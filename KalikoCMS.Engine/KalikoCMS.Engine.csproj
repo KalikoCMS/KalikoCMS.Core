@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FC032B3C-8643-4C35-929C-88959FC980D4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KalikoCMS</RootNamespace>
+    <AssemblyName>KalikoCMS.Engine</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\Repository\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="fastJSON">
+      <HintPath>..\Repository\fastJSON.dll</HintPath>
+    </Reference>
+    <Reference Include="IQToolkit">
+      <HintPath>..\Repository\IQToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="IQToolkit.Data">
+      <HintPath>..\Repository\IQToolkit.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Kaliko.Logger">
+      <HintPath>..\Repository\Kaliko.Logger.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\AttributeReader.cs" />
+    <Compile Include="Attributes\PageTypeAttribute.cs" />
+    <Compile Include="Attributes\PropertyAttribute.cs" />
+    <Compile Include="Attributes\PropertyTypeAttribute.cs" />
+    <Compile Include="Caching\CacheManager.cs" />
+    <Compile Include="Caching\CachePriority.cs" />
+    <Compile Include="Caching\ICacheProvider.cs" />
+    <Compile Include="Caching\WebCache.cs" />
+    <Compile Include="Configuration\SiteHostConfiguration.cs" />
+    <Compile Include="Configuration\SiteHostConfigurationLanguage.cs" />
+    <Compile Include="Configuration\SiteHostConfigurationLanguageCollection.cs" />
+    <Compile Include="Configuration\SiteSettings.cs" />
+    <Compile Include="ContentProvider\IPageValueSupport.cs" />
+    <Compile Include="ContentProvider\PageProvider.cs" />
+    <Compile Include="Core\FileSystemObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Core\Collections\PageCollectionEnumerator.cs" />
+    <Compile Include="Core\InterfaceReader.cs" />
+    <Compile Include="Core\IStartupSequence.cs" />
+    <Compile Include="Search\IIndexable.cs" />
+    <Compile Include="Core\PageNameBuilder.cs" />
+    <Compile Include="Search\IndexItem.cs" />
+    <Compile Include="Search\BaseSearchProvider.cs" />
+    <Compile Include="Data\DataStore.cs" />
+    <Compile Include="Data\DataStoreData.cs" />
+    <Compile Include="Data\KeyValuePair.cs" />
+    <Compile Include="Data\StandardDataStore.cs" />
+    <Compile Include="Events\PropertyEventArgs.cs" />
+    <Compile Include="Events\PageEventArgs.cs" />
+    <Compile Include="Core\RootPage.cs" />
+    <Compile Include="Data\PageInstanceData.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="Modules\RequestModule.cs" />
+    <Compile Include="Core\CmsPage.cs" />
+    <Compile Include="Core\EditablePage.cs" />
+    <Compile Include="Core\Language.cs" />
+    <Compile Include="Core\LanguageTranslator.cs" />
+    <Compile Include="Core\Collections\PageCollection.cs" />
+    <Compile Include="Core\PageIndex.cs" />
+    <Compile Include="Core\PageIndexItem.cs" />
+    <Compile Include="Core\PublishState.cs" />
+    <Compile Include="Core\PageType.cs" />
+    <Compile Include="Core\Collections\PropertyCollection.cs" />
+    <Compile Include="Core\PropertyItem.cs" />
+    <Compile Include="Core\PropertyType.cs" />
+    <Compile Include="Core\Security.cs" />
+    <Compile Include="Data\DataStoreManager.cs" />
+    <Compile Include="Data\EntityProvider\ContentDatabase.cs" />
+    <Compile Include="Data\EntityProvider\ContentDatabaseWithAttributes.cs" />
+    <Compile Include="Data\DataManager.cs" />
+    <Compile Include="Data\PageData.cs" />
+    <Compile Include="Data\EntityProvider\PageInstanceEntity.cs" />
+    <Compile Include="Data\EntityProvider\PageEntity.cs" />
+    <Compile Include="Data\EntityProvider\PagePropertyEntity.cs" />
+    <Compile Include="Data\PageTypeData.cs" />
+    <Compile Include="Data\PropertyData.cs" />
+    <Compile Include="Data\EntityProvider\PropertyEntity.cs" />
+    <Compile Include="Data\PropertyTypeData.cs" />
+    <Compile Include="Data\SiteLanguageData.cs" />
+    <Compile Include="Extensions\PredicateExtension.cs" />
+    <Compile Include="Framework\PageMaster.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Framework\PageTemplate.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Framework\PageTemplateTyped.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Framework\WebControlBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\InitModule.cs" />
+    <Compile Include="Modules\ShortUrlModule.cs" />
+    <Compile Include="PageFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyType\DateTimeProperty.cs" />
+    <Compile Include="PropertyType\HtmlProperty.cs" />
+    <Compile Include="PropertyType\ImageProperty.cs" />
+    <Compile Include="PropertyType\ImagePropertyAttribute.cs" />
+    <Compile Include="PropertyType\ImageSetProperty.cs" />
+    <Compile Include="PropertyType\IPropertyControl.cs" />
+    <Compile Include="Core\PropertyData.cs" />
+    <Compile Include="PropertyType\NumericProperty.cs" />
+    <Compile Include="PropertyType\StringProperty.cs" />
+    <Compile Include="PropertyType\TextProperty.cs" />
+    <Compile Include="Search\NullSearchProvider.cs" />
+    <Compile Include="Search\SearchManager.cs" />
+    <Compile Include="Search\SearchHit.cs" />
+    <Compile Include="Search\SearchQuery.cs" />
+    <Compile Include="Search\SearchResult.cs" />
+    <Compile Include="Serialization\Base62.cs" />
+    <Compile Include="Serialization\JsonSerialization.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="WebControls\AutoBindableBase.cs" />
+    <Compile Include="WebControls\BaseList.cs" />
+    <Compile Include="WebControls\BreadCrumbs.cs" />
+    <Compile Include="WebControls\CustomWebControl.cs" />
+    <Compile Include="WebControls\FileList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WebControls\FormMail.cs" />
+    <Compile Include="WebControls\MenuList.cs" />
+    <Compile Include="WebControls\PageList.cs" />
+    <Compile Include="WebControls\PageListItem.cs" />
+    <Compile Include="WebControls\PropertyControl.cs" />
+    <Compile Include="Events\SendFormEventArgs.cs" />
+    <Compile Include="WebControls\RolePanel.cs" />
+    <Compile Include="WebControls\SortDirection.cs" />
+    <Compile Include="WebControls\SortOrder.cs" />
+    <Compile Include="WebControls\TemplateItem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Scripts\PropertyEditor_String.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ResharperPattern.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
