@@ -40,9 +40,9 @@
                     <asp:LinkButton runat="server" ID="SaveButton" CssClass="btn btn-large btn-primary">
                         <i class="icon-ok icon-white"></i> Save page
                     </asp:LinkButton>
-                    <asp:LinkButton runat="server" ID="LinkButton1" CssClass="btn btn-large">
+<%--                    <asp:LinkButton runat="server" ID="LinkButton1" CssClass="btn btn-large">
                         <i class="icon-trash"></i> Delete page
-                    </asp:LinkButton>
+                    </asp:LinkButton>--%>
                     </div>
                 </fieldset>
             </div>

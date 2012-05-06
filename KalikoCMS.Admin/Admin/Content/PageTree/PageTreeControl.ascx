@@ -16,6 +16,7 @@
         $(document).ready(function () {
             initTreeView();
             $("#new-page-button").click(clickCreateNewPage);
+            $("#remove-page-button").click(clickDeletePage);
 
             $("#new-page-button").tooltip({ placement: "bottom" });
             $("#remove-page-button").tooltip({ placement: "bottom" });
@@ -24,6 +25,30 @@
         function clickCreateNewPage() {
             openModal("/Admin/Content/Dialogs/SelectPagetypeDialog.aspx?pageId=" + currentPageId, 500, 400);
             return false;
+        }
+
+        function clickDeletePage() {
+            if (confirm("Really delete page?")) {
+                deletePage(currentPageId);
+            }
+            return false;
+        }
+
+        function deletePage(pageId) {
+            $.ajax({
+                async: false,
+                type: 'POST',
+                url: "/Admin/Content/PageTree/JQueryTreeContent.ashx",
+                data: {
+                    "operation": "remove_node",
+                    "id": currentPageId
+                },
+                success: function(r) {
+                    if (!r.status) {
+                        refreshTreeNode();
+                    }
+                }
+            });
         }
 
         function createNewPage(pageTypeId) {

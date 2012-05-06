@@ -53,6 +53,23 @@ namespace KalikoCMS.Admin.Content.PageTree {
             }
         }
 
+
+        private void MoveNode(HttpContext context) {
+            Guid pageId = new Guid(context.Request.Form["id"]);
+            Guid targetId = new Guid(context.Request.Form["ref"]);
+
+            PageFactory.MovePage(pageId, targetId);
+
+            context.Response.ContentType = "application/json";
+            context.Response.Write("{ \"success\": true }");
+        }
+
+        private void RemoveNode(HttpContext context) {
+            Guid pageId = new Guid(context.Request.Form["id"]);
+            PageFactory.DeletePage(pageId);
+        }
+
+
         #region IHttpHandler Members
 
         public bool IsReusable {
@@ -67,19 +84,12 @@ namespace KalikoCMS.Admin.Content.PageTree {
             if(operation== "get_children") {
                 GetChildren(context);
             }
-            else if(operation=="move_node") {
+            else if (operation == "move_node") {
                 MoveNode(context);
             }
-        }
-
-        private void MoveNode(HttpContext context) {
-            Guid pageId = new Guid(context.Request.Form["id"]);
-            Guid targetId = new Guid(context.Request.Form["ref"]);
-
-            PageFactory.MovePage(pageId, targetId);
-
-            context.Response.ContentType = "application/json";
-            context.Response.Write("{ \"success\": true }");
+            else if (operation == "remove_node") {
+                RemoveNode(context);
+            }
         }
 
         #endregion
