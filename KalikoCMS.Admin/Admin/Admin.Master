@@ -1,0 +1,100 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="KalikoCMS.Admin.Admin" %>
+<%@ Register TagPrefix="admin" TagName="TopNavigation" Src="TopNavigation.ascx" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>KalikoCMS Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow" />
+    <link href="/Admin/Assets/Styles/jquery-ui.custom.css" rel="stylesheet" />
+    <link href="/Admin/Assets/Styles/jquery.jgrowl.css" rel="stylesheet" />
+    <link href="/Admin/Assets/Styles/bootstrap.css" rel="stylesheet" />
+    <style type="text/css">
+        body
+        {
+            padding-bottom: 20px;
+            padding-top: 40px;
+        }
+        
+        .sidebar-nav
+        {
+            padding: 9px 0;
+        }
+        
+        .container {
+            min-width: 944px;
+            padding: 20px;
+            width: auto;
+        }
+        
+        .no-scroll { overflow: hidden; }
+        #pagetree { position: absolute;top: 40px;left: 0px;right: 0px;bottom: 0px;overflow: auto; }
+        
+        .navbar-fixed-top .nav li i { opacity: 0.4; }
+        .navbar-fixed-top .nav li:hover i,
+        .navbar-fixed-top .nav li.active i { opacity: 1; }
+        
+        iframe { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+        #modal-popup { overflow: hidden;}
+        
+        #left-block { margin-left: 20px; }
+        
+        .full-height { top:60px;bottom:20px;position:absolute;overflow:auto; }
+    </style>
+    <!-- IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="/Admin/Assets/Scripts/html5shiv.min.js"></script>
+    <![endif]-->
+    <script src="/Admin/Assets/Scripts/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <admin:TopNavigation runat="server" />
+        <div class="container">
+            <div class="row">
+                <asp:ContentPlaceHolder ID="FullRegion" runat="server">
+                    <div id="left-block">
+                        <asp:ContentPlaceHolder ID="LeftRegion" runat="server" />
+                    </div>
+                    <!--/span-->
+                    <div>
+                        <asp:ContentPlaceHolder ID="RightRegion" runat="server" />
+                    </div>
+                    <!--/span-->
+                </asp:ContentPlaceHolder>
+            </div>
+            <!--/row-->
+            <footer class="container-fluid navbar-fixed-bottom">
+            <p>Powered by KalikoCMS</p>
+          </footer>
+        </div>
+        <!--/.fluid-container-->
+    </form>
+    
+    <div class='modal hide fade' id='modal-popup'></div>
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/Admin/Assets/Scripts/bootstrap.min.js"></script>
+    
+    <script src="/Admin/Assets/Scripts/jquery.cookie.js"></script>
+    <script src="/Admin/Assets/Scripts/jquery.hotkeys.js"></script>
+    <script src="/Admin/Assets/Scripts/jquery.jstree.js"></script>
+    <script src="/Admin/Assets/Scripts/jquery-ui-1.8.20.custom.min.js"></script>
+    <script src="/Admin/Assets/Scripts/jquery.jgrowl.js"></script>
+    
+    <script>
+        function openModal(url, width, height) {
+            // TODO: Merge CSS
+            $('#modal-popup').css("marginLeft", "-" + (width / 2) + "px").css("marginTop", "-" + (height / 2) + "px").css("width", width + "px").css("height", height + "px").html("<iframe src=\"" + url + "\" style=\"overflow:hidden;width:" + width + "px;height:" + height + "px;\"></iframe>");
+            $('#modal-popup').modal('show');
+        }
+        
+        function closeModal() {
+            $('#modal-popup').modal('hide');
+        }
+    </script>
+</body>
+</html>

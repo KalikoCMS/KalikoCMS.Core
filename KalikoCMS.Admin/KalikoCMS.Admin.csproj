@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5702B060-5F88-4110-9E39-B2F8B748EF9A}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KalikoCMS</RootNamespace>
+    <AssemblyName>KalikoCMS.Admin</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Kaliko.Logger">
+      <HintPath>..\Repository\Kaliko.Logger.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Assets\Scripts\jquery.hotkeys.js" />
+    <Content Include="Admin\Assets\Scripts\jquery.jgrowl.js" />
+    <Content Include="Admin\Assets\Styles\jquery.jgrowl.css" />
+    <Content Include="Admin\Login.aspx" />
+    <Content Include="Admin\TopNavigation.ascx" />
+    <Content Include="Admin\Assets\Images\glyphicons-halflings-white.png" />
+    <Content Include="Admin\Assets\Images\glyphicons-halflings.png" />
+    <Content Include="Admin\Assets\Scripts\bootstrap.min.js" />
+    <Content Include="Admin\Assets\Scripts\html5shiv.min.js" />
+    <Content Include="Admin\Assets\Scripts\jquery-1.7.2.min.js" />
+    <Content Include="Admin\Assets\Scripts\jquery-ui-1.8.20.custom.min.js" />
+    <Content Include="Admin\Assets\Scripts\jquery.datetimeentry.js" />
+    <Content Include="Admin\Assets\Styles\bootstrap-responsive.css" />
+    <Content Include="Admin\Assets\Styles\bootstrap.css" />
+    <Content Include="Admin\Assets\Styles\jquery-ui.custom.css" />
+    <Content Include="Admin\Content\Default.aspx" />
+    <Content Include="Admin\Content\Dialogs\SelectPagetypeDialog.aspx" />
+    <Content Include="Admin\Content\EditPage.aspx" />
+    <Content Include="Admin\Content\PageTree\PageTreeControl.ascx" />
+    <Content Include="Admin\Content\PropertyType\DateTimePropertyEditor.ascx" />
+    <Content Include="Admin\Content\PropertyType\HtmlPropertyEditor.ascx" />
+    <Content Include="Admin\Content\PropertyType\ImagePropertyEditor.ascx" />
+    <Content Include="Admin\Content\PropertyType\NumericPropertyEditor.ascx" />
+    <Content Include="Admin\Content\PropertyType\StringPropertyEditor.ascx" />
+    <Content Include="Admin\Content\PropertyType\TextPropertyEditor.ascx" />
+    <Content Include="Admin\Default.aspx" />
+    <Content Include="Admin\Assets\Scripts\jquery.cookie.js" />
+    <Content Include="Admin\Assets\Scripts\jquery.jstree.js" />
+    <Content Include="Admin\Assets\Styles\classic\d.gif" />
+    <Content Include="Admin\Assets\Styles\classic\d.png" />
+    <Content Include="Admin\Assets\Styles\classic\dot_for_ie.gif" />
+    <Content Include="Admin\Assets\Styles\classic\style.css" />
+    <Content Include="Admin\Assets\Styles\classic\throbber.gif" />
+    <Content Include="Global.asax" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\Admin.Master.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Admin.Master.designer.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\TopNavigation.ascx.cs">
+      <DependentUpon>TopNavigation.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\TopNavigation.ascx.designer.cs">
+      <DependentUpon>TopNavigation.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\Dialogs\SelectPagetypeDialog.aspx.cs">
+      <DependentUpon>SelectPagetypeDialog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\Dialogs\SelectPagetypeDialog.aspx.designer.cs">
+      <DependentUpon>SelectPagetypeDialog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\EditPage.aspx.cs">
+      <DependentUpon>EditPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\EditPage.aspx.designer.cs">
+      <DependentUpon>EditPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PageTree\JQueryTreeContent.ashx.cs">
+      <DependentUpon>JQueryTreeContent.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PageTree\PageTreeControl.ascx.cs">
+      <DependentUpon>PageTreeControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PageTree\PageTreeControl.ascx.designer.cs">
+      <DependentUpon>PageTreeControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\DateTimePropertyEditor.ascx.cs">
+      <DependentUpon>DateTimePropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\DateTimePropertyEditor.ascx.designer.cs">
+      <DependentUpon>DateTimePropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\HtmlPropertyEditor.ascx.cs">
+      <DependentUpon>HtmlPropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\HtmlPropertyEditor.ascx.designer.cs">
+      <DependentUpon>HtmlPropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\ImagePropertyEditor.ascx.cs">
+      <DependentUpon>ImagePropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\ImagePropertyEditor.ascx.designer.cs">
+      <DependentUpon>ImagePropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\NumericPropertyEditor.ascx.cs">
+      <DependentUpon>NumericPropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\NumericPropertyEditor.ascx.designer.cs">
+      <DependentUpon>NumericPropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\StringPropertyEditor.ascx.cs">
+      <DependentUpon>StringPropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\StringPropertyEditor.ascx.designer.cs">
+      <DependentUpon>StringPropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\TextPropertyEditor.ascx.cs">
+      <DependentUpon>TextPropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\TextPropertyEditor.ascx.designer.cs">
+      <DependentUpon>TextPropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Admin.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KalikoCMS.Engine\KalikoCMS.Engine.csproj">
+      <Project>{FC032B3C-8643-4C35-929C-88959FC980D4}</Project>
+      <Name>KalikoCMS.Engine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Content\PageTree\JQueryTreeContent.ashx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>53249</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
