@@ -18,6 +18,8 @@ namespace KalikoCMS.Core {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Text;
     using Kaliko;
     using KalikoCMS.Configuration;
@@ -30,19 +32,15 @@ namespace KalikoCMS.Core {
         private static readonly Predicate<PageIndexItem> IsUnpublished = t => !(t.StartPublish <= DateTime.Now && !(DateTime.Now > t.StopPublish));
 
         private readonly List<PageIndexItem> _pageIndex;
-        private readonly Hashtable _urlCollection;
-
 
         internal PageIndex() {
-            _urlCollection = new Hashtable();
             _pageIndex = new List<PageIndexItem>();
         }
 
         internal PageIndex(List<PageIndexItem> pageIndex) {
-            _urlCollection = new Hashtable();
             _pageIndex = pageIndex;
 
-            ClearLinkedList();
+            InitLinkedList();
             BuildLinkedList();
         }
 
@@ -66,7 +64,6 @@ namespace KalikoCMS.Core {
 
         internal void Clear() {
             _pageIndex.Clear();
-            _urlCollection.Clear();
         }
 
         internal static PageIndex CreatePageIndex(int languageId) {
@@ -294,6 +291,7 @@ namespace KalikoCMS.Core {
             }
         }
 
+        // TODO: No deleted pages in index, remove related code below
         private static PageIndex CleanUp(PageIndex pageIndex) {
             PageIndex pages = new PageIndex();
             pages.LanguageId = pageIndex.LanguageId;
@@ -355,8 +353,7 @@ namespace KalikoCMS.Core {
             return pages;
         }
 
-        private void ClearLinkedList() {
-            // TODO: Döp om!
+        private void InitLinkedList() {
             int pageId = 0;
 
             for(int i = 0;i < _pageIndex.Count;i++) {
@@ -429,6 +426,31 @@ namespace KalikoCMS.Core {
                     break;
                 }
             }
+        }
+
+/*        public void DeletePage(Guid pageId) {
+            PageCollection pageTree = GetPageTreeFromPage(pageId, PublishState.All);
+            pageTree.Add(pageId);
+
+            _pageIndex.RemoveAll(i => pageTree.PageIds.Contains(i.PageId));
+
+            InitLinkedList();
+            BuildLinkedList();
+        }*/
+
+        //private int FindIndexPositionForPage(Guid pageId) {
+        //    for (int i = 0; i < _pageIndex.Count; i++) {
+        //        if(_pageIndex[i].PageId == pageId) {
+        //            return i;
+        //        }
+        //    }
+        //    return -1;
+        //}
+        public void DeletePages(Collection<Guid> pageIds) {
+            _pageIndex.RemoveAll(i => pageIds.Contains(i.PageId));
+
+            InitLinkedList();
+            BuildLinkedList();
         }
     }
 }

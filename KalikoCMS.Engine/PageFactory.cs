@@ -24,6 +24,7 @@ namespace KalikoCMS {
     using KalikoCMS.ContentProvider;
     using KalikoCMS.Core;
     using KalikoCMS.Core.Collections;
+    using KalikoCMS.Data;
     using KalikoCMS.Data.EntityProvider;
     using KalikoCMS.Events;
 
@@ -367,6 +368,15 @@ namespace KalikoCMS {
             }
 
             return string.Empty;
+        }
+
+        public static void DeletePage(Guid pageId) {
+            // TODO: Only remove per language
+            Collection<Guid> pageIds = PageData.DeletePage(pageId);
+
+            foreach (PageIndex pageIndex in _pageLanguageIndex) {
+                pageIndex.DeletePages(pageIds);
+            }
         }
     }
 }

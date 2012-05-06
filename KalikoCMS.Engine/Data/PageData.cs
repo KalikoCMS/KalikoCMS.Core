@@ -71,28 +71,26 @@ namespace KalikoCMS.Data {
 
 
         //TODO: Lägg till språkparameter
-        internal static int DeletePage(Guid pageId) {
-            int deletedPages;
-
+        internal static Collection<Guid> DeletePage(Guid pageId) {
             Collection<Guid> pageIds = PageFactory.GetPageTreeFromPage(pageId, PublishState.All).PageIds;
             pageIds.Add(pageId);
-            
+            Guid[] pageIdArray = pageIds.ToArray();
+
             DataManager.OpenConnection();
 
             try {
-                IQueryable<PageInstanceEntity> items = DataManager.Instance.PageInstance.Where(pi => pageIds.Contains(pi.PageId));
+                IQueryable<PageInstanceEntity> items = DataManager.Instance.PageInstance.Where(p => pageIdArray.Contains(p.PageId));
 
                 foreach (PageInstanceEntity item in items) {
                     item.DeletedDate = DateTime.Now;
+                    DataManager.Instance.PageInstance.Update(item);
                 }
-
-                deletedPages = DataManager.Instance.PageInstance.Update(items);
             }
             finally {
                 DataManager.CloseConnection();
             }
 
-            return deletedPages;
+            return pageIds;
         }
 
         internal static PageEntity GetPageEntity(Guid pageId) {
