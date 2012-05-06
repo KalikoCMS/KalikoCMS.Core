@@ -265,6 +265,8 @@ namespace KalikoCMS {
             if (page != null) {
                 page.PageName = pageInstance.PageName;
                 page.UpdateDate = pageInstance.UpdateDate;
+                page.StartPublish = pageInstance.StartPublish;
+                page.StopPublish = pageInstance.StopPublish;
 
                 pageIndex.SavePageIndexItem(page);
             }

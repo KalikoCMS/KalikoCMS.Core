@@ -53,11 +53,11 @@ namespace KalikoCMS.Core {
             return editablePage;
         }
 
-        public void SetStartPublish(DateTime dateTime) {
+        public void SetStartPublish(DateTime? dateTime) {
             StartPublish = dateTime;
         }
 
-        public void SetStopPublish(DateTime dateTime) {
+        public void SetStopPublish(DateTime? dateTime) {
             StopPublish = dateTime;
         }
         

@@ -125,6 +125,11 @@ namespace KalikoCMS.Core {
             return editablePage;
         }
 
+        public EditablePage CreateChildPage(int pageTypeId) {
+            EditablePage editablePage = EditablePage.CreateEditableChildPage(this, pageTypeId);
+            return editablePage;
+        }
+
         public virtual EditablePage MakeEditable() {
             EditablePage editablePage = EditablePage.CreateEditablePage(this);
             return editablePage;
