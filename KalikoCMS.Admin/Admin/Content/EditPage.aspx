@@ -14,12 +14,50 @@
     <link href="/Admin/Assets/Styles/jquery-ui.custom.css" rel="stylesheet" />
     <style type="text/css">
         #ui-datepicker-div { font-size: 12px; }
+        
+        .html-toolbar {
+            display: block;
+            margin: 10px 0 0 0;
+            padding: 0;
+            list-style: disc outside none;
+            background: #eaeaea;
+            padding: 4px; height: 30px; width: 500px; border-left: 1px solid rgb(216, 216, 216); border-top: 1px solid rgb(216, 216, 216); border-right: 1px solid rgb(216, 216, 216); border-radius: 3px 3px 0px 0px; box-shadow: 0pt 1px 3px rgba(255, 255, 255, 0.075) inset;
+        }
+        
+        .html-toolbar > li {
+            display: list-item;
+            float: left;
+            list-style: none outside none;
+            margin: 0 5px 0 0;
+        }
+        
+        .html-toolbar:after {
+            clear: both;
+            content: "";
+            display: table;
+        }
+
+        iframe {
+            background-color: #FFFFFF;
+            border: 1px solid #CCCCCC;
+            border-radius: 3px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            color: #555555;
+            font-size: 13px;
+            height: 200px;
+            line-height: 18px;
+            margin-bottom: 9px;
+            padding: 4px;
+            width: 500px;
+        }
     </style>
     <!-- IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="/Admin/Assets/Scripts/html5shiv.min.js"></script>
     <![endif]-->
     <script src="/Admin/Assets/Scripts/jquery-1.7.2.min.js"></script>
+    <script src="/Admin/Assets/Scripts/jquery.wysiwyg.js"></script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -50,8 +88,13 @@
     </form>
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="/Admin/Assets/Scripts/bootstrap.min.js"></script>
-    
     <script src="/Admin/Assets/Scripts/jquery-ui-1.8.20.custom.js"></script>
     <script src="/Admin/Assets/Scripts/jquery.datetimeentry.js"></script>
+    
+    <script>
+        $().ready(function () {
+            $('textarea.html-editor').editHtml();
+        });
+    </script>
 </body>
 </html>

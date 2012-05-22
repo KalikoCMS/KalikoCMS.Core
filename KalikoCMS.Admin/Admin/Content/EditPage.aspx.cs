@@ -30,6 +30,18 @@ namespace KalikoCMS.Admin.Content {
         private Guid _parentId;
         private int _pageTypeId;
 
+        protected void Page_Init(object sender, EventArgs e) {
+            Request.QueryString["id"].TryParseGuid(out _pageId);
+            Request.QueryString["parentId"].TryParseGuid(out _parentId);
+            int.TryParse(Request.QueryString["pageTypeId"], out _pageTypeId);
+
+            SaveButton.Click += SaveButtonEventHandler;
+
+            _controls = new List<IPropertyControl>();
+
+            LoadControls();
+        }
+
         private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId) {
             Core.PropertyType propertyType = Core.PropertyType.GetPropertyType(propertyTypeId);
             string editControl = propertyType.EditControl;
@@ -48,7 +60,7 @@ namespace KalikoCMS.Admin.Content {
             if (_pageId != Guid.Empty) {
                 LoadFormForExistingPage();
             }
-            else if(_parentId != Guid.Empty) {
+            else if(_pageTypeId > 0) {
                 LoadFormForNewPage();
             }
             else {
@@ -102,18 +114,6 @@ namespace KalikoCMS.Admin.Content {
 
                 AddControl(propertyName, propertyData, propertyDefinition.PropertyTypeId);
             }
-        }
-
-        protected void Page_Init(object sender, EventArgs e) {
-            Request.QueryString["id"].TryParseGuid(out _pageId);
-            Request.QueryString["parentId"].TryParseGuid(out _parentId);
-            int.TryParse(Request.QueryString["pageTypeId"], out _pageTypeId);
-
-            SaveButton.Click += SaveButtonEventHandler;
-
-            _controls = new List<IPropertyControl>();
-
-            LoadControls();
         }
 
         private void SaveButtonEventHandler(object sender, EventArgs e) {
