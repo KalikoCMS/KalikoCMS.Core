@@ -16,6 +16,7 @@
 
 namespace KalikoCMS.Core {
     using System;
+    using System.Reflection;
     using System.Runtime.Remoting.Messaging;
     using System.Runtime.Remoting.Proxies;
 
@@ -26,41 +27,56 @@ namespace KalikoCMS.Core {
             _target = Activator.CreateInstance(type);
         }
 
+        public static CmsPage CreatePageProxy(Type type) {
+            var pageProxy = new PageProxy(type);
+            return (CmsPage)pageProxy.GetTransparentProxy();
+        }
+
         public override IMessage Invoke(IMessage message) {
             var methodMessage = (IMethodCallMessage)message;
             var method = methodMessage.MethodBase;
+            object returnValue;
 
             if (method.IsVirtual) {
-                string methodName = method.Name;
-                
-                if (methodName.StartsWith("get_")) {
-                    CmsPage currentPage = (CmsPage)_target;
-                    string propertyName = methodName.Length > 4 ? methodName.Substring(4) : string.Empty;
-                    PropertyData propertyData = currentPage.Property[propertyName];
-
-                    return new ReturnMessage(propertyData, methodMessage.Args, methodMessage.ArgCount, methodMessage.LogicalCallContext, methodMessage);
+                returnValue = HandleVirtualMethods(methodMessage, method);
+            }
+            else {
+                try {
+                    returnValue = method.Invoke(_target, methodMessage.Args);
+                }
+                catch (Exception exception) {
+                    throw GetExceptionToRethrow(exception);
                 }
             }
 
-            try {
-                object returnValue = method.Invoke(_target, methodMessage.Args);
-                ReturnMessage returnMessage = new ReturnMessage(returnValue, methodMessage.Args, methodMessage.ArgCount, methodMessage.LogicalCallContext, methodMessage);
-
-                return returnMessage;
-            }
-            catch (Exception ex) {
-                if (ex.InnerException != null) {
-                    throw ex.InnerException;
-                }
-
-                throw;
-            }
+            var returnMessage = BuildReturnMessage(methodMessage, returnValue);
+            return returnMessage;
         }
 
-        public static CmsPage CreatePageProxy(Type type) {
-            PageProxy pageProxy = new PageProxy(type);
-            return (CmsPage)pageProxy.GetTransparentProxy();
+        private object HandleVirtualMethods(IMethodCallMessage methodMessage, MethodBase method) {
+            string methodName = method.Name;
+
+            if (methodName.StartsWith("get_")) {
+                var currentPage = (CmsPage)_target;
+                string propertyName = methodName.Substring(4);
+                var propertyData = currentPage.Property[propertyName];
+
+                return propertyData;
+            }
+
+            return null;
+        }
+
+        private static Exception GetExceptionToRethrow(Exception exception) {
+            if (exception.InnerException != null) {
+                return exception.InnerException;
+            }
+
+            return exception;
+        }
+
+        private static IMessage BuildReturnMessage(IMethodCallMessage methodMessage, object returnValue) {
+            return new ReturnMessage(returnValue, methodMessage.Args, methodMessage.ArgCount, methodMessage.LogicalCallContext, methodMessage);
         }
     }
-
 }
