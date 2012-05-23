@@ -20,7 +20,7 @@ namespace KalikoCMS.Core {
     using KalikoCMS.Framework;
     using KalikoCMS.Serialization;
 
-    public class CmsPage {
+    public class CmsPage : MarshalByRefObject {
         public DateTime CreatedDate { get; internal set; }
         public DateTime DeletedDate { get; internal set; }
         public int LanguageId { get; internal set; }

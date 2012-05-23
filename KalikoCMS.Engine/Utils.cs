@@ -25,6 +25,14 @@ namespace KalikoCMS {
 
     // TODO: Move to more specific classes
     public static class Utils {
+
+        public static bool IsNullableType(Type type) {
+            bool result = (type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(Nullable<>)));
+            return result;
+        }
+
+
+
         public static string GetAppSetting(string key) {
             return ConfigurationManager.AppSettings.Get(key);
         }

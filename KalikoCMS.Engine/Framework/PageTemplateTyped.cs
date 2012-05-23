@@ -16,7 +16,6 @@
 
 namespace KalikoCMS.Framework {
     using System;
-    using Castle.DynamicProxy;
     using KalikoCMS.Core;
     
     public abstract class PageTemplate<T> : PageTemplate where T : CmsPage {
@@ -35,23 +34,16 @@ namespace KalikoCMS.Framework {
             return ConvertToTypedPage(PageFactory.GetPage(_pageId));
         }
 
-        // TODO: Make less accessable
-        internal static CmsPage ConvertToTypedPage(CmsPage src) {
-            var pageProxy = CreatePageProxy();
-
-            ShallowCopyPageToProxy(src, pageProxy);
-
-            return pageProxy;
-        }
-
-        private static CmsPage CreatePageProxy() {
-            ProxyGenerator generator = new ProxyGenerator();
-            ProxyGenerationOptions options = new ProxyGenerationOptions();
-            IInterceptor[] interceptors = new IInterceptor[] { new PropertyInterceptor() };
+        internal static CmsPage ConvertToTypedPage(CmsPage sourcePage) {
             Type type = typeof(T);
+            
+            var proxyPage = PageProxy.CreatePageProxy(type);
 
-            return (CmsPage)generator.CreateClassProxy(type, new Type[] { }, options, new object[] { }, interceptors);
+            ShallowCopyPageToProxy(sourcePage, proxyPage);
+
+            return proxyPage;
         }
+
 
         private static void ShallowCopyPageToProxy(CmsPage src, CmsPage pageProxy) {
             pageProxy.PageName = src.PageName;
@@ -73,23 +65,6 @@ namespace KalikoCMS.Framework {
             pageProxy.UrlSegment = src.UrlSegment;
             pageProxy.VisibleInMenu = src.VisibleInMenu;
             pageProxy.VisibleInSiteMap = src.VisibleInSiteMap;
-        }
-
-        private class PropertyInterceptor : IInterceptor {
-
-            public void Intercept(IInvocation invocation) {
-                string methodName = invocation.Method.Name;
-
-                if(methodName.StartsWith("get_", StringComparison.Ordinal)) {
-                    CmsPage currentPage = (CmsPage)invocation.InvocationTarget;
-                    string propertyName = methodName.Length > 4 ? methodName.Substring(4) : string.Empty;
-
-                    invocation.ReturnValue = currentPage.Property[propertyName];
-                } 
-                else {
-                    invocation.Proceed();
-                }
-            }
         }
     }
 }

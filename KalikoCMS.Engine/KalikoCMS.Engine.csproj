@@ -36,10 +36,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=2.5.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Third party tools\Castle Project\Bin\Castle.Core.dll</HintPath>
-    </Reference>
     <Reference Include="fastJSON, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Third party tools\fastJSON\Bin\fastJSON.dll</HintPath>
@@ -84,6 +80,7 @@
     <Compile Include="Core\Collections\PageCollectionEnumerator.cs" />
     <Compile Include="Core\InterfaceReader.cs" />
     <Compile Include="Core\IStartupSequence.cs" />
+    <Compile Include="Core\PageProxy.cs" />
     <Compile Include="Search\IIndexable.cs" />
     <Compile Include="Core\PageNameBuilder.cs" />
     <Compile Include="Search\IndexItem.cs" />

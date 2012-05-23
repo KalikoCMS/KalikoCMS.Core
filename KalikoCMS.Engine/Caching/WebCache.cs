@@ -43,7 +43,6 @@ namespace KalikoCMS.Caching {
             }
 
             HttpContext.Current.Cache.Add(key, value, null, absoluteExpiration, slidingExpirationTimeSpan, cacheItemPriority, null);
-
         }
 
         private static CacheItemPriority TranslateCachePriority(CachePriority priority) {
