@@ -21,6 +21,9 @@ namespace KalikoCMS.Core {
     using KalikoCMS.Serialization;
 
     public class CmsPage : MarshalByRefObject {
+        private PropertyCollection _propertyCollection;
+        private PageCollection _parentPath;
+
         public DateTime CreatedDate { get; internal set; }
         public DateTime DeletedDate { get; internal set; }
         public int LanguageId { get; internal set; }
@@ -42,12 +45,6 @@ namespace KalikoCMS.Core {
         internal int FirstChild { get; set; }
         internal int NextPage { get; set; }
         internal string UrlSegment { get; set; }
-
-        /* Moved to social
-        private ReadOnlyCollection<Comment> _comments;
-         */
-
-        private PropertyCollection _propertyCollection;
 
         protected CmsPage() {
         }
@@ -117,6 +114,12 @@ namespace KalikoCMS.Core {
                 string shortUrl = string.Format("!{0}", Base62.Encode(PageInstanceId));
 
                 return shortUrl;
+            }
+        }
+
+        public PageCollection ParentPath {
+            get {
+                return _parentPath ?? (_parentPath = PageFactory.GetPagePath(this));
             }
         }
 

@@ -1,7 +1,8 @@
-﻿/* 
+﻿#region License and copyright notice
+/* 
  * Kaliko Content Management System
  * 
- * Copyright (c) Fredrik Schultz
+ * Copyright (c) Fredrik Schultz and Contributors
  * 
  * This source is subject to the Microsoft Public License.
  * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
@@ -11,10 +12,11 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED 
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
-using System.Web.UI;
+#endregion
 
 namespace KalikoCMS.WebControls {
+    using System.Web.UI;
+
     public class TemplateItem : Control, INamingContainer {
     }
 }

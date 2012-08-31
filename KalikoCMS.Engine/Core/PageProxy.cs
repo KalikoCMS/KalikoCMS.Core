@@ -38,7 +38,7 @@ namespace KalikoCMS.Core {
             object returnValue;
 
             if (method.IsVirtual) {
-                returnValue = HandleVirtualMethods(methodMessage, method);
+                returnValue = HandleVirtualMethods(method);
             }
             else {
                 try {
@@ -53,7 +53,7 @@ namespace KalikoCMS.Core {
             return returnMessage;
         }
 
-        private object HandleVirtualMethods(IMethodCallMessage methodMessage, MethodBase method) {
+        private object HandleVirtualMethods(MethodBase method) {
             string methodName = method.Name;
 
             if (methodName.StartsWith("get_")) {

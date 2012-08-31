@@ -50,6 +50,10 @@ namespace KalikoCMS.Core.Collections {
             _pageIds.Add(pageId);
         }
 
+        public bool Contains(Guid pageId) {
+            return _pageIds.Contains(pageId);
+        }
+
         public void Sort(SortOrder sortOrder, SortDirection sortDirection) {
             lock (PadLock) {
                 if (IsAlreadySorted(sortOrder, sortDirection)) {

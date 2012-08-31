@@ -183,9 +183,17 @@ namespace KalikoCMS {
             return page.ConvertToTypedPage<T>();
         }
 
+        internal static PageCollection GetPagePath(CmsPage page) {
+            return GetPagePath(page.PageId, page.LanguageId);
+        }
 
         internal static PageCollection GetPagePath(Guid pageId) {
-            PageIndex pageIndex = GetPageIndex(Language.CurrentLanguageId);
+            var languageId = Language.CurrentLanguageId;
+            return GetPagePath(pageId, languageId);
+        }
+
+        private static PageCollection GetPagePath(Guid pageId, int languageId) {
+            PageIndex pageIndex = GetPageIndex(languageId);
 
             PageCollection pathList = new PageCollection();
             Guid currentPageId = pageId;
@@ -193,8 +201,9 @@ namespace KalikoCMS {
             for (int i = 0; i < 10000; i++) {
                 pathList.Add(currentPageId);
                 currentPageId = pageIndex.GetPageIndexItem(currentPageId).ParentId;
-                if (currentPageId == Guid.Empty)
+                if (currentPageId == Guid.Empty) {
                     break;
+                }
             }
 
             return pathList;
@@ -378,5 +387,6 @@ namespace KalikoCMS {
                 pageIndex.DeletePages(pageIds);
             }
         }
+
     }
 }

@@ -22,15 +22,12 @@ namespace KalikoCMS.WebControls {
     /// Foundation that adds the capability to do autobinding to all web controls which inherits this class.
     /// </summary>
     public abstract class AutoBindableBase : CustomWebControl {
-
         private bool _databound;
-
 
         [Bindable(true),
          Category("Data"),
          DefaultValue(null)]
         public bool AutoBind { get; set; }
-
 
         public override void DataBind() {
             _databound = true;

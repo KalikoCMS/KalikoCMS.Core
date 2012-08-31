@@ -83,7 +83,7 @@ namespace KalikoCMS.WebControls {
                 if(PageTypeList != null) {
                     // TODO: skriva kommentar
                     foreach (int i in PageTypeList) {
-                        pageCollection = pageCollection + PageFactory.GetChildrenForPageOfPageType(PageLink, i, PageState);
+                        pageCollection += PageFactory.GetChildrenForPageOfPageType(PageLink, i, PageState);
                     }
                 }
                 else {

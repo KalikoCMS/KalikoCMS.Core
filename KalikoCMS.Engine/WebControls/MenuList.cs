@@ -1,7 +1,8 @@
-﻿/* 
+﻿#region License and copyright notice
+/* 
  * Kaliko Content Management System
  * 
- * Copyright (c) Fredrik Schultz
+ * Copyright (c) Fredrik Schultz and Contributors
  * 
  * This source is subject to the Microsoft Public License.
  * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
@@ -11,41 +12,33 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED 
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
-using System.ComponentModel;
-using System.Web.UI;
-using KalikoCMS.Core;
+#endregion
 
 namespace KalikoCMS.WebControls {
+    using System.ComponentModel;
+    using System.Web.UI;
+    using KalikoCMS.Core;
+
     public class MenuList : PageList {
-
-        #region Public Properties
-
         [Browsable(false),
          DefaultValue(null),
          PersistenceMode(PersistenceMode.InnerProperty),
          TemplateContainer(typeof(PageListItem))]
         public virtual ITemplate SelectedItemTemplate { get; set; }
 
-        #endregion
-
-
-        #region Public Methods
-
         protected override bool AddPage(CmsPage page) {
             if (page.VisibleInMenu) {
-                if ((SelectedItemTemplate != null) && (CurrentPage.PageId == page.PageId || CurrentPage.RootId == page.PageId || CurrentPage.ParentId == page.PageId))
+                if ((SelectedItemTemplate != null) && (CurrentPage.ParentPath.Contains(page.PageId))) {
                     CreateItem(Index, page.PageId, SelectedItemTemplate);
-                else
+                }
+                else {
                     CreateItem(Index, page.PageId, ItemTemplate);
+                }
 
                 return true;
             }
 
             return false;
         }
-
-        #endregion
-
     }
 }

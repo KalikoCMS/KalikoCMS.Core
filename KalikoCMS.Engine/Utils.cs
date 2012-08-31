@@ -27,7 +27,7 @@ namespace KalikoCMS {
     public static class Utils {
 
         public static bool IsNullableType(Type type) {
-            bool result = (type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(Nullable<>)));
+            bool result = (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>));
             return result;
         }
 

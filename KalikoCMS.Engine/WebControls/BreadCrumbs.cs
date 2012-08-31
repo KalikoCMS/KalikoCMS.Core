@@ -23,7 +23,6 @@ namespace KalikoCMS.WebControls {
 
     public class Breadcrumbs : AutoBindableBase {
 
-
         #region Public Properties
 
         [Browsable(false),
@@ -44,8 +43,6 @@ namespace KalikoCMS.WebControls {
 
         #endregion
 
-
-
         public override void DataBind() {
             base.DataBind();
 
@@ -53,7 +50,6 @@ namespace KalikoCMS.WebControls {
             CreateControlHierarchy();
             ChildControlsCreated = true;
         }
-
 
         private void CreateControlHierarchy() {
             if (PageLink == Guid.Empty) {

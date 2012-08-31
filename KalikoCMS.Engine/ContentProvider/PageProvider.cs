@@ -25,23 +25,27 @@ namespace KalikoCMS.ContentProvider {
         }
 
         internal static void HandleRequest(string url) {
-            string newurl = PageFactory.FindPage(url);
+            string newUrl = PageFactory.FindPage(url);
 
-            if ((newurl.Length == 0) && (url.Length == 0 || url == "default.aspx")) {
-                newurl = PageFactory.GetUrlForPage(Configuration.SiteSettings.Instance.StartPageId);
+            if ((newUrl.Length == 0) && (url.Length == 0 || url == "default.aspx")) {
+                newUrl = PageFactory.GetUrlForPage(Configuration.SiteSettings.Instance.StartPageId);
             }
 
-            if(newurl.Length > 0) {
+            if(newUrl.Length > 0) {
                 RequestModule.AttachOriginalInfo();
 
+                newUrl = AttachQueryStringParameters(newUrl);
 
-                // Attach querystring parameters to the new url
-                if(HttpContext.Current.Request.QueryString.Count > 0 && !newurl.EndsWith(".html", System.StringComparison.OrdinalIgnoreCase)) {
-                    newurl += RequestModule.GetQuerystringExceptId();
-                }
-
-                RequestModule.RewritePath(newurl);
+                RequestModule.RewritePath(newUrl);
             }
+        }
+
+        private static string AttachQueryStringParameters(string newurl) {
+            if (HttpContext.Current.Request.QueryString.Count > 0 && !newurl.EndsWith(".html", System.StringComparison.OrdinalIgnoreCase)) {
+                newurl += RequestModule.GetQuerystringExceptId();
+            }
+
+            return newurl;
         }
     }
 }

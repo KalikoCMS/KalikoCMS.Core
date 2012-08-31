@@ -81,6 +81,7 @@
     <Compile Include="Core\InterfaceReader.cs" />
     <Compile Include="Core\IStartupSequence.cs" />
     <Compile Include="Core\PageProxy.cs" />
+    <Compile Include="PropertyType\PageLinkProperty.cs" />
     <Compile Include="Search\IIndexable.cs" />
     <Compile Include="Core\PageNameBuilder.cs" />
     <Compile Include="Search\IndexItem.cs" />
