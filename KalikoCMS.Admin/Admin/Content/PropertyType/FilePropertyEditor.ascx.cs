@@ -15,48 +15,44 @@
 #endregion
 
 namespace KalikoCMS.Admin.Content.PropertyType {
-    using System.Globalization;
+    using System;
+    using System.Web.UI;
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
 
-    public partial class NumericPropertyEditor : PropertyEditorBase {
+    public partial class FilePropertyEditor : PropertyEditorBase {
 
         public override string PropertyLabel {
             set { LabelText.Text = value; }
         }
-
+        
         public override PropertyData PropertyValue {
-            set {
-                NumericProperty numericProperty = (NumericProperty)value;
-                if (numericProperty.ValueSet) {
-                    ValueField.Text = numericProperty.Value.ToString(CultureInfo.InvariantCulture);
-                }
+            get {
+                var property = new FileProperty(FilePath.Value);
+                return property;
             }
-            get { return new NumericProperty(ValueField.Text); }
+            set {
+                var property = (FileProperty)value;
+                FilePath.Value = property.FilePath;
+                DisplayField.Text = property.FilePath;
+            }
         }
 
         public override bool Validate() {
-            string value = ValueField.Text;
-            int integerValue;
-
-            if (string.IsNullOrEmpty(value) || int.TryParse(value, out integerValue)) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return true;
         }
 
         public override bool Validate(bool required) {
-            string value = ValueField.Text;
-            int integerValue;
+            throw new NotImplementedException();
+        }
 
-            if (int.TryParse(value, out integerValue)) {
-                return true;
-            }
-            else {
-                return false;
-            }
+        protected override void OnLoad(EventArgs e) {
+            base.OnLoad(e);
+
+            ScriptManager.RegisterClientScriptInclude(this, typeof(FilePropertyEditor), "Admin.Content.PropertyType.FilePropertyEditor", "/Admin/Content/PropertyType/FilePropertyEditor.js");
+
+            string clickScript = "propertyEditor.file.openDialog('#" + FilePath.ClientID + "', '#" + DisplayField.ClientID + "');return false;";
+            SelectButton.Attributes["onclick"] = clickScript;
         }
     }
 }

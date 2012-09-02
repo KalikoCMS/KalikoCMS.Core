@@ -24,7 +24,7 @@ namespace KalikoCMS.Admin.Content {
     using KalikoCMS.PropertyType;
 
     public partial class EditPage : Page {
-        private List<IPropertyControl> _controls;
+        private List<PropertyEditorBase> _controls;
         private Guid _pageId;
         private string _pageName;
         private Guid _parentId;
@@ -37,7 +37,7 @@ namespace KalikoCMS.Admin.Content {
 
             SaveButton.Click += SaveButtonEventHandler;
 
-            _controls = new List<IPropertyControl>();
+            _controls = new List<PropertyEditorBase>();
 
             LoadControls();
         }
@@ -46,7 +46,7 @@ namespace KalikoCMS.Admin.Content {
             Core.PropertyType propertyType = Core.PropertyType.GetPropertyType(propertyTypeId);
             string editControl = propertyType.EditControl;
 
-            var loadControl = (IPropertyControl)LoadControl(editControl);
+            var loadControl = (PropertyEditorBase)LoadControl(editControl);
             loadControl.PropertyName = propertyName;
             if (propertyValue != null) {
                 loadControl.PropertyValue = propertyValue;
@@ -177,7 +177,7 @@ namespace KalikoCMS.Admin.Content {
             editablePage.SetStartPublish(((DateTimeProperty)StartPublishDate.PropertyValue).Value);
             editablePage.SetStopPublish(((DateTimeProperty)StopPublishDate.PropertyValue).Value);
 
-            foreach (IPropertyControl propertyControl in _controls) {
+            foreach (PropertyEditorBase propertyControl in _controls) {
                 string propertyName = propertyControl.PropertyName;
                 PropertyData propertyValue = propertyControl.PropertyValue;
 

@@ -12,7 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KalikoCMS</RootNamespace>
     <AssemblyName>KalikoCMS.Admin</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -44,7 +44,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
@@ -59,6 +58,13 @@
     <Content Include="Admin\Assets\Scripts\jquery.jgrowl.js" />
     <Content Include="Admin\Assets\Scripts\jquery.wysiwyg.js" />
     <Content Include="Admin\Assets\Styles\jquery.jgrowl.css" />
+    <Content Include="Admin\Content\Dialogs\SelectFileDialog.aspx" />
+    <Content Include="Admin\Content\Dialogs\SelectPageDialog.aspx" />
+    <Content Include="Admin\Content\PropertyType\FilePropertyEditor.ascx" />
+    <Content Include="Admin\Content\PropertyType\FilePropertyEditor.js" />
+    <Content Include="Admin\Content\PropertyType\ImagePropertyEditor.js" />
+    <Content Include="Admin\Content\PropertyType\PageLinkPropertyEditor.ascx" />
+    <Content Include="Admin\Content\PropertyType\PageLinkPropertyEditor.js" />
     <Content Include="Admin\Login.aspx" />
     <Content Include="Admin\TopNavigation.ascx" />
     <Content Include="Admin\Assets\Images\glyphicons-halflings-white.png" />
@@ -107,6 +113,41 @@
     </Compile>
     <Compile Include="Admin\Admin.Master.designer.cs">
       <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\Dialogs\Dialog.Master.cs">
+      <DependentUpon>Dialog.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\Dialogs\Dialog.Master.designer.cs">
+      <DependentUpon>Dialog.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\Dialogs\SelectFileDialog.aspx.cs">
+      <DependentUpon>SelectFileDialog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\Dialogs\SelectFileDialog.aspx.designer.cs">
+      <DependentUpon>SelectFileDialog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\Dialogs\SelectPageDialog.aspx.cs">
+      <DependentUpon>SelectPageDialog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\Dialogs\SelectPageDialog.aspx.designer.cs">
+      <DependentUpon>SelectPageDialog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\FilePropertyEditor.ascx.cs">
+      <DependentUpon>FilePropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\FilePropertyEditor.ascx.designer.cs">
+      <DependentUpon>FilePropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\PageLinkPropertyEditor.ascx.cs">
+      <DependentUpon>PageLinkPropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\PageLinkPropertyEditor.ascx.designer.cs">
+      <DependentUpon>PageLinkPropertyEditor.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -219,7 +260,9 @@
   <ItemGroup>
     <Content Include="Admin\Content\PageTree\JQueryTreeContent.ashx" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Admin\Content\Dialogs\Dialog.Master" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>

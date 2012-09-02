@@ -17,9 +17,16 @@
 namespace KalikoCMS.Admin {
     using System;
     using System.Web.UI;
+    using KalikoCMS.Configuration;
 
     public partial class Admin : MasterPage {
         protected void Page_Load(object sender, EventArgs e) {
+        }
+
+        public string AdminPath {
+            get {
+                return SiteSettings.Instance.AdminPath;
+            }
         }
     }
 }

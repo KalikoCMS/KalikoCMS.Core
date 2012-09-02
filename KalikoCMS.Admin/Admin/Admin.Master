@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="KalikoCMS.Admin.Admin" %>
+<%@ Import Namespace="KalikoCMS.Configuration" %>
 <%@ Register TagPrefix="admin" TagName="TopNavigation" Src="TopNavigation.ascx" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,9 +8,9 @@
     <title>KalikoCMS Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow" />
-    <link href="/Admin/Assets/Styles/jquery-ui.custom.css" rel="stylesheet" />
-    <link href="/Admin/Assets/Styles/jquery.jgrowl.css" rel="stylesheet" />
-    <link href="/Admin/Assets/Styles/bootstrap.css" rel="stylesheet" />
+    <link href="<%=AdminPath%>Assets/Styles/jquery-ui.custom.css" rel="stylesheet" />
+    <link href="<%=AdminPath%>Assets/Styles/jquery.jgrowl.css" rel="stylesheet" />
+    <link href="<%=AdminPath%>Assets/Styles/bootstrap.css" rel="stylesheet" />
     <style type="text/css">
         body
         {
@@ -44,9 +45,9 @@
     </style>
     <!-- IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="/Admin/Assets/Scripts/html5shiv.min.js"></script>
+      <script src="<%=AdminPath%>Assets/Scripts/html5shiv.min.js"></script>
     <![endif]-->
-    <script src="/Admin/Assets/Scripts/jquery-1.7.2.min.js"></script>
+    <script src="<%=AdminPath%>Assets/Scripts/jquery-1.7.2.min.js"></script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -74,21 +75,29 @@
     
     <div class='modal hide fade' id='modal-popup'></div>
 
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/Admin/Assets/Scripts/bootstrap.min.js"></script>
+    <script src="<%=AdminPath%>Assets/Scripts/bootstrap.min.js"></script>
     
-    <script src="/Admin/Assets/Scripts/jquery.cookie.js"></script>
-    <script src="/Admin/Assets/Scripts/jquery.hotkeys.js"></script>
-    <script src="/Admin/Assets/Scripts/jquery.jstree.js"></script>
-    <script src="/Admin/Assets/Scripts/jquery-ui-1.8.20.custom.min.js"></script>
-    <script src="/Admin/Assets/Scripts/jquery.jgrowl.js"></script>
+    <script src="<%=AdminPath%>Assets/Scripts/jquery.cookie.js"></script>
+    <script src="<%=AdminPath%>Assets/Scripts/jquery.hotkeys.js"></script>
+    <script src="<%=AdminPath%>Assets/Scripts/jquery.jstree.js"></script>
+    <script src="<%=AdminPath%>Assets/Scripts/jquery-ui-1.8.20.custom.min.js"></script>
+    <script src="<%=AdminPath%>Assets/Scripts/jquery.jgrowl.js"></script>
     
     <script>
-        function openModal(url, width, height) {
+        function openModal(url, width, height, callback) {
             // TODO: Merge CSS
-            $('#modal-popup').css("marginLeft", "-" + (width / 2) + "px").css("marginTop", "-" + (height / 2) + "px").css("width", width + "px").css("height", height + "px").html("<iframe src=\"" + url + "\" style=\"overflow:hidden;width:" + width + "px;height:" + height + "px;\"></iframe>");
+            $('#modal-popup')
+                .css("marginLeft", "-" + (width / 2) + "px").css("marginTop", "-" + (height / 2) + "px").css("width", width + "px").css("height", height + "px")
+                .html("<iframe src=\"" + url + "\" style=\"overflow:hidden;width:" + width + "px;height:" + height + "px;\"></iframe>");
+
+            $('#modal-popup iframe').load(function () {
+                this.contentWindow.callback = callback;
+
+                //                if (initValues) {
+                //                    this.contentWindow.init(initValues);
+                //                }
+            });
+            
             $('#modal-popup').modal('show');
         }
         

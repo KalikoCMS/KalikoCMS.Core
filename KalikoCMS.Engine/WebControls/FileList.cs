@@ -1,7 +1,8 @@
+#region License and copyright notice
 /* 
  * Kaliko Content Management System
  * 
- * Copyright (c) Fredrik Schultz
+ * Copyright (c) Fredrik Schultz and Contributors
  * 
  * This source is subject to the Microsoft Public License.
  * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
@@ -11,20 +12,20 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED 
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Collections.Generic;
-using KalikoCMS.Core;
+#endregion
 
 namespace KalikoCMS.WebControls {
-    public class FileList : BaseList {
+    using System;
+    using System.Collections;
+    using System.ComponentModel;
+    using System.IO;
+    using System.Linq;
+    using System.Web.UI;
+    using System.Web.UI.WebControls;
+    using System.Collections.Generic;
+    using KalikoCMS.Core;
 
+    public class FileList : BaseList {
         // TODO: Fixa en ny template för systemmeddelanden (tom katalog etc)
 
         #region Properties
@@ -55,10 +56,10 @@ namespace KalikoCMS.WebControls {
          PersistenceMode(PersistenceMode.InnerProperty),
          TemplateContainer(typeof(FileListItem))]
         public virtual ITemplate FolderTemplate { get; set; }
+        
         #endregion
 
 
-        #region Methods and Implementation
         public override void DataBind() {
             base.DataBind();
             EnsureChildControls();
@@ -130,8 +131,6 @@ namespace KalikoCMS.WebControls {
             item.DataBind();
             item.DataItem = null;
         }
-
-        #endregion
 
     }
 

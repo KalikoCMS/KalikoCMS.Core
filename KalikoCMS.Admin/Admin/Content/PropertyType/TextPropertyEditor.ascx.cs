@@ -1,37 +1,40 @@
-﻿
+﻿#region License and copyright notice
+/* 
+ * Kaliko Content Management System
+ * 
+ * Copyright (c) Fredrik Schultz and Contributors
+ * 
+ * This source is subject to the Microsoft Public License.
+ * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
+ * All other rights reserved.
+ * 
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED 
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+#endregion
+
 namespace KalikoCMS.Admin.Content.PropertyType {
-    using System.Web.UI;
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
 
-    public partial class TextPropertyEditor : UserControl, IPropertyControl {
-        private string _propertyName;
+    public partial class TextPropertyEditor : PropertyEditorBase {
 
-        public string PropertyName {
-            get {
-                return _propertyName;
-            }
-            set {
-                _propertyName = value;
-                LabelText.Text = value;
-            }
-        }
-
-        public string PropertyLabel {
+        public override string PropertyLabel {
             set { LabelText.Text = value; }
         }
 
-        public PropertyData PropertyValue {
+        public override PropertyData PropertyValue {
             set { ValueField.Text = ((TextProperty)value).Value; }
             get { return new TextProperty(ValueField.Text); }
         }
 
-        public bool Validate() {
+        public override bool Validate() {
             ErrorText.Visible = false;
             return true;
         }
 
-        public bool Validate(bool required) {
+        public override bool Validate(bool required) {
             if (required) {
                 if (string.IsNullOrEmpty(ValueField.Text)) {
                     ErrorText.Text = "* Required";

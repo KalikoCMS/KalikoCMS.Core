@@ -170,20 +170,13 @@ namespace KalikoCMS.WebControls {
             // Setup mail objects
             // TODO: Bryt ut till egen klass för mailhantering
             SmtpClient smtp = new SmtpClient();
-            MailMessage mail = new MailMessage(MailFrom, MailTo)
-            { Subject = mailSubject, Body = mailTemplate, IsBodyHtml = true };
-            smtp.Send(mail);
+            MailMessage mail = new MailMessage(MailFrom, MailTo) { 
+                Subject = mailSubject, 
+                Body = mailTemplate, 
+                IsBodyHtml = true 
+            };
 
-            //if (string.IsNullOrEmpty(extraemail)) {
-            //    try {
-            //        mail = new MailMessage(MailFrom, extraemail)
-            //        { Subject = mailSubject, Body = mailTemplate, IsBodyHtml = true };
-            //        smtp.Send(mail);
-            //    }
-            //    catch {
-            //        throw;
-            //    }
-            //}
+            smtp.Send(mail);
         }
 
         private bool UseCustomFormHandler {
@@ -193,15 +186,21 @@ namespace KalikoCMS.WebControls {
         }
 
         private void ShowThankYouMessage() {
-            // Add thank you message
+            AddThankYouMessage();
+
+            if (HideFormAfterSend) {
+                RemoveForm();
+            }
+        }
+
+        private void AddThankYouMessage() {
             Control placeHolder = new PlaceHolder();
             ThankYouTemplate.InstantiateIn(placeHolder);
             Controls.AddAt(0, placeHolder);
+        }
 
-            // Remove the posted form if property HideFormAfterSend is set to true
-            if (HideFormAfterSend) {
-                Controls.Remove(_formContainer);
-            }
+        private void RemoveForm() {
+            Controls.Remove(_formContainer);
         }
     }
 }

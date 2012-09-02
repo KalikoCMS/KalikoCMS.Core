@@ -81,6 +81,7 @@
     <Compile Include="Core\InterfaceReader.cs" />
     <Compile Include="Core\IStartupSequence.cs" />
     <Compile Include="Core\PageProxy.cs" />
+    <Compile Include="PropertyType\FileProperty.cs" />
     <Compile Include="PropertyType\PageLinkProperty.cs" />
     <Compile Include="Search\IIndexable.cs" />
     <Compile Include="Core\PageNameBuilder.cs" />
@@ -144,7 +145,9 @@
     <Compile Include="PropertyType\ImageProperty.cs" />
     <Compile Include="PropertyType\ImagePropertyAttribute.cs" />
     <Compile Include="PropertyType\ImageSetProperty.cs" />
-    <Compile Include="PropertyType\IPropertyControl.cs" />
+    <Compile Include="PropertyType\PropertyEditorBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Core\PropertyData.cs" />
     <Compile Include="PropertyType\NumericProperty.cs" />
     <Compile Include="PropertyType\StringProperty.cs" />

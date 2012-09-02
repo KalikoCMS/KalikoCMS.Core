@@ -1,0 +1,39 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Dialog.master.cs" Inherits="KalikoCMS.Admin.Content.Dialogs.Dialog" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title><%=Page.Title %></title>
+    <link href="/Admin/Assets/Styles/bootstrap.css" rel="stylesheet">
+    <!-- IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="/Admin/Assets/Scripts/html5shiv.min.js"></script>
+    <![endif]-->
+    <script src="/Admin/Assets/Scripts/jquery-1.7.2.min.js"></script>
+    <script src="/Admin/Assets/Scripts/bootstrap.min.js"></script>
+
+    <script>
+        function close() {
+            parent.closeModal();
+        }
+    </script>
+    <style>
+        .modal-body { bottom: 58px; left: 0; position: fixed; right: 0; top: 47px; }        
+        .modal-footer { position: fixed;left: 0;right: 0;bottom: 0;}
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="modal-header">
+            <h3><%=Page.Title %></h3>
+        </div>
+        <div class="modal-body">
+            <asp:ContentPlaceHolder ID="MainArea" runat="server"/>
+        </div>
+        <div class="modal-footer">
+            <asp:ContentPlaceHolder ID="ButtonArea" runat="server"/>
+        </div>
+    </form>
+    <asp:ContentPlaceHolder ID="ScriptArea" runat="server"/>
+</body>
+</html>

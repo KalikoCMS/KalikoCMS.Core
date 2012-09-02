@@ -1,27 +1,32 @@
-﻿
+﻿#region License and copyright notice
+/* 
+ * Kaliko Content Management System
+ * 
+ * Copyright (c) Fredrik Schultz and Contributors
+ * 
+ * This source is subject to the Microsoft Public License.
+ * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
+ * All other rights reserved.
+ * 
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED 
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+#endregion
+
 namespace KalikoCMS.Admin.Content.PropertyType {
     using System;
     using System.Globalization;
-    using System.Web.UI;
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
 
-    public partial class DateTimePropertyEditor : UserControl, IPropertyControl {
-        private string _propertyName;
+    public partial class DateTimePropertyEditor : PropertyEditorBase {
 
-        public string PropertyName {
-            get { return _propertyName; }
-            set {
-                _propertyName = value;
-                LabelText.Text = value;
-            }
-        }
-
-        public string PropertyLabel {
+        public override string PropertyLabel {
             set { LabelText.Text = value; }
         }
 
-        public PropertyData PropertyValue {
+        public override PropertyData PropertyValue {
             set {
                 DateTime? dateTime = ((DateTimeProperty)value).Value;
                 if(dateTime==null) {
@@ -49,7 +54,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             ValueField.Attributes.Add("autocomplete", "off");
         }
 
-        public bool Validate() {
+        public override bool Validate() {
             string value = ValueField.Text;
 
             if (!IsNumericOrEmpty(value)) {
@@ -62,7 +67,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             return true;
         }
 
-        public bool Validate(bool required) {
+        public override bool Validate(bool required) {
             string value = ValueField.Text;
 
             if (required) {

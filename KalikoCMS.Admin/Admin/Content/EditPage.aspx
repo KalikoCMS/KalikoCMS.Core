@@ -58,6 +58,22 @@
     <![endif]-->
     <script src="/Admin/Assets/Scripts/jquery-1.7.2.min.js"></script>
     <script src="/Admin/Assets/Scripts/jquery.wysiwyg.js"></script>
+
+    <script>
+        var propertyEditor = {
+            dialogs: {
+                openSelectPageDialog: function (pageId, languageId, callback) {
+                    parent.openModal("/Admin/Content/Dialogs/SelectPageDialog.aspx?pageId=" + pageId, 500, 400, callback);
+                    return false;
+                },
+                openSelectFileDialog: function (filePath, callback) {
+                    parent.openModal("/Admin/Content/Dialogs/SelectFileDialog.aspx?filePath=" + filePath, 500, 400, callback);
+                    return false;
+                }
+            }
+        };
+    </script>
+
 </head>
 <body>
     <form id="form1" runat="server">

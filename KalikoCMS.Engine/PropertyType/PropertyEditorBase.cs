@@ -15,14 +15,18 @@
 #endregion
 
 namespace KalikoCMS.PropertyType {
+    using System.Web.UI;
     using KalikoCMS.Core;
 
-    public interface IPropertyControl {
-        string PropertyName { get; set; }
-        string PropertyLabel { set; }
-        PropertyData PropertyValue { get; set; }
+    public abstract class PropertyEditorBase : UserControl {
+        public string PropertyName { get; set; }
+        
+        public abstract string PropertyLabel { set; }
+        
+        public abstract PropertyData PropertyValue { get; set; }
 
-        bool Validate();
-        bool Validate(bool required);
+        public abstract bool Validate();
+
+        public abstract bool Validate(bool required);
     }
 }

@@ -15,48 +15,43 @@
 #endregion
 
 namespace KalikoCMS.Admin.Content.PropertyType {
+    using System;
+    using System.Globalization;
+    using System.Web.UI;
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
 
-    public partial class ImagePropertyEditor : System.Web.UI.UserControl, IPropertyControl {
-        private string _propertyName;
+    public partial class ImagePropertyEditor : PropertyEditorBase {
 
-        public string PropertyName {
-            get { return _propertyName; }
-            set {
-                _propertyName = value;
-                LabelText.Text = value;
-            }
-        }
-
-        public string PropertyLabel {
+        public override string PropertyLabel {
             set { LabelText.Text = value; }
         }
 
-        public PropertyData PropertyValue {
+        public override PropertyData PropertyValue {
             set {
-                ImageProperty imageProperty = ((ImageProperty) value);
-                ImagePath.Text = imageProperty.ImageUrl;
+                ImageProperty imageProperty = (ImageProperty)value;
+                ImagePath.Value = imageProperty.ImageUrl;
+                DisplayField.Text = imageProperty.ImageUrl;
+                ImagePreview.ImageUrl = imageProperty.ImageUrl;
                 int width = imageProperty.Width ?? 0;
                 int height = imageProperty.Height ?? 0;
-                
-                
-                WidthValue.Text = (width == 0? string.Empty : width.ToString());
-                HeightValue.Text = (height == 0 ? string.Empty : height.ToString());
+
+                WidthValue.Value = (width == 0 ? string.Empty : width.ToString(CultureInfo.InvariantCulture));
+                HeightValue.Value = (height == 0 ? string.Empty : height.ToString(CultureInfo.InvariantCulture));
                 AltText.Text = imageProperty.AltText;
             }
             get {
                 ImageProperty imageProperty = new ImageProperty();
-                imageProperty.ImageUrl = ImagePath.Text;
-                imageProperty.AltText= AltText.Text;
+                imageProperty.ImageUrl = ImagePath.Value;
+                imageProperty.AltText = AltText.Text;
 
                 int width;
                 int height;
 
-                if(int.TryParse(WidthValue.Text, out width)) {
+                if (int.TryParse(WidthValue.Value, out width)) {
                     imageProperty.Width = width;
                 }
-                if(int.TryParse(HeightValue.Text, out height)) {
+                if (int.TryParse(HeightValue.Value, out height)) {
                     imageProperty.Height = height;
                 }
 
@@ -64,12 +59,22 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             }
         }
 
-        public bool Validate() {
+        public override bool Validate() {
             return true;
         }
 
-        public bool Validate(bool required) {
+        public override bool Validate(bool required) {
+            // TODO: Implementera rätt logik här
             return Validate();
+        }
+
+        protected override void OnLoad(EventArgs e) {
+            base.OnLoad(e);
+
+            ScriptManager.RegisterClientScriptInclude(this, typeof(FilePropertyEditor), "Admin.Content.PropertyType.ImagePropertyEditor", "/Admin/Content/PropertyType/ImagePropertyEditor.js");
+
+            string clickScript = string.Format("propertyEditor.image.openDialog('#{0}', '#{1}', '#{2}');return false;", ImagePath.ClientID, DisplayField.ClientID, ImagePreview.ClientID);
+            SelectButton.Attributes["onclick"] = clickScript;
         }
     }
 }

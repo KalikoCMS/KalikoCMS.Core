@@ -71,5 +71,36 @@ namespace KalikoCMS.PropertyType {
                 image.Height = (int)Height;
             }
         }
+
+        public string ToHtml() {
+            if(string.IsNullOrEmpty(ImageUrl)) {
+                return string.Empty;
+            }
+
+            string styles = Styles;
+            string html = string.Format("<img src=\"{0}\" alt=\"{1}\"{2} />", ImageUrl, AltText, styles);
+
+            return html;
+        }
+
+        private string Styles {
+            get {
+                string styles = string.Empty;
+                
+                if (Width != null && Width > 0) {
+                    styles += string.Format("width:{0}px;", Width);
+                }
+                
+                if (Height != null && Height > 0) {
+                    styles += string.Format("height:{0}px;", Height);
+                }
+                
+                if (styles.Length > 0) {
+                    styles = string.Format(" styles=\"{0}\"", styles);
+                }
+                
+                return styles;
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@
 namespace KalikoCMS.Admin.Content.PropertyType {
     
     
-    public partial class ImagePropertyEditor {
+    public partial class PageLinkPropertyEditor {
         
         /// <summary>
         /// LabelText control.
@@ -20,6 +20,24 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LabelText;
+        
+        /// <summary>
+        /// LanguageId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField LanguageId;
+        
+        /// <summary>
+        /// PageId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField PageId;
         
         /// <summary>
         /// DisplayField control.
@@ -40,24 +58,6 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         protected global::System.Web.UI.WebControls.HyperLink SelectButton;
         
         /// <summary>
-        /// AltText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox AltText;
-        
-        /// <summary>
-        /// ImagePreview control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image ImagePreview;
-        
-        /// <summary>
         /// ErrorText control.
         /// </summary>
         /// <remarks>
@@ -65,32 +65,5 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ErrorText;
-        
-        /// <summary>
-        /// ImagePath control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField ImagePath;
-        
-        /// <summary>
-        /// WidthValue control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField WidthValue;
-        
-        /// <summary>
-        /// HeightValue control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField HeightValue;
     }
 }

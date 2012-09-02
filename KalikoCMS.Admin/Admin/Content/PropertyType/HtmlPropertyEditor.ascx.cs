@@ -15,37 +15,27 @@
 #endregion
 
 namespace KalikoCMS.Admin.Content.PropertyType {
-    using System.Web.UI;
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
 
-    public partial class HtmlPropertyEditor : UserControl, IPropertyControl {
-        private string _propertyName;
+    public partial class HtmlPropertyEditor : PropertyEditorBase {
 
-        public string PropertyName {
-            get { return _propertyName; }
-            set {
-                _propertyName = value;
-                LabelText.Text = value;
-            }
-        }
-
-        public string PropertyLabel {
+        public override string PropertyLabel {
             set { LabelText.Text = value; }
         }
 
-        public PropertyData PropertyValue {
+        public override PropertyData PropertyValue {
             set {
                 ValueField.Text = ((HtmlProperty)value).Value;
             }
             get { return new HtmlProperty(ValueField.Text); }
         }
 
-        public bool Validate() {
+        public override bool Validate() {
             return true;
         }
 
-        public bool Validate(bool required) {
+        public override bool Validate(bool required) {
             return Validate();
         }
     }

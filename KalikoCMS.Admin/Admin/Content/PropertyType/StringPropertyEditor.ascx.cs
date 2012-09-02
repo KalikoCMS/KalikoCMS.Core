@@ -18,34 +18,25 @@ namespace KalikoCMS.Admin.Content.PropertyType {
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
 
-    public partial class StringPropertyEditor : System.Web.UI.UserControl, IPropertyControl {
-        private string _propertyName;
+    public partial class StringPropertyEditor : PropertyEditorBase {
 
-        public string PropertyName {
-            get { return _propertyName; }
-            set {
-                _propertyName = value;
-                LabelText.Text = value;
-            }
-        }
-
-        public string PropertyLabel {
+        public override string PropertyLabel {
             set { LabelText.Text = value + " <i class=\"icon-info\"></i>"; }
         }
 
-        public PropertyData PropertyValue {
+        public override PropertyData PropertyValue {
             set {
                 ValueField.Text = ((StringProperty)value).Value;
             }
             get { return new StringProperty(ValueField.Text); }
         }
 
-        public bool Validate() {
+        public override bool Validate() {
             ErrorText.Visible = false;
             return true;
         }
 
-        public bool Validate(bool required) {
+        public override bool Validate(bool required) {
             if(required) {
                 if(string.IsNullOrEmpty(ValueField.Text)) {
                     ErrorText.Text = "* Required";
