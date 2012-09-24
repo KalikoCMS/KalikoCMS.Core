@@ -8,7 +8,6 @@
         </div>
 
         <asp:TextBox runat="server" ID="AltText" />
-
         
         <div>
             <asp:Image ID="ImagePreview" Width="120" CssClass="thumbnail" runat="server"/>
@@ -16,7 +15,7 @@
 
         <asp:Literal ID="ErrorText" runat="server" />
     </div>
-</div>    
+</div>
 
 <asp:HiddenField runat="server" ID="ImagePath" />
 <asp:HiddenField runat="server" ID="WidthValue" />

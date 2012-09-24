@@ -27,7 +27,8 @@ namespace KalikoCMS.PropertyType {
         public string ImageUrl { get; set; }
         public int? Width { get; set; }
         public int? Height { get; set; }
-        public string AltText { get; set; }
+        public string Description { get; set; }
+        public bool IsOriginal { get; set; }
 
         protected override string StringValue {
             get { return ImageUrl; }
@@ -46,7 +47,7 @@ namespace KalikoCMS.PropertyType {
             hash = JsonSerialization.CombineHashCode(hash, ImageUrl);
             hash = JsonSerialization.CombineHashCode(hash, Width);
             hash = JsonSerialization.CombineHashCode(hash, Height);
-            hash = JsonSerialization.CombineHashCode(hash, AltText);
+            hash = JsonSerialization.CombineHashCode(hash, Description);
 
             return hash;
         }
@@ -62,7 +63,7 @@ namespace KalikoCMS.PropertyType {
             }
 
             image.ImageUrl = ImageUrl;
-            image.AlternateText = AltText;
+            image.AlternateText = Description;
 
             if (Width != null) {
                 image.Width = (int)Width;
@@ -78,7 +79,7 @@ namespace KalikoCMS.PropertyType {
             }
 
             string styles = Styles;
-            string html = string.Format("<img src=\"{0}\" alt=\"{1}\"{2} />", ImageUrl, AltText, styles);
+            string html = string.Format("<img src=\"{0}\" alt=\"{1}\"{2} />", ImageUrl, Description, styles);
 
             return html;
         }

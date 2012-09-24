@@ -38,12 +38,12 @@ namespace KalikoCMS.Admin.Content.PropertyType {
 
                 WidthValue.Value = (width == 0 ? string.Empty : width.ToString(CultureInfo.InvariantCulture));
                 HeightValue.Value = (height == 0 ? string.Empty : height.ToString(CultureInfo.InvariantCulture));
-                AltText.Text = imageProperty.AltText;
+                AltText.Text = imageProperty.Description;
             }
             get {
                 ImageProperty imageProperty = new ImageProperty();
                 imageProperty.ImageUrl = ImagePath.Value;
-                imageProperty.AltText = AltText.Text;
+                imageProperty.Description = AltText.Text;
 
                 int width;
                 int height;

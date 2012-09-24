@@ -42,12 +42,14 @@ namespace KalikoCMS.Admin.Content {
             LoadControls();
         }
 
-        private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId) {
+        private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId, string headerText) {
             Core.PropertyType propertyType = Core.PropertyType.GetPropertyType(propertyTypeId);
             string editControl = propertyType.EditControl;
 
             var loadControl = (PropertyEditorBase)LoadControl(editControl);
             loadControl.PropertyName = propertyName;
+            loadControl.PropertyLabel = headerText;
+            
             if (propertyValue != null) {
                 loadControl.PropertyValue = propertyValue;
             }
@@ -87,7 +89,7 @@ namespace KalikoCMS.Admin.Content {
             foreach (PropertyEntity propertyDefinition in propertyDefinitions) {
                 string propertyName = propertyDefinition.Name;
                 
-                AddControl(propertyName, null, propertyDefinition.PropertyTypeId);
+                AddControl(propertyName, null, propertyDefinition.PropertyTypeId, propertyDefinition.Header);
             }
         }
 
@@ -112,7 +114,7 @@ namespace KalikoCMS.Admin.Content {
                 string propertyName = propertyDefinition.Name;
                 PropertyData propertyData = cmsPage.Property[propertyName];
 
-                AddControl(propertyName, propertyData, propertyDefinition.PropertyTypeId);
+                AddControl(propertyName, propertyData, propertyDefinition.PropertyTypeId, propertyDefinition.Header);
             }
         }
 

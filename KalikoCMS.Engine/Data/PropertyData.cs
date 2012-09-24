@@ -28,6 +28,10 @@ namespace KalikoCMS.Data {
             return DataManager.Select(DataManager.Instance.Property, p => p.PageTypeId == pageTypeId, p => p.SortOrder);
         }
 
+        internal static List<PropertyEntity> GetAllPropertyDefinitions() {
+            return DataManager.SelectAll(DataManager.Instance.Property);
+        }
+
         internal static void UpdatePropertyDefinitions(IEnumerable<PropertyEntity> propertyDefinitions) {
             DataManager.BatchUpdate(DataManager.Instance.Property, propertyDefinitions);
         }
