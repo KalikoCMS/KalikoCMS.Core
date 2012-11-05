@@ -4,7 +4,7 @@ namespace KalikoCMS.Search {
     using KalikoCMS.Events;
     using KalikoSearch.Core;
 
-    public class KalikoSearchProvider : BaseSearchProvider {
+    public class KalikoSearchProvider : SearchProviderBase {
         private Collection _collection;
         private static string[] _searchFields = new[] { "title", "summary", "content" };
 
@@ -61,5 +61,6 @@ namespace KalikoCMS.Search {
 
             return result;
         }
+
     }
 }

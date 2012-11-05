@@ -21,7 +21,6 @@ namespace KalikoCMS.PropertyType {
 
     [PropertyType("C40B0CB0-DB98-4A59-A000-037EC5189DF0", "Numeric", "Numeric", "~/Admin/Content/PropertyType/NumericPropertyEditor.ascx")]
     public class NumericProperty : PropertyData {
-        private static readonly int EmptyHashCode = string.Empty.GetHashCode();
         private int? _cachedHashCode;
         private int _value;
 

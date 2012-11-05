@@ -17,7 +17,7 @@
 namespace KalikoCMS.Search {
     using System;
 
-    public class NullSearchProvider : BaseSearchProvider {
+    public class NullSearchProvider : SearchProviderBase {
         public override void AddToIndex(IndexItem item) {
             throw new Exception("Can't search using NullSearchProvider, change to a valid provider in config.");
         }

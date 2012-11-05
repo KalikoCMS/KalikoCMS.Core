@@ -37,7 +37,6 @@ namespace KalikoCMS.Serialization {
 
             try {
                 T instance = JsonSerializer.ToObject<T>(json);
-                //T instance = (T)JsonSerializer.Parse(json);
                 return instance;
             }
             catch (Exception e) {

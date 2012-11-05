@@ -86,7 +86,7 @@
     <Compile Include="Search\IIndexable.cs" />
     <Compile Include="Core\PageNameBuilder.cs" />
     <Compile Include="Search\IndexItem.cs" />
-    <Compile Include="Search\BaseSearchProvider.cs" />
+    <Compile Include="Search\SearchProviderBase.cs" />
     <Compile Include="Data\DataStore.cs" />
     <Compile Include="Data\DataStoreData.cs" />
     <Compile Include="Data\KeyValuePair.cs" />

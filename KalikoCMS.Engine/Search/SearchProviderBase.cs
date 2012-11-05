@@ -18,7 +18,7 @@ namespace KalikoCMS.Search {
     using System;
     using KalikoCMS.Core;
 
-    public abstract class BaseSearchProvider {
+    public abstract class SearchProviderBase {
         public abstract void AddToIndex(IndexItem item);
 
         public abstract void RemoveFromIndex(Guid pageId, int languageId);

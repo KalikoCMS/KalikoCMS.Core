@@ -21,13 +21,7 @@ namespace KalikoCMS.Search {
     using KalikoCMS.Core.Collections;
 
     public class SearchManager : IStartupSequence {
-        private static BaseSearchProvider _searchProvider;
-
-        public static BaseSearchProvider Instance {
-            get {
-                return _searchProvider;
-            }
-        }
+        public static SearchProviderBase Instance { get; private set; }
 
         public static int IndexAllPages() {
             PageCollection pages = PageFactory.GetPageTreeFromPage(SiteSettings.RootPage, PublishState.All);
@@ -49,7 +43,7 @@ namespace KalikoCMS.Search {
             string searchProvider = SiteSettings.Instance.SearchProvider;
 
             if (string.IsNullOrEmpty(searchProvider)) {
-                _searchProvider = new NullSearchProvider();
+                Instance = new NullSearchProvider();
                 return;
             }
 
@@ -58,7 +52,7 @@ namespace KalikoCMS.Search {
                 throw new NullReferenceException("Type.GetType(" + searchProvider + ") returned null.");
             }
 
-            _searchProvider = (BaseSearchProvider)Activator.CreateInstance(searchProviderType);
+            Instance = (SearchProviderBase)Activator.CreateInstance(searchProviderType);
         }
     }
 }
