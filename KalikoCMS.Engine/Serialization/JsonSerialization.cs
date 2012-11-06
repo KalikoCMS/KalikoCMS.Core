@@ -24,6 +24,7 @@ namespace KalikoCMS.Serialization {
         private const int RandomlyChosenPrimeNumber2 = 31;
 
         private static readonly JSON JsonSerializer = GetSerializer();
+        private static readonly JSONParameters GenericParameters = new JSONParameters {UseExtensions = false};
 
         private static JSON GetSerializer() {
             JSON instance = JSON.Instance;
@@ -47,7 +48,7 @@ namespace KalikoCMS.Serialization {
         }
 
         public static string SerializeJson(object instance) {
-            string json = JsonSerializer.ToJSON(instance, false);
+            string json = JsonSerializer.ToJSON(instance, GenericParameters);
 
             return json;
         }
