@@ -42,7 +42,7 @@ namespace KalikoCMS.Data {
 
             List<PageType> pageTypes = GetPageTypes();
 
-            IEnumerable<Type> typesWithAttribute = AttributeReader.GetTypesWithAttribute(typeof (PageTypeAttribute));
+            IEnumerable<Type> typesWithAttribute = AttributeReader.GetTypesWithAttribute(typeof (PageTypeAttribute)).ToList();
 
             foreach (Type type in typesWithAttribute) {
 

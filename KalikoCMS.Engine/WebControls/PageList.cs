@@ -30,9 +30,9 @@ namespace KalikoCMS.WebControls {
         protected int _pageSortOrder = 100;
 
         // Paging variables
-        protected bool _paging;
-        protected int _pageSize;
-        protected int _pageIndex;
+        private bool _paging;
+        private int _pageSize;
+        private int _pageIndex;
         private int _showFrom;
         private int _showTo;
 

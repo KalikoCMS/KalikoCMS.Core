@@ -42,7 +42,7 @@ namespace KalikoCMS.Caching {
                 slidingExpirationTimeSpan = Cache.NoSlidingExpiration;
             }
 
-            HttpContext.Current.Cache.Add(key, value, null, absoluteExpiration, slidingExpirationTimeSpan, cacheItemPriority, null);
+            HttpContext.Current.Cache.Insert(key, value, null, absoluteExpiration, slidingExpirationTimeSpan, cacheItemPriority, null);
         }
 
         private static CacheItemPriority TranslateCachePriority(CachePriority priority) {

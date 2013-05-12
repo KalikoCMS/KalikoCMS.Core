@@ -49,9 +49,8 @@ namespace KalikoCMS.WebControls {
         protected override void Render(HtmlTextWriter writer) {
 
             ID = ID ?? ClientID;
-            Core.CmsPage page;
             //If we set 
-            page = PageId == Guid.Empty ? ((PageTemplate)Page).CurrentPage : PageFactory.GetPage(PageId);
+            CmsPage page = PageId == Guid.Empty ? ((PageTemplate)Page).CurrentPage : PageFactory.GetPage(PageId);
 
             //if(DataType == PageEditDataType.Property) {
 

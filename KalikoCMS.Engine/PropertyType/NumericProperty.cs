@@ -14,6 +14,8 @@
  */
 #endregion
 
+using System.Globalization;
+
 namespace KalikoCMS.PropertyType {
     using KalikoCMS.Attributes;
     using KalikoCMS.Core;
@@ -40,7 +42,7 @@ namespace KalikoCMS.PropertyType {
 
         protected override string StringValue {
             get {
-                return Value.ToString();
+                return Value.ToString(CultureInfo.InvariantCulture);
             }
         }
 

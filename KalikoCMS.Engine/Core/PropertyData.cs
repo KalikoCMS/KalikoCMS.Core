@@ -28,7 +28,7 @@ namespace KalikoCMS.Core {
             PropertyData property = DeserializeFromJson(data);
 
             if (property == null) {
-                property = (PropertyData)Activator.CreateInstance(GetType()); ;
+                property = (PropertyData)Activator.CreateInstance(GetType());
             }
 
             return property;

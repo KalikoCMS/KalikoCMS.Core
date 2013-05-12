@@ -206,23 +206,26 @@ namespace KalikoCMS.Core {
         }
 
         private PageInstanceEntity CreateNewPageInstanceEntity() {
-            PageInstanceEntity pageInstance;
-            pageInstance = new PageInstanceEntity();
-            pageInstance.PageId = PageId;
-            pageInstance.LanguageId = LanguageId;
-            pageInstance.CreatedDate = DateTime.Now;
-            pageInstance.UpdateDate = DateTime.Now;
+            var pageInstance = new PageInstanceEntity
+                               {
+                                   PageId = PageId,
+                                   LanguageId = LanguageId,
+                                   CreatedDate = DateTime.Now,
+                                   UpdateDate = DateTime.Now
+                               };
             return pageInstance;
         }
 
         private PageEntity CreateNewPageEntity() {
-            PageEntity pageEntity;
-            pageEntity = new PageEntity();
-            pageEntity.PageId = PageId;
-            pageEntity.PageTypeId = PageTypeId;
-            pageEntity.ParentId = ParentId;
-            pageEntity.RootId = RootId;
-            pageEntity.TreeLevel = TreeLevel;
+            var pageEntity = new PageEntity
+                             {
+                                 PageId = PageId,
+                                 PageTypeId = PageTypeId,
+                                 ParentId = ParentId,
+                                 RootId = RootId,
+                                 TreeLevel = TreeLevel,
+                                 VisibleInMenus = VisibleInMenu
+                             };
             return pageEntity;
         }
     }

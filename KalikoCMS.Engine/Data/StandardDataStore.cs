@@ -60,9 +60,9 @@ namespace KalikoCMS.Data {
             string key = CreateKey(objectName);
             string value = JsonSerialization.SerializeJson(instance);
             string cacheKey = GetCacheKey(key);
-            KeyValuePair keyValuePair = new KeyValuePair(key, value);
+            var keyValuePair = new KeyValuePair(key, value);
 
-            DataStoreData.UpdateDataStoreItem(keyValuePair); ;
+            DataStoreData.UpdateDataStoreItem(keyValuePair);
 
             Caching.CacheManager.Remove(cacheKey);
         }

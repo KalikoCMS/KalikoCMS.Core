@@ -323,7 +323,7 @@ namespace KalikoCMS.Core {
                 }
                 fullpath = fullpath.ToLower();
                 //page.PageUrl = fullpath.Replace("/", "") + "/";
-                page.PageUrl = fullpath.Replace("//", "/") + "/"; ;
+                page.PageUrl = fullpath.Replace("//", "/") + "/";
 
                 //TODO: TEST MED / ISTÄLLER FÖR .ASPX-sökvägar
                 // fullpath.Replace(".aspx", string.Empty) + ".aspx";

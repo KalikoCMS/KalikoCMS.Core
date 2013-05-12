@@ -14,6 +14,8 @@
  */
 #endregion
 
+using System.Globalization;
+
 namespace KalikoCMS.WebControls {
     using System;
     using System.ComponentModel;
@@ -165,7 +167,7 @@ namespace KalikoCMS.WebControls {
             }
 
             // Fill out predefined tags
-            mailTemplate = MailTemplate.Replace("@@timestamp@@", DateTime.Now.ToString());
+            mailTemplate = MailTemplate.Replace("@@timestamp@@", DateTime.Now.ToString(CultureInfo.InvariantCulture));
 
             // Setup mail objects
             // TODO: Bryt ut till egen klass för mailhantering
