@@ -18,6 +18,7 @@ namespace KalikoCMS.Core {
     using System;
     using System.Collections.Generic;
     using Kaliko;
+    using KalikoCMS.PropertyType;
 
     public class PropertyType {
         private static readonly List<PropertyType> PropertyTypes = Data.PropertyTypeData.GetPropertyTypes();
@@ -31,7 +32,20 @@ namespace KalikoCMS.Core {
 
         public PropertyData ClassInstance {
             get {
-                return _class ?? (_class = (PropertyData)Activator.CreateInstance(Type));
+                return _class ?? (_class = CreateInstance());
+            }
+        }
+
+        private PropertyData CreateInstance() {
+            // TODO: Experimental code to handle typed properties
+            if (Type.IsGenericType) {
+                // TODO: Bad code, possible candidate for errors down the road. Fix!
+                Type dynamicClosedGenericClass = Type.MakeGenericType(typeof(PropertyData));
+                return (PropertyData)Activator.CreateInstance(dynamicClosedGenericClass, null);
+                
+            }
+            else {
+                return (PropertyData) Activator.CreateInstance(Type);
             }
         }
 
@@ -39,11 +53,25 @@ namespace KalikoCMS.Core {
             return PropertyTypes.Find(pt => pt.PropertyTypeId == propertyTypeId);
         }
 
+        public static PropertyType GetPropertyTypeByClassName(string className) {
+            return PropertyTypes.Find(pt => pt.Class == className);
+        }
+
         public static Guid GetPropertyTypeId(Type type) {
-            PropertyType propertyType = PropertyTypes.Find(pt => pt.Class == type.FullName);
+            // TODO: Experimental code to handle typed properties
+            string typeName;
+
+            if (type.IsGenericType) {
+                typeName = type.FullName.Substring(0, type.FullName.IndexOf('['));
+            }
+            else {
+                typeName = type.FullName;
+            }
+
+            PropertyType propertyType = PropertyTypes.Find(pt => pt.Class == typeName);
 
             if(propertyType == null) {
-                Exception exception = new Exception("Cannot find propertytype for type " + type.Name);
+                var exception = new Exception("Cannot find propertytype for type " + type.Name);
                 Logger.Write(exception, Logger.Severity.Major);
                 throw exception;
             }

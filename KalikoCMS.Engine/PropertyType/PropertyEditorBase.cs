@@ -17,6 +17,7 @@
 namespace KalikoCMS.PropertyType {
     using System.Web.UI;
     using KalikoCMS.Core;
+    using Serialization;
 
     public abstract class PropertyEditorBase : UserControl {
         public string PropertyName { get; set; }
@@ -25,8 +26,34 @@ namespace KalikoCMS.PropertyType {
         
         public abstract PropertyData PropertyValue { get; set; }
 
+        public abstract string Parameters { set; }
+
         public abstract bool Validate();
 
         public abstract bool Validate(bool required);
+
+        public string SerializedProperty {
+            get {
+                if (PropertyValue == null) {
+                    // Note: Required for new generic properties like CollectionProperty that doesn't have a default empty value.
+                    return null;
+                }
+                
+                return PropertyValue.Serialize();
+            }
+            set {
+                if (PropertyValue == null) {
+                    // Note: Required for new generic properties like CollectionProperty that doesn't have a default empty value.
+                    PropertyValue = (PropertyData) JsonSerialization.DeserializeTypedJson(value);
+                }
+                else {
+                    PropertyValue = PropertyValue.Deserialize(value);
+                }
+            }
+        }
+
+        public string SerializeProperty(PropertyData property) {
+            return property.Serialize();
+        }
     }
 }

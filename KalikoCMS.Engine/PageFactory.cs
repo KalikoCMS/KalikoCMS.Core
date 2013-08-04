@@ -29,6 +29,7 @@ namespace KalikoCMS {
     using KalikoCMS.Events;
 
     public class PageFactory {
+        internal const string PAGE_EXPIRED_URL = "/PageExpired.htm";
         private static List<PageIndex> _pageLanguageIndex;
         private static bool _indexing;
         private static PageEventHandler _pageSaved;
@@ -209,6 +210,21 @@ namespace KalikoCMS {
             return pathList;
         }
 
+        public static CmsPage GetParentAtLevel(Guid pageId, int level) {
+            var pageCollection = GetPagePath(pageId);
+            level++;
+
+            if (pageCollection.Count < level) {
+                return null;
+            }
+
+            var pageCount = pageCollection.Count;
+            var parentId = pageCollection.PageIds[pageCount - level];
+            var page = GetPage(parentId);
+
+            return page;
+        }
+
         public static PageCollection GetPageTreeFromPage(Guid pageId, PublishState pageState) {
             return CurrentIndex.GetPageTreeFromPage(pageId, pageState);
         }
@@ -340,7 +356,7 @@ namespace KalikoCMS {
 
                 return url;
             }
-            return "/PageExpired.htm";
+            return PAGE_EXPIRED_URL;
         }
 
         private static void IndexSite(int languageId) {

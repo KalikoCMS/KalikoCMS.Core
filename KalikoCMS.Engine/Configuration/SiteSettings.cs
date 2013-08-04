@@ -59,5 +59,19 @@ namespace KalikoCMS.Configuration {
                 return _adminPath ?? (_adminPath = (string)base["adminPath"]);
             }
         }
+
+        // TODO: Read from config
+        public string DateFormat {
+            get {
+                return "yyyy-MM-dd HH:mm:ss";
+            }
+        }
+
+        // TODO: Read from config
+        public string FilePath {
+            get {
+                return "/Files/";
+            }
+        }
     }
 }

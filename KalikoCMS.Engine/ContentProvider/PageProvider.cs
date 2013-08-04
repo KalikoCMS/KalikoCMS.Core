@@ -24,28 +24,37 @@ namespace KalikoCMS.ContentProvider {
             // Prevent default constructor.. 
         }
 
-        internal static void HandleRequest(string url) {
-            string newUrl = PageFactory.FindPage(url);
+        internal static bool HandleRequest(string url) {
+            string templateUrl = PageFactory.FindPage(url);
 
-            if ((newUrl.Length == 0) && (url.Length == 0 || url == "default.aspx")) {
-                newUrl = PageFactory.GetUrlForPage(Configuration.SiteSettings.Instance.StartPageId);
+            if (IsUrlToStartPage(url, templateUrl)) {
+                templateUrl = PageFactory.GetUrlForPage(Configuration.SiteSettings.Instance.StartPageId);
             }
 
-            if(newUrl.Length > 0) {
-                RequestModule.AttachOriginalInfo();
-
-                newUrl = AttachQueryStringParameters(newUrl);
-
-                RequestModule.RewritePath(newUrl);
+            if (templateUrl.Length > 0) {
+                RedirectToTemplate(templateUrl);
+                return true;
             }
+
+            return false;
         }
 
-        private static string AttachQueryStringParameters(string newurl) {
-            if (HttpContext.Current.Request.QueryString.Count > 0 && !newurl.EndsWith(".html", System.StringComparison.OrdinalIgnoreCase)) {
-                newurl += RequestModule.GetQuerystringExceptId();
+        private static void RedirectToTemplate(string templateUrl) {
+            RequestModule.AttachOriginalInfo();
+            templateUrl = AttachQueryStringParameters(templateUrl);
+            RequestModule.RewritePath(templateUrl);
+        }
+
+        private static bool IsUrlToStartPage(string url, string newUrl) {
+            return (newUrl.Length == 0) && (url.Length == 0 || url == "default.aspx");
+        }
+
+        private static string AttachQueryStringParameters(string newUrl) {
+            if (HttpContext.Current.Request.QueryString.Count > 0 && !newUrl.EndsWith(".html", System.StringComparison.OrdinalIgnoreCase)) {
+                newUrl += RequestModule.GetQuerystringExceptId();
             }
 
-            return newurl;
+            return newUrl;
         }
     }
 }

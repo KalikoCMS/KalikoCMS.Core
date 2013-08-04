@@ -80,38 +80,49 @@ namespace KalikoCMS.Data {
                     //IEnumerable<PropertyAttribute> propertyAttributes =
                     //    attributes.Where(attributeInType => attributeType.IsAssignableFrom(attributeInType.GetType())).Cast<PropertyAttribute>();
 
-                    PropertyAttribute propertyAttribute = (PropertyAttribute)attributes.SingleOrDefault(a => attributeType.IsAssignableFrom(a.GetType()));
+                    PropertyAttribute propertyAttribute = (PropertyAttribute)attributes.SingleOrDefault(a => attributeType.IsInstanceOfType(a));
 
                     if (propertyAttribute != null) {
                         string propertyName = propertyInfo.Name;
                         Type declaringType = propertyInfo.PropertyType;
                         Guid propertyTypeId = Core.PropertyType.GetPropertyTypeId(declaringType);
 
-                        if(!propertyAttribute.IsTypeValid(declaringType)) {
+                        if (!propertyAttribute.IsTypeValid(declaringType)) {
                             //TODO: Write better message to ease bug fixing..
-                            string message = string.Format("The attribute of property {0} on page {1} does not match property type!", propertyName, pageType.Name);
+                            string message =
+                                string.Format(
+                                    "The attribute of property {0} on page {1} does not match property type!",
+                                    propertyName, pageType.Name);
                             Logger.Write(message, Logger.Severity.Critical);
                             throw new Exception(message);
                         }
 
+
+
                         count++;
 
                         //TODO: Ska verkligen flera attributes tilllåtas?????
+
+                        PropertyEntity property = properties.SingleOrDefault(p => p.Name == propertyName);
+
+                        if (property == null) {
+                            property = new PropertyEntity();
+                            property.Name = propertyName;
+                            properties.Add(property);
+                        }
+
+                        property.PropertyTypeId = propertyTypeId;
+                        property.PageTypeId = pageType.PageTypeId;
+                        property.SortOrder = count;
+                        property.Header = propertyAttribute.Header;
                         
-                            PropertyEntity property = properties.SingleOrDefault(p => p.Name == propertyName);
-
-                            if (property == null) {
-                                property = new PropertyEntity();
-                                property.Name = propertyName;
-                                properties.Add(property);
-                            }
-
-                            property.PropertyTypeId = propertyTypeId;
-                            property.PageTypeId = pageType.PageTypeId;
-                            property.SortOrder = count;
-                            property.Header = propertyAttribute.Header;
+                        // If generic and standard attribute, store generic type as parameter
+                        if (declaringType.IsGenericType && propertyAttribute.GetType() == typeof (PropertyAttribute)) {
+                            property.Parameters = declaringType.GetGenericArguments()[0].ToString();
+                        }
+                        else {
                             property.Parameters = propertyAttribute.Parameters;
-                        
+                        }
                     }
                 }
 

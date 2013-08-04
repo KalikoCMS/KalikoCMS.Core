@@ -199,10 +199,18 @@ namespace KalikoCMS.Core {
                     pagePropertiesForPage.Add(propertyEntity);
                 }
 
-                propertyEntity.PageData = propertyItem.PropertyData.Serialize();
+                propertyEntity.PageData = GetSerializedPropertyValue(propertyItem);
             }
 
             Data.PropertyData.SavePagePropertiesForPage(pagePropertiesForPage);
+        }
+
+        private static string GetSerializedPropertyValue(PropertyItem propertyItem) {
+            if (propertyItem.PropertyData == null) {
+                return null;
+            }
+            
+            return propertyItem.PropertyData.Serialize();
         }
 
         private PageInstanceEntity CreateNewPageInstanceEntity() {

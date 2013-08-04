@@ -45,7 +45,7 @@ namespace KalikoCMS.Modules {
 
             // TODO: Lägg till sidkällor här..
 
-            PageProvider.HandleRequest(url);
+            if(PageProvider.HandleRequest(url)) { return; }
 
         }
 
@@ -67,7 +67,7 @@ namespace KalikoCMS.Modules {
             
             foreach (string key in HttpContext.Current.Request.QueryString.Keys) {
                 if (key != "id") {
-                    queryString += "&" + key + "=" + HttpContext.Current.Request.QueryString[key];
+                    queryString += string.Format("&{0}={1}", key, HttpContext.Current.Request.QueryString[key]);
                 }
             }
 
