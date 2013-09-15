@@ -322,15 +322,10 @@ namespace KalikoCMS.Core {
                     }
                 }
                 fullpath = fullpath.ToLower();
-                //page.PageUrl = fullpath.Replace("/", "") + "/";
                 page.PageUrl = fullpath.Replace("//", "/") + "/";
-
-                //TODO: TEST MED / ISTÄLLER FÖR .ASPX-sökvägar
-                // fullpath.Replace(".aspx", string.Empty) + ".aspx";
 
                 //Is any parent deleted or is the page itself deleted?
                 if ((isDeleted || page.DeletedDate != null) == false) {
-
 
                     //The page itself is not deleted but the parrent is, set the childs deletedate to the same value
                     if (isDeleted && page.DeletedDate == null) {

@@ -67,14 +67,14 @@ namespace KalikoCMS.WebControls {
             ChildControlsCreated = true;
         }
 
+        // TODO: Clean up and refactor
         private void CreateControlHierarchy() {
             Index = 0;
             if (BaseUrl != null) BasePath = System.Web.HttpContext.Current.Server.MapPath(BaseUrl.ToString());
             string path = BasePath + Folder;
 
             // Prevent hacking
-            if (path.Substring(0, BasePath.Length).ToUpperInvariant() != BasePath.ToUpperInvariant())
-            {
+            if (path.Substring(0, BasePath.Length).ToUpperInvariant() != BasePath.ToUpperInvariant()) {
                 path = BasePath;
             }
             Folder = path.Substring(BasePath.Length - 1);
@@ -92,11 +92,13 @@ namespace KalikoCMS.WebControls {
                 DirectoryInfo[] folders = dir.GetDirectories();
                 List<FileSystemObject> folderList = (from folder in folders
                                                      where !folder.Name.StartsWith("_") && !folder.Name.StartsWith(".")
-                                                     where Security.CanCurrentUserAccess(folder)
-                                                     select new FileSystemObject(folder.Name, 0, 0, FileSystemObject.GetFolderFriendlyName(folder))).ToList();
+                                                     select
+                                                         new FileSystemObject(folder.Name, 0, 0,
+                                                                              FileSystemObject.GetFolderFriendlyName(
+                                                                                  folder))).ToList();
 
                 //Sortera folders på friendly name
-                IComparer<FileSystemObject> comparer = new CompareFileSysObject();
+                IComparer<FileSystemObject> comparer = new FileSystemObjectComparer();
                 folderList.Sort(comparer);
                 //Lägg till dom
                 foreach (FileSystemObject folderItem in folderList) {
@@ -105,16 +107,13 @@ namespace KalikoCMS.WebControls {
                 }
 
                 FileInfo[] files = dir.GetFiles();
-                CompareFileInfo cpfi = new CompareFileInfo {SortDirection = SortDirection, Sortorder = SortOrder};
+                FileInfoComparer cpfi = new FileInfoComparer {SortDirection = SortDirection, SortOrder = SortOrder};
                 Array.Sort(files, cpfi);
                 foreach (FileInfo file in files) {
-                    //                        if (!(file.Extension.ToLower() == ".jpg" || file.Extension.ToLower() == ".gif" || file.Extension.ToLower() == ".png"))
-                    {
-                        CreateItem(new FileSystemObject(file.Name, 1, file.Length), FileTemplate);
-                        Index++;
-                        if (MaxCount != 0 && MaxCount == Index)
-                            break;
-                    }
+                    CreateItem(new FileSystemObject(file.Name, 1, file.Length), FileTemplate);
+                    Index++;
+                    if (MaxCount != 0 && MaxCount == Index)
+                        break;
                 }
             }
         }
@@ -137,14 +136,10 @@ namespace KalikoCMS.WebControls {
 
     public class FileListItem : WebControl, INamingContainer {
 
-
         internal virtual object DataItem { get; set; }
 
-        public virtual FileSystemObject FileItem
-        {
-            get {
-                return (FileSystemObject)DataItem;
-            }
+        public virtual FileSystemObject FileItem {
+            get { return (FileSystemObject) DataItem; }
         }
 
         protected override void Render(HtmlTextWriter writer) {
@@ -153,38 +148,33 @@ namespace KalikoCMS.WebControls {
 
     }
 
-    public class CompareFileInfo : IComparer {
-        private SortOrder _sortorder = SortOrder.StartPublishDate;
+    public class FileInfoComparer : IComparer {
+        public SortOrder SortOrder { get; set; }
 
-        public SortOrder Sortorder {
-            get { return _sortorder; }
-            set { _sortorder = value; }
-        }
-        private SortDirection _sortdirection = SortDirection.Descending;
+        public SortDirection SortDirection { get; set; }
 
-        public SortDirection SortDirection {
-            get { return _sortdirection; }
-            set { _sortdirection = value; }
+        public FileInfoComparer() {
+            SortDirection = SortDirection.Descending;
+            SortOrder = SortOrder.StartPublishDate;
         }
 
-        int IComparer.Compare(object x, object y) {
-            FileInfo xfi = (FileInfo)x;
-            FileInfo yfi = (FileInfo)y;
+        int IComparer.Compare(object a, object b) {
+            var fileA = (FileInfo)a;
+            var fileB = (FileInfo)b;
 
-
-            if(_sortdirection == SortDirection.Descending) {
-                if(_sortorder == SortOrder.PageName) {
-                    return String.Compare(xfi.Name.ToLower().Trim(), yfi.Name.ToLower().Trim());
+            if(SortDirection == SortDirection.Descending) {
+                if(SortOrder == SortOrder.PageName) {
+                    return String.CompareOrdinal(fileA.Name.ToLower().Trim(), fileB.Name.ToLower().Trim());
                 }
                 
-                return DateTime.Compare(xfi.CreationTime, yfi.CreationTime);
+                return DateTime.Compare(fileA.CreationTime, fileB.CreationTime);
             }
             
-            if(_sortorder == SortOrder.PageName) {
-                return -1 * String.Compare(xfi.Name.ToLower().Trim(), yfi.Name.ToLower().Trim());
+            if(SortOrder == SortOrder.PageName) {
+                return -1 * String.CompareOrdinal(fileA.Name.ToLower().Trim(), fileB.Name.ToLower().Trim());
             }
             
-            return -1 * DateTime.Compare(xfi.CreationTime, yfi.CreationTime);
+            return -1 * DateTime.Compare(fileA.CreationTime, fileB.CreationTime);
         }
 
 

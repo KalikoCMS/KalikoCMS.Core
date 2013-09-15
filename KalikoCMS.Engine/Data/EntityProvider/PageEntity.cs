@@ -20,8 +20,6 @@ namespace KalikoCMS.Data.EntityProvider {
     public class PageEntity {
         internal Guid PageId;
         internal int PageTypeId;
-        internal bool VisibleInMenus;
-        internal bool VisibleInSitemap;
         internal Guid ParentId;
         internal Guid RootId;
         internal int TreeLevel;

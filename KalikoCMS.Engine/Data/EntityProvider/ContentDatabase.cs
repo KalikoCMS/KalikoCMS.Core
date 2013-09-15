@@ -35,11 +35,6 @@ namespace KalikoCMS.Data.EntityProvider {
 
         #region Table definitions
 
-        /* Moved to social
-        public virtual IEntityTable<Comment> Comment {
-            get { return _provider.GetTable<Comment>("Comment"); }
-        }*/
-
         public virtual IEntityTable<PageEntity> Page {
             get { return _provider.GetTable<PageEntity>("Page"); }
         }

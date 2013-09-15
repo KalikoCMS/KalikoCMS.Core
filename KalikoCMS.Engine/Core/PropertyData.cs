@@ -16,6 +16,8 @@
 
 namespace KalikoCMS.Core {
     using System;
+    using System.Web;
+    using KalikoCMS.Extensions;
     using KalikoCMS.Serialization;
 
     public abstract class PropertyData {
@@ -28,18 +30,32 @@ namespace KalikoCMS.Core {
             PropertyData property = DeserializeFromJson(data);
 
             if (property == null) {
-                property = (PropertyData)Activator.CreateInstance(GetType());
+                var type = GetType();
+                
+                // TODO: Temporary fix to prevent wrongfully generic casts
+                if (type.IsGenericType) {
+                    return null;
+                }
+
+                property = (PropertyData)Activator.CreateInstance(type);
             }
 
             return property;
         }
 
-        internal string Serialize() {
+        internal virtual string Serialize() {
             return JsonSerialization.SerializeJson(this);
         }
 
         public override string ToString() {
             return StringValue;
+        }
+
+        public virtual string Preview {
+            get {
+                var preview = StringValue.LimitCharacters(32);
+                return HttpUtility.HtmlEncode(preview);
+            }
         }
 
         public override abstract int GetHashCode();

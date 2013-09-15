@@ -28,7 +28,11 @@ namespace KalikoCMS.PropertyType {
         public int? Width { get; set; }
         public int? Height { get; set; }
         public string Description { get; set; }
-        public bool IsOriginal { get; set; }
+        public string OriginalImageUrl { get; set; }
+        public int? CropX { get; set; }
+        public int? CropY { get; set; }
+        public int? CropW { get; set; }
+        public int? CropH { get; set; }
 
         protected override string StringValue {
             get { return ImageUrl; }
@@ -48,6 +52,11 @@ namespace KalikoCMS.PropertyType {
             hash = JsonSerialization.CombineHashCode(hash, Width);
             hash = JsonSerialization.CombineHashCode(hash, Height);
             hash = JsonSerialization.CombineHashCode(hash, Description);
+            hash = JsonSerialization.CombineHashCode(hash, OriginalImageUrl);
+            hash = JsonSerialization.CombineHashCode(hash, CropX);
+            hash = JsonSerialization.CombineHashCode(hash, CropY);
+            hash = JsonSerialization.CombineHashCode(hash, CropW);
+            hash = JsonSerialization.CombineHashCode(hash, CropH);
 
             return hash;
         }

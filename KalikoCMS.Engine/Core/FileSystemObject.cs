@@ -1,9 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using KalikoCMS.Extensions;
+﻿#region License and copyright notice
+/* 
+ * Kaliko Content Management System
+ * 
+ * Copyright (c) Fredrik Schultz and Contributors
+ * 
+ * This source is subject to the Microsoft Public License.
+ * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
+ * All other rights reserved.
+ * 
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED 
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+#endregion
 
 namespace KalikoCMS.Core {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using KalikoCMS.Extensions;
+
     public class FileSystemObject {
 
         public int Type { get; set; }
@@ -32,6 +48,7 @@ namespace KalikoCMS.Core {
             SortName = friendlyName.ToLower().Trim();
         }
 
+        // TODO: Replace old code
         public static string GetFolderFriendlyName(DirectoryInfo folder) {
             string friendlyFolderName = string.Empty;
             if (folder.Name.Equals("Images_Common")) {
@@ -42,8 +59,12 @@ namespace KalikoCMS.Core {
                 Guid folderpageid;
                 if (folder.Name.Substring(7).TryParseGuid(out folderpageid)) {
                     CmsPage p = PageFactory.GetPage(folderpageid);
-                    if (p != null) friendlyFolderName = p.PageName;
-                    else friendlyFolderName = folder.Name;
+                    if (p != null) {
+                        friendlyFolderName = p.PageName;
+                    }
+                    else {
+                        friendlyFolderName = folder.Name;
+                    }
                 }
             }
             else {
@@ -56,9 +77,9 @@ namespace KalikoCMS.Core {
 
 
 
-    public class CompareFileSysObject : IComparer<FileSystemObject> {
+    public class FileSystemObjectComparer : IComparer<FileSystemObject> {
         int IComparer<FileSystemObject>.Compare(FileSystemObject a, FileSystemObject b) {
-            return String.Compare(a.SortName, b.SortName);
+            return String.CompareOrdinal(a.SortName, b.SortName);
         }
     }
 

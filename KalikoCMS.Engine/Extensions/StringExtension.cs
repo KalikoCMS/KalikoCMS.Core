@@ -36,5 +36,31 @@ namespace KalikoCMS.Extensions {
                 return false;
             }
         }
+
+        public static string LimitCharacters(this string text, int length) {
+            if (string.IsNullOrEmpty(text)) {
+                return string.Empty;
+            }
+
+            if (text.Length <= length) {
+                return text;
+            }
+
+            var delimiters = new[] {' ', '.', ',', ':', ';'};
+            int index = text.LastIndexOfAny(delimiters, length - 3);
+
+            if (index > (length/2)) {
+                return text.Substring(0, index) + "...";
+            }
+            else {
+                return text.Substring(0, length - 3) + "...";
+            }
+        }
+
+        public static string StripHtml(this string htmlString) {
+            const string pattern = @"<(.|\n)*?>";
+
+            return Regex.Replace(htmlString, pattern, string.Empty);
+        }
     }
 }

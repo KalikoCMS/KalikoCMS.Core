@@ -15,8 +15,10 @@
 #endregion
 
 namespace KalikoCMS.PropertyType {
+    using System.Web;
     using KalikoCMS.Core;
     using KalikoCMS.Attributes;
+    using KalikoCMS.Extensions;
     using KalikoCMS.Serialization;
 
     [PropertyType("18873bf3-d3a4-4389-bef1-0949664ee09c", "HTML", "HTML String", "~/Admin/Content/PropertyType/HtmlPropertyEditor.ascx")]
@@ -35,6 +37,13 @@ namespace KalikoCMS.PropertyType {
 
         protected override string StringValue {
             get { return Value; }
+        }
+
+        public override string Preview {
+            get {
+                var preview = StringValue.StripHtml().LimitCharacters(32);
+                return HttpUtility.HtmlEncode(preview);
+            }
         }
 
         protected override PropertyData DeserializeFromJson(string data) {

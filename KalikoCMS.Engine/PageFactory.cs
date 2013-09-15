@@ -293,7 +293,8 @@ namespace KalikoCMS {
                 page.UpdateDate = pageInstance.UpdateDate;
                 page.StartPublish = pageInstance.StartPublish;
                 page.StopPublish = pageInstance.StopPublish;
-
+                page.VisibleInMenu = pageInstance.VisibleInMenu;
+                // TODO: VisibleInSitemap
                 pageIndex.SavePageIndexItem(page);
             }
             else {

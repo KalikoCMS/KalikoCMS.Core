@@ -25,6 +25,7 @@ namespace KalikoCMS {
 
     // TODO: Move to more specific classes
     public static class Utils {
+        private static string _version;
 
         public static bool IsNullableType(Type type) {
             bool result = (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>));
@@ -95,6 +96,7 @@ namespace KalikoCMS {
             return field;
         }
 
+
         public static String ReadSetting(String key, String defaultValue) {
             string setting = ConfigurationManager.AppSettings[key];
             return string.IsNullOrEmpty(setting) ? defaultValue : setting;
@@ -111,6 +113,10 @@ namespace KalikoCMS {
 
         public static void StoreItem(string key, bool value) {
             HttpContext.Current.Items[key] = value;
+        }
+
+        public static string Version {
+            get { return _version ?? (_version = Assembly.GetExecutingAssembly().GetName().Version.ToString()); }
         }
     }
 

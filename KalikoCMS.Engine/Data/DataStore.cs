@@ -30,11 +30,14 @@ namespace KalikoCMS.Data {
             _prefix = id.ToString();
         }
 
+        protected DataStore(string id) {
+            _prefix = id;
+        }
+
         protected string CreateKey(string objectName) {
             return string.Format(CultureInfo.InvariantCulture, "{0}:{1}", _prefix, objectName);
         }
 
-        // TODO: Bryt ut och lägg på cachning..
         public abstract T Get<T>(string objectName);
 
         public abstract void Store(string objectName, object instance);

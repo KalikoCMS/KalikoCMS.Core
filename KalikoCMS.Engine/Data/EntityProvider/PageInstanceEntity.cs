@@ -28,6 +28,8 @@ namespace KalikoCMS.Data.EntityProvider {
         internal DateTime? DeletedDate;
         internal DateTime? StartPublish;
         internal DateTime? StopPublish;
+        internal bool VisibleInMenu;
+        internal bool VisibleInSitemap;
         internal PageEntity Page;
     }
 }

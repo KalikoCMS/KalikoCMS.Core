@@ -28,6 +28,10 @@ namespace KalikoCMS.Data {
             : base(id) {
         }
 
+        public StandardDataStore(string id)
+            : base(id) {
+        }
+
         public override T Get<T>(string objectName) {
             string key = CreateKey(objectName);
             string cacheKey = GetCacheKey(key);

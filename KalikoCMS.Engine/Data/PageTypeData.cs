@@ -46,7 +46,7 @@ namespace KalikoCMS.Data {
 
             foreach (Type type in typesWithAttribute) {
 
-                PageTypeAttribute attribute = AttributeReader.GetAttribute<PageTypeAttribute>(type);
+                var attribute = AttributeReader.GetAttribute<PageTypeAttribute>(type);
 
                 PageType pageType = pageTypes.SingleOrDefault(pt => pt.Name == attribute.Name);
 
@@ -66,7 +66,7 @@ namespace KalikoCMS.Data {
             BatchUpdate(pageTypes);
 
             foreach (Type type in typesWithAttribute) {
-                PageTypeAttribute attribute = AttributeReader.GetAttribute<PageTypeAttribute>(type);
+                var attribute = AttributeReader.GetAttribute<PageTypeAttribute>(type);
 
                 PageType pageType = pageTypes.SingleOrDefault(pt => pt.Name == attribute.Name);
                 
@@ -76,11 +76,9 @@ namespace KalikoCMS.Data {
                 int count = 0;
 
                 foreach (PropertyInfo propertyInfo in type.GetProperties()) {
-                    object[] attributes = propertyInfo.GetCustomAttributes(true);
-                    //IEnumerable<PropertyAttribute> propertyAttributes =
-                    //    attributes.Where(attributeInType => attributeType.IsAssignableFrom(attributeInType.GetType())).Cast<PropertyAttribute>();
+                    var attributes = propertyInfo.GetCustomAttributes(true);
 
-                    PropertyAttribute propertyAttribute = (PropertyAttribute)attributes.SingleOrDefault(a => attributeType.IsInstanceOfType(a));
+                    var propertyAttribute = (PropertyAttribute)attributes.SingleOrDefault(attributeType.IsInstanceOfType);
 
                     if (propertyAttribute != null) {
                         string propertyName = propertyInfo.Name;
@@ -106,8 +104,7 @@ namespace KalikoCMS.Data {
                         PropertyEntity property = properties.SingleOrDefault(p => p.Name == propertyName);
 
                         if (property == null) {
-                            property = new PropertyEntity();
-                            property.Name = propertyName;
+                            property = new PropertyEntity {Name = propertyName};
                             properties.Add(property);
                         }
 
@@ -118,7 +115,8 @@ namespace KalikoCMS.Data {
                         
                         // If generic and standard attribute, store generic type as parameter
                         if (declaringType.IsGenericType && propertyAttribute.GetType() == typeof (PropertyAttribute)) {
-                            property.Parameters = declaringType.GetGenericArguments()[0].ToString();
+                            var subType = declaringType.GetGenericArguments()[0];
+                            property.Parameters = subType.FullName + ", " + subType.Assembly.GetName().Name;
                         }
                         else {
                             property.Parameters = propertyAttribute.Parameters;

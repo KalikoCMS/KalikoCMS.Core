@@ -16,7 +16,6 @@
 
 namespace KalikoCMS.PropertyType {
     using System;
-    using System.Globalization;
     using KalikoCMS.Attributes;
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
@@ -24,23 +23,24 @@ namespace KalikoCMS.PropertyType {
         public ImagePropertyAttribute(string header) : base(header) {
         }
 
+        public class ImagePropertyAttributeValues {
+            public int Width { get; set; }
+            public int Height { get; set; }
+        }
+
         public int Width { get; set; }
         public int Height { get; set; }
 
         public override string Parameters {
             get {
-                string parameters = string.Format(CultureInfo.InvariantCulture, "{0}:{1}", Width, Height);
-                return parameters;
+                var attributeValues = new ImagePropertyAttributeValues {Width = Width, Height = Height};
+
+                return Serialization.JsonSerialization.SerializeJson(attributeValues);
             }
         }
 
         public override bool IsTypeValid(Type type) {
-            if(type == typeof(ImageProperty)) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return type == typeof (ImageProperty);
         }
     }
 }

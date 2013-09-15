@@ -16,6 +16,7 @@
 
 namespace KalikoCMS.Modules {
     using System;
+    using System.Text;
     using System.Web;
     using System.Web.SessionState;
     using KalikoCMS.ContentProvider;
@@ -32,7 +33,7 @@ namespace KalikoCMS.Modules {
             url = url.Length > rootPathLength ? url.Substring(rootPathLength) : string.Empty;
             
 
-            /*TODO: LITE INTRESSANT KOD NÄR SPRÅKSTÖDET SLÄPPS PÅ IGEN!!!
+            /*TODO: Kod för gamla språkstödet..
             if(url.IndexOf('/') == 2) {
                 string langCode = url.Substring(0, 2).ToLower();
                 if(Language.IsValidLanguage(langCode)) {
@@ -41,39 +42,27 @@ namespace KalikoCMS.Modules {
                 }
             }*/
 
-
-
+            if(PageProvider.HandleRequest(url)) return;
             // TODO: Lägg till sidkällor här..
-
-            if(PageProvider.HandleRequest(url)) { return; }
-
         }
-
-
-
-
-
-
+        
         internal static void RewritePath(string path) {
-            /*  TODO:          Security.AttachUserInformation();          */
+            //Security.AttachUserInformation();  TODO: Värt att implementera igen?
             Language.AttachLanguageToHttpContext();
-
             HttpContext.Current.RewritePath(path);
         }
 
-
         internal static string GetQuerystringExceptId() {
-            string queryString = string.Empty;
-            
+            var stringBuilder = new StringBuilder();
+
             foreach (string key in HttpContext.Current.Request.QueryString.Keys) {
                 if (key != "id") {
-                    queryString += string.Format("&{0}={1}", key, HttpContext.Current.Request.QueryString[key]);
+                    stringBuilder.AppendFormat("&{0}={1}", key, HttpContext.Current.Request.QueryString[key]);
                 }
             }
 
-            return queryString;
+            return stringBuilder.ToString();
         }
-
 
         internal static void AttachOriginalInfo() {
             // Store original path and parameters for later reconstruction
@@ -86,17 +75,18 @@ namespace KalikoCMS.Modules {
             context.PreRequestHandlerExecute += PreRequestHandlerExecute;
         }
 
-        private void PreRequestHandlerExecute(object sender, EventArgs e) {
+        private static void PreRequestHandlerExecute(object sender, EventArgs e) {
             HttpSessionState session = HttpContext.Current.Session;
-            if (session != null) {
-                if (session.IsNewSession) {
-                    Language.CurrentLanguage = Language.ReadLanguageFromHostAddress();
-                    session["__session_is_set"] = "true";
-                }
+            
+            if (session == null) return;
+
+            if (session.IsNewSession) {
+                Language.CurrentLanguage = Language.ReadLanguageFromHostAddress();
+                session["__session_is_set"] = "true";
             }
         }
 
-        private void PostAuthenticateRequest(object sender, EventArgs e) {
+        private static void PostAuthenticateRequest(object sender, EventArgs e) {
             HandleRequest();
         }
 

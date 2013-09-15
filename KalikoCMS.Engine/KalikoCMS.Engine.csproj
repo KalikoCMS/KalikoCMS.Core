@@ -81,8 +81,8 @@
     <Compile Include="Core\InterfaceReader.cs" />
     <Compile Include="Core\IStartupSequence.cs" />
     <Compile Include="Core\PageProxy.cs" />
+    <Compile Include="PropertyType\BooleanProperty.cs" />
     <Compile Include="PropertyType\CollectionProperty.cs" />
-    <Compile Include="PropertyType\CollectionPropertyAttribute.cs" />
     <Compile Include="PropertyType\FileProperty.cs" />
     <Compile Include="PropertyType\PageLinkProperty.cs" />
     <Compile Include="Search\IIndexable.cs" />

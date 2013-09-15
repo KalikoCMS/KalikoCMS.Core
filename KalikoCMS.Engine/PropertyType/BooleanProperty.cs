@@ -1,4 +1,5 @@
 ﻿#region License and copyright notice
+
 /* 
  * Kaliko Content Management System
  * 
@@ -12,40 +13,28 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED 
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 #endregion
 
 namespace KalikoCMS.PropertyType {
-    using KalikoCMS.Attributes;
-    using KalikoCMS.Core;
-    using KalikoCMS.Serialization;
     using System.Globalization;
+    using Attributes;
+    using Core;
+    using Serialization;
 
-    [PropertyType("C40B0CB0-DB98-4A59-A000-037EC5189DF0", "Numeric", "Numeric", "~/Admin/Content/PropertyType/NumericPropertyEditor.ascx")]
-    public class NumericProperty : PropertyData {
+    [PropertyType("FC9D9E40-F749-4A5A-BB8F-EF065EA7935C", "Boolean", "Boolean", "~/Admin/Content/PropertyType/BooleanPropertyEditor.ascx")]
+    public class BooleanProperty : PropertyData {
+        private bool _value;
         private int? _cachedHashCode;
-        private int _value;
-
-        public NumericProperty() {
+        
+        public BooleanProperty() {
         }
 
-        public NumericProperty(int value) {
+        public BooleanProperty(bool value) {
             Value = value;
         }
 
-        public NumericProperty(string value) {
-            int number;
-            if(int.TryParse(value, out number)) {
-                Value = number;
-            }
-        }
-
-        protected override string StringValue {
-            get {
-                return Value.ToString(CultureInfo.InvariantCulture);
-            }
-        }
-
-        public int Value {
+        public bool Value {
             get {
                 return _value;
             }
@@ -57,8 +46,12 @@ namespace KalikoCMS.PropertyType {
 
         public bool ValueSet { get; set; }
 
+        protected override string StringValue {
+            get { return Value.ToString(CultureInfo.InvariantCulture); }
+        }
+
         protected override PropertyData DeserializeFromJson(string data) {
-            return JsonSerialization.DeserializeJson<NumericProperty>(data);
+            return JsonSerialization.DeserializeJson<BooleanProperty>(data);
         }
 
         public override int GetHashCode() {
@@ -66,7 +59,10 @@ namespace KalikoCMS.PropertyType {
         }
 
         private int CalculateHashCode() {
-            return Value.GetHashCode();
+            int hash = JsonSerialization.GetNewHash();
+            hash = JsonSerialization.CombineHashCode(hash, Value);
+            hash = JsonSerialization.CombineHashCode(hash, ValueSet);
+            return hash;
         }
     }
 }

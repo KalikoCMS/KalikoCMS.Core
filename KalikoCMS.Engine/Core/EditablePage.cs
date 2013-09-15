@@ -60,22 +60,14 @@ namespace KalikoCMS.Core {
         public void SetStopPublish(DateTime? dateTime) {
             StopPublish = dateTime;
         }
+
+        public void SetVisibleInMenu(bool visibleInMenu) {
+            VisibleInMenu = visibleInMenu;
+        }
         
-        //internal static  EditablePage CreateEditablePage(Type type) {
-        //    PageType pageType = PageType.GetPageTypeForType(type);
-
-        //    if (pageType == null) {
-        //        throw new Exception("Can't find page type for type " + type.Name);
-        //    }
-
-        //    EditablePage editablePage = EditablePage.CreateEditableChildPage(this, pageType.PageTypeId);
-        //    return editablePage;
-        //}
-
-
         private static void ShallowCopyProperties(CmsPage page, EditablePage editablePage) {
-            PropertyCollection propertyCollection = new PropertyCollection();
-            List<PropertyItem> propertyItems = new List<PropertyItem>();
+            var propertyCollection = new PropertyCollection();
+            var propertyItems = new List<PropertyItem>();
 
             foreach (PropertyItem propertyItem in page.Property) {
                 propertyItems.Add(new PropertyItem {
@@ -114,12 +106,12 @@ namespace KalikoCMS.Core {
         }
 
         internal static EditablePage CreateEditableChildPage(CmsPage page, int pageTypeId) {
-            EditablePage editablePage = new EditablePage();
-
-            editablePage.PageId = Guid.NewGuid();
-            editablePage.PageTypeId = pageTypeId;
-            editablePage.ParentId = page.PageId;
-            editablePage.LanguageId = page.LanguageId;
+            var editablePage = new EditablePage {
+                PageId = Guid.NewGuid(),
+                PageTypeId = pageTypeId,
+                ParentId = page.PageId,
+                LanguageId = page.LanguageId
+            };
 
             if (page.PageId == SiteSettings.RootPage) {
                 editablePage.RootId = editablePage.PageId;
@@ -168,6 +160,7 @@ namespace KalikoCMS.Core {
             pageInstance.PageName = PageName;
             pageInstance.StartPublish = StartPublish;
             pageInstance.StopPublish = StopPublish;
+            pageInstance.VisibleInMenu = VisibleInMenu;
 
             EnsurePageUrl();
 
@@ -219,7 +212,8 @@ namespace KalikoCMS.Core {
                                    PageId = PageId,
                                    LanguageId = LanguageId,
                                    CreatedDate = DateTime.Now,
-                                   UpdateDate = DateTime.Now
+                                   UpdateDate = DateTime.Now,
+                                   VisibleInMenu = true
                                };
             return pageInstance;
         }
@@ -232,7 +226,6 @@ namespace KalikoCMS.Core {
                                  ParentId = ParentId,
                                  RootId = RootId,
                                  TreeLevel = TreeLevel,
-                                 VisibleInMenus = VisibleInMenu
                              };
             return pageEntity;
         }

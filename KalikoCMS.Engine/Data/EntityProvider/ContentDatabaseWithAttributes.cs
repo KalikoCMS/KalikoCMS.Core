@@ -26,30 +26,10 @@ namespace KalikoCMS.Data.EntityProvider {
 
         public ContentDatabaseWithAttributes() : base(DataManager.Provider) {
         }
-
-        /* Moved to social
-        [Table]
-        [Column(Member = "CommentId", IsPrimaryKey = true, IsGenerated = true)]
-        [Column(Member = "PageId")]
-        [Column(Member = "LanguageId")]
-        [Column(Member = "UserName")]
-        [Column(Member = "CommentText")]
-        [Column(Member = "CommentDate")]
-        [Column(Member = "IsReported")]
-        [Column(Member = "IsRemoved")]
-        [Column(Member = "IP")]
-        [Column(Member = "IsValid")]
-        [Column(Member = "Email")]
-        public override IEntityTable<Comment> Comment {
-            get { return base.Comment; }
-        }
-        */
-         
+        
         [Table]
         [Column(Member = "PageId", IsPrimaryKey = true)]
         [Column(Member = "PageTypeId")]
-        [Column(Member = "VisibleInMenus")]
-        [Column(Member = "VisibleInSitemap")]
         [Column(Member = "ParentId")]
         [Column(Member = "RootId")]
         [Column(Member = "TreeLevel")]
@@ -71,6 +51,8 @@ namespace KalikoCMS.Data.EntityProvider {
         [Column(Member = "DeletedDate")]
         [Column(Member = "StartPublish")]
         [Column(Member = "StopPublish")]
+        [Column(Member = "VisibleInMenu")]
+        [Column(Member = "VisibleInSitemap")]
         [Association(Member = "Page", KeyMembers = "PageId", RelatedEntityID = "Page", RelatedKeyMembers = "PageId")]
         public override IEntityTable<PageInstanceEntity> PageInstance {
             get {

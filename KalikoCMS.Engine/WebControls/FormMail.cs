@@ -113,7 +113,6 @@ namespace KalikoCMS.WebControls {
         private void FormMail_Click(object sender, EventArgs e) {
             bool showThankyou = true;
 
-            // Check if a custom form handler has been assigned..
             if(UseCustomFormHandler) {
                 SendFormEventArgs ea = new SendFormEventArgs(_formContainer.Controls);
                 OnSendForm(ea);
@@ -133,7 +132,6 @@ namespace KalikoCMS.WebControls {
 
         private void SendFormAsEmail() {
             // No custom form handler was found, do the default mailing..
-            string extraemail = string.Empty;
             string mailSubject = MailSubject;
             string mailTemplate = MailTemplate;
 
@@ -144,10 +142,6 @@ namespace KalikoCMS.WebControls {
                     TextBox textBox = ((TextBox)c);
                     mailSubject = mailSubject.Replace("@@" + c.ID + "@@", textBox.Text);
                     mailTemplate = mailTemplate.Replace("@@" + c.ID + "@@", textBox.Text);
-
-                    if (c.ID == ExtraEmailId) {
-                        extraemail = textBox.Text;
-                    }
                 }
                 else if (type == typeof(HiddenField)) {
                     HiddenField hiddenField = ((HiddenField)c);
