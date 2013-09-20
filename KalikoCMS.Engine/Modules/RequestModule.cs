@@ -19,8 +19,9 @@ namespace KalikoCMS.Modules {
     using System.Text;
     using System.Web;
     using System.Web.SessionState;
-    using KalikoCMS.ContentProvider;
-    using KalikoCMS.Core;
+    using Configuration;
+    using ContentProvider;
+    using Core;
 
     internal class RequestModule : IHttpModule {
         // Prevent default constructor..
@@ -28,7 +29,7 @@ namespace KalikoCMS.Modules {
 
         private static void HandleRequest() {
             string url = HttpContext.Current.Request.Path.ToLowerInvariant();
-            int rootPathLength = HttpContext.Current.Request.ApplicationPath.Length;
+            int rootPathLength = SiteSettings.ApplicationPath.Length;
 
             url = url.Length > rootPathLength ? url.Substring(rootPathLength) : string.Empty;
             

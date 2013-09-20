@@ -16,7 +16,7 @@
 
 namespace KalikoCMS.Data.EntityProvider {
     using IQToolkit;
-    using KalikoCMS.Core;
+    using Core;
 
     public class ContentDatabase {
         private readonly IEntityProvider _provider;

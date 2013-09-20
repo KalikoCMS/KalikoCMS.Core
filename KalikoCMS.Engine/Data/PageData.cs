@@ -20,8 +20,8 @@ namespace KalikoCMS.Data {
     using System.Collections.ObjectModel;
     using System.Linq;
     using Kaliko;
-    using KalikoCMS.Core;
-    using KalikoCMS.Data.EntityProvider;
+    using Core;
+    using EntityProvider;
 
     internal static class PageData {
 
@@ -69,8 +69,7 @@ namespace KalikoCMS.Data {
                         };
         }
 
-
-        //TODO: Lägg till språkparameter
+        //TODO: Add language parameters when going multi-language
         internal static Collection<Guid> DeletePage(Guid pageId) {
             Collection<Guid> pageIds = PageFactory.GetPageTreeFromPage(pageId, PublishState.All).PageIds;
             pageIds.Add(pageId);

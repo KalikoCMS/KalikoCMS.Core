@@ -48,7 +48,7 @@ namespace KalikoCMS.WebControls {
         private void HookupEventOnSubmitButton() {
             foreach (Control c in _formContainer.Controls) {
                 if (c.ID == SendButton) {
-                    ((Button)c).Click += FormMail_Click;
+                    ((Button)c).Click += SubmitHandler;
                 }
             }
         }
@@ -110,7 +110,7 @@ namespace KalikoCMS.WebControls {
         }
 
 
-        private void FormMail_Click(object sender, EventArgs e) {
+        private void SubmitHandler(object sender, EventArgs e) {
             bool showThankyou = true;
 
             if(UseCustomFormHandler) {

@@ -17,7 +17,7 @@
 namespace KalikoCMS.Data.EntityProvider {
     using IQToolkit;
     using IQToolkit.Data.Mapping;
-    using KalikoCMS.Core;
+    using Core;
 
     public class ContentDatabaseWithAttributes : ContentDatabase {
 
@@ -118,7 +118,7 @@ namespace KalikoCMS.Data.EntityProvider {
         [Column(Member = "Name")]
         [Column(Member = "Class")]
         [Column(Member = "EditControl")]
-        public override IEntityTable<Core.PropertyType> PropertyType {
+        public override IEntityTable<PropertyType> PropertyType {
             get { return base.PropertyType; }
         }
 

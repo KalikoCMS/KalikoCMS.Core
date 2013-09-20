@@ -18,7 +18,6 @@ namespace KalikoCMS.Core {
     using System;
     using System.Collections.Generic;
     using Kaliko;
-    using KalikoCMS.PropertyType;
 
     public class PropertyType {
         private static readonly List<PropertyType> PropertyTypes = Data.PropertyTypeData.GetPropertyTypes();
@@ -42,7 +41,6 @@ namespace KalikoCMS.Core {
                 // TODO: Bad code, possible candidate for errors down the road. Fix!
                 Type dynamicClosedGenericClass = Type.MakeGenericType(typeof(PropertyData));
                 return (PropertyData)Activator.CreateInstance(dynamicClosedGenericClass, null);
-                
             }
             else {
                 return (PropertyData) Activator.CreateInstance(Type);

@@ -20,13 +20,13 @@ namespace KalikoCMS.Core.Collections {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
-    using KalikoCMS.WebControls;
+    using WebControls;
 
     public sealed class PageCollection : IEnumerable<CmsPage> {
         private static readonly object PadLock = new object();
 
-        // TODO: implementera inför flerspråksstöd
-        private readonly int _languageId;
+        // TODO: Prepared for multilanguage
+        // private readonly int _languageId;
         private readonly Collection<Guid> _pageIds;
 
 

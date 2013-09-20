@@ -16,9 +16,9 @@
 
 namespace KalikoCMS.Core {
     using System;
-    using KalikoCMS.Core.Collections;
-    using KalikoCMS.Framework;
-    using KalikoCMS.Serialization;
+    using Collections;
+    using Framework;
+    using Serialization;
 
     public class CmsPage : MarshalByRefObject {
         private PropertyCollection _propertyCollection;

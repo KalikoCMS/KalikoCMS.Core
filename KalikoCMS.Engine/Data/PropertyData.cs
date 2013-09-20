@@ -41,16 +41,13 @@ namespace KalikoCMS.Data {
             string cacheName = GetCacheName(pageId, languageId);
             
             PropertyCollection propertyCollection = new PropertyCollection();
-
             List<PropertyItem> propertyItems = CacheManager.Get<List<PropertyItem>>(cacheName);
 
             if(propertyItems!=null) {
                 propertyCollection.Properties = propertyItems;
             }
             else {
-
                 IQueryable<PropertyItem> properties;
-
                 DataManager.OpenConnection();
 
                 try {

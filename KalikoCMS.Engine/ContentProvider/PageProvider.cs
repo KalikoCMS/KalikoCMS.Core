@@ -16,7 +16,7 @@
 
 namespace KalikoCMS.ContentProvider {
     using System.Web;
-    using KalikoCMS.Modules;
+    using Modules;
 
     internal class PageProvider {
 

@@ -43,17 +43,17 @@ namespace KalikoCMS.Core {
         }
 
         private static string GetUniqueUrl(Guid parentId, string baseUrl) {
-            PageCollection sieblings = PageFactory.GetChildrenForPage(parentId, PublishState.All);
-            var sieblingNames = new List<string>();
+            PageCollection siblings = PageFactory.GetChildrenForPage(parentId, PublishState.All);
+            var siblingNames = new List<string>();
 
-            foreach (CmsPage child in sieblings) {
-                sieblingNames.Add(child.UrlSegment);
+            foreach (CmsPage child in siblings) {
+                siblingNames.Add(child.UrlSegment);
             }
 
             string suggestedUrl = baseUrl;
             int counter = 1;
 
-            while (sieblingNames.Contains(suggestedUrl)) {
+            while (siblingNames.Contains(suggestedUrl)) {
                 counter++;
                 suggestedUrl = string.Format("{0}~{1}", baseUrl, counter);
             }
@@ -78,18 +78,19 @@ namespace KalikoCMS.Core {
         }
 
         private static List<KeyValuePair<string, string>> SetupLetterTranslation() {
-            var letterTranslation = new List<KeyValuePair<string, string>>();
-            letterTranslation.Add(new KeyValuePair<string, string>("á", "a"));
-            letterTranslation.Add(new KeyValuePair<string, string>("à", "a"));
-            letterTranslation.Add(new KeyValuePair<string, string>("å", "a"));
-            letterTranslation.Add(new KeyValuePair<string, string>("ã", "a"));
-            letterTranslation.Add(new KeyValuePair<string, string>("ä", "a"));
-            letterTranslation.Add(new KeyValuePair<string, string>("ç", "c"));
-            letterTranslation.Add(new KeyValuePair<string, string>("è", "e"));
-            letterTranslation.Add(new KeyValuePair<string, string>("é", "e"));
-            letterTranslation.Add(new KeyValuePair<string, string>("ü", "u"));
-            letterTranslation.Add(new KeyValuePair<string, string>("ö", "o"));
-            letterTranslation.Add(new KeyValuePair<string, string>("ß", "ss"));
+            var letterTranslation = new List<KeyValuePair<string, string>> {
+                new KeyValuePair<string, string>("á", "a"),
+                new KeyValuePair<string, string>("à", "a"),
+                new KeyValuePair<string, string>("å", "a"),
+                new KeyValuePair<string, string>("ã", "a"),
+                new KeyValuePair<string, string>("ä", "a"),
+                new KeyValuePair<string, string>("ç", "c"),
+                new KeyValuePair<string, string>("è", "e"),
+                new KeyValuePair<string, string>("é", "e"),
+                new KeyValuePair<string, string>("ü", "u"),
+                new KeyValuePair<string, string>("ö", "o"),
+                new KeyValuePair<string, string>("ß", "ss")
+            };
 
             return letterTranslation;
         }

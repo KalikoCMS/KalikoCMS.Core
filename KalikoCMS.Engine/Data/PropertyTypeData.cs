@@ -18,7 +18,7 @@ namespace KalikoCMS.Data {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using KalikoCMS.Attributes;
+    using Attributes;
 
     internal static class PropertyTypeData {
         private static List<Core.PropertyType> _propertyTypes;
@@ -35,8 +35,8 @@ namespace KalikoCMS.Data {
             IEnumerable<Type> typesWithAttribute = AttributeReader.GetTypesWithAttribute(typeof (PropertyTypeAttribute));
 
             foreach (Type type in typesWithAttribute) {
-                PropertyTypeAttribute customAttribute = (PropertyTypeAttribute) type.GetCustomAttributes(typeof (PropertyTypeAttribute), false)[0];
-                Guid proptertyTypeId = new Guid(customAttribute.PropertyTypeId);
+                var customAttribute = (PropertyTypeAttribute) type.GetCustomAttributes(typeof (PropertyTypeAttribute), false)[0];
+                var proptertyTypeId = new Guid(customAttribute.PropertyTypeId);
 
                 Core.PropertyType propertyType = GetExistingPropertyTypeOrCreateNew(proptertyTypeId);
 
@@ -51,8 +51,7 @@ namespace KalikoCMS.Data {
             Core.PropertyType propertyType = _propertyTypes.SingleOrDefault(p => p.PropertyTypeId == propertyTypeId);
 
             if(propertyType==null) {
-                propertyType = new Core.PropertyType();
-                propertyType.PropertyTypeId = propertyTypeId;
+                propertyType = new Core.PropertyType {PropertyTypeId = propertyTypeId};
                 _propertyTypes.Add(propertyType);
             }
 

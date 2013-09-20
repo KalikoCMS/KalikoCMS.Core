@@ -17,7 +17,7 @@
 namespace KalikoCMS.Core {
     using System;
     using System.Collections.Generic;
-    using KalikoCMS.Data;
+    using Data;
 
     public class PageType {
         public static List<PageType> PageTypes { get; internal set; }
@@ -33,15 +33,14 @@ namespace KalikoCMS.Core {
         public bool ShowSortOrder { get; set; }
         public bool ShowVisibleInMenu { get; set; }
         internal Type Type { get; set; }
-        // TODO: Make internal after testing
-        public CmsPage Instance { get; set; }
+        internal CmsPage Instance { get; set; }
 
         public static PageType GetPageType(int pageTypeId) {
             return PageTypes.Find(pt => pt.PageTypeId == pageTypeId);
         }
 
         internal static void LoadPageTypes() {
-            PageTypeData.SyncPageTypes();
+            Synchronizer.SynchronizePageTypes();
         }
 
         public static PageType GetPageTypeForType(Type type) {

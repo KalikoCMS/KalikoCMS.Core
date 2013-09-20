@@ -28,7 +28,7 @@ namespace KalikoCMS.Core {
 
         public static string Translate(string key) {
             if (string.IsNullOrEmpty(key)) {
-                ArgumentException argumentException = new ArgumentException("Argument to Translate(string key) should not be null or empty.");
+                var argumentException = new ArgumentException("Argument to Translate(string key) should not be null or empty.");
                 Logger.Write(argumentException);
                 throw argumentException;
             }
@@ -61,6 +61,7 @@ namespace KalikoCMS.Core {
         }
 
         private static void ReadLanguages() {
+            // TODO: Make dynamic
             string folder = HttpContext.Current.Server.MapPath("/lang/");
 
             if(!Directory.Exists(folder)) {
@@ -101,8 +102,8 @@ namespace KalikoCMS.Core {
         }
 
         private static Hashtable GetLookupTableFromFile(string file, out string languageCode) {
-            XmlTextReader xmlTextReader = new XmlTextReader(file);
-            Hashtable lookupTable = new Hashtable();
+            var xmlTextReader = new XmlTextReader(file);
+            var lookupTable = new Hashtable();
             string path = string.Empty;
             languageCode = string.Empty;
 
@@ -128,7 +129,7 @@ namespace KalikoCMS.Core {
         }
 
         private static void AddValuesToExistingLookupTable(Hashtable lookupTable, string languageCode) {
-            Hashtable existingTable = (Hashtable)TranslationData[languageCode];
+            var existingTable = (Hashtable)TranslationData[languageCode];
 
             foreach (DictionaryEntry dictionaryEntry in lookupTable) {
                 existingTable.Add(dictionaryEntry.Key, dictionaryEntry.Value);

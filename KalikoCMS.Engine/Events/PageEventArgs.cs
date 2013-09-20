@@ -16,7 +16,7 @@
 
 namespace KalikoCMS.Events {
     using System;
-    using KalikoCMS.Core;
+    using Core;
 
     public delegate void PageEventHandler(Object sender, PageEventArgs e);
 
@@ -35,7 +35,7 @@ namespace KalikoCMS.Events {
                 return _languageId;
             }
         }
-        
+
         public Guid PageId {
             get { return _pageId; }
         }

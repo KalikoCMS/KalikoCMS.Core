@@ -81,6 +81,7 @@
     <Compile Include="Core\InterfaceReader.cs" />
     <Compile Include="Core\IStartupSequence.cs" />
     <Compile Include="Core\PageProxy.cs" />
+    <Compile Include="Data\Synchronizer.cs" />
     <Compile Include="PropertyType\BooleanProperty.cs" />
     <Compile Include="PropertyType\CollectionProperty.cs" />
     <Compile Include="PropertyType\FileProperty.cs" />
@@ -179,9 +180,6 @@
     <Compile Include="WebControls\SortDirection.cs" />
     <Compile Include="WebControls\SortOrder.cs" />
     <Compile Include="WebControls\TemplateItem.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Scripts\PropertyEditor_String.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ResharperPattern.xml" />

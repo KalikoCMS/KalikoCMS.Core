@@ -18,7 +18,7 @@ namespace KalikoCMS.Core {
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using KalikoCMS.Extensions;
+    using Extensions;
 
     public class FileSystemObject {
 
@@ -59,12 +59,7 @@ namespace KalikoCMS.Core {
                 Guid folderpageid;
                 if (folder.Name.Substring(7).TryParseGuid(out folderpageid)) {
                     CmsPage p = PageFactory.GetPage(folderpageid);
-                    if (p != null) {
-                        friendlyFolderName = p.PageName;
-                    }
-                    else {
-                        friendlyFolderName = folder.Name;
-                    }
+                    friendlyFolderName = p != null ? p.PageName : folder.Name;
                 }
             }
             else {

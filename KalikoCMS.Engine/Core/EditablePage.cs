@@ -20,8 +20,8 @@ namespace KalikoCMS.Core {
     using Configuration;
     using Data;
     using Data.EntityProvider;
-    using KalikoCMS.Caching;
-    using KalikoCMS.Core.Collections;
+    using Caching;
+    using Collections;
 
     public class EditablePage : CmsPage {
         public new string PageName { get; set; }
@@ -34,7 +34,7 @@ namespace KalikoCMS.Core {
         }
 
         internal static EditablePage CreateEditablePage(CmsPage page) {
-            EditablePage editablePage = new EditablePage();
+            var editablePage = new EditablePage();
 
             ShallowCopyPage(page, editablePage);
             ShallowCopyProperties(page, editablePage);

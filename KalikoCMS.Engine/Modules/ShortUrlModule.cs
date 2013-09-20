@@ -17,6 +17,7 @@
 namespace KalikoCMS.Modules {
     using System;
     using System.Web;
+    using Configuration;
     using KalikoCMS.Serialization;
 
     public class ShortUrlModule : IHttpModule {
@@ -26,7 +27,7 @@ namespace KalikoCMS.Modules {
 
         private void PostAuthenticateRequest(object sender, EventArgs e) {
             string url = HttpContext.Current.Request.Path;
-            int rootPathLength = HttpContext.Current.Request.ApplicationPath.Length;
+            int rootPathLength = SiteSettings.ApplicationPath.Length;
 
             url = url.Length > rootPathLength ? url.Substring(rootPathLength) : string.Empty;
 

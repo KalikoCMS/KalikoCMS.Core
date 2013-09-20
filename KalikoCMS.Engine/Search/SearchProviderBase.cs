@@ -16,7 +16,7 @@
 
 namespace KalikoCMS.Search {
     using System;
-    using KalikoCMS.Core;
+    using Core;
 
     public abstract class SearchProviderBase {
         public abstract void AddToIndex(IndexItem item);
@@ -30,11 +30,11 @@ namespace KalikoCMS.Search {
         public abstract SearchResult Search(SearchQuery query);
 
         public void IndexPage(CmsPage page) {
-            PageType pageType = PageType.GetPageType(page.PageTypeId);
-            IIndexable indexable = pageType.Instance as IIndexable;
+            var pageType = PageType.GetPageType(page.PageTypeId);
+            var indexable = pageType.Instance as IIndexable;
 
             if (indexable != null) {
-                IndexItem indexItem = indexable.MakeIndexItem(page);
+                var indexItem = indexable.MakeIndexItem(page);
                 AddToIndex(indexItem);
             }
 

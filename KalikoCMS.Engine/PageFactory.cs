@@ -21,15 +21,15 @@ namespace KalikoCMS {
     using System.Globalization;
     using System.Web;
     using Kaliko;
-    using KalikoCMS.ContentProvider;
-    using KalikoCMS.Core;
-    using KalikoCMS.Core.Collections;
-    using KalikoCMS.Data;
-    using KalikoCMS.Data.EntityProvider;
-    using KalikoCMS.Events;
+    using ContentProvider;
+    using Core;
+    using Core.Collections;
+    using Data;
+    using Data.EntityProvider;
+    using Events;
 
     public class PageFactory {
-        internal const string PAGE_EXPIRED_URL = "/PageExpired.htm";
+        internal const string PageExpiredUrl = "/PageExpired.htm";
         private static List<PageIndex> _pageLanguageIndex;
         private static bool _indexing;
         private static PageEventHandler _pageSaved;
@@ -357,7 +357,7 @@ namespace KalikoCMS {
 
                 return url;
             }
-            return PAGE_EXPIRED_URL;
+            return PageExpiredUrl;
         }
 
         private static void IndexSite(int languageId) {

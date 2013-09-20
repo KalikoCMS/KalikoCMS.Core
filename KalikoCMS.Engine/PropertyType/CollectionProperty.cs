@@ -22,7 +22,7 @@ namespace KalikoCMS.PropertyType {
 
     [PropertyType("E4A242F3-80E8-4D2A-9799-7728303B12C9", "Collection", "Collection of a specific type", "~/Admin/Content/PropertyType/CollectionPropertyEditor.ascx")]
     public class CollectionProperty<T> : PropertyData where T : PropertyData {
-        private static readonly int EmptyHashCode = string.Empty.GetHashCode();
+        private const int EmptyHashCode = 0;
         private int? _cachedHashCode;
         
         protected override string StringValue {

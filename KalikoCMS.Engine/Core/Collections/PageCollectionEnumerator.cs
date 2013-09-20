@@ -31,12 +31,7 @@ namespace KalikoCMS.Core.Collections {
         public bool MoveNext() {
             _index++;
 
-            if (_index < _pageIds.Count) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return _index < _pageIds.Count;
         }
 
         public void Reset() {

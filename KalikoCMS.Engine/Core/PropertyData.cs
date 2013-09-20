@@ -53,7 +53,7 @@ namespace KalikoCMS.Core {
 
         public virtual string Preview {
             get {
-                var preview = StringValue.LimitCharacters(32);
+                var preview = StringValue.LimitCharacters(64);
                 return HttpUtility.HtmlEncode(preview);
             }
         }

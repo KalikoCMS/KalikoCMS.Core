@@ -19,13 +19,12 @@ namespace KalikoCMS.Core {
     using System.Collections;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Linq;
     using System.Text;
     using Kaliko;
-    using KalikoCMS.Configuration;
-    using KalikoCMS.Core.Collections;
-    using KalikoCMS.Data;
-    using KalikoCMS.Extensions;
+    using Configuration;
+    using Collections;
+    using Data;
+    using Extensions;
 
     internal class PageIndex {
         private static readonly Predicate<PageIndexItem> IsPublished = t => t.StartPublish <= DateTime.Now && (t.StopPublish == null || !(DateTime.Now > t.StopPublish));
@@ -69,8 +68,7 @@ namespace KalikoCMS.Core {
         internal static PageIndex CreatePageIndex(int languageId) {
             List<PageIndexItem> pageIndexItems = PageData.GetPageStructure(languageId);
 
-            PageIndex pageIndex = new PageIndex(pageIndexItems);
-            pageIndex.LanguageId = languageId;
+            var pageIndex = new PageIndex(pageIndexItems) {LanguageId = languageId};
 
             pageIndex = CleanUp(pageIndex);
 
@@ -104,7 +102,7 @@ namespace KalikoCMS.Core {
         }
 
         public PageCollection GetChildrenByCriteria(Guid parentId, Predicate<PageIndexItem> match) {
-            PageCollection pageCollection = new PageCollection();
+            var pageCollection = new PageCollection();
             PageIndexItem pageIndexItem;
 
             if (parentId == SiteSettings.RootPage) {
@@ -143,8 +141,8 @@ namespace KalikoCMS.Core {
         }
 
         public PageCollection GetPageTreeByCriteria(Guid pageId, PublishState pageState) {
-            PageCollection pageCollection = new PageCollection();
-            Stack stack = new Stack();
+            var pageCollection = new PageCollection();
+            var stack = new Stack();
             int currentId;
             int index = 0;
 
@@ -201,7 +199,7 @@ namespace KalikoCMS.Core {
         }
 
         public PageCollection GetPagesByCriteria(Predicate<PageIndexItem> match) {
-            PageCollection pageCollection = new PageCollection();
+            var pageCollection = new PageCollection();
 
             _pageIndex.FindAll(match).ForEach(t => pageCollection.Add(t.PageId));
 
@@ -293,8 +291,7 @@ namespace KalikoCMS.Core {
 
         // TODO: No deleted pages in index, remove related code below
         private static PageIndex CleanUp(PageIndex pageIndex) {
-            PageIndex pages = new PageIndex();
-            pages.LanguageId = pageIndex.LanguageId;
+            var pages = new PageIndex {LanguageId = pageIndex.LanguageId};
 
             foreach (PageIndexItem page in pageIndex.Items) {
                 bool isDeleted = false;
@@ -377,13 +374,14 @@ namespace KalikoCMS.Core {
         }
 
         private PageIndexItem GetRootPageIndexItem() {
-            PageIndexItem rootPageIndexItem = new PageIndexItem {
-                                                                    CreatedDate = DateTime.MinValue,
-                                                                    FirstChild = 0,
-                                                                    NextPage = -1,
-                                                                    PageId = SiteSettings.RootPage,
-                                                                    PageName = "Root",
-                                                                };
+            var rootPageIndexItem = new PageIndexItem
+                {
+                    CreatedDate = DateTime.MinValue,
+                    FirstChild = 0,
+                    NextPage = -1,
+                    PageId = SiteSettings.RootPage,
+                    PageName = "Root",
+                };
             return rootPageIndexItem;
         }
 

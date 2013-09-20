@@ -27,7 +27,7 @@ namespace KalikoCMS.Data {
     using KalikoCMS.Data.EntityProvider;
 
     public static class DataManager {
-        private static readonly DbEntityProvider _provider = GetDbEntityProvider();
+        private static readonly DbEntityProvider EntityProvider = GetDbEntityProvider();
 
         private static DbEntityProvider GetDbEntityProvider() {
             return DbEntityProvider.From(SiteSettings.Instance.DataProvider,
@@ -36,24 +36,24 @@ namespace KalikoCMS.Data {
         }
 
         public static DbEntityProvider Provider {
-            get { return _provider; }
+            get { return EntityProvider; }
         }
 
         public static ContentDatabase Instance {
             get {
-                return new ContentDatabase(_provider);
+                return new ContentDatabase(EntityProvider);
             }
         }
 
         public static void OpenConnection() {
-            if (_provider.Connection.State == ConnectionState.Open) {
-                _provider.Connection.Close();
+            if (EntityProvider.Connection.State == ConnectionState.Open) {
+                EntityProvider.Connection.Close();
             }
             Provider.Connection.Open();
         }
 
         public static void CloseConnection() {
-            _provider.Connection.Close();
+            EntityProvider.Connection.Close();
         }
 
 
@@ -76,7 +76,7 @@ namespace KalikoCMS.Data {
 
 
         public static T GetById<T>(IEntityTable<T> entityTable, int id) {
-            T item = default(T);
+            T item;
 
             OpenConnection();
 
@@ -96,7 +96,7 @@ namespace KalikoCMS.Data {
 
 
         public static T GetById<T>(IEntityTable<T> entityTable, Guid id) {
-            T item = default(T);
+            T item;
 
             OpenConnection();
 
@@ -148,7 +148,7 @@ namespace KalikoCMS.Data {
 
 
         public static List<T> Select<T>(IEntityTable<T> entityTable, Expression<Func<T, bool>> whereClause) {
-            List<T> items = null;
+            List<T> items;
 
             OpenConnection();
 
@@ -168,7 +168,7 @@ namespace KalikoCMS.Data {
 
 
         public static List<T> Select<T, TKey>(IEntityTable<T> entityTable, Expression<Func<T, bool>> whereClause, Expression<Func<T, TKey>> orderBy) {
-            List<T> items = null;
+            List<T> items;
 
             OpenConnection();
 
@@ -188,7 +188,7 @@ namespace KalikoCMS.Data {
 
 
         public static List<T> SelectAll<T>(IEntityTable<T> entityTable) {
-            List<T> items = null;
+            List<T> items;
 
             OpenConnection();
 
@@ -207,7 +207,7 @@ namespace KalikoCMS.Data {
         }
 
         public static T Single<T>(IEntityTable<T> entityTable, Expression<Func<T, bool>> whereClause) {
-            T item = default(T);
+            T item;
 
             OpenConnection();
 

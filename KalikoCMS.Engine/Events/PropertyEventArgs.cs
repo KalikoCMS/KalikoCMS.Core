@@ -16,7 +16,7 @@
 
 namespace KalikoCMS.Events {
     using System;
-    using KalikoCMS.Core.Collections;
+    using Core.Collections;
 
     public delegate void PropertyEventHandler(Object sender, PropertyEventArgs e);
 

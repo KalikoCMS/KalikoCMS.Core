@@ -17,9 +17,11 @@
 namespace KalikoCMS.Configuration {
     using System;
     using System.Configuration;
+    using System.Web;
 
     public sealed class SiteSettings : ConfigurationSection {
         private static SiteSettings _instance;
+        private static string _applicationPath;
         private Guid? _startPageId;
         private string _adminPath;
         private string _datastoreProvider;
@@ -40,7 +42,10 @@ namespace KalikoCMS.Configuration {
         public static Guid RootPage {
             get { return Guid.Empty; }
         }
- 
+
+        public static string ApplicationPath {
+            get { return _applicationPath ?? (_applicationPath = HttpContext.Current.Request.ApplicationPath); }
+        }
 
         [ConfigurationProperty("adminPath", IsRequired = true, DefaultValue = "/Admin/")]
         public string AdminPath {
@@ -103,6 +108,5 @@ namespace KalikoCMS.Configuration {
         public Guid StartPageId {
             get { return (Guid) (_startPageId ?? (_startPageId = (Guid) base["startPageId"])); }
         }
-
     }
 }
