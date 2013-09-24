@@ -140,7 +140,6 @@ namespace KalikoCMS.Core {
 
         protected Search.IndexItem GetBaseIndexItem() {
             var indexItem = new Search.IndexItem {
-                                                     Path = PageUrl.ToString(),
                                                      Created = CreatedDate,
                                                      LanguageId = LanguageId,
                                                      Modified = UpdateDate,
@@ -148,6 +147,11 @@ namespace KalikoCMS.Core {
                                                      PublishStart = StartPublish,
                                                      PublishStop = StopPublish
                                                  };
+
+            if (PageUrl != null) {
+                indexItem.Path = PageUrl.ToString();
+            }
+
             return indexItem;
         }
     }

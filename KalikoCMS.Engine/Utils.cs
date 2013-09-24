@@ -20,12 +20,14 @@ namespace KalikoCMS {
     using System.IO;
     using System.Reflection;
     using System.Web;
-    using KalikoCMS.Configuration;
-    using KalikoCMS.Extensions;
+    using Configuration;
+    using Extensions;
+    using Kaliko;
 
     // TODO: Move to more specific classes
     public static class Utils {
         private static string _version;
+        private static string _applicationPath;
 
         public static bool IsNullableType(Type type) {
             bool result = (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>));
@@ -99,7 +101,7 @@ namespace KalikoCMS {
 
         public static String ReadSetting(String key, String defaultValue) {
             string setting = ConfigurationManager.AppSettings[key];
-            return string.IsNullOrEmpty(setting) ? defaultValue : setting;
+            return String.IsNullOrEmpty(setting) ? defaultValue : setting;
         }
 
         public static void SetCookie(string key, string value) {
@@ -117,6 +119,16 @@ namespace KalikoCMS {
 
         public static string Version {
             get { return _version ?? (_version = Assembly.GetExecutingAssembly().GetName().Version.ToString()); }
+        }
+
+        public static string ApplicationPath {
+            get { return _applicationPath ?? (_applicationPath = HttpContext.Current.Request.ApplicationPath); }
+        }
+
+        public static void Throw<T>(string message, Logger.Severity severity = Logger.Severity.Major) where T : Exception {
+            var exception = (T)Activator.CreateInstance(typeof(T), message);
+            Logger.Write(exception, severity);
+            throw exception;
         }
     }
 

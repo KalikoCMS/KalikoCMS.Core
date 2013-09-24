@@ -21,9 +21,11 @@ namespace KalikoCMS.Search {
     public abstract class SearchProviderBase {
         public abstract void AddToIndex(IndexItem item);
 
+        public abstract void RemoveAll();
+
         public abstract void RemoveFromIndex(Guid pageId, int languageId);
 
-        public abstract void DoOptimizations();
+        public abstract void IndexingFinished();
 
         public abstract void Init();
 
@@ -38,7 +40,7 @@ namespace KalikoCMS.Search {
                 AddToIndex(indexItem);
             }
 
-            DoOptimizations();
+            IndexingFinished();
         }
 
     }

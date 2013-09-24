@@ -27,7 +27,7 @@ namespace KalikoCMS.Modules {
 
         private void PostAuthenticateRequest(object sender, EventArgs e) {
             string url = HttpContext.Current.Request.Path;
-            int rootPathLength = SiteSettings.ApplicationPath.Length;
+            int rootPathLength = Utils.ApplicationPath.Length;
 
             url = url.Length > rootPathLength ? url.Substring(rootPathLength) : string.Empty;
 

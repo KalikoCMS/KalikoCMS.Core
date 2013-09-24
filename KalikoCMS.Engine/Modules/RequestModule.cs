@@ -29,7 +29,7 @@ namespace KalikoCMS.Modules {
 
         private static void HandleRequest() {
             string url = HttpContext.Current.Request.Path.ToLowerInvariant();
-            int rootPathLength = SiteSettings.ApplicationPath.Length;
+            int rootPathLength = Utils.ApplicationPath.Length;
 
             url = url.Length > rootPathLength ? url.Substring(rootPathLength) : string.Empty;
             

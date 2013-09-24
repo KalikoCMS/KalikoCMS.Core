@@ -22,11 +22,15 @@ namespace KalikoCMS.Search {
             throw new Exception("Can't search using NullSearchProvider, change to a valid provider in config.");
         }
 
+        public override void RemoveAll() {
+            throw new Exception("Can't search using NullSearchProvider, change to a valid provider in config.");
+        }
+
         public override void RemoveFromIndex(Guid pageId, int languageId) {
             throw new Exception("Can't search using NullSearchProvider, change to a valid provider in config.");
         }
 
-        public override void DoOptimizations() {
+        public override void IndexingFinished() {
         }
 
         public override void Init() {

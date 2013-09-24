@@ -15,7 +15,7 @@
 #endregion
 
 namespace KalikoCMS.Search {
-    using KalikoCMS.Core;
+    using Core;
 
     public interface IIndexable {
         IndexItem MakeIndexItem(CmsPage page);

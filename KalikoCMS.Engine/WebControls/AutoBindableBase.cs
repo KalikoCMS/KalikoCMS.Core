@@ -35,7 +35,6 @@ namespace KalikoCMS.WebControls {
             base.DataBind();
         }
 
-        // TODO: Flytta senare i eventordningen?
         protected override void OnLoad(EventArgs e) {
             if(AutoBind && !_databound) {
                 DataBind();

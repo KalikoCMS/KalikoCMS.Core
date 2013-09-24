@@ -2,6 +2,7 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using HtmlAgilityPack;
     using KalikoSearch.Core;
 
     public class PageDocument : IndexDocument {
@@ -98,7 +99,12 @@
                 return GetFieldValue("content");
             }
             set {
-                AddField("content", value, FieldStore.Store, FieldIndex.Analyzed);
+                //TODO: Bryt ut!!
+                var doc = new HtmlDocument();
+                doc.LoadHtml(value ?? string.Empty);
+                var innerText = doc.DocumentNode.InnerText;
+
+                AddField("content", innerText, FieldStore.Store, FieldIndex.Analyzed);
             }
         }
 
@@ -107,7 +113,7 @@
                 return GetFieldValue("category");
             }
             set {
-                AddField("category", value, FieldStore.Store, FieldIndex.IndexOnly);
+                AddField("category", value, FieldStore.Store, FieldIndex.Analyzed);
             }
         }
     }

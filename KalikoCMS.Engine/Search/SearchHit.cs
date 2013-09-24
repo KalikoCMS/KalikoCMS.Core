@@ -15,9 +15,11 @@
 #endregion
 
 namespace KalikoCMS.Search {
+    using System;
     using System.Collections.Generic;
 
     public class SearchHit {
+        public Guid PageId { get; set; }
         public string Title { get; set; }
         public string Path { get; set; }
         public string Excerpt { get; set; }

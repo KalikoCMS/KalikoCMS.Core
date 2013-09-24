@@ -1,23 +1,27 @@
 ﻿
 namespace KalikoCMS.Search {
     using System;
-    using KalikoCMS.Events;
+    using Events;
     using KalikoSearch.Core;
 
     public class KalikoSearchProvider : SearchProviderBase {
-        private Collection _collection;
-        private static string[] _searchFields = new[] { "title", "summary", "content" };
+        private readonly Collection _collection;
+        private static readonly string[] SearchFields = new[] { "title", "summary", "content", "category" };
 
         public KalikoSearchProvider() {
-            _collection = new Collection("KalikCMS");
+            _collection = new Collection("KalikoCMS");
         }
 
         public override void AddToIndex(IndexItem item) {
             string key = GetKey(item.PageId, item.LanguageId);
-            PageDocument pageDocument = new PageDocument(key, item);
+            var pageDocument = new PageDocument(key, item);
             _collection.AddDocument(pageDocument);
-            
-            DoOptimizations();
+
+            IndexingFinished();
+        }
+
+        public override void RemoveAll() {
+            _collection.RemoveAll();
         }
 
         public override void RemoveFromIndex(Guid pageId, int languageId) {
@@ -25,7 +29,7 @@ namespace KalikoCMS.Search {
             _collection.RemoveDocument(key);
         }
 
-        public override void DoOptimizations() {
+        public override void IndexingFinished() {
             _collection.OptimizeIndex();
         }
 
@@ -43,7 +47,7 @@ namespace KalikoCMS.Search {
         }
 
         public override SearchResult Search(SearchQuery query) {
-            KalikoSearch.Core.SearchResult searchResult = _collection.Search(query.SearchString, _searchFields, query.MetaData, query.ReturnFromPosition, query.NumberOfHitsToReturn);
+            KalikoSearch.Core.SearchResult searchResult = _collection.Search(query.SearchString, SearchFields, query.MetaData, query.ReturnFromPosition, query.NumberOfHitsToReturn);
 
             SearchResult result = ConvertResult(searchResult);
 
@@ -51,12 +55,19 @@ namespace KalikoCMS.Search {
         }
 
         private SearchResult ConvertResult(KalikoSearch.Core.SearchResult searchResult) {
-            SearchResult result = new SearchResult();
-            result.NumberOfHits = searchResult.NumberOfHits;
-            result.SecondsTaken = searchResult.SecondsTaken;
+            var result = new SearchResult {
+                NumberOfHits = searchResult.NumberOfHits, 
+                SecondsTaken = searchResult.SecondsTaken
+            };
 
             foreach (var hit in searchResult.Hits) {
-                result.Hits.Add(new SearchHit() { Excerpt = hit.Excerpt, Path = hit.Path, Title = hit.Title, MetaData = hit.MetaData });
+                result.Hits.Add(new SearchHit {
+                    Excerpt = hit.Excerpt, 
+                    Path = hit.Path, 
+                    Title = hit.Title, 
+                    MetaData = hit.MetaData, 
+                    PageId = hit.PageId
+                });
             }
 
             return result;

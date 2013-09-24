@@ -17,11 +17,9 @@
 namespace KalikoCMS.Configuration {
     using System;
     using System.Configuration;
-    using System.Web;
 
     public sealed class SiteSettings : ConfigurationSection {
         private static SiteSettings _instance;
-        private static string _applicationPath;
         private Guid? _startPageId;
         private string _adminPath;
         private string _datastoreProvider;
@@ -32,6 +30,7 @@ namespace KalikoCMS.Configuration {
         private string _dateFormat;
         private string _filePath;
         private string _imageCachePath;
+        private string _blockedFileExtensions;
 
         public static SiteSettings Instance {
             get {
@@ -41,10 +40,6 @@ namespace KalikoCMS.Configuration {
 
         public static Guid RootPage {
             get { return Guid.Empty; }
-        }
-
-        public static string ApplicationPath {
-            get { return _applicationPath ?? (_applicationPath = HttpContext.Current.Request.ApplicationPath); }
         }
 
         [ConfigurationProperty("adminPath", IsRequired = true, DefaultValue = "/Admin/")]
@@ -107,6 +102,12 @@ namespace KalikoCMS.Configuration {
         [ConfigurationProperty("startPageId", IsRequired = true)]
         public Guid StartPageId {
             get { return (Guid) (_startPageId ?? (_startPageId = (Guid) base["startPageId"])); }
+        }
+
+
+        [ConfigurationProperty("blockedFileExtensions", IsRequired = false, DefaultValue = @"(bat|exe|cmd|sh|php|pl|cgi|386|dll|com|torrent|js|app|jar|pif|vb|vbscript|wsf|asp|aspx|cs|cer|csr|jsp|drv|sys|ade|adp|bas|chm|cpl|crt|csh|fxp|hlp|hta|inf|ins|isp|jse|htaccess|htpasswd|ksh|lnk|mdb|mde|mdt|mdw|msc|msi|msp|mst|ops|pcd|prg|reg|scr|sct|shb|shs|url|vbe|vbs|wsc|wsf|wsh)$")]
+        public string BlockedFileExtensions {
+            get { return _blockedFileExtensions ?? (_blockedFileExtensions = (string)base["blockedFileExtensions"]); }
         }
     }
 }
