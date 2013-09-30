@@ -23,6 +23,11 @@ namespace KalikoCMS.Search {
     public class SearchManager : IStartupSequence {
         public static SearchProviderBase Instance { get; private set; }
 
+        public void Startup() {
+            LoadSearchProviderFromConfig();
+        }
+
+
         public static int IndexAllPages() {
             Instance.RemoveAll();
             
@@ -35,11 +40,6 @@ namespace KalikoCMS.Search {
             Instance.IndexingFinished();
 
             return pages.Count;
-        }
-
-
-        public void Startup() {
-            LoadSearchProviderFromConfig();
         }
 
 

@@ -65,7 +65,7 @@ namespace KalikoCMS {
 
             string[] segments = pageUrl.Trim('/').Split('/');
             int position = 0;
-            PageIndexItem lastPage = new PageIndexItem();
+            var lastPage = new PageIndexItem();
 
             for (int i = 0; i < segments.Length; i++) {
                 var segment = segments[i];
@@ -110,18 +110,17 @@ namespace KalikoCMS {
         }
 
         private static string TryGetPageHandlerWithValueSupport(int i, string[] segments, PageIndexItem page) {
-           
             // TODO: Refactor
-            PageType pageType = PageType.GetPageType(page.PageTypeId);
+            var pageType = PageType.GetPageType(page.PageTypeId);
             if(pageType==null) {
                 return string.Empty;
             }
 
-            IPageValueSupport valueSupport = pageType.Instance as IPageValueSupport;
-            string pageHandler = string.Empty;
+            var valueSupport = pageType.Instance as IPageValueSupport;
+            var pageHandler = string.Empty;
 
             if (valueSupport != null) {
-                string[] remainingSegments = new string[segments.Length - i];
+                var remainingSegments = new string[segments.Length - i];
                 Array.Copy(segments, i, remainingSegments, 0, remainingSegments.Length);
 
                 pageHandler = valueSupport.GetPageHandler(page.PageId, remainingSegments);
@@ -194,10 +193,9 @@ namespace KalikoCMS {
         }
 
         private static PageCollection GetPagePath(Guid pageId, int languageId) {
-            PageIndex pageIndex = GetPageIndex(languageId);
-
-            PageCollection pathList = new PageCollection();
-            Guid currentPageId = pageId;
+            var pageIndex = GetPageIndex(languageId);
+            var pathList = new PageCollection();
+            var currentPageId = pageId;
 
             for (int i = 0; i < 10000; i++) {
                 pathList.Add(currentPageId);
