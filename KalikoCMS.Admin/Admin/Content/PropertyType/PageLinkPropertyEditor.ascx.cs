@@ -56,6 +56,10 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             }
         }
 
+        public override string Parameters {
+            set { throw new NotImplementedException(); }
+        }
+
         public override bool Validate() {
             throw new NotImplementedException();
         }
@@ -67,7 +71,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
 
-            ScriptManager.RegisterClientScriptInclude(this, typeof(PageLinkPropertyEditor), "Admin.Content.PropertyType.PageLinkPropertyEditor", "/Admin/Content/PropertyType/PageLinkPropertyEditor.js");
+            ScriptManager.RegisterClientScriptInclude(this, typeof(PageLinkPropertyEditor), "Admin.Content.PropertyType.PageLinkPropertyEditor", "Content/PropertyType/PageLinkPropertyEditor.js");
 
             string clickScript = "propertyEditor.pageLink.openDialog('#" + LanguageId.ClientID + "','#" + PageId.ClientID + "', '#" + DisplayField.ClientID + "');return false;";
             SelectButton.Attributes["onclick"] = clickScript;

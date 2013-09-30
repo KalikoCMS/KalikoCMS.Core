@@ -15,20 +15,23 @@
 #endregion
 
 namespace KalikoCMS.Admin.Content.Dialogs {
+    using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
+    using System.Linq;
     using System.Web;
-    using System.Web.Script.Services;
     using System.Web.Services;
+    using Kaliko;
 
     public partial class SelectFileDialog : System.Web.UI.Page {
+        private static string[] _invalidPathChars;
+
         [WebMethod]
         public static JQueryResponse GetFileList(string path) {
             path = HttpContext.Current.Server.MapPath(path);
-            var fileList = new JsonFileList();
+            var fileList = new JsonFileList {folders = ListFolders(path), files = ListFiles(path)};
 
-            fileList.folders = ListFolders(path);
-            fileList.files = ListFiles(path);
             return new JQueryResponse(200, fileList);
         }
 
@@ -53,6 +56,56 @@ namespace KalikoCMS.Admin.Content.Dialogs {
             }
             
             return folderList.ToArray();
+        }
+
+        [WebMethod]
+        public static JQueryResponse CreateFolder(string folderName, string path) {
+            if(ContainsInvalidCharacters(folderName)) {
+                return new JQueryResponse(500, "Folder names may not contain the following characters: " + HttpUtility.HtmlEncode(String.Join(",", InvalidPathChars)));
+            }
+
+            var newPath = Path.Combine(path, folderName);
+
+            // TODO: Expand with multiple file paths
+            if (!newPath.StartsWith(Configuration.SiteSettings.Instance.FilePath)) {
+                Logger.Write("Attempt to create folder '" + folderName + "' in path '" + path + "'!", Logger.Severity.Major);
+                return new JQueryResponse(500, "Access violation!");
+            }
+
+            JQueryResponse returnValue;
+
+            try {
+                Directory.CreateDirectory(HttpContext.Current.Server.MapPath(newPath));
+                returnValue = new JQueryResponse(200, null);
+            }
+            catch (Exception exception) {
+                Logger.Write(exception, Logger.Severity.Major);
+                returnValue = new JQueryResponse(500, exception.Message);
+            }
+
+            return returnValue;
+        }
+
+        private static bool ContainsInvalidCharacters(string folderName) {
+            foreach (var invalidPathChar in InvalidPathChars) {
+                if (folderName.Contains(invalidPathChar.ToString(CultureInfo.InvariantCulture))) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        protected static string[] InvalidPathChars {
+            get { return _invalidPathChars ?? (_invalidPathChars = BuildInvalidPathCharsTable()); }
+        }
+
+        private static string[] BuildInvalidPathCharsTable() {
+            var invalidPathChars = Path.GetInvalidPathChars();
+            var list = new List<string> {":", "/", "\\"};
+
+            list.AddRange(invalidPathChars.Select(invalidPathChar => invalidPathChar.ToString(CultureInfo.InvariantCulture)));
+
+            return list.ToArray();
         }
 
         // ReSharper disable InconsistentNaming

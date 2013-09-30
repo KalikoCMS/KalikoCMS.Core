@@ -2,6 +2,6 @@
 <div class="control-group">
     <asp:Label AssociatedControlID="ValueField" runat="server" ID="LabelText" CssClass="control-label" />
     <div class="controls">
-        <asp:TextBox runat="server" ID="ValueField" CssClass="span5 html-editor" TextMode="MultiLine" />
+        <asp:TextBox runat="server" ID="ValueField" CssClass="wide-input html-editor hide" TextMode="MultiLine" />
     </div>
 </div>

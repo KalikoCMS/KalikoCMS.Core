@@ -22,6 +22,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
     using KalikoCMS.PropertyType;
 
     public partial class ImagePropertyEditor : PropertyEditorBase {
+        private ImagePropertyAttribute.ImagePropertyAttributeValues _attributeValues;
 
         public override string PropertyLabel {
             set { LabelText.Text = value; }
@@ -29,33 +30,65 @@ namespace KalikoCMS.Admin.Content.PropertyType {
 
         public override PropertyData PropertyValue {
             set {
-                ImageProperty imageProperty = (ImageProperty)value;
+                var imageProperty = (ImageProperty) value;
+
+                if (string.IsNullOrEmpty(imageProperty.ImageUrl)) {
+                    ImagePreview.ImageUrl = string.Format("{0}assets/images/no-image.jpg", Configuration.SiteSettings.Instance.AdminPath);
+                }
+                else {
+                    ImagePreview.ImageUrl = Configuration.SiteSettings.Instance.AdminPath + "Assets/Images/Thumbnail.ashx?path=" + Server.UrlEncode(imageProperty.ImageUrl);
+                }
+
                 ImagePath.Value = imageProperty.ImageUrl;
-                DisplayField.Text = imageProperty.ImageUrl;
-                ImagePreview.ImageUrl = imageProperty.ImageUrl;
+                OriginalImagePath.Value = imageProperty.OriginalImageUrl;
                 int width = imageProperty.Width ?? 0;
                 int height = imageProperty.Height ?? 0;
+                int cropX = imageProperty.CropX ?? -1;
+                int cropY = imageProperty.CropY ?? -1;
+                int cropW = imageProperty.CropW ?? -1;
+                int cropH = imageProperty.CropH ?? -1;
 
-                WidthValue.Value = (width == 0 ? string.Empty : width.ToString(CultureInfo.InvariantCulture));
-                HeightValue.Value = (height == 0 ? string.Empty : height.ToString(CultureInfo.InvariantCulture));
-                AltText.Text = imageProperty.Description;
+                WidthValue.Value = GetStringValue(width);
+                HeightValue.Value = GetStringValue(height);
+                CropX.Value = GetStringValue(cropX, -1);
+                CropY.Value = GetStringValue(cropY, -1);
+                CropW.Value = GetStringValue(cropW, -1);
+                CropH.Value = GetStringValue(cropH, -1);
+                AltText.Value = imageProperty.Description;
             }
             get {
-                ImageProperty imageProperty = new ImageProperty();
-                imageProperty.ImageUrl = ImagePath.Value;
-                imageProperty.Description = AltText.Text;
-
-                int width;
-                int height;
-
-                if (int.TryParse(WidthValue.Value, out width)) {
-                    imageProperty.Width = width;
-                }
-                if (int.TryParse(HeightValue.Value, out height)) {
-                    imageProperty.Height = height;
-                }
+                var imageProperty = new ImageProperty
+                {
+                    ImageUrl = ImagePath.Value,
+                    OriginalImageUrl = OriginalImagePath.Value,
+                    Description = AltText.Value,
+                    Width = TryToGetValue(WidthValue.Value),
+                    Height = TryToGetValue(HeightValue.Value),
+                    CropX = TryToGetValue(CropX.Value),
+                    CropY = TryToGetValue(CropY.Value),
+                    CropW = TryToGetValue(CropW.Value),
+                    CropH = TryToGetValue(CropH.Value)
+                };
 
                 return imageProperty;
+            }
+        }
+
+        private static string GetStringValue(int value, int defaultValue = 0) {
+            return (value == defaultValue ? string.Empty : value.ToString(CultureInfo.InvariantCulture));
+        }
+
+        private int? TryToGetValue(string stringValue) {
+            int value;
+            if (int.TryParse(stringValue, out value)) {
+                return value;
+            }
+            return null;
+        }
+
+        public override string Parameters {
+            set {
+                _attributeValues = Serialization.JsonSerialization.DeserializeJson<ImagePropertyAttribute.ImagePropertyAttributeValues>(value);
             }
         }
 
@@ -71,9 +104,23 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
 
-            ScriptManager.RegisterClientScriptInclude(this, typeof(FilePropertyEditor), "Admin.Content.PropertyType.ImagePropertyEditor", "/Admin/Content/PropertyType/ImagePropertyEditor.js");
+            ScriptManager.RegisterClientScriptInclude(this, typeof (FilePropertyEditor),
+                                                      "Admin.Content.PropertyType.ImagePropertyEditor",
+                                                      "Content/PropertyType/ImagePropertyEditor.js?d=" + DateTime.Now.Ticks);
 
-            string clickScript = string.Format("propertyEditor.image.openDialog('#{0}', '#{1}', '#{2}');return false;", ImagePath.ClientID, DisplayField.ClientID, ImagePreview.ClientID);
+            int width = 0;
+            int height = 0;
+
+            if (_attributeValues != null) {
+                width = _attributeValues.Width;
+                height = _attributeValues.Height;
+            }
+
+            string clickScript =
+                string.Format(
+                    "propertyEditor.image.openDialog('#{0}', '#{1}', '#{2}', '#{3}', '#{4}', '#{5}', '#{6}', '{7}', '{8}', '#{9}');return false;",
+                    ImagePath.ClientID, ImagePreview.ClientID, OriginalImagePath.ClientID, CropX.ClientID,
+                    CropY.ClientID, CropW.ClientID, CropH.ClientID, width, height, AltText.ClientID);
             SelectButton.Attributes["onclick"] = clickScript;
         }
     }

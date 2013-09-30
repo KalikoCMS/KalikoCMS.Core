@@ -22,15 +22,6 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         protected global::System.Web.UI.WebControls.Label LabelText;
         
         /// <summary>
-        /// DisplayField control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DisplayField;
-        
-        /// <summary>
         /// SelectButton control.
         /// </summary>
         /// <remarks>
@@ -38,15 +29,6 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink SelectButton;
-        
-        /// <summary>
-        /// AltText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox AltText;
         
         /// <summary>
         /// ImagePreview control.
@@ -92,5 +74,59 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HeightValue;
+        
+        /// <summary>
+        /// AltText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField AltText;
+        
+        /// <summary>
+        /// OriginalImagePath control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField OriginalImagePath;
+        
+        /// <summary>
+        /// CropX control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField CropX;
+        
+        /// <summary>
+        /// CropY control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField CropY;
+        
+        /// <summary>
+        /// CropW control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField CropW;
+        
+        /// <summary>
+        /// CropH control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField CropH;
     }
 }

@@ -10,7 +10,7 @@
 namespace KalikoCMS.Admin.Content.PropertyType {
     
     
-    public partial class DateTimePropertyEditor {
+    public partial class BooleanPropertyEditor {
         
         /// <summary>
         /// LabelText control.
@@ -22,22 +22,13 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         protected global::System.Web.UI.WebControls.Label LabelText;
         
         /// <summary>
-        /// DateControl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel DateControl;
-        
-        /// <summary>
         /// ValueField control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ValueField;
+        protected global::System.Web.UI.WebControls.CheckBox ValueField;
         
         /// <summary>
         /// ErrorText control.
@@ -46,6 +37,6 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ErrorText;
+        protected global::System.Web.UI.WebControls.Literal ErrorText;
     }
 }

@@ -1,12 +1,11 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PageTreeControl.ascx.cs" Inherits="KalikoCMS.Admin.Content.PageTree.PageTreeControl" %>
     
     <div class="btn-group" style="margin-left:4px;margin-top:-4px;margin-bottom:4px;">
-        <a href="#" id="new-page-button" class="btn btn-small" rel="tooltip" data-original-title="Add a new page under<br/>the selected page below."><i class="icon-plus"></i> Add page</a>        
-        <a href="#" id="remove-page-button" class="btn btn-small" rel="tooltip" data-original-title="Remove the selected page."><i class="icon-trash"></i> Remove page</a>
+        <a href="#" id="new-page-button" class="btn btn-small" rel="tooltip" data-original-title="Add a new page under the selected page below." data-container="body"><i class="icon-plus"></i> Add page</a>        
+        <a href="#" id="remove-page-button" class="btn btn-small" rel="tooltip" data-original-title="Remove the selected page." data-container="body"><i class="icon-trash"></i> Remove page</a>
     </div>
 
-    <div id="pagetree">
-    </div>
+    <div id="pagetree"></div>
 
 
 
@@ -23,7 +22,7 @@
         });
 
         function clickCreateNewPage() {
-            openModal("/Admin/Content/Dialogs/SelectPagetypeDialog.aspx?pageId=" + currentPageId, 500, 400);
+            root.openModal("Content/Dialogs/SelectPagetypeDialog.aspx?pageId=" + currentPageId, 500, 400);
             return false;
         }
 
@@ -34,11 +33,11 @@
             return false;
         }
 
-        function deletePage(pageId) {
+        function deletePage() {
             $.ajax({
                 async: false,
                 type: 'POST',
-                url: "/Admin/Content/PageTree/JQueryTreeContent.ashx",
+                url: "Content/PageTree/JQueryTreeContent.ashx",
                 data: {
                     "operation": "remove_node",
                     "id": currentPageId
@@ -52,158 +51,102 @@
         }
 
         function createNewPage(pageTypeId) {
-            closeModal();
+            root.closeModal();
 
-            $("#maincontent").attr("src", "/Admin/Content/EditPage.aspx?id=&parentId=" + currentPageId + "&pageTypeId=" + pageTypeId);
+            $("#maincontent").attr("src", "Content/EditPage.aspx?id=&parentId=" + currentPageId + "&pageTypeId=" + pageTypeId);
         }
 
         function refreshTreeNode(node) {
-            //$("#pagetree").jstree("refresh", $(".jstree-clicked"))
             $("#pagetree").jstree("refresh", "#node_" + node);
         }
 
         function initTreeView() {
-            var plugins = ["themes", "json_data", "ui", "crrm", "cookies", "dnd", "search", "types", "hotkeys"];
+          var plugins = ["themes", "json_data", "ui", "crrm", "cookies", "dnd", "search", "types", "hotkeys"];
 
-            $("#pagetree").jstree({
-                "plugins": plugins,
-                "themes": { "theme": "classic", "url": "/Admin/Assets/Styles/classic/style.css" },
-                "json_data": {
-                    "ajax": {
-                        "url": "/Admin/Content/PageTree/JQueryTreeContent.ashx",
-                        "type": 'POST',
-                        "data": function (n) {
-                            return {
-                                "operation": "get_children",
-                                "id": n.attr ? n.attr("id").replace("node_", "") : "<%=Guid.Empty %>"
-                            };
-                        }
-                    },
-                    "data": [
-                        {
-                            "data": "Root",
-                            "attr": { "id": "<%=Guid.Empty %>", "rel": "root" },
-                            "state": "closed"
-                        }
-                    ]
+          $("#pagetree")
+            .jstree({
+              "plugins": plugins,
+              "themes": { "theme": "classic", "url": "assets/css/jstree.classic.css" },
+              "json_data": {
+                "ajax": {
+                  "url": "Content/PageTree/JQueryTreeContent.ashx",
+                  "type": 'POST',
+                  "data": function(n) {
+                    return {
+                      "operation": "get_children",
+                      "id": n.attr ? n.attr("id").replace("node_", "") : "<%=Guid.Empty %>"
+                    };
+                  }
                 },
+                "data": [
+                  {
+                    "data": "Root",
+                    "attr": { "id": "<%=Guid.Empty %>", "rel": "root" },
+                    "state": "closed"
+                  }
+                ]
+              },
+              "types": {
+                "max_depth": -2,
+                "max_children": -2,
                 "types": {
-                    "max_depth": -2,
-                    "max_children": -2,
-                    "types": {
-                        "default": {
-                            "icon": { "image": "../file.png" }
-                        },
-                        "folder": {
-                            "valid_children": ["default", "folder"],
-                            "icon": { "image": "../folder.png" }
-                        },
-                        "root": {
-                            "valid_children": ["default", "folder"],
-                            "icon": { "image": "../root.png" },
-                            "start_drag": false,
-                            "move_node": false,
-                            "delete_node": false,
-                            "remove": false
-                        }
-                    }
-                },
-                "ui": { "disable_selecting_children": true },
-                "core": {
-                    "initially_open": ["<%=Guid.Empty %>"]
+                  "default": {
+                    "icon": { "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAANkE3LLaAgAAAT9JREFUeJyNkSFvAkEUhOft3RVIoAaBrjl+AuJ+R9Okrg6B5AcQbAUC339Rh606GlSbYAmChDaQ1HBw+6aGuxA4lhs5+963M7uCo1qt1kO3231U1cyCqkJVEcfx12QyeYdLURQ9s0C73Y6r1YqDwWDsBHQ6nafz5cPhwPV6zdlsRpIcjUZvALzTPeOCep6HSqUCQLDdbtHr9V76/f5r6QQkmaYpN5sNp9NPxvGU8/mcYRhG2Z7v7HVM0Wg00G6HSJIEQRCg2Wy2AXyUAmSQer2OarUKYwxEJP+qUoB82PdzYCbnI5aCnhskQbJwWEQgIrDWXgKstVBVWGudgKxGYYL9fg9VdQKcFdI0vQm4WkFEvFqtdhMQBAF83/cuAMvl8nc4HH4DAK8QRESMMbJYLH5y7+T8DsB94dWX+gOQAMA/YTjF6dr/m9QAAAAASUVORK5CYII=" }
+                  },
+                  "folder": {
+                    "valid_children": ["default", "folder"],
+                    "icon": { "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAANkE3LLaAgAAAf5JREFUeJylk09rU1EQxX/vvZs2sa1FK7ZSNy7UhVhFEL+GFEFQkIK40A/gxp3uBDeCn0Fxp1B0J925E0sXtoYm8TV5SdskbZLm/cm9d1zkJZaWasEDw53FnDNnZrjwn3DS9/zNG3PX0QaUR7PRaOeLG0vHVrl35/bzKOxKrRrIZq0q5fIve2vuyl1gEjh1RHgACsBzXW80myUbhQCM5bLO5y9L79rtVst1Hedgw4mJk86jhQcv3n9YfKmAs5nTM9PfVn6gdS8tERzHxXU4uX9WSfPtTsyZC5evweKMml94/OzV6zcPrZGUClYGMv0k0bCnZbgw13G4/+TpfLAbN1Qhv1ppRZZMxsXYfoGVvpDYPqUZCh0tDIbxHAe/bc3PtbWK8tfXC34zZHJ8DG0EEUEETCqSiFBrm6F9ANeF7S6ZoFQoqe1K0c9XGsm52RMjSU9jLWiRoYt619JNLPtX6SqoNCNT3yiWFRAsl7ba0fjsVDfSWNsnW4Hd2NCKhYN38DIu5VozBl1RQH0579fj6atT4V6CtmBECLXQ6R0mA6iRDGW/ugPUFdBeWS3U9i7aS2EnwaQOelYOMwcOcjmCQmkT2FEA1WIhMOEoJhobnvJv8CTHTuDXAKsA+Pp2cSvujKNj8w9uOsOox/dPH+HPZ8oCE8doPoADdIDwmPVH4zez+Qeo9wGi9wAAAABJRU5ErkJggg==" }
+                  },
+                  "root": {
+                    "valid_children": ["default", "folder"],
+                    "icon": { "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAANkE3LLaAgAAAitJREFUeJx9kz9rFEEYxn/zZ29vd2bvvLvEKIJYSWI8QmwkRSqxC/glUuYDpUoUOSFgLcaAWPkVJHZWEVEOkvM2O7s7Y7GXuKTIAw/MDLw/nnfmHcF/PVZKPUnTtAJQSi2ONVo3e6UU0+lU53n+DTgFEC3Ap9XVtZfj8djFcYIxBmMsxhisNRiTsrS0xPHxx87h4cFn4EWDbxQBT3u9EXGcdYyxWJuRZRm9niXLGi8vj1hbGwOsAykwvwKkEKXQIc8rpKzQukLrEq1LlCpRyjGb5cRxAkQGygSYywXAQjcJQVMUAedoOeCcx7maPC9JkgxIDXAHoAVIOt5risIvigJl6RfFjS8vS6zNsHZJAPfagKFSMXUtcY5FitBaN4CiqImiiH5/BDBqAx5qnVJV4rqFomhclg2kSVZTVQFrBwDD1ivIu0J0KIpAFAU6HW44LCANwJg+IAfgo0WCMAKJc/X1hd3s37mKoqgpiooss0AYAokGop2dV8P9/X2899cTp5RCCEEIgRA83ntC8Cgl2d5eZ2/v5+jk5IOVQHdz89lwNOrR7WriWKI1SFkjRIWUNVJ6pPQIESAEHtxfYWvr+SDLMqsB41zRPz39znw+p60QAgBCNBMvheRsdoaMJb4OgziOrQb+TqfTPxsbG8xmM26TFpoJE3bZ5cv7r7/Pz88vNHBxdDR5o3X0SCkVQvDhVoiMec1Ev313MHHO/bj6jQJYAdQttW154BdQ/wPpmwtvrx3CnQAAAABJRU5ErkJggg==" },
+                    "start_drag": false,
+                    "move_node": false,
+                    "delete_node": false,
+                    "remove": false
+                  }
                 }
-            }).bind("select_node.jstree", function (event, data) {
-                // `data.rslt.obj` is the jquery extended node that was clicked
-                var _url = data.rslt.obj.attr("url");
-                var pageId = data.rslt.obj.attr("id").replace("node_", "");
-
-                currentPageId = pageId;
-
-                $("#maincontent").attr("src", "/Admin/Content/EditPage.aspx?id=" + pageId);
-                //$("#maincontent").attr("src", _url);
+              },
+              "ui": { "disable_selecting_children": true },
+              "core": {
+                "initially_open": ["<%=Guid.Empty %>"]
+              }
             })
-            //	.bind("create.jstree", function (e, data) {
-            //	    $.post(
-            //			"./server.php",
-            //			{
-            //			    "operation": "create_node",
-            //			    "id": data.rslt.parent.attr("id").replace("node_", ""),
-            //			    "position": data.rslt.position,
-            //			    "title": data.rslt.name,
-            //			    "type": data.rslt.obj.attr("rel")
-            //			},
-            //			function (r) {
-            //			    if (r.status) {
-            //			        $(data.rslt.obj).attr("id", "node_" + r.id);
-            //			    }
-            //			    else {
-            //			        $.jstree.rollback(data.rlbk);
-            //			    }
-            //			}
-            //		);
-            //	})
-            //	.bind("remove.jstree", function (e, data) {
-            //	    data.rslt.obj.each(function () {
-            //	        $.ajax({
-            //	            async: false,
-            //	            type: 'POST',
-            //	            url: "./server.php",
-            //	            data: {
-            //	                "operation": "remove_node",
-            //	                "id": this.id.replace("node_", "")
-            //	            },
-            //	            success: function (r) {
-            //	                if (!r.status) {
-            //	                    data.inst.refresh();
-            //	                }
-            //	            }
-            //	        });
-            //	    });
-            //	})
-            //	.bind("rename.jstree", function (e, data) {
-            //	    $.post(
-            //			"./server.php",
-            //			{
-            //			    "operation": "rename_node",
-            //			    "id": data.rslt.obj.attr("id").replace("node_", ""),
-            //			    "title": data.rslt.new_name
-            //			},
-            //			function (r) {
-            //			    if (!r.status) {
-            //			        $.jstree.rollback(data.rlbk);
-            //			    }
-            //			}
-            //		);
-            //	})
-                .bind("move_node.jstree", function (e, data) {
-                    data.rslt.o.each(function (i) {
-                        $.ajax({
-                            async: false,
-                            type: 'POST',
-                            url: "/Admin/Content/PageTree/JQueryTreeContent.ashx",
-                            data: {
-                                "operation": "move_node",
-                                "id": $(this).attr("id").replace("node_", ""),
-                                "ref": data.rslt.cr === -1 ? 1 : data.rslt.np.attr("id").replace("node_", ""),
-                                "position": data.rslt.cp + i,
-                                "title": data.rslt.name,
-                                "copy": data.rslt.cy ? 1 : 0
-                            },
-                            success: function (r) {
-                                if (!r.success) {
-                                    $.jstree.rollback(data.rlbk);
-                                    alert("Could not move " + data.rslt.name);
-                                } else {
-                                    $(data.rslt.oc).attr("id", "node_" + r.id);
-                                    if (data.rslt.cy && $(data.rslt.oc).children("UL").length) {
-                                        data.inst.refresh(data.inst._get_parent(data.rslt.oc));
-                                    }
-                                }
-                            }
-                        });
-                    });
-                });
+            .bind("select_node.jstree", function (event, data) {
+              var pageId = data.rslt.obj.attr("id").replace("node_", "");
 
+              currentPageId = pageId;
+
+              $("#maincontent").attr("src", "Content/EditPage.aspx?id=" + pageId);
+            })
+            .bind("move_node.jstree", function (e, data) {
+              data.rslt.o.each(function (i) {
+                $.ajax({
+                  async: false,
+                  type: 'POST',
+                  url: "Content/PageTree/JQueryTreeContent.ashx",
+                  data: {
+                    "operation": "move_node",
+                    "id": $(this).attr("id").replace("node_", ""),
+                    "ref": data.rslt.cr === -1 ? 1 : data.rslt.np.attr("id").replace("node_", ""),
+                    "position": data.rslt.cp + i,
+                    "title": data.rslt.name,
+                    "copy": data.rslt.cy ? 1 : 0
+                  },
+                  success: function (r) {
+                    if (!r.success) {
+                      $.jstree.rollback(data.rlbk);
+                      alert("Could not move " + data.rslt.name);
+                    } else {
+                      $(data.rslt.oc).attr("id", "node_" + r.id);
+                      if (data.rslt.cy && $(data.rslt.oc).children("UL").length) {
+                        data.inst.refresh(data.inst._get_parent(data.rslt.oc));
+                      }
+                    }
+                  }
+                });
+              });
+            });
         }
 
     </script>

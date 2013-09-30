@@ -31,6 +31,10 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             get { return new HtmlProperty(ValueField.Text); }
         }
 
+        public override string Parameters {
+            set { throw new System.NotImplementedException(); }
+        }
+
         public override bool Validate() {
             return true;
         }

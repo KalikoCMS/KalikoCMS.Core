@@ -17,13 +17,14 @@
 namespace KalikoCMS.Admin.Content.PropertyType {
     using System;
     using System.Globalization;
+    using Configuration;
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
 
     public partial class DateTimePropertyEditor : PropertyEditorBase {
 
         public override string PropertyLabel {
-            set { LabelText.Text = value; }
+            set { LabelText.Text = value + " <i class=\"icon-time\"></i>"; }
         }
 
         public override PropertyData PropertyValue {
@@ -33,7 +34,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                     ValueField.Text = string.Empty;
                 }
                 else {
-                    ValueField.Text = ((DateTime)dateTime).ToString(CultureInfo.InvariantCulture);
+                    ValueField.Text = ((DateTime)dateTime).ToString(SiteSettings.Instance.DateFormat);
                 }
             }
             get {
@@ -52,6 +53,11 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             base.OnLoad(e);
 
             ValueField.Attributes.Add("autocomplete", "off");
+            ValueField.Attributes.Add("data-format", SiteSettings.Instance.DateFormat);
+        }
+
+        public override string Parameters {
+            set { throw new NotImplementedException(); }
         }
 
         public override bool Validate() {

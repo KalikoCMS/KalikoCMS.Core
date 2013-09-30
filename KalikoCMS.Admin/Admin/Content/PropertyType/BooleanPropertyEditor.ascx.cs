@@ -15,52 +15,37 @@
 #endregion
 
 namespace KalikoCMS.Admin.Content.PropertyType {
-    using System.Globalization;
-    using KalikoCMS.Core;
+    using System;
+    using Core;
     using KalikoCMS.PropertyType;
 
-    public partial class NumericPropertyEditor : PropertyEditorBase {
-
+    public partial class BooleanPropertyEditor : PropertyEditorBase {
         public override string PropertyLabel {
             set { LabelText.Text = value; }
         }
 
         public override PropertyData PropertyValue {
+            get {
+                return new BooleanProperty(ValueField.Checked);
+            }
             set {
-                var numericProperty = (NumericProperty)value;
-                if (numericProperty.ValueSet) {
-                    ValueField.Text = numericProperty.Value.ToString(CultureInfo.InvariantCulture);
+                var booleanProperty = (BooleanProperty) value;
+                if (booleanProperty.ValueSet) {
+                    ValueField.Checked = booleanProperty.Value;
                 }
             }
-            get { return new NumericProperty(ValueField.Text); }
         }
 
         public override string Parameters {
-            set { throw new System.NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
 
         public override bool Validate() {
-            string value = ValueField.Text;
-            int integerValue;
-
-            if (string.IsNullOrEmpty(value) || int.TryParse(value, out integerValue)) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return true;
         }
 
         public override bool Validate(bool required) {
-            string value = ValueField.Text;
-            int integerValue;
-
-            if (int.TryParse(value, out integerValue)) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return true;
         }
     }
 }

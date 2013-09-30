@@ -7,45 +7,36 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KalikoCMS.Admin.Content.PropertyType {
+namespace KalikoCMS.Admin.Content.Dialogs {
     
     
-    public partial class DateTimePropertyEditor {
+    public partial class EditCollectionPropertyDialog {
         
         /// <summary>
-        /// LabelText control.
+        /// PropertyEditor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelText;
+        protected global::System.Web.UI.WebControls.PlaceHolder PropertyEditor;
         
         /// <summary>
-        /// DateControl control.
+        /// PostbackResult control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel DateControl;
+        protected global::System.Web.UI.WebControls.Literal PostbackResult;
         
         /// <summary>
-        /// ValueField control.
+        /// SaveButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ValueField;
-        
-        /// <summary>
-        /// ErrorText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ErrorText;
+        protected global::System.Web.UI.HtmlControls.HtmlButton SaveButton;
     }
 }

@@ -21,7 +21,9 @@ namespace KalikoCMS.Admin.Content.PropertyType {
     public partial class StringPropertyEditor : PropertyEditorBase {
 
         public override string PropertyLabel {
-            set { LabelText.Text = value + " <i class=\"icon-info\"></i>"; }
+            set {
+                LabelText.Text = value;
+            }
         }
 
         public override PropertyData PropertyValue {
@@ -29,6 +31,10 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                 ValueField.Text = ((StringProperty)value).Value;
             }
             get { return new StringProperty(ValueField.Text); }
+        }
+
+        public override string Parameters {
+            set { throw new System.NotImplementedException(); }
         }
 
         public override bool Validate() {

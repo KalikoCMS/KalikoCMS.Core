@@ -31,20 +31,26 @@ namespace KalikoCMS.Admin.Content {
         private int _pageTypeId;
 
         protected void Page_Init(object sender, EventArgs e) {
-            Request.QueryString["id"].TryParseGuid(out _pageId);
-            Request.QueryString["parentId"].TryParseGuid(out _parentId);
-            int.TryParse(Request.QueryString["pageTypeId"], out _pageTypeId);
+            GetQueryStringValues();
 
             SaveButton.Click += SaveButtonEventHandler;
 
             _controls = new List<PropertyEditorBase>();
 
+            MainForm.Action = Request.Url.PathAndQuery;
+
             LoadControls();
         }
 
-        private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId, string headerText) {
-            Core.PropertyType propertyType = Core.PropertyType.GetPropertyType(propertyTypeId);
-            string editControl = propertyType.EditControl;
+        private void GetQueryStringValues() {
+            Request.QueryString["id"].TryParseGuid(out _pageId);
+            Request.QueryString["parentId"].TryParseGuid(out _parentId);
+            int.TryParse(Request.QueryString["pageTypeId"], out _pageTypeId);
+        }
+
+        private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId, string headerText, string parameters) {
+            var propertyType = Core.PropertyType.GetPropertyType(propertyTypeId);
+            var editControl = propertyType.EditControl;
 
             var loadControl = (PropertyEditorBase)LoadControl(editControl);
             loadControl.PropertyName = propertyName;
@@ -54,7 +60,11 @@ namespace KalikoCMS.Admin.Content {
                 loadControl.PropertyValue = propertyValue;
             }
 
-            EditControls.Controls.Add((Control)loadControl);
+            if (!string.IsNullOrEmpty(parameters)) {
+                loadControl.Parameters = parameters;
+            }
+
+            EditControls.Controls.Add(loadControl);
             _controls.Add(loadControl);
         }
 
@@ -75,22 +85,26 @@ namespace KalikoCMS.Admin.Content {
             PageName.Visible = false;
             StartPublishDate.Visible = false;
             StopPublishDate.Visible = false;
+            VisibleInMenu.Visible = false;
             SaveButton.Visible = false;
         }
 
         private void LoadFormForNewPage() {
             PageHeader.Text = "Create new page";
-            PageName.PropertyLabel = "Pagename";
-            StartPublishDate.PropertyLabel = "Start publish";
-            StopPublishDate.PropertyLabel = "Stop publish";
+            SetStandardFieldLabels();
 
             List<PropertyEntity> propertyDefinitions = PageFactory.GetPropertyDefinitionsForPagetype(_pageTypeId);
 
             foreach (PropertyEntity propertyDefinition in propertyDefinitions) {
-                string propertyName = propertyDefinition.Name;
-                
-                AddControl(propertyName, null, propertyDefinition.PropertyTypeId, propertyDefinition.Header);
+                AddControl(propertyDefinition.Name, null, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters);
             }
+        }
+
+        private void SetStandardFieldLabels() {
+            PageName.PropertyLabel = "Pagename";
+            StartPublishDate.PropertyLabel = "Start publish";
+            StopPublishDate.PropertyLabel = "Stop publish";
+            VisibleInMenu.PropertyLabel = "Visible in menus";
         }
 
         private void LoadFormForExistingPage() {
@@ -99,14 +113,12 @@ namespace KalikoCMS.Admin.Content {
             _pageName = cmsPage.PageName;
             PageHeader.Text = _pageName;
 
-            PageName.PropertyLabel = "Pagename";
+            SetStandardFieldLabels(); 
+
             PageName.PropertyValue = new StringProperty(cmsPage.PageName);
-
-            StartPublishDate.PropertyLabel = "Start publish";
             StartPublishDate.PropertyValue = new DateTimeProperty(cmsPage.StartPublish);
-
-            StopPublishDate.PropertyLabel = "Stop publish";
             StopPublishDate.PropertyValue = new DateTimeProperty(cmsPage.StopPublish);
+            VisibleInMenu.PropertyValue = new BooleanProperty(cmsPage.VisibleInMenu);
 
             List<PropertyEntity> propertyDefinitions = PageFactory.GetPropertyDefinitionsForPagetype(cmsPage.PageTypeId);
 
@@ -114,17 +126,14 @@ namespace KalikoCMS.Admin.Content {
                 string propertyName = propertyDefinition.Name;
                 PropertyData propertyData = cmsPage.Property[propertyName];
 
-                AddControl(propertyName, propertyData, propertyDefinition.PropertyTypeId, propertyDefinition.Header);
+                AddControl(propertyName, propertyData, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters);
             }
         }
 
         private void SaveButtonEventHandler(object sender, EventArgs e) {
-            
             if(IsDataValid) {
                 SaveData();
-                MessageBox.Text = "<script>parent.$.jGrowl(\"Page <b>" + _pageName
-                                  + "</b> saved!!\", { themeState: '' });parent.refreshTreeNode('" + _parentId
-                                  + "');</script>";
+                MessageBox.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> saved!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();parent.refreshTreeNode('{1}');</script>", _pageName, _parentId);
                 MessageBox.Visible = true;
             }
             else {
@@ -178,6 +187,7 @@ namespace KalikoCMS.Admin.Content {
             editablePage.PageName = ((StringProperty)PageName.PropertyValue).Value;
             editablePage.SetStartPublish(((DateTimeProperty)StartPublishDate.PropertyValue).Value);
             editablePage.SetStopPublish(((DateTimeProperty)StopPublishDate.PropertyValue).Value);
+            editablePage.SetVisibleInMenu(((BooleanProperty) VisibleInMenu.PropertyValue).Value);
 
             foreach (PropertyEditorBase propertyControl in _controls) {
                 string propertyName = propertyControl.PropertyName;

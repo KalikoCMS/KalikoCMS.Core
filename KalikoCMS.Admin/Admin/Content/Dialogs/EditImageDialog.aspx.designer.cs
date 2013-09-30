@@ -7,91 +7,100 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KalikoCMS.Admin.Content {
+namespace KalikoCMS.Admin.Content.Dialogs {
     
     
-    public partial class EditPage {
+    public partial class EditImageDialog {
         
         /// <summary>
-        /// MainForm control.
+        /// PostbackResult control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm MainForm;
+        protected global::System.Web.UI.WebControls.Literal PostbackResult;
         
         /// <summary>
-        /// PageHeader control.
+        /// CropImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal PageHeader;
+        protected global::System.Web.UI.WebControls.Image CropImage;
         
         /// <summary>
-        /// PageName control.
+        /// DescriptionField control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::KalikoCMS.Admin.Content.PropertyType.StringPropertyEditor PageName;
+        protected global::System.Web.UI.WebControls.TextBox DescriptionField;
         
         /// <summary>
-        /// StartPublishDate control.
+        /// CropX control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::KalikoCMS.Admin.Content.PropertyType.DateTimePropertyEditor StartPublishDate;
+        protected global::System.Web.UI.WebControls.HiddenField CropX;
         
         /// <summary>
-        /// StopPublishDate control.
+        /// CropY control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::KalikoCMS.Admin.Content.PropertyType.DateTimePropertyEditor StopPublishDate;
+        protected global::System.Web.UI.WebControls.HiddenField CropY;
         
         /// <summary>
-        /// VisibleInMenu control.
+        /// CropW control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::KalikoCMS.Admin.Content.PropertyType.BooleanPropertyEditor VisibleInMenu;
+        protected global::System.Web.UI.WebControls.HiddenField CropW;
         
         /// <summary>
-        /// EditControls control.
+        /// CropH control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel EditControls;
+        protected global::System.Web.UI.WebControls.HiddenField CropH;
         
         /// <summary>
-        /// ErrorMessage control.
+        /// Width control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ErrorMessage;
+        protected global::System.Web.UI.WebControls.HiddenField Width;
         
         /// <summary>
-        /// MessageBox control.
+        /// Height control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal MessageBox;
+        protected global::System.Web.UI.WebControls.HiddenField Height;
+        
+        /// <summary>
+        /// ImageSource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField ImageSource;
         
         /// <summary>
         /// SaveButton control.
@@ -100,6 +109,6 @@ namespace KalikoCMS.Admin.Content {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton SaveButton;
+        protected global::KalikoCMS.Admin.WebControls.BootstrapButton SaveButton;
     }
 }

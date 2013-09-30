@@ -4,7 +4,8 @@
 <head>
     <title>Login</title>
     <meta name="robots" content="noindex, nofollow" />
-    <link href="/Admin/Assets/Styles/bootstrap.css" rel="stylesheet" />
+    <link href="/Admin/Assets/Styles/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Admin/Assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <style type="text/css">
     </style>
 </head>
@@ -36,8 +37,7 @@
                     <div class="control-group">
                         <div class="controls">
                             <asp:CheckBox ID="RememberMe" runat="server" CssClass="checkbox" Text="Remember me next time." />&nbsp;
-                            <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="Log In" ValidationGroup="Login1"
-                                CssClass="button" />
+                            <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="Log In" ValidationGroup="Login1" CssClass="btn" />
                         </div>
                     </div>
                         <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="Login1" />

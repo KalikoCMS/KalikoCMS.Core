@@ -10,7 +10,7 @@
 namespace KalikoCMS.Admin.Content.PropertyType {
     
     
-    public partial class DateTimePropertyEditor {
+    public partial class CollectionPropertyEditor {
         
         /// <summary>
         /// LabelText control.
@@ -22,30 +22,39 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         protected global::System.Web.UI.WebControls.Label LabelText;
         
         /// <summary>
-        /// DateControl control.
+        /// ListContainer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel DateControl;
+        protected global::System.Web.UI.WebControls.Panel ListContainer;
         
         /// <summary>
-        /// ValueField control.
+        /// Items control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ValueField;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Items;
         
         /// <summary>
-        /// ErrorText control.
+        /// AddNewButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ErrorText;
+        protected global::System.Web.UI.HtmlControls.HtmlButton AddNewButton;
+        
+        /// <summary>
+        /// CollectionValue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox CollectionValue;
     }
 }

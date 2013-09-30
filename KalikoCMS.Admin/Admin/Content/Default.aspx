@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="KalikoCMS.Admin.Content.Default" MasterPageFile="~/Admin/Admin.Master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="KalikoCMS.Admin.Content.Default" MasterPageFile="../Templates/MasterPages/Admin.Master" %>
 <%@ Register TagPrefix="custom" tagName="PageTreeControl" src="PageTree/PageTreeControl.ascx" %>
 
 <asp:Content ContentPlaceHolderID="LeftRegion" runat="server">

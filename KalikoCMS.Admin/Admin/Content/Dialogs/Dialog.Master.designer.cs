@@ -13,22 +13,22 @@ namespace KalikoCMS.Admin.Content.Dialogs {
     public partial class Dialog {
         
         /// <summary>
-        /// Head1 control.
+        /// ScriptArea control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ScriptArea;
         
         /// <summary>
-        /// form1 control.
+        /// MainForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.HtmlControls.HtmlForm MainForm;
         
         /// <summary>
         /// MainArea control.
@@ -47,14 +47,5 @@ namespace KalikoCMS.Admin.Content.Dialogs {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder ButtonArea;
-        
-        /// <summary>
-        /// ScriptArea control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ScriptArea;
     }
 }

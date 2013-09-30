@@ -1,17 +1,46 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EditPage.aspx.cs" Inherits="KalikoCMS.Admin.Content.EditPage" ValidateRequest="false" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EditPage.aspx.cs" Inherits="KalikoCMS.Admin.Content.EditPage" ValidateRequest="false" MasterPageFile="../Templates/MasterPages/Base.Master" %>
 <%@ Register tagPrefix="cms" tagName="StringPropertyEditor" src="PropertyType/StringPropertyEditor.ascx" %>
 <%@ Register tagPrefix="cms" tagName="DateTimePropertyEditor" src="PropertyType/DateTimePropertyEditor.ascx" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>KalikoCMS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Le styles -->
-    <link href="/Admin/Assets/Styles/bootstrap.css" rel="stylesheet">
-    <link href="/Admin/Assets/Styles/jquery-ui.custom.css" rel="stylesheet" />
+<%@ Register tagPrefix="cms" tagName="BooleanPropertyEditor" src="PropertyType/BooleanPropertyEditor.ascx" %>
+
+<asp:Content ContentPlaceHolderID="MainContent" runat="server">
+  <form id="MainForm" runat="server">
+  <h1><i class="icon-edit"></i> <asp:Literal ID="PageHeader" runat="server" /></h1>
+  <div style="position: fixed; top: 60px; bottom: 93px; left: 0px; right: 0px; overflow: auto; padding: 10px;">
+    <div class="form-horizontal">
+      <fieldset>
+        <cms:StringPropertyEditor ID="PageName" runat="server" />
+        <cms:DateTimePropertyEditor ID="StartPublishDate" runat="server" />
+        <cms:DateTimePropertyEditor ID="StopPublishDate" runat="server" />
+        <cms:BooleanPropertyEditor ID="VisibleInMenu" runat="server" />
+        <asp:Panel ID="EditControls" runat="server" />
+        <asp:Literal ID="ErrorMessage" runat="server" />
+        <asp:Literal ID="MessageBox" Visible="False" runat="server" />
+        <div class="form-actions" style="position: fixed; bottom: 10px; width: 100%; margin: 0;">
+          <asp:LinkButton runat="server" ID="SaveButton" CssClass="btn btn-large btn-primary"><i class="icon-ok icon-white"></i> Save page</asp:LinkButton>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  </form>
+</asp:Content>
+
+
+<asp:Content ContentPlaceHolderID="AdditionalScripts" runat="server">
+    <script src="assets/js/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="assets/js/bootstrap-datetimepicker.min.js?d=<%=DateTime.Now %>" type="text/javascript"></script>
+    <script src="assets/js/jquery.wysiwyg.js" type="text/javascript"></script>
+    
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('textarea.html-editor').editHtml();
+      });
+    </script>
+</asp:Content>
+
+<asp:Content ContentPlaceHolderID="AdditionalStyles" runat="server">
+    <link href="assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
     <style type="text/css">
         #ui-datepicker-div { font-size: 12px; }
         
@@ -21,7 +50,12 @@
             padding: 0;
             list-style: disc outside none;
             background: #eaeaea;
-            padding: 4px; height: 30px; width: 500px; border-left: 1px solid rgb(216, 216, 216); border-top: 1px solid rgb(216, 216, 216); border-right: 1px solid rgb(216, 216, 216); border-radius: 3px 3px 0px 0px; box-shadow: 0pt 1px 3px rgba(255, 255, 255, 0.075) inset;
+            padding: 4px; 
+            height: 30px; 
+            border: 1px solid rgb(216, 216, 216); 
+            border-bottom: none; 
+            border-radius: 3px 3px 0 0; 
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.075) inset;
         }
         
         .html-toolbar > li {
@@ -40,9 +74,9 @@
         iframe {
             background-color: #FFFFFF;
             border: 1px solid #CCCCCC;
-            border-radius: 3px;
             -moz-border-radius: 3px;
             -webkit-border-radius: 3px;
+            border-radius: 3px;
             color: #555555;
             font-size: 13px;
             height: 200px;
@@ -52,65 +86,4 @@
             width: 500px;
         }
     </style>
-    <!-- IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="/Admin/Assets/Scripts/html5shiv.min.js"></script>
-    <![endif]-->
-    <script src="/Admin/Assets/Scripts/jquery-1.7.2.min.js"></script>
-    <script src="/Admin/Assets/Scripts/jquery.wysiwyg.js"></script>
-
-    <script>
-        var propertyEditor = {
-            dialogs: {
-                openSelectPageDialog: function (pageId, languageId, callback) {
-                    parent.openModal("/Admin/Content/Dialogs/SelectPageDialog.aspx?pageId=" + pageId, 500, 400, callback);
-                    return false;
-                },
-                openSelectFileDialog: function (filePath, callback) {
-                    parent.openModal("/Admin/Content/Dialogs/SelectFileDialog.aspx?filePath=" + filePath, 500, 400, callback);
-                    return false;
-                }
-            }
-        };
-    </script>
-
-</head>
-<body>
-    <form id="form1" runat="server">
-        <h1><asp:Literal ID="PageHeader" runat="server" /></h1>
-        <div style="position: fixed;top:40px;bottom:92px;left:0px;right:0px;overflow: auto;padding:10px;">
-            <div class="form-horizontal">
-                <fieldset>
-                    <cms:StringPropertyEditor ID="PageName" runat="server" />
-                    <cms:DateTimePropertyEditor ID="StartPublishDate" runat="server" />
-                    <cms:DateTimePropertyEditor ID="StopPublishDate" runat="server" />
-        
-                    <asp:Panel ID="EditControls" runat="server" />
-                    <asp:Literal ID="ErrorMessage" runat="server" />
-                    <asp:Literal ID="MessageBox" Visible="False" runat="server" />                    
-
-                    <div class="form-actions" style="position: fixed;bottom:0px;width: 100%;">
-                    
-                    <asp:LinkButton runat="server" ID="SaveButton" CssClass="btn btn-large btn-primary">
-                        <i class="icon-ok icon-white"></i> Save page
-                    </asp:LinkButton>
-<%--                    <asp:LinkButton runat="server" ID="LinkButton1" CssClass="btn btn-large">
-                        <i class="icon-trash"></i> Delete page
-                    </asp:LinkButton>--%>
-                    </div>
-                </fieldset>
-            </div>
-        </div>
-    </form>
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/Admin/Assets/Scripts/bootstrap.min.js"></script>
-    <script src="/Admin/Assets/Scripts/jquery-ui-1.8.20.custom.js"></script>
-    <script src="/Admin/Assets/Scripts/jquery.datetimeentry.js"></script>
-    
-    <script>
-        $().ready(function () {
-            $('textarea.html-editor').editHtml();
-        });
-    </script>
-</body>
-</html>
+</asp:Content>

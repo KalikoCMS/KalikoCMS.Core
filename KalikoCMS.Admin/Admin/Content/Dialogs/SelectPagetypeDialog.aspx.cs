@@ -21,9 +21,15 @@ namespace KalikoCMS.Admin.Content.Dialogs {
 
     public partial class SelectPagetypeDialog : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
-            StringBuilder stringBuilder = new StringBuilder();
+            var pageTypes = PageType.PageTypes;
 
-            foreach (PageType pageType in PageType.PageTypes) {
+            if (pageTypes == null) {
+                return;
+            }
+
+            var stringBuilder = new StringBuilder();
+
+            foreach (PageType pageType in pageTypes) {
                 stringBuilder.Append("<li><a href=\"javascript:selectPageType('" + pageType.PageTypeId + "')\">" + pageType.Name + "</a></li>");
             }
 

@@ -23,11 +23,11 @@ namespace KalikoCMS.Admin.Content.PageTree {
 
     public class JQueryTreeContent : IHttpHandler {
         private void GetChildren(HttpContext context) {
-            Guid pageId = new Guid(context.Request.Form["id"]);
+            var pageId = new Guid(context.Request.Form["id"]);
             string separator = string.Empty;
 
             PageCollection children = PageFactory.GetChildrenForPage(pageId, PublishState.All);
-            StringBuilder stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder();
             stringBuilder.Append("[");
 
 
@@ -55,8 +55,8 @@ namespace KalikoCMS.Admin.Content.PageTree {
 
 
         private void MoveNode(HttpContext context) {
-            Guid pageId = new Guid(context.Request.Form["id"]);
-            Guid targetId = new Guid(context.Request.Form["ref"]);
+            var pageId = new Guid(context.Request.Form["id"]);
+            var targetId = new Guid(context.Request.Form["ref"]);
 
             PageFactory.MovePage(pageId, targetId);
 
@@ -65,7 +65,7 @@ namespace KalikoCMS.Admin.Content.PageTree {
         }
 
         private void RemoveNode(HttpContext context) {
-            Guid pageId = new Guid(context.Request.Form["id"]);
+            var pageId = new Guid(context.Request.Form["id"]);
             PageFactory.DeletePage(pageId);
         }
 

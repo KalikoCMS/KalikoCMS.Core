@@ -7,18 +7,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KalikoCMS.Admin.Content.Dialogs {
+namespace KalikoCMS.Admin.Search {
     
     
-    public partial class SelectPagetypeDialog {
+    public partial class Default {
         
         /// <summary>
-        /// PageTypeList control.
+        /// ResultBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal PageTypeList;
+        protected global::System.Web.UI.WebControls.Literal ResultBox;
+        
+        /// <summary>
+        /// ReindexButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ReindexButton;
     }
 }
