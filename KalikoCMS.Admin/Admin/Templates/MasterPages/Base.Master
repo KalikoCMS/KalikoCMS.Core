@@ -1,0 +1,33 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Base.master.cs" Inherits="KalikoCMS.Admin.Templates.MasterPages.Base" %>
+<!DOCTYPE html>
+<html lang="en">
+  <head runat="server">
+    <title><%=Page.Title %></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <base href="<%=KalikoCMS.Configuration.SiteSettings.Instance.AdminPath %>" />
+    
+    <!-- Stylesheets -->
+    <asp:ContentPlaceHolder ID="BaseStyles" runat="server">
+      <link href="assets/css/jquery-ui.custom.css" rel="stylesheet" />
+      <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+      <link href="assets/fonts/css/font-awesome.min.css" rel="stylesheet" />
+      <link href="assets/css/kalikocms.admin.css" rel="stylesheet" />
+    </asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="AdditionalStyles" runat="server" />
+    
+    <!-- IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.min.js"></script>
+    <![endif]-->
+    <script src="assets/js/jquery-1.10.2.min.js"></script>
+  </head>
+  <body>
+    <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+    
+    <!-- Scripts -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <asp:ContentPlaceHolder ID="AdditionalScripts" runat="server" />
+  </body>
+</html>

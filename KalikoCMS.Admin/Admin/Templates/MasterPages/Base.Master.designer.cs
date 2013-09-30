@@ -7,45 +7,45 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KalikoCMS.Admin {
+namespace KalikoCMS.Admin.Templates.MasterPages {
     
     
-    public partial class Admin {
+    public partial class Base {
         
         /// <summary>
-        /// form1 control.
+        /// BaseStyles control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder BaseStyles;
         
         /// <summary>
-        /// FullRegion control.
+        /// AdditionalStyles control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder FullRegion;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder AdditionalStyles;
         
         /// <summary>
-        /// LeftRegion control.
+        /// MainContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder LeftRegion;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
         
         /// <summary>
-        /// RightRegion control.
+        /// AdditionalScripts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder RightRegion;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder AdditionalScripts;
     }
 }

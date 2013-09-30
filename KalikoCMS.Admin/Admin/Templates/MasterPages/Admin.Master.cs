@@ -14,13 +14,16 @@
  */
 #endregion
 
-namespace KalikoCMS.Admin {
+namespace KalikoCMS.Admin.Templates.MasterPages {
     using System;
     using System.Web.UI;
-    using KalikoCMS.Configuration;
+    using Configuration;
 
     public partial class Admin : MasterPage {
-        protected void Page_Load(object sender, EventArgs e) {
+        protected override void OnLoad(EventArgs e) {
+            MainForm.Action = Request.Url.PathAndQuery;
+
+            base.OnLoad(e);
         }
 
         public string AdminPath {

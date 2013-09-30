@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="KalikoCMS.Admin.Global" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="KalikoCMS.Global" Language="C#" %>

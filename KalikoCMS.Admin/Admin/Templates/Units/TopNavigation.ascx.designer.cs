@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KalikoCMS.Admin {
+namespace KalikoCMS.Admin.Templates.Units {
 
 
     public partial class TopNavigation {

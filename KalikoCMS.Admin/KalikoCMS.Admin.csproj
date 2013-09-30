@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -18,6 +19,16 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,46 +48,75 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Kaliko.ImageLibrary, Version=1.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Third party tools\ImageLibrary\1.2.6\Kaliko.ImageLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Kaliko.Logger">
       <HintPath>..\Repository\Kaliko.Logger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Admin\Assets\Scripts\jquery.hotkeys.js" />
-    <Content Include="Admin\Assets\Scripts\jquery.jgrowl.js" />
-    <Content Include="Admin\Assets\Scripts\jquery.wysiwyg.js" />
-    <Content Include="Admin\Assets\Styles\jquery.jgrowl.css" />
+    <Content Include="Admin\Assets\css\jquery.jcrop.min.css" />
+    <Content Include="Admin\Assets\css\kalikocms.admin.css" />
+    <Content Include="Admin\Assets\fonts\css\font-awesome-ie7.css" />
+    <Content Include="Admin\Assets\fonts\css\font-awesome-ie7.min.css" />
+    <Content Include="Admin\Assets\fonts\css\font-awesome.css" />
+    <Content Include="Admin\Assets\fonts\css\font-awesome.min.css" />
+    <Content Include="Admin\Assets\fonts\font\fontawesome-webfont.svg" />
+    <Content Include="Admin\Assets\images\error-image.jpg" />
+    <Content Include="Admin\Assets\images\loading.gif" />
+    <Content Include="Admin\Assets\images\no-image.jpg" />
+    <Content Include="Admin\Assets\images\progressbar.gif" />
+    <Content Include="Admin\Assets\js\bootbox.min.js" />
+    <Content Include="Admin\Assets\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="Admin\Assets\js\bootstrap-modal.js" />
+    <Content Include="Admin\Assets\js\bootstrap-modalmanager.js" />
+    <Content Include="Admin\Assets\js\bootstrap-notify.js" />
+    <Content Include="Admin\Assets\js\jquery-ui.min.js" />
+    <Content Include="Admin\Assets\js\jquery.color.js" />
+    <Content Include="Admin\Assets\js\jquery.fileupload-process.js" />
+    <Content Include="Admin\Assets\js\jquery.fileupload-ui.js" />
+    <Content Include="Admin\Assets\js\jquery.fileupload.js" />
+    <Content Include="Admin\Assets\js\jquery.hotkeys.js" />
+    <Content Include="Admin\Assets\js\jquery.iframe-transport.js" />
+    <Content Include="Admin\Assets\js\jquery.jcrop.min.js" />
+    <Content Include="Admin\Assets\js\jquery.wysiwyg.js" />
+    <Content Include="Admin\Assets\js\kalikocms.core.js" />
+    <Content Include="Admin\Assets\js\tmpl.min.js" />
+    <Content Include="Admin\Assets\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Admin\Assets\css\bootstrap-modal.css" />
+    <Content Include="Admin\Assets\css\bootstrap-notify.css" />
+    <Content Include="Admin\Assets\css\bootstrap-responsive.min.css" />
+    <Content Include="Admin\Assets\css\bootstrap.min.css" />
+    <Content Include="Admin\Assets\css\jquery.fileupload-ui.css" />
+    <Content Include="Admin\Content\Dialogs\EditImageDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectFileDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectPageDialog.aspx" />
+    <Content Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx" />
+    <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.ascx" />
+    <Content Include="Admin\Content\Dialogs\EditCollectionPropertyDialog.aspx" />
+    <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.js" />
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.js" />
     <Content Include="Admin\Content\PropertyType\ImagePropertyEditor.js" />
     <Content Include="Admin\Content\PropertyType\PageLinkPropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\PageLinkPropertyEditor.js" />
     <Content Include="Admin\Login.aspx" />
-    <Content Include="Admin\TopNavigation.ascx" />
-    <Content Include="Admin\Assets\Images\glyphicons-halflings-white.png" />
-    <Content Include="Admin\Assets\Images\glyphicons-halflings.png" />
-    <Content Include="Admin\Assets\Scripts\bootstrap.min.js" />
-    <Content Include="Admin\Assets\Scripts\html5shiv.min.js" />
-    <Content Include="Admin\Assets\Scripts\jquery-1.7.2.min.js" />
-    <Content Include="Admin\Assets\Scripts\jquery-ui-1.8.20.custom.min.js" />
-    <Content Include="Admin\Assets\Scripts\jquery.datetimeentry.js" />
-    <Content Include="Admin\Assets\Styles\bootstrap-responsive.css" />
-    <Content Include="Admin\Assets\Styles\bootstrap.css" />
-    <Content Include="Admin\Assets\Styles\jquery-ui.custom.css" />
+    <Content Include="Admin\Search\Default.aspx" />
+    <Content Include="Admin\Templates\Units\TopNavigation.ascx" />
+    <Content Include="Admin\Assets\js\bootstrap.min.js" />
+    <Content Include="Admin\Assets\js\html5shiv.min.js" />
+    <Content Include="Admin\Assets\js\jquery-1.10.2.min.js" />
+    <Content Include="Admin\Assets\css\jquery-ui.custom.css" />
     <Content Include="Admin\Content\Default.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectPagetypeDialog.aspx" />
     <Content Include="Admin\Content\EditPage.aspx" />
@@ -88,13 +128,9 @@
     <Content Include="Admin\Content\PropertyType\StringPropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\TextPropertyEditor.ascx" />
     <Content Include="Admin\Default.aspx" />
-    <Content Include="Admin\Assets\Scripts\jquery.cookie.js" />
-    <Content Include="Admin\Assets\Scripts\jquery.jstree.js" />
-    <Content Include="Admin\Assets\Styles\classic\d.gif" />
-    <Content Include="Admin\Assets\Styles\classic\d.png" />
-    <Content Include="Admin\Assets\Styles\classic\dot_for_ie.gif" />
-    <Content Include="Admin\Assets\Styles\classic\style.css" />
-    <Content Include="Admin\Assets\Styles\classic\throbber.gif" />
+    <Content Include="Admin\Assets\js\jquery.cookie.js" />
+    <Content Include="Admin\Assets\js\jquery.jstree.js" />
+    <Content Include="Admin\Assets\css\jstree.classic.css" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -107,12 +143,39 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin\Admin.Master.cs">
+    <Compile Include="Admin\Content\Dialogs\EditImageDialog.aspx.cs">
+      <DependentUpon>EditImageDialog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\Dialogs\EditImageDialog.aspx.designer.cs">
+      <DependentUpon>EditImageDialog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx.cs">
+      <DependentUpon>BooleanPropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx.designer.cs">
+      <DependentUpon>BooleanPropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Handlers\FileHandler.ashx.cs">
+      <DependentUpon>FileHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Search\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Search\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Templates\MasterPages\Admin.Master.cs">
       <DependentUpon>Admin.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Admin\Admin.Master.designer.cs">
+    <Compile Include="Admin\Templates\MasterPages\Admin.Master.designer.cs">
       <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Assets\images\Thumbnail.ashx.cs">
+      <DependentUpon>Thumbnail.ashx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Content\Dialogs\Dialog.Master.cs">
       <DependentUpon>Dialog.Master</DependentUpon>
@@ -135,6 +198,20 @@
     <Compile Include="Admin\Content\Dialogs\SelectPageDialog.aspx.designer.cs">
       <DependentUpon>SelectPageDialog.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\Content\PropertyType\CollectionPropertyEditor.ascx.cs">
+      <DependentUpon>CollectionPropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\CollectionPropertyEditor.ascx.designer.cs">
+      <DependentUpon>CollectionPropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\Dialogs\EditCollectionPropertyDialog.aspx.cs">
+      <DependentUpon>EditCollectionPropertyDialog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\Dialogs\EditCollectionPropertyDialog.aspx.designer.cs">
+      <DependentUpon>EditCollectionPropertyDialog.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Content\PropertyType\FilePropertyEditor.ascx.cs">
       <DependentUpon>FilePropertyEditor.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -156,11 +233,18 @@
     <Compile Include="Admin\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Admin\TopNavigation.ascx.cs">
+    <Compile Include="Admin\Templates\MasterPages\Base.Master.cs">
+      <DependentUpon>Base.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Templates\MasterPages\Base.Master.designer.cs">
+      <DependentUpon>Base.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Templates\Units\TopNavigation.ascx.cs">
       <DependentUpon>TopNavigation.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Admin\TopNavigation.ascx.designer.cs">
+    <Compile Include="Admin\Templates\Units\TopNavigation.ascx.designer.cs">
       <DependentUpon>TopNavigation.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Content\Default.aspx.cs">
@@ -243,18 +327,23 @@
     <Compile Include="Admin\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\WebControls\BootstrapButton.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Admin\Admin.Master" />
+    <Content Include="Admin\Templates\MasterPages\Admin.Master" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KalikoCMS.Engine\KalikoCMS.Engine.csproj">
       <Project>{FC032B3C-8643-4C35-929C-88959FC980D4}</Project>
       <Name>KalikoCMS.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KalikoCMS.Search\KalikoCMS.Search.csproj">
+      <Project>{D7500A83-6B4F-4D68-B215-D9730DE48044}</Project>
+      <Name>KalikoCMS.Search</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -263,8 +352,31 @@
   <ItemGroup>
     <Content Include="Admin\Content\Dialogs\Dialog.Master" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Assets\images\Thumbnail.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Assets\fonts\font\fontawesome-webfont.eot" />
+    <Content Include="Admin\Assets\fonts\font\fontawesome-webfont.ttf" />
+    <Content Include="Admin\Assets\fonts\font\fontawesome-webfont.woff" />
+    <Content Include="Admin\Assets\fonts\font\FontAwesome.otf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Templates\MasterPages\Base.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Handlers\FileHandler.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Admin\Assets\cache\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
