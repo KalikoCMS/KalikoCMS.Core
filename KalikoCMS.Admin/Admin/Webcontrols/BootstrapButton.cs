@@ -21,6 +21,7 @@
             
             if (!Enabled) {
                 Attributes["class"] += " disabled";
+                Attributes.Add("disabled", "disabled");
             }
 
             if (Mode == ButtonMode.Primary) {

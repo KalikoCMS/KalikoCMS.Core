@@ -47,13 +47,31 @@
                 applyFormat(format);
                 updateTextBox();
             },
-            insertImage: function() {
-                insertHTML('<img src="http://ssl.gstatic.com/gb/images/j_e6a6aca6.png" alt="hej" />');
-                updateTextBox();
+            browseImage: function() {
+                top.registerCallback(function (imagePath, cropX, cropY, cropW, cropH, originalPath, description) { insertImage(imagePath, description); });
+                propertyEditor.dialogs.openEditImageDialog('', '', '', '', '', '', '', '', '');
+            },
+            showSource: function () {
+                if (htmlMode) {
+                    htmlMode = false;
+                    $(element).show();
+                    iframe.hide();
+                    $toolbar.find("li[data-context='html']").hide();
+                    //$toolbar.hide();
+                }
+                else {
+                    updateIframe();
+                    htmlMode = true;
+                    $(element).hide();
+                    iframe.show();
+                    $toolbar.find("li[data-context='html']").show();
+                    //$toolbar.show();
+                }
             }
         };
         var contentWindow;
         var contentDocument;
+        var htmlMode = true;
 
         instanceCounter++;
 
@@ -62,9 +80,15 @@
         setTimeout(function() {
             contentWindow = iframe[0].contentWindow;
             contentDocument = contentWindow.document;
+            
+            // TODO: Refactor and allow setting doctypes and local stylesheets
+            contentDocument.open();
+            contentDocument.write('<!DOCTYPE html><html><head></head><body></body></html>');
+            contentDocument.close();
+            
             var frameBody = $('body', contentDocument);
 
-            frameBody.html($(element).text());
+            updateIframe();
             frameBody.attr('contentEditable', true);
             frameBody.attr('designMode', 'on');
             
@@ -79,16 +103,17 @@
         var $toolbar = $('<ul id="htmlTools_' + instanceCounter + '" class="' + settings.toolbarClass + '"></ul>');
         iframe.before($toolbar);
 
-        var group = createButtonGroup($toolbar);
+        var group = createButtonGroup($toolbar, 'html');
         addToolInGroup(group, 'icon-bold', commands.bold, null);
         addToolInGroup(group, 'icon-italic', commands.italic, null);
         addToolInGroup(group, 'icon-underline', commands.underline, null);
-        addTool($toolbar, 'icon-remove-sign', commands.removeFormat, null);
-        addTool($toolbar, 'icon-picture', commands.insertImage, null);
-        addFormatDropdown($toolbar);
+        addTool($toolbar, 'icon-remove-sign', commands.removeFormat, null, 'html');
+        addTool($toolbar, 'icon-picture', commands.browseImage, null, 'html');
+        addTool($toolbar, 'icon-file-text-alt', commands.showSource, null, 'all');
+        addFormatDropdown($toolbar, 'html');
         
-        function addFormatDropdown(toolbar) {
-            var $dropdown = $('<li class="dropdown"><a href="#" data-toggle="dropdown" class="btn dropdown-toggle"><i class="icon-font"></i>&nbsp;<span class="current-font">Format</span>&nbsp;<b class="caret"></b></a><ul class="dropdown-menu"></ul></li>');
+        function addFormatDropdown(toolbar, context) {
+            var $dropdown = $('<li class="dropdown" data-context="' + context + '"><a href="#" data-toggle="dropdown" class="btn dropdown-toggle"><i class="icon-font"></i>&nbsp;<span class="current-font">Format</span>&nbsp;<b class="caret"></b></a><ul class="dropdown-menu"></ul></li>');
             var $options = $('ul', $dropdown);
 
             addFormatOption($options, 'Paragraph', 'p');
@@ -111,15 +136,22 @@
             var frameBody = $('body', doc);
             $(element).val(frameBody.html());
         }
+        
+        function updateIframe() {
+            var text = $(element).val();
+            var doc = iframe[0].contentWindow.document;
+            var frameBody = $('body', doc);
+            frameBody.html(text);
+        }
 
-        function createButtonGroup(toolbar) {
-            var buttonGroup = $('<li><div class="btn-group"></div></li>');
+        function createButtonGroup(toolbar, context) {
+            var buttonGroup = $('<li data-context="' + context + '"><div class="btn-group"></div></li>');
             toolbar.append(buttonGroup);
             return buttonGroup.find("div");
         }
 
-        function addTool(toolbar, icon, command, parameter) {
-            var $icon = $('<li><a href="javascript:;" class="btn" unselectable="on"><i class="' + icon + '"></i></a></li>');
+        function addTool(toolbar, icon, command, parameter, context) {
+            var $icon = $('<li data-context="' + context + '"><a href="javascript:;" class="btn" unselectable="on"><i class="' + icon + '"></i></a></li>');
             $icon.click(function() {
                 command(parameter);
             });
@@ -137,8 +169,16 @@
             contentDocument.execCommand(command, false, param);
         }        
 
+        function insertImage(imagePath, description) {
+            if (imagePath == null || imagePath.length == 0) {
+                return;
+            }
+            
+            insertHtml('<img src="' + imagePath + '" alt="' + description + '" />');
+            updateTextBox();
+        }
 
-        function insertHTML(html) {
+        function insertHtml(html) {
             var sel = rangy.getSelection(contentWindow);
             
             if (sel.rangeCount) {
