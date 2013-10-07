@@ -367,9 +367,7 @@
   <ItemGroup>
     <Content Include="Admin\Handlers\FileHandler.ashx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Admin\Assets\cache\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

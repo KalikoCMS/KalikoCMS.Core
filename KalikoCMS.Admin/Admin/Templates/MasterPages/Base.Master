@@ -13,7 +13,7 @@
       <link href="assets/css/jquery-ui.custom.css" rel="stylesheet" />
       <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
       <link href="assets/fonts/css/font-awesome.min.css" rel="stylesheet" />
-      <link href="assets/css/kalikocms.admin.css" rel="stylesheet" />
+      <link href="assets/css/kalikocms.admin.css?d=<%=DateTime.Now.Ticks %>" rel="stylesheet" />
     </asp:ContentPlaceHolder>
     <asp:ContentPlaceHolder ID="AdditionalStyles" runat="server" />
     

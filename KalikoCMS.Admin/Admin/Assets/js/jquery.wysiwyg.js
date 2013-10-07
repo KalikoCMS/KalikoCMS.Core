@@ -75,7 +75,7 @@
 
         instanceCounter++;
 
-        var iframe = $('<iframe id="htmlEditor_' + instanceCounter + '"></iframe>');
+        var iframe = $('<iframe id="htmlEditor_' + instanceCounter + '" class="html-editor-content"></iframe>');
         $(element).before(iframe);
         setTimeout(function() {
             contentWindow = iframe[0].contentWindow;

@@ -29,7 +29,7 @@
 <asp:Content ContentPlaceHolderID="AdditionalScripts" runat="server">
     <script src="assets/js/jquery-ui.min.js" type="text/javascript"></script>
     <script src="assets/js/bootstrap-datetimepicker.min.js?d=<%=DateTime.Now %>" type="text/javascript"></script>
-    <script src="assets/js/jquery.wysiwyg.js" type="text/javascript"></script>
+    <script src="assets/js/jquery.wysiwyg.js?d=<%=DateTime.Now.Ticks %>" type="text/javascript"></script>
     
     <script type="text/javascript">
       $(document).ready(function () {
@@ -40,50 +40,4 @@
 
 <asp:Content ContentPlaceHolderID="AdditionalStyles" runat="server">
     <link href="assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-
-    <style type="text/css">
-        #ui-datepicker-div { font-size: 12px; }
-        
-        .html-toolbar {
-            display: block;
-            margin: 10px 0 0 0;
-            padding: 0;
-            list-style: disc outside none;
-            background: #eaeaea;
-            padding: 4px; 
-            height: 30px; 
-            border: 1px solid rgb(216, 216, 216); 
-            border-bottom: none; 
-            border-radius: 3px 3px 0 0; 
-            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.075) inset;
-        }
-        
-        .html-toolbar > li {
-            display: list-item;
-            float: left;
-            list-style: none outside none;
-            margin: 0 5px 0 0;
-        }
-        
-        .html-toolbar:after {
-            clear: both;
-            content: "";
-            display: table;
-        }
-
-        iframe {
-            background-color: #FFFFFF;
-            border: 1px solid #CCCCCC;
-            -moz-border-radius: 3px;
-            -webkit-border-radius: 3px;
-            border-radius: 3px;
-            color: #555555;
-            font-size: 13px;
-            height: 200px;
-            line-height: 18px;
-            margin-bottom: 9px;
-            padding: 4px;
-            width: 500px;
-        }
-    </style>
 </asp:Content>
