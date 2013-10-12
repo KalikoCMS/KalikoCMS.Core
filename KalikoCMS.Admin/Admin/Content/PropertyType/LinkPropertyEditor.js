@@ -5,7 +5,6 @@
             var type = $(typeField).val();
 
             var callback = function (newUrl, newType) {
-                alert("savbed" + newUrl + newType);
                 $(urlField).val(newUrl);
                 $(typeField).val(newType);
                 $(displayField).val(newUrl);

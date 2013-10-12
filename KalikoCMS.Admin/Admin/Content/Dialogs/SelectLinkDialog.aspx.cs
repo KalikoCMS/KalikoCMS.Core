@@ -16,6 +16,8 @@
 
 namespace KalikoCMS.Admin.Content.Dialogs {
     using System;
+    using System.Globalization;
+    using Configuration;
     using KalikoCMS.Extensions;
     using KalikoCMS.PropertyType;
 
@@ -58,6 +60,13 @@ namespace KalikoCMS.Admin.Content.Dialogs {
                     FileDisplayField.Text = _url;
                     break;
                 case LinkProperty.LinkType.Page:
+                    var pageId = PageFactory.GetPageIdFromUrl(_url);
+                    if (pageId != Guid.Empty) {
+                        var page = PageFactory.GetPage(pageId);
+                        PageDisplayField.Text = page.PageName;
+                        PageId.Value = page.PageId.ToString();
+                        LanguageId.Value = page.LanguageId.ToString(CultureInfo.InvariantCulture);
+                    }
                     break;
             }
         }
@@ -67,11 +76,40 @@ namespace KalikoCMS.Admin.Content.Dialogs {
             var typeString = Request.QueryString["type"];
             int type;
 
+            _url = StripLocalDomain(_url);
+
             if (int.TryParse(typeString, out type)) {
                 _currentType = (LinkProperty.LinkType)type;
             }
             else {
                 _currentType = LinkProperty.LinkType.Unknown;
+            }
+
+            if (_currentType == LinkProperty.LinkType.Unknown) {
+                TryLookupUnkownLinkType();
+            }
+        }
+
+        private string StripLocalDomain(string url) {
+            if (url.Contains(Utils.ServerDomain)) {
+                return new Uri(url).PathAndQuery;
+            }
+            else {
+                return url;
+            }
+        }
+
+        private void TryLookupUnkownLinkType() {
+            if (_url.StartsWith(SiteSettings.Instance.FilePath)) {
+                _currentType = LinkProperty.LinkType.File;
+                return;
+            }
+
+            // TODO: Make a better lookup
+            var pageId = PageFactory.GetPageIdFromUrl(_url);
+            if (pageId != Guid.Empty) {
+                _currentType = LinkProperty.LinkType.Page;
+                return;
             }
         }
 
@@ -115,7 +153,7 @@ namespace KalikoCMS.Admin.Content.Dialogs {
                 return string.Empty;
             }
 
-            return page.PageUrl.AbsolutePath;
+            return page.PageUrl.ToString();
         }
 
         private void CreateCallback(string url, LinkProperty.LinkType linkType) {

@@ -104,6 +104,59 @@ namespace KalikoCMS {
             return string.Empty;
         }
 
+        // TODO: Replace this method
+        public static Guid GetPageIdFromUrl(string url) {
+            if (_pageLanguageIndex == null)
+                IndexSite();
+
+            PageIndex pageIndex = GetPageIndex(Language.CurrentLanguageId);
+
+            if (pageIndex.Items.Count == 0) {
+                return Guid.Empty;
+            }
+
+            if (url.EndsWith(".aspx", StringComparison.InvariantCultureIgnoreCase)) {
+                url = url.Substring(0, url.Length - 5);
+            }
+
+            string[] segments = url.Trim('/').Split('/');
+            int position = 0;
+            var lastPage = new PageIndexItem();
+
+            for (int i = 0; i < segments.Length; i++) {
+                var segment = segments[i];
+                int segmentHash = segment.GetHashCode();
+
+                while (true) {
+                    PageIndexItem page = pageIndex.Items[position];
+                    if ((page.UrlSegmentHash == segmentHash) && (page.UrlSegment == segment)) {
+                        if (i == segments.Length - 1) {
+                            return page.PageId;
+                        }
+
+                        position = page.FirstChild;
+
+                        if (position == -1) {
+                            return Guid.Empty;
+                        }
+
+                        lastPage = page;
+
+                        // Fortsätt med nästa segment...
+                        break;
+                    }
+
+                    position = page.NextPage;
+
+                    if (position == -1) {
+                        return Guid.Empty;
+                    }
+                }
+            }
+
+            return Guid.Empty;
+        }
+
 
         private static string TryGetPageExtender(int i, string[] segments, PageIndexItem page) {
             // TODO: Refactor
@@ -236,7 +289,7 @@ namespace KalikoCMS {
         }
 
 
-        public static string GetUrlForPage(Guid pageId) {
+        internal static string GetUrlForPage(Guid pageId) {
             PageIndexItem page = GetPageIndexItem(pageId, Language.CurrentLanguageId);
             return page != null ? GetTemplateUrl(page) : string.Empty;
         }

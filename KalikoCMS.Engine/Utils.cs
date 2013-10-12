@@ -28,6 +28,8 @@ namespace KalikoCMS {
     public static class Utils {
         private static string _version;
         private static string _applicationPath;
+        private static string _domainApplicationPath;
+        private static string _serverDomain;
 
         public static bool IsNullableType(Type type) {
             bool result = (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>));
@@ -124,6 +126,26 @@ namespace KalikoCMS {
         public static string ApplicationPath {
             get { return _applicationPath ?? (_applicationPath = HttpContext.Current.Request.ApplicationPath); }
         }
+
+        public static string DomainApplicationPath {
+            get { return _domainApplicationPath ?? (_domainApplicationPath = GetDomainApplicationPath()); }
+        }
+
+        public static string ServerDomain {
+            get { return _serverDomain ?? (_serverDomain = HttpContext.Current.Request.Url.Host); }
+        }
+
+        private static string GetDomainApplicationPath() {
+            var protocol = HttpContext.Current.Request.IsSecureConnection ? "https" : "http";
+
+            if (ApplicationPath == "/") {
+                return string.Format("{0}://{1}", protocol, HttpContext.Current.Request.Url.Host);
+            }
+            else {
+                return string.Format("{0}://{1}{2}", protocol, HttpContext.Current.Request.Url.Host, ApplicationPath);
+            }
+        }
+
 
         public static void Throw<T>(string message, Logger.Severity severity = Logger.Severity.Major) where T : Exception {
             var exception = (T)Activator.CreateInstance(typeof(T), message);

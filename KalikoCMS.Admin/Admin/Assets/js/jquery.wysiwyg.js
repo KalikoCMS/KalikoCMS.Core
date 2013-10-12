@@ -49,7 +49,12 @@
             },
             browseImage: function() {
                 top.registerCallback(function (imagePath, cropX, cropY, cropW, cropH, originalPath, description) { insertImage(imagePath, description); });
-                propertyEditor.dialogs.openEditImageDialog('', '', '', '', '', '', '', '', '');
+                top.propertyEditor.dialogs.openEditImageDialog('', '', '', '', '', '', '', '', '');
+            },
+            selectLink: function() {
+                var currentLink = getCurrentLink();
+                top.registerCallback(function (newUrl, newType) { insertLink(newUrl); });
+                top.propertyEditor.dialogs.openSelectLinkDialog(currentLink, 0);
             },
             showSource: function () {
                 if (htmlMode) {
@@ -57,7 +62,6 @@
                     $(element).show();
                     iframe.hide();
                     $toolbar.find("li[data-context='html']").hide();
-                    //$toolbar.hide();
                 }
                 else {
                     updateIframe();
@@ -65,7 +69,6 @@
                     $(element).hide();
                     iframe.show();
                     $toolbar.find("li[data-context='html']").show();
-                    //$toolbar.show();
                 }
             }
         };
@@ -95,7 +98,7 @@
             $(contentDocument).keyup(updateTextBox).bind('ondrop', updateTextBox).bind('DOMNodeInserted', updateTextBox);
 
             try {
-                contentDocument.execCommand('styleWithCSS', false, false); // Få Firefox att sluta tramsa med SPAN-taggar
+                contentDocument.execCommand('styleWithCSS', false, false); // Prevent Firefox from using SPAN-tags
             } catch(ex) {
             }
         }, 1);
@@ -109,6 +112,7 @@
         addToolInGroup(group, 'icon-underline', commands.underline, null);
         addTool($toolbar, 'icon-remove-sign', commands.removeFormat, null, 'html');
         addTool($toolbar, 'icon-picture', commands.browseImage, null, 'html');
+        addTool($toolbar, 'icon-link', commands.selectLink, null, 'html');
         addTool($toolbar, 'icon-file-text-alt', commands.showSource, null, 'all');
         addFormatDropdown($toolbar, 'html');
         
@@ -178,6 +182,28 @@
             updateTextBox();
         }
 
+        function insertLink(url) {
+            if (url == null) {
+                return;
+            }
+
+            if (url.length == 0) {
+                removeOuterNode("A");
+                updateTextBox();
+                return;
+            }
+            
+            var node = findParentNode("A");
+            if (node) {
+                node.href = url;
+                updateTextBox();
+                return;
+            }
+
+            surroundHtml('<a href="' + url + '"></a>', url);
+            updateTextBox();
+        }
+
         function insertHtml(html) {
             var sel = rangy.getSelection(contentWindow);
             
@@ -193,9 +219,31 @@
             contentWindow.focus();
         }
 
+        function surroundHtml(html, defaultContent) {
+            var selection = rangy.getSelection(contentWindow);
+
+            if (selection.rangeCount) {
+                var range = selection.getRangeAt(0).cloneRange();
+                var node = $(html)[0];
+
+                if (selection.isCollapsed && typeof defaultContent !== "undefined") {
+                    range.collapse(false);
+                    node.appendChild(contentDocument.createTextNode(defaultContent));
+                    range.insertNode(node);
+                } else {
+                    range.surroundContents(node);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                }
+            } 
+
+            contentWindow.focus();
+        }
+
 
         function applyFormat(format) {
-            
+            contentDocument.execCommand("FormatBlock", false, "<" + format + ">");
+            return;
 /*            
 
             // TODO: kolla in splitDataNode
@@ -218,9 +266,7 @@
 
             range.refresh();
 */
-            contentDocument.execCommand("FormatBlock", false, "<" + format + ">");
-            return;
-            if (isCollapsed) {
+/*???            if (isCollapsed) {
                 contentDocument.execCommand("FormatBlock", false, "<" + format + ">");
             } else {
                 var newNode = document.createElement(format);
@@ -231,15 +277,19 @@
                 range.insertNode(newNode);
             }
             return;
-/**/            
+   
             contentDocument.execCommand("FormatBlock", false, "<" + format + ">");
-            contentWindow.focus();
+            contentWindow.focus();*/
         }
 
         function removeFormat() {
-            var elm = findParentNode("DIV|H1|H2|H3|H4|H5|H6|P|PRE|BLOCKQUOTE|ADDRESS");
-            if(elm) {
-                elm.outerHTML = elm.innerHTML;
+            removeOuterNode("DIV|H1|H2|H3|H4|H5|H6|P|PRE|BLOCKQUOTE|ADDRESS");
+        }
+
+        function removeOuterNode(tag) {
+            var parentNode = findParentNode(tag);
+            if (parentNode) {
+                parentNode.outerHTML = parentNode.innerHTML;
             }
         }
 
@@ -269,6 +319,15 @@
             return null;
         }
 
+        function getCurrentLink() {
+            var parentNode = findParentNode("A");
+            
+            if (parentNode) {
+                return parentNode.href;
+            } else {
+                return '';
+            }
+        }
     }
     
 })(jQuery);
