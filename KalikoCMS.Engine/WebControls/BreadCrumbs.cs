@@ -18,8 +18,8 @@ namespace KalikoCMS.WebControls {
     using System;
     using System.ComponentModel;
     using System.Web.UI;
-    using KalikoCMS.Core.Collections;
-    using KalikoCMS.Framework;
+    using Core.Collections;
+    using Framework;
 
     public class Breadcrumbs : AutoBindableBase {
 
@@ -66,24 +66,26 @@ namespace KalikoCMS.WebControls {
         }
 
         private void CreateItem(Guid pageId, bool useSeparator) {
-            if (ItemTemplate != null) {
-                if (useSeparator) {
-                    AddSeparator();
-                }
-
-                PageListItem item = new PageListItem();
-
-                ItemTemplate.InstantiateIn(item);
-
-                item.DataItem = pageId;
-                Controls.Add(item);
-                item.DataBind();
+            if (ItemTemplate == null) {
+                return;
             }
+
+            if (useSeparator) {
+                AddSeparator();
+            }
+
+            var item = new PageListItem();
+
+            ItemTemplate.InstantiateIn(item);
+
+            item.DataItem = pageId;
+            Controls.Add(item);
+            item.DataBind();
         }
 
         private void AddSeparator() {
             if (SeparatorTemplate != null) {
-                TemplateItem item = new TemplateItem();
+                var item = new TemplateItem();
                 SeparatorTemplate.InstantiateIn(item);
                 Controls.Add(item);
             }

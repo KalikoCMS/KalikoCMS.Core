@@ -19,7 +19,7 @@ namespace KalikoCMS.Core {
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
     using System.Web;
-    using KalikoCMS.Core.Collections;
+    using Collections;
 
     public class PageNameBuilder {
         private static List<KeyValuePair<string, string>> _letterTranslation;
@@ -31,7 +31,7 @@ namespace KalikoCMS.Core {
         }
 
         public static string PageNameToUrl(string pageName, Guid parentId) {
-            string baseUrl = pageName.ToLower();
+            var baseUrl = pageName.ToLower();
 
             baseUrl = HandleWhiteSpaces(baseUrl);
             baseUrl = HandleNonAsciiLetters(baseUrl);

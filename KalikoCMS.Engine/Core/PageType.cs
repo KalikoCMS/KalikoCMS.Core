@@ -18,6 +18,7 @@ namespace KalikoCMS.Core {
     using System;
     using System.Collections.Generic;
     using Data;
+    using Data.EntityProvider;
 
     public class PageType {
         public static List<PageType> PageTypes { get; internal set; }
@@ -45,6 +46,10 @@ namespace KalikoCMS.Core {
 
         public static PageType GetPageTypeForType(Type type) {
             return PageTypes.Find(pt => pt.Type == type);
+        }
+
+        public static List<PropertyEntity> GetPropertyDefinitions(int pagetypeId) {
+            return Data.PropertyData.GetPropertyDefinitionsForPagetype(pagetypeId);
         }
     }
 }

@@ -16,8 +16,8 @@
 
 namespace KalikoCMS.Framework {
     using System;
-    using KalikoCMS.Core;
-    using KalikoCMS.Data;
+    using Core;
+    using Data;
 
     public abstract class PageTemplate : System.Web.UI.Page {
         private CmsPage _currentPage;

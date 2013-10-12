@@ -14,15 +14,14 @@
  */
 #endregion
 
-using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Web.UI;
-using KalikoCMS.Core;
-using KalikoCMS.Framework;
-using KalikoCMS.PropertyType;
-
 namespace KalikoCMS.WebControls {
+    using System;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Web.UI;
+    using Core;
+    using Framework;
+
     public class PropertyControl : AutoBindableBase, IAttributeAccessor {
 
         private string StyleTags {

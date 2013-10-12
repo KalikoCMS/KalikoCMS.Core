@@ -14,16 +14,15 @@
  */
 #endregion
 
-using System.Globalization;
-
 namespace KalikoCMS.WebControls {
     using System;
     using System.ComponentModel;
+    using System.Globalization;
     using System.Net.Mail;
     using System.Web;
     using System.Web.UI;
     using System.Web.UI.WebControls;
-    using KalikoCMS.Events;
+    using Events;
 
     public class FormMail : CustomWebControl {
 
@@ -114,7 +113,7 @@ namespace KalikoCMS.WebControls {
             bool showThankyou = true;
 
             if(UseCustomFormHandler) {
-                SendFormEventArgs ea = new SendFormEventArgs(_formContainer.Controls);
+                var ea = new SendFormEventArgs(_formContainer.Controls);
                 OnSendForm(ea);
                 showThankyou = ea.FormWasSentCorrectly;
             }
@@ -139,22 +138,22 @@ namespace KalikoCMS.WebControls {
             foreach (Control c in _formContainer.Controls) {
                 Type type = c.GetType();
                 if (type == typeof(TextBox)) {
-                    TextBox textBox = ((TextBox)c);
+                    var textBox = ((TextBox)c);
                     mailSubject = mailSubject.Replace("@@" + c.ID + "@@", textBox.Text);
                     mailTemplate = mailTemplate.Replace("@@" + c.ID + "@@", textBox.Text);
                 }
                 else if (type == typeof(HiddenField)) {
-                    HiddenField hiddenField = ((HiddenField)c);
+                    var hiddenField = ((HiddenField)c);
                     mailSubject = mailSubject.Replace("@@" + c.ID + "@@", hiddenField.Value);
                     mailTemplate = mailTemplate.Replace("@@" + c.ID + "@@", hiddenField.Value);
                 }
                 else if (type == typeof(DropDownList)) {
-                    DropDownList dropDownList = ((DropDownList)c);
+                    var dropDownList = ((DropDownList)c);
                     mailSubject = mailSubject.Replace("@@" + c.ID + "@@", dropDownList.SelectedValue);
                     mailTemplate = mailTemplate.Replace("@@" + c.ID + "@@", dropDownList.SelectedValue);
                 }
                 else if (type == typeof(RadioButtonList)) {
-                    RadioButtonList radioButtonList = ((RadioButtonList)c);
+                    var radioButtonList = ((RadioButtonList)c);
                     mailSubject = mailSubject.Replace("@@" + c.ID + "@@", radioButtonList.SelectedValue);
                     mailTemplate = mailTemplate.Replace("@@" + c.ID + "@@", radioButtonList.SelectedValue);
                 }
@@ -165,8 +164,8 @@ namespace KalikoCMS.WebControls {
 
             // Setup mail objects
             // TODO: Bryt ut till egen klass för mailhantering
-            SmtpClient smtp = new SmtpClient();
-            MailMessage mail = new MailMessage(MailFrom, MailTo) { 
+            var smtp = new SmtpClient();
+            var mail = new MailMessage(MailFrom, MailTo) { 
                 Subject = mailSubject, 
                 Body = mailTemplate, 
                 IsBodyHtml = true 

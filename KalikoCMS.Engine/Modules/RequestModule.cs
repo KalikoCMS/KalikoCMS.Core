@@ -19,7 +19,6 @@ namespace KalikoCMS.Modules {
     using System.Text;
     using System.Web;
     using System.Web.SessionState;
-    using Configuration;
     using ContentProvider;
     using Core;
 
@@ -43,7 +42,9 @@ namespace KalikoCMS.Modules {
                 }
             }*/
 
-            if(PageProvider.HandleRequest(url)) return;
+            if (PageProvider.HandleRequest(url)) {
+                return;
+            }
             // TODO: Lägg till sidkällor här..
         }
         

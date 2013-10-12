@@ -17,7 +17,7 @@
 namespace KalikoCMS.Modules {
     using System;
     using System.Web;
-    using KalikoCMS.Core;
+    using Core;
 
     public class InitModule : IHttpModule {
         private static bool _isRunning;

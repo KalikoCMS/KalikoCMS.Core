@@ -1,7 +1,8 @@
-﻿/* 
+﻿#region License and copyright notice
+/* 
  * Kaliko Content Management System
  * 
- * Copyright (c) Fredrik Schultz
+ * Copyright (c) Fredrik Schultz and Contributors
  * 
  * This source is subject to the Microsoft Public License.
  * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
@@ -11,10 +12,12 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED 
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
-using System;
+#endregion
 
 namespace KalikoCMS.WebControls {
+    using System;
+    using Core;
+
     public class PageListItem : CustomWebControl {
         private Core.CmsPage _page;
 
@@ -25,8 +28,8 @@ namespace KalikoCMS.WebControls {
         #endregion
 
         //TODO: Byt ut DataItem till CmsPage
-        public virtual new Core.CmsPage CurrentPage {
-            get { return _page ?? (_page = PageFactory.GetPage((Guid)DataItem)); }
+        public virtual new CmsPage CurrentPage {
+            get { return _page ?? (_page = PageFactory.GetPage(DataItem)); }
         }
     }
 }

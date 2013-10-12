@@ -16,9 +16,9 @@
 
 namespace KalikoCMS.PropertyType {
     using System;
-    using KalikoCMS.Attributes;
-    using KalikoCMS.Core;
-    using KalikoCMS.Serialization;
+    using Attributes;
+    using Core;
+    using Serialization;
 
     [PropertyType("56A791FC-D480-40A9-B161-651B9C7D8AEA", "PageLink", "Page link property", "~/Admin/Content/PropertyType/PageLinkPropertyEditor.ascx")]
     public class PageLinkProperty : PropertyData {

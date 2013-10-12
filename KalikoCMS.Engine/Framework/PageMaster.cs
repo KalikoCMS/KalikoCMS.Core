@@ -15,7 +15,7 @@
 #endregion
 
 namespace KalikoCMS.Framework {
-    using KalikoCMS.Core;
+    using Core;
 
     public class PageMaster : System.Web.UI.MasterPage {
         private CmsPage _currentPage;

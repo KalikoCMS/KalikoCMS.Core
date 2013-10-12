@@ -15,11 +15,9 @@
 #endregion
 
 namespace KalikoCMS.Framework {
-    using System;
-    using KalikoCMS.Core;
+    using Core;
     
     public abstract class PageTemplate<T> : PageTemplate where T : CmsPage {
-        private Guid _pageId;
         private CmsPage _currentPage;
 
         protected new T CurrentPage {
@@ -28,15 +26,15 @@ namespace KalikoCMS.Framework {
             }
         }
 
-        private CmsPage GetCurrentPage() {
-            _pageId = Utils.GetCurrentPageId();
+        private static CmsPage GetCurrentPage() {
+            var pageId = Utils.GetCurrentPageId();
+            var page = PageFactory.GetPage(pageId);
 
-            return ConvertToTypedPage(PageFactory.GetPage(_pageId));
+            return ConvertToTypedPage(page);
         }
 
         internal static CmsPage ConvertToTypedPage(CmsPage sourcePage) {
-            Type type = typeof(T);
-            
+            var type = typeof(T);
             var proxyPage = PageProxy.CreatePageProxy(type);
 
             ShallowCopyPageToProxy(sourcePage, proxyPage);

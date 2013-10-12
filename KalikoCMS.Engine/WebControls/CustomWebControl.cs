@@ -17,8 +17,8 @@
 namespace KalikoCMS.WebControls {
     using System.ComponentModel;
     using System.Web.UI;
-    using KalikoCMS.Core;
-    using KalikoCMS.Framework;
+    using Core;
+    using Framework;
     using AttributeCollection = System.Web.UI.AttributeCollection;
 
     [ParseChildren(true), PersistChildren(false)]

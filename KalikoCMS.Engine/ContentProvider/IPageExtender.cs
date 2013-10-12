@@ -17,7 +17,7 @@
 namespace KalikoCMS.ContentProvider {
     using System;
 
-    public interface IPageValueSupport {
+    public interface IPageExtender {
         string GetPageHandler(Guid pageId, string[] remainingSegments);
     }
 }

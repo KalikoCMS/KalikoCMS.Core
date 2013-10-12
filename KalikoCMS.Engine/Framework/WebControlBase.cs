@@ -15,7 +15,7 @@
 #endregion
 
 namespace KalikoCMS.Framework {
-    using KalikoCMS.Core;
+    using Core;
     
     public class WebControlBase : System.Web.UI.UserControl {
         private CmsPage _currentPage;

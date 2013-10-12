@@ -41,11 +41,6 @@ namespace KalikoCMS {
             }
         }
 
-        // TODO: Flytta till bättre klass!
-        public static List<PropertyEntity> GetPropertyDefinitionsForPagetype(int pagetypeId) {
-            return Data.PropertyData.GetPropertyDefinitionsForPagetype(pagetypeId);
-        }
-
 
         // TODO: Refactor
         internal static string FindPage(string pageUrl) {
@@ -83,7 +78,7 @@ namespace KalikoCMS {
                         if (position == -1) {
                             //TODO: För MVC stöd så måste logiken här skrivas om..
 
-                            string pageHandler = TryGetPageHandlerWithValueSupport(i, segments, lastPage);
+                            string pageHandler = TryGetPageExtender(i, segments, lastPage);
 
                             return pageHandler;
                         }
@@ -99,7 +94,7 @@ namespace KalikoCMS {
                     if (position == -1) {
                         //TODO: För MVC stöd så måste logiken här skrivas om..
 
-                        string pageHandler = TryGetPageHandlerWithValueSupport(i, segments, lastPage);
+                        string pageHandler = TryGetPageExtender(i, segments, lastPage);
 
                         return pageHandler;
                     }
@@ -109,14 +104,15 @@ namespace KalikoCMS {
             return string.Empty;
         }
 
-        private static string TryGetPageHandlerWithValueSupport(int i, string[] segments, PageIndexItem page) {
+
+        private static string TryGetPageExtender(int i, string[] segments, PageIndexItem page) {
             // TODO: Refactor
             var pageType = PageType.GetPageType(page.PageTypeId);
             if(pageType==null) {
                 return string.Empty;
             }
 
-            var valueSupport = pageType.Instance as IPageValueSupport;
+            var valueSupport = pageType.Instance as IPageExtender;
             var pageHandler = string.Empty;
 
             if (valueSupport != null) {
@@ -129,6 +125,7 @@ namespace KalikoCMS {
             return pageHandler;
         }
 
+
         public static PageCollection GetChildrenForPage(Guid pageId, PublishState pageState = PublishState.Published) {
             PageIndex pageIndex = CurrentIndex;
 
@@ -140,6 +137,7 @@ namespace KalikoCMS {
             }
         }
 
+
         public static PageCollection GetChildrenForPageOfPageType(Guid pageId, int pageTypeId, PublishState pageState = PublishState.Published) {
             if (pageId == Guid.Empty) {
                 return CurrentIndex.GetRootChildren(pageTypeId, pageState);
@@ -149,15 +147,18 @@ namespace KalikoCMS {
             }
         }
 
+
         public static PageCollection GetChildrenForPageOfPageType(Guid pageId, Type pageType, PublishState pageState = PublishState.Published) {
             PageType pageTypeItem = PageType.GetPageTypeForType(pageType);
 
             return GetChildrenForPageOfPageType(pageId, pageTypeItem.PageTypeId, pageState);
         }
 
+
         public static CmsPage GetPage(Guid pageId) {
             return GetPage(pageId, Language.CurrentLanguageId);
         }
+
 
         public static CmsPage GetPage(Guid pageId, int languageId) {
             if (pageId == Guid.Empty) {
@@ -174,23 +175,28 @@ namespace KalikoCMS {
             }
         }
 
+
         public static T GetPage<T>(Guid pageId) where T : CmsPage {
             return GetPage<T>(pageId, Language.CurrentLanguageId);
         }
+
 
         public static T GetPage<T>(Guid pageId, int languageId) where T : CmsPage {
             CmsPage page = GetPage(pageId, Language.CurrentLanguageId);
             return page.ConvertToTypedPage<T>();
         }
 
+
         internal static PageCollection GetPagePath(CmsPage page) {
             return GetPagePath(page.PageId, page.LanguageId);
         }
+
 
         internal static PageCollection GetPagePath(Guid pageId) {
             var languageId = Language.CurrentLanguageId;
             return GetPagePath(pageId, languageId);
         }
+
 
         private static PageCollection GetPagePath(Guid pageId, int languageId) {
             var pageIndex = GetPageIndex(languageId);
@@ -208,6 +214,7 @@ namespace KalikoCMS {
             return pathList;
         }
 
+
         public static CmsPage GetParentAtLevel(Guid pageId, int level) {
             var pageCollection = GetPagePath(pageId);
             level++;
@@ -223,14 +230,17 @@ namespace KalikoCMS {
             return page;
         }
 
+
         public static PageCollection GetPageTreeFromPage(Guid pageId, PublishState pageState) {
             return CurrentIndex.GetPageTreeFromPage(pageId, pageState);
         }
+
 
         public static string GetUrlForPage(Guid pageId) {
             PageIndexItem page = GetPageIndexItem(pageId, Language.CurrentLanguageId);
             return page != null ? GetTemplateUrl(page) : string.Empty;
         }
+
 
         internal static void IndexSite() {
             if (!_indexing) {
@@ -271,6 +281,7 @@ namespace KalikoCMS {
                 }
             }
         }
+
 
         internal static void RaisePageSaved(Guid pageId, int languageId) {
             if (_pageSaved != null) {
@@ -318,6 +329,7 @@ namespace KalikoCMS {
             }
         }
 
+
         private static string BuildPageUrl(PageInstanceEntity pageInstance, Guid parentId) {
             CmsPage parent = GetPage(parentId);
             string parentUrl = parent.PageUrl.ToString();
@@ -327,9 +339,11 @@ namespace KalikoCMS {
             return url;
         }
 
+
         private static PageIndex GetPageIndex(int languageId) {
             return _pageLanguageIndex.Find(i => i.LanguageId == languageId);
         }
+
 
         private static PageIndexItem GetPageIndexItem(Guid pageId, int languageId) {
             if (_pageLanguageIndex == null)
@@ -347,6 +361,7 @@ namespace KalikoCMS {
             return page;
         }
 
+
         private static string GetTemplateUrl(PageIndexItem page) {
             if (page.IsAvailable) {
                 PageType pageType = PageType.GetPageType(page.PageTypeId);
@@ -358,12 +373,14 @@ namespace KalikoCMS {
             return PageExpiredUrl;
         }
 
+
         private static void IndexSite(int languageId) {
             PageIndex pageIndex = PageIndex.CreatePageIndex(languageId);
 
             _pageLanguageIndex.RemoveAll(i => i.LanguageId == languageId);
             _pageLanguageIndex.Add(pageIndex);
         }
+
 
         public static event PageEventHandler PageSaved {
             add {
@@ -375,6 +392,7 @@ namespace KalikoCMS {
             }
         }
 
+
         public static void MovePage(Guid pageId, Guid targetId) {
             // TODO: Kolla så att URL:en inte blir fel
             // TODO: Fixa i databasen också
@@ -382,6 +400,7 @@ namespace KalikoCMS {
                 pageIndex.MovePage(pageId, targetId);
             }
         }
+
 
         public static string GetUrlForPageInstanceId(int pageInstanceId) {
             foreach (PageIndex pageIndex in _pageLanguageIndex) {
@@ -393,6 +412,7 @@ namespace KalikoCMS {
 
             return string.Empty;
         }
+
 
         public static void DeletePage(Guid pageId) {
             // TODO: Only remove per language
