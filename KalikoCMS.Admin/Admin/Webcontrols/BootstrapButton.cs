@@ -3,13 +3,18 @@
     using System.Web.UI.WebControls;
 
     public class BootstrapButton : HtmlButton {
+        private bool _enabled = true;
+
         public string Icon { get; set; }
 
         public ButtonMode Mode { get; set; }
 
         public string Text { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool Enabled {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
 
         protected override void OnPreRender(System.EventArgs e) {
             base.OnPreRender(e);

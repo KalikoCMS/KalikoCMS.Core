@@ -14,8 +14,13 @@
 
 <asp:Content ContentPlaceHolderID="AdditionalScripts" runat="server">
     <script>
+      function abort() {
+        top.abortCallback();
+        close();
+      }
+      
       function close() {
-        parent.closeModal();
+        top.closeModal();
       }
     </script>
     <asp:ContentPlaceHolder ID="ScriptArea" runat="server"/>

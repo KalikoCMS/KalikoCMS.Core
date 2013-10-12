@@ -48,6 +48,10 @@
         var callback = callbackStack.pop();
         callback.apply(this, arguments);
       }
+      
+      function abortCallback() {
+        callbackStack.pop();
+      }
 
       function openModal(url, width, height) {
         $('<iframe class="modal hide fade" style="height:' + height + 'px;" src="' + url + '"></iframe>')

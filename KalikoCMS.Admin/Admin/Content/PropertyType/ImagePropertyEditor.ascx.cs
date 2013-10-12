@@ -104,7 +104,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
 
-            ScriptManager.RegisterClientScriptInclude(this, typeof (FilePropertyEditor),
+            ScriptManager.RegisterClientScriptInclude(this, typeof(FilePropertyEditor),
                                                       "Admin.Content.PropertyType.ImagePropertyEditor",
                                                       "Content/PropertyType/ImagePropertyEditor.js?d=" + DateTime.Now.Ticks);
 
@@ -118,7 +118,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
 
             string clickScript =
                 string.Format(
-                    "propertyEditor.image.openDialog('#{0}', '#{1}', '#{2}', '#{3}', '#{4}', '#{5}', '#{6}', '{7}', '{8}', '#{9}');return false;",
+                    "top.propertyEditor.image.openDialog('#{0}', '#{1}', '#{2}', '#{3}', '#{4}', '#{5}', '#{6}', '{7}', '{8}', '#{9}');return false;",
                     ImagePath.ClientID, ImagePreview.ClientID, OriginalImagePath.ClientID, CropX.ClientID,
                     CropY.ClientID, CropW.ClientID, CropH.ClientID, width, height, AltText.ClientID);
             SelectButton.Attributes["onclick"] = clickScript;

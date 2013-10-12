@@ -100,6 +100,7 @@
     <Content Include="Admin\Assets\css\jquery.fileupload-ui.css" />
     <Content Include="Admin\Content\Dialogs\EditImageDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectFileDialog.aspx" />
+    <Content Include="Admin\Content\Dialogs\SelectLinkDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectPageDialog.aspx" />
     <Content Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.ascx" />
@@ -108,6 +109,8 @@
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.js" />
     <Content Include="Admin\Content\PropertyType\ImagePropertyEditor.js" />
+    <Content Include="Admin\Content\PropertyType\LinkPropertyEditor.ascx" />
+    <Content Include="Admin\Content\PropertyType\LinkPropertyEditor.js" />
     <Content Include="Admin\Content\PropertyType\PageLinkPropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\PageLinkPropertyEditor.js" />
     <Content Include="Admin\Login.aspx" />
@@ -150,12 +153,26 @@
     <Compile Include="Admin\Content\Dialogs\EditImageDialog.aspx.designer.cs">
       <DependentUpon>EditImageDialog.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\Content\Dialogs\SelectLinkDialog.aspx.cs">
+      <DependentUpon>SelectLinkDialog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\Dialogs\SelectLinkDialog.aspx.designer.cs">
+      <DependentUpon>SelectLinkDialog.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx.cs">
       <DependentUpon>BooleanPropertyEditor.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx.designer.cs">
       <DependentUpon>BooleanPropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\LinkPropertyEditor.ascx.cs">
+      <DependentUpon>LinkPropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\LinkPropertyEditor.ascx.designer.cs">
+      <DependentUpon>LinkPropertyEditor.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Handlers\FileHandler.ashx.cs">
       <DependentUpon>FileHandler.ashx</DependentUpon>

@@ -22,7 +22,7 @@
 
       $(function () {
         $("#deselect-button").click(removeItem);
-        $("#close-button").click(close);
+        $("#close-button").click(abort);
       });
 
       function removeItem() {

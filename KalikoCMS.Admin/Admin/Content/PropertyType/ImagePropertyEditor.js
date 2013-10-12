@@ -22,10 +22,10 @@
 
             top.registerCallback(callback);
 
-            propertyEditor.dialogs.openEditImageDialog(imagePath, originalPath, cropX, cropY, cropW, cropH, width, height, description);
+            top.propertyEditor.dialogs.openEditImageDialog(imagePath, originalPath, cropX, cropY, cropW, cropH, width, height, description);
         }
     };
-})(window.propertyEditor || (window.propertyEditor = {}));
+})(top.propertyEditor || (top.propertyEditor = {}));
 
 
 (function (dialogs) {
@@ -33,4 +33,4 @@
         parent.openModal("Content/Dialogs/EditImageDialog.aspx?imagePath=" + imagePath + "&originalPath=" + originalPath + "&cropX=" + cropX + "&cropY=" + cropY + "&cropW=" + cropW + "&cropH=" + cropH + "&width=" + width + "&height=" + height + "&description=" + escape(description), 710, 500);
         return false;
     };
-})(window.propertyEditor.dialogs || (window.propertyEditor.dialogs = {}));
+})(top.propertyEditor.dialogs || (top.propertyEditor.dialogs = {}));

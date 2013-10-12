@@ -1,20 +1,20 @@
 ﻿(function (propertyEditor) {
     propertyEditor.pageLink = {
-        openDialog: function(languageField, pageField, displayField) {
-            var languageId = $(languageField).val();
-            var pageId = $(pageField).val();
+        openDialog: function (languageField, pageField, displayField) {
+            var languageId = languageField.val();
+            var pageId = pageField.val();
 
-            var callback = function(newPageId, newPageName) {
-                $(pageField).val(newPageId);
-                $(displayField).val(newPageName);
+            var callback = function (newPageId, newPageName) {
+                pageField.val(newPageId);
+                displayField.val(newPageName);
             };
 
             top.registerCallback(callback);
-            
-            window.propertyEditor.dialogs.openSelectPageDialog(pageId, languageId);
+
+            top.propertyEditor.dialogs.openSelectPageDialog(pageId, languageId);
         }
     };
-})(window.propertyEditor || (window.propertyEditor = {}));
+})(top.propertyEditor || (top.propertyEditor = {}));
 
 
 (function (dialogs) {
@@ -22,4 +22,4 @@
         parent.openModal("Content/Dialogs/SelectPageDialog.aspx?pageId=" + pageId + "&languageId=" + languageId, 500, 400);
         return false;
     };
-})(window.propertyEditor.dialogs || (window.propertyEditor.dialogs = {}));
+})(top.propertyEditor.dialogs || (top.propertyEditor.dialogs = {}));

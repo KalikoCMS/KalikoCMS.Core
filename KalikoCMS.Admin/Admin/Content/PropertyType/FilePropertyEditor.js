@@ -10,10 +10,10 @@
 
             top.registerCallback(callback);
             
-            window.propertyEditor.dialogs.openSelectFileDialog(filePath);
+            top.propertyEditor.dialogs.openSelectFileDialog(filePath);
         }
     };
-})(window.propertyEditor || (window.propertyEditor = {}));
+})(top.propertyEditor || (top.propertyEditor = {}));
 
 
 (function(dialogs) {
@@ -21,4 +21,4 @@
         parent.openModal("Content/Dialogs/SelectFileDialog.aspx?filePath=" + filePath, 700, 500);
         return false;
     };
-})(window.propertyEditor.dialogs || (window.propertyEditor.dialogs = {}));
+})(top.propertyEditor.dialogs || (top.propertyEditor.dialogs = {}));

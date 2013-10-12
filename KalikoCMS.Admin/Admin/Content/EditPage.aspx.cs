@@ -93,7 +93,7 @@ namespace KalikoCMS.Admin.Content {
             PageHeader.Text = "Create new page";
             SetStandardFieldLabels();
 
-            List<PropertyEntity> propertyDefinitions = PageFactory.GetPropertyDefinitionsForPagetype(_pageTypeId);
+            List<PropertyEntity> propertyDefinitions = PageType.GetPropertyDefinitions(_pageTypeId);
 
             foreach (PropertyEntity propertyDefinition in propertyDefinitions) {
                 AddControl(propertyDefinition.Name, null, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters);
@@ -120,7 +120,7 @@ namespace KalikoCMS.Admin.Content {
             StopPublishDate.PropertyValue = new DateTimeProperty(cmsPage.StopPublish);
             VisibleInMenu.PropertyValue = new BooleanProperty(cmsPage.VisibleInMenu);
 
-            List<PropertyEntity> propertyDefinitions = PageFactory.GetPropertyDefinitionsForPagetype(cmsPage.PageTypeId);
+            List<PropertyEntity> propertyDefinitions = PageType.GetPropertyDefinitions(cmsPage.PageTypeId);
 
             foreach (PropertyEntity propertyDefinition in propertyDefinitions) {
                 string propertyName = propertyDefinition.Name;

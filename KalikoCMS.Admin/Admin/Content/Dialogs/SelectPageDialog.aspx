@@ -5,9 +5,9 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="ButtonArea" runat="server">
-    <a id="select-button"class="btn btn-primary disabled" href="javascript:selectPage();"><i class="icon-ok"></i> Select page</a>
-    <a id="deselect-button" href="javascript:noPage();" class="btn btn-danger"><i class="icon-trash icon-white"></i> No page</a>
-    <a data-dismiss="modal" class="btn" href="javascript:close();">Close</a>
+    <button type="button" id="select-button"class="btn btn-primary disabled"><i class="icon-ok"></i> Select page</button>
+    <button type="button" id="deselect-button" class="btn btn-danger"><i class="icon-trash icon-white"></i> No page</button>
+    <button type="button" id="close-button" data-dismiss="modal" class="btn">Close</button>
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="ScriptArea" runat="server">
@@ -18,10 +18,6 @@
         var currentPageId = "";
         var pageName = "";
         var buttonEnabled = false;
-
-        function init(initValues) {
-            alert(initValues+"!!!!!!");
-        }
 
         function selectPage() {
           if (!buttonEnabled)
@@ -38,7 +34,11 @@
 
 
         $(document).ready(function () {
-            initTreeView();
+          initTreeView();
+
+          $('#select-button').click(selectPage);
+          $('#deselect-button').click(noPage);
+          $('#close-button').click(abort);
         });
 
         function refreshTreeNode(node) {

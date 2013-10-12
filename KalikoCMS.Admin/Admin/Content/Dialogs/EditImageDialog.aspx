@@ -97,7 +97,7 @@
       }
 
       $(function() {
-        $("#close-button").click(close);
+        $("#close-button").click(abort);
         $("#select-image-button").click(function() {
           top.registerCallback(changeImage);
           parent.openModal("Content/Dialogs/SelectFileDialog.aspx?filePath=" + "", 700, 500);

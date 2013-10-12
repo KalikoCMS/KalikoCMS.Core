@@ -106,7 +106,7 @@
   <a class="btn btn-primary" href="javascript:switchToFileListMode();"><i class="icon-arrow-left"></i> Return to file list</a>
   </span>
 
-  <a data-dismiss="modal" class="btn" href="javascript:close();">Cancel</a>
+  <a data-dismiss="modal" class="btn" href="javascript:abort();">Cancel</a>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptArea" runat="server">
@@ -146,8 +146,8 @@
 
 
       $("#upload-file-button")
-        .click(switchToUploadMode).
-        tooltip({ placement: "bottom" });
+        .click(switchToUploadMode)
+        .tooltip({ placement: "bottom" });
 
       loadFileList();
     });
@@ -190,7 +190,6 @@
               return [{ name: 'path', value: path }];
             },
             maxFileSize: 5000000 //,
-            //acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
           }
         )
         .bind('fileuploaddrop', function(e, data) {
@@ -198,10 +197,6 @@
             switchToUploadMode();
           }
         });
-
-
-      //}
-
     });
 
     function changePath(newPath) {

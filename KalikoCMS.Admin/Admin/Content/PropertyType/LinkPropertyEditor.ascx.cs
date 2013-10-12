@@ -18,41 +18,25 @@ namespace KalikoCMS.Admin.Content.PropertyType {
     using System;
     using System.Globalization;
     using System.Web.UI;
-    using KalikoCMS.Core;
-    using KalikoCMS.Extensions;
+    using Core;
     using KalikoCMS.PropertyType;
 
-    public partial class PageLinkPropertyEditor : PropertyEditorBase {
-
+    public partial class LinkPropertyEditor : PropertyEditorBase {
         public override string PropertyLabel {
             set { LabelText.Text = value; }
         }
-        
+
         public override PropertyData PropertyValue {
             get {
-                Guid pageId;
-                if (PageId.Value.TryParseGuid(out pageId)) {
-                    // TODO: Lägg till språkhantering!!
-                    return new PageLinkProperty(Language.CurrentLanguageId, pageId);
-                }
-                else {
-                    return new PageLinkProperty();
-                }
+                string url = Url.Value;
+                string type = Type.Value;
+                return new LinkProperty(url, type);
             }
             set {
-                var pageLinkProperty = ((PageLinkProperty)value);
-
-                if (!pageLinkProperty.IsValid) {
-                    return;
-                }
-
-                var page = pageLinkProperty.Page;
-
-                if (page != null) {
-                    DisplayField.Text = page.PageName;
-                    LanguageId.Value = page.LanguageId.ToString(CultureInfo.InvariantCulture);
-                    PageId.Value = page.PageId.ToString();
-                }
+                var linkProperty = ((LinkProperty)value);
+                DisplayField.Text = linkProperty.Url;
+                Url.Value = linkProperty.Url;
+                Type.Value = ((int)linkProperty.Type).ToString(CultureInfo.InvariantCulture);
             }
         }
 
@@ -71,9 +55,9 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
 
-            ScriptManager.RegisterClientScriptInclude(this, typeof(PageLinkPropertyEditor), "Admin.Content.PropertyType.PageLinkPropertyEditor", "Content/PropertyType/PageLinkPropertyEditor.js");
+            ScriptManager.RegisterClientScriptInclude(this, typeof(LinkPropertyEditor), "Admin.Content.PropertyType.LinkPropertyEditor", "Content/PropertyType/LinkPropertyEditor.js");
 
-            string clickScript = string.Format("top.propertyEditor.pageLink.openDialog($('#{0}'),$('#{1}'),$('#{2}'));return false;", LanguageId.ClientID, PageId.ClientID, DisplayField.ClientID);
+            string clickScript = string.Format("top.propertyEditor.link.openDialog('#{0}','#{1}', '#{2}');return false;", Url.ClientID, Type.ClientID, DisplayField.ClientID);
             SelectButton.Attributes["onclick"] = clickScript;
         }
     }

@@ -3,7 +3,7 @@
         openDialog: function (container, valueField, className) {
             var callback = function (val, exerpt) {
                 var list = $(container).find("ul.sortable-collection");
-                var content = '<i class="icon-sort"></i> ' + exerpt + ' <a href="#" onclick="window.propertyEditor.collection.editField(this);return false;" class="pull-right"><i class="icon-edit"></i>edit</a>';
+                var content = '<i class="icon-sort"></i> ' + exerpt + ' <a href="#" onclick="top.propertyEditor.collection.editField(this);return false;" class="pull-right"><i class="icon-edit"></i>edit</a>';
                 if (valueField == null && val != null) {
                     list.append('<li class="btn collection-item" data-value=\'' + val + '\'>' + content + '</li>');
                 }
@@ -24,7 +24,7 @@
                 value = $(valueField).attr('data-value');
             }
 
-            window.propertyEditor.dialogs.openEditCollectionPropertyDialog(className, value);
+            top.propertyEditor.dialogs.openEditCollectionPropertyDialog(className, value);
         },
         editField: function (element) {
             var listItem = $(element).parent();
@@ -35,7 +35,7 @@
             propertyEditor.collection.openDialog('#' + containerId, listItem, className);
         }
     };
-})(window.propertyEditor || (window.propertyEditor = {}));
+})(top.propertyEditor || (top.propertyEditor = {}));
 
 
 (function (dialogs) {
@@ -43,7 +43,7 @@
         parent.openModal('Content/Dialogs/EditCollectionPropertyDialog.aspx?propertyType=' + className + '&value=' + escape(value), 500, 400);
         return false;
     };
-})(window.propertyEditor.dialogs || (window.propertyEditor.dialogs = {}));
+})(top.propertyEditor.dialogs || (top.propertyEditor.dialogs = {}));
 
 
 $(document).ready(function () {
