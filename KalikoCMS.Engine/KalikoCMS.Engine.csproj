@@ -72,7 +72,7 @@
     <Compile Include="Configuration\SiteHostConfigurationLanguage.cs" />
     <Compile Include="Configuration\SiteHostConfigurationLanguageCollection.cs" />
     <Compile Include="Configuration\SiteSettings.cs" />
-    <Compile Include="ContentProvider\IPageValueSupport.cs" />
+    <Compile Include="ContentProvider\IPageExtender.cs" />
     <Compile Include="ContentProvider\PageProvider.cs" />
     <Compile Include="Core\FileSystemObject.cs">
       <SubType>Code</SubType>
@@ -85,6 +85,7 @@
     <Compile Include="PropertyType\BooleanProperty.cs" />
     <Compile Include="PropertyType\CollectionProperty.cs" />
     <Compile Include="PropertyType\FileProperty.cs" />
+    <Compile Include="PropertyType\LinkProperty.cs" />
     <Compile Include="PropertyType\PageLinkProperty.cs" />
     <Compile Include="Search\IIndexable.cs" />
     <Compile Include="Core\PageNameBuilder.cs" />
