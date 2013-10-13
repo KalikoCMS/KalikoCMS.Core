@@ -30,7 +30,9 @@ namespace KalikoCMS.WebControls {
 
 
         protected CmsPage CurrentPage {
-            get { return _currentPage ?? (_currentPage = ((PageTemplate)Page).CurrentPage); }
+            get {
+                return _currentPage ?? (_currentPage = ((PageTemplate)Page).CurrentPage);
+            }
         }
 
 

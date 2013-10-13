@@ -43,7 +43,7 @@ namespace KalikoCMS.Core {
         }
 
         internal static EditablePage CreateEditableChildPage(CmsPage page, Type type) {
-            PageType pageType = PageType.GetPageTypeForType(type);
+            PageType pageType = PageType.GetPageType(type);
 
             if (pageType == null) {
                 throw new Exception("Can't find page type for type " + type.Name);

@@ -48,7 +48,7 @@ namespace KalikoCMS.Data {
             return from p in DataManager.Instance.Page
                     join pi in DataManager.Instance.PageInstance on p.PageId equals pi.PageId
                     where pi.LanguageId == languageId && pi.DeletedDate == null
-                    orderby p.ParentId, pi.PageName
+                    orderby p.TreeLevel, p.ParentId, pi.PageName
                     select
                         new PageIndexItem {
                             PageId = pi.PageId,

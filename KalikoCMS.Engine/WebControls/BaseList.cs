@@ -68,9 +68,7 @@ namespace KalikoCMS.WebControls {
          DefaultValue(SortDirection.Ascending)]
         public SortDirection SortDirection { get; set; }
 
-        public int Count {
-            get { return Index; }
-        }
+        public int Count { get; protected set; }
 
         #endregion
 

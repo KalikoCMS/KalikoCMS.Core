@@ -40,12 +40,12 @@ namespace KalikoCMS.Core {
             return PageTypes.Find(pt => pt.PageTypeId == pageTypeId);
         }
 
-        internal static void LoadPageTypes() {
-            Synchronizer.SynchronizePageTypes();
+        public static PageType GetPageType(Type type) {
+            return PageTypes.Find(pt => pt.Type == type);
         }
 
-        public static PageType GetPageTypeForType(Type type) {
-            return PageTypes.Find(pt => pt.Type == type);
+        internal static void LoadPageTypes() {
+            Synchronizer.SynchronizePageTypes();
         }
 
         public static List<PropertyEntity> GetPropertyDefinitions(int pagetypeId) {

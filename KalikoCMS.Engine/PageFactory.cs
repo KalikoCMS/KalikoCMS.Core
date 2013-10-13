@@ -202,7 +202,7 @@ namespace KalikoCMS {
 
 
         public static PageCollection GetChildrenForPageOfPageType(Guid pageId, Type pageType, PublishState pageState = PublishState.Published) {
-            PageType pageTypeItem = PageType.GetPageTypeForType(pageType);
+            PageType pageTypeItem = PageType.GetPageType(pageType);
 
             return GetChildrenForPageOfPageType(pageId, pageTypeItem.PageTypeId, pageState);
         }
