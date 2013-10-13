@@ -1,7 +1,8 @@
-﻿/* 
+﻿#region License and copyright notice
+/* 
  * Kaliko Content Management System
  * 
- * Copyright (c) Fredrik Schultz
+ * Copyright (c) Fredrik Schultz and Contributors
  * 
  * This source is subject to the Microsoft Public License.
  * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
@@ -11,23 +12,21 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED 
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using KalikoCMS.Caching;
-using KalikoCMS.Core;
+#endregion
 
 namespace KalikoCMS.WebControls {
-    using KalikoCMS.Core.Collections;
+    using System;
+    using System.Collections;
+    using System.ComponentModel;
+    using System.Web.UI;
+    using System.Web.UI.WebControls;
+    using Caching;
+    using Core;
+    using Core.Collections;
 
     public class PageList : BaseList {
 
         #region Private Member Variables
-
-        protected int _pageSortOrder = 100;
 
         // Paging variables
         private bool _paging;
@@ -36,7 +35,9 @@ namespace KalikoCMS.WebControls {
         private int _showFrom;
         private int _showTo;
 
-        protected int _returnPageID;
+        public PageList() {
+            PageSortOrder = 100;
+        }
 
         #endregion
 
@@ -54,15 +55,13 @@ namespace KalikoCMS.WebControls {
 
         #region Private Methods
         
-        // TODO: Flytta ut publiceringskollen till den inre loopen, annars funkar inte cachningen..
         private PageCollection GetCacheablePageSource() {
-            // If datasource manually given, use it.
-            if (DataSource != null)
+            if (DataSource != null) {
                 return DataSource;
+            }
 
-            PageCollection pageCollection = CacheManager.Get<PageCollection>(CacheName);
+            var pageCollection = CacheManager.Get<PageCollection>(CacheName);
 
-            // No cached value, get page source the hard way
             if((pageCollection == null) || (pageCollection.Count == 0)) {
                 pageCollection = PageSource;
                 CacheManager.Add(CacheName, pageCollection);
@@ -74,21 +73,20 @@ namespace KalikoCMS.WebControls {
         // TODO: Hantera att fråga efter opublicerade via adminknapp!
         protected PageCollection PageSource {
             get {
-                // If datasource manually given, use it.
-                if(DataSource != null)
+                if (DataSource != null) {
                     return DataSource;
+                }
 
-                PageCollection pageCollection = new PageCollection();
+                var pageCollection = new PageCollection();
 
                 if(PageTypeList != null) {
                     // TODO: skriva kommentar
-                    foreach (int i in PageTypeList) {
+                    foreach (Type i in PageTypeList) {
                         pageCollection += PageFactory.GetChildrenForPageOfPageType(PageLink, i, PageState);
                     }
                 }
                 else {
-                    // Simple case, just get the children for the pagelink
-                    pageCollection = PageFactory.GetChildrenForPage(PageLink, PageState);
+                    pageCollection = PageFactory.GetChildrenForPage(PageLink, PublishState.All);
                 }
 
                 pageCollection.Sort(SortOrder, SortDirection);
@@ -117,6 +115,14 @@ namespace KalikoCMS.WebControls {
 
             foreach( CmsPage page in pageCollection) {
                 if(!_paging || ShowUnpublished || ((Index >= _showFrom) && (Index < _showTo))) {
+                    if (PageState == PublishState.Published && !page.IsAvailable) {
+                        continue;
+                    }
+
+                    if (PageState == PublishState.Unpublished && page.IsAvailable) {
+                        continue;
+                    }
+
                     if(AddPage(page)) {
                         Index++;
 
@@ -142,7 +148,7 @@ namespace KalikoCMS.WebControls {
 
         protected void CreateSeparator(int itemIndex) {
             if(SeparatorTemplate != null && itemIndex != 0) {
-                Literal item = new Literal();
+                var item = new Literal();
                 SeparatorTemplate.InstantiateIn(item);
                 Controls.Add(item);
             }
@@ -151,25 +157,20 @@ namespace KalikoCMS.WebControls {
 
         protected void CreateItem(int itemIndex, Guid pageId, ITemplate template, bool useSeparator = true) {
             if(template != null) {
-                if(useSeparator)
+                if (useSeparator) {
                     CreateSeparator(itemIndex);
+                }
 
-                PageListItem item = new PageListItem { DataItem = pageId };
+                var item = new PageListItem { DataItem = pageId };
 
                 template.InstantiateIn(item);
 
                 Controls.Add(item);
 
                 item.DataBind();
-                //item.DataItem = null; // TODO: Behövs verkligen?
             }
         }
 
-
-        /*
-        protected void CreateItem(int itemIndex, object dataItem) {
-            CreateItem(itemIndex, dataItem, ItemTemplate);
-        }*/
 
 
         // TODO: Vad används clickitem till?
@@ -179,22 +180,23 @@ namespace KalikoCMS.WebControls {
         }
 
         protected PageListItem CreateClickItem(int itemIndex, bool dataBind, Guid pageId, ITemplate template, Uri url, bool useSeparator) {
-            if(useSeparator)
+            if (useSeparator) {
                 CreateSeparator(itemIndex);
+            }
 
-            PageListItem item = new PageListItem();
+            var item = new PageListItem();
 
-            if(template != null)
+            if (template != null) {
                 template.InstantiateIn(item);
+            }
 
             item.DataItem = pageId;
-            HyperLink lb = new HyperLink { NavigateUrl = url.ToString() };
+            var lb = new HyperLink { NavigateUrl = url.ToString() };
             lb.Controls.Add(item);
             Controls.Add(lb);
-            if(dataBind)
+            if (dataBind) {
                 item.DataBind();
-            
-            //item.DataItem = null; ??????????????
+            }
 
             return item;
         }
@@ -272,12 +274,9 @@ namespace KalikoCMS.WebControls {
         public bool PageAutoPublish { get; set; }
 
         [Bindable(true),
-        Category("Data"),
-        DefaultValue(null)]
-        public int PageSortOrder {
-            get { return _pageSortOrder; }
-            set { _pageSortOrder = value; }
-        }
+         Category("Data"),
+         DefaultValue(null)]
+        public int PageSortOrder { get; set; }
 
         [Bindable(true),
          Category("Data"),
@@ -318,32 +317,16 @@ namespace KalikoCMS.WebControls {
          Category("Data"),
          DefaultValue(null)]
         public bool GetOnlyPagesOfPageTypeList { get; set; }
-
-        /*
-        [Bindable(true),
-         Category("Data"),
-         DefaultValue(null)]
-        public bool IgnorePublishDates { get; set; }
-        */
-
+        
         [Bindable(true),
          Category("Data"),
          DefaultValue(null)]
         public PublishState PageState { get; set; }
-
-
-        /// <summary>
-        /// Name of the property where the eventdate is stored if not given, will use start publish date as standard
-        /// </summary>
+        
         [Bindable(true),
          Category("Data"),
          DefaultValue(null)]
-        public string DatePropertyName { get; set; }
-
-        [Bindable(true),
-         Category("Data"),
-         DefaultValue(null)]
-        public int[] PageTypeList { get; set; }
+        public Type[] PageTypeList { get; set; }
 
         [Bindable(true),
          Category("Data"),

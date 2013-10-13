@@ -22,7 +22,7 @@
         });
 
         function clickCreateNewPage() {
-            root.openModal("Content/Dialogs/SelectPagetypeDialog.aspx?pageId=" + currentPageId, 500, 400);
+            top.openModal("Content/Dialogs/SelectPagetypeDialog.aspx?pageId=" + currentPageId, 500, 400);
             return false;
         }
 
@@ -51,7 +51,7 @@
         }
 
         function createNewPage(pageTypeId) {
-            root.closeModal();
+            top.closeModal();
 
             $("#maincontent").attr("src", "Content/EditPage.aspx?id=&parentId=" + currentPageId + "&pageTypeId=" + pageTypeId);
         }

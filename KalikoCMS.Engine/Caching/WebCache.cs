@@ -24,7 +24,7 @@ namespace KalikoCMS.Caching {
     public class WebCache : ICacheProvider {
 
         public void Add<T>(string key, T value, CachePriority priority, int timeout, bool slidingExpiration) {
-            if (value == null) {
+            if (Equals(value, default(T))) {
                 return;
             }
 
@@ -69,9 +69,9 @@ namespace KalikoCMS.Caching {
         }
 
         public void RemoveRelated(Guid pageId) {
-            var keys = from DictionaryEntry dict in HttpContext.Current.Cache
-                       let key = dict.Key.ToString()
-                       where key.Contains(pageId.ToString())
+            var keys = from DictionaryEntry entry in HttpContext.Current.Cache
+                       let key = entry.Key.ToString()
+                       where key.Contains(pageId.ToString()) || key.StartsWith("PageList:")
                        select key;
 
             foreach (string key in keys) {
