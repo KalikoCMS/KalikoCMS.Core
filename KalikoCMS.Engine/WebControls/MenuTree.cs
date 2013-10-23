@@ -70,41 +70,48 @@ namespace KalikoCMS.WebControls {
 
             Index = 0;
 
-            int currentlv = -1;
+            int currentLevel = -1;
+            int openedItems = 0;
 
             // TODO: Fixa till så att ordningen på templates blir rätt!!!!
+            TemplateItem templateItem;
+
             foreach (CmsPage page in pageList) {
                 if (page.VisibleInMenu) {
 
-                    if (currentlv == page.TreeLevel) {
+                    if (currentLevel == page.TreeLevel) {
                         CreateItem(Index, page.PageId, EndItemTemplate);
+                        openedItems--;
                     }
 
                     //new lv?
-                    if (NewLevelTemplate != null && currentlv < page.TreeLevel) {
-                        currentlv = page.TreeLevel;
-                        TemplateItem i = new TemplateItem();
-                        NewLevelTemplate.InstantiateIn(i);
-                        Controls.Add(i);
+                    if (NewLevelTemplate != null && currentLevel < page.TreeLevel) {
+                        currentLevel = page.TreeLevel;
+                        templateItem = new TemplateItem();
+                        NewLevelTemplate.InstantiateIn(templateItem);
+                        Controls.Add(templateItem);
                     }
+
                     //up a lv?
-                    if (EndLevelTemplate != null && currentlv > page.TreeLevel) {
-                        int lvups = currentlv - page.TreeLevel;
+                    if (EndLevelTemplate != null && currentLevel > page.TreeLevel) {
+                        int lvups = currentLevel - page.TreeLevel;
 
-                        currentlv = page.TreeLevel;
-
-
+                        currentLevel = page.TreeLevel;
 
                         for (int moi = 0; moi < lvups; moi++) {
+                            openedItems--;
                             CreateItem(Index, page.PageId, EndItemTemplate);
-                            TemplateItem i = new TemplateItem();
-                            EndLevelTemplate.InstantiateIn(i);
-                            Controls.Add(i);
+                            templateItem = new TemplateItem();
+                            EndLevelTemplate.InstantiateIn(templateItem);
+                            Controls.Add(templateItem);
                             CreateItem(Index, page.PageId, EndItemTemplate);
+                            openedItems--;
                         }
                     }
 
                     if (pathway.Contains(page.PageId)) {
+                        CreateItem(Index, page.PageId, StartItemTemplate);
+                        openedItems++;
                         if (SelectedItemTemplate != null) {
                             CreateItem(Index, page.PageId, SelectedItemTemplate);
                         }
@@ -114,10 +121,21 @@ namespace KalikoCMS.WebControls {
                     }
                     else {
                         CreateItem(Index, page.PageId, StartItemTemplate);
+                        openedItems++;
                         CreateItem(Index, page.PageId, ItemTemplate);
                     }
                     Index++;
                 }
+            }
+
+            for (int i = 0; i < openedItems; i++) {
+                templateItem = new TemplateItem();
+                EndItemTemplate.InstantiateIn(templateItem);
+                Controls.Add(templateItem);
+
+                templateItem = new TemplateItem();
+                EndLevelTemplate.InstantiateIn(templateItem);
+                Controls.Add(templateItem);
             }
         }
     }
