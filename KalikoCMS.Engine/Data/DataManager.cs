@@ -24,7 +24,7 @@ namespace KalikoCMS.Data {
     using IQToolkit.Data;
     using Configuration;
     using Kaliko;
-    using KalikoCMS.Data.EntityProvider;
+    using EntityProvider;
 
     public static class DataManager {
         private static readonly DbEntityProvider EntityProvider = GetDbEntityProvider();
@@ -40,9 +40,7 @@ namespace KalikoCMS.Data {
         }
 
         public static ContentDatabase Instance {
-            get {
-                return new ContentDatabase(EntityProvider);
-            }
+            get { return new ContentDatabase(EntityProvider); }
         }
 
         public static void OpenConnection() {
@@ -206,6 +204,7 @@ namespace KalikoCMS.Data {
             return items;
         }
 
+
         public static T Single<T>(IEntityTable<T> entityTable, Expression<Func<T, bool>> whereClause) {
             T item;
 
@@ -223,6 +222,26 @@ namespace KalikoCMS.Data {
             }
 
             return item;
+        }
+
+
+        internal static int DeleteAll<T>(IEntityTable<T> entityTable) {
+            int affectedRows;
+
+            OpenConnection();
+
+            try {
+                affectedRows = entityTable.Delete(p => true);
+            }
+            catch (Exception e) {
+                Logger.Write(e, Logger.Severity.Major);
+                throw;
+            }
+            finally {
+                CloseConnection();
+            }
+
+            return affectedRows;
         }
     }
 }

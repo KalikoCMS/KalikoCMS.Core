@@ -67,7 +67,7 @@ namespace KalikoCMS.Core {
             UpdateDate = pageIndexItem.UpdateDate;
             UrlSegment = pageIndexItem.UrlSegment;
             VisibleInMenu = pageIndexItem.VisibleInMenu;
-            //VisibleInSiteMap
+            //TODO: VisibleInSiteMap
 
             FirstChild = pageIndexItem.FirstChild;
             NextPage = pageIndexItem.NextPage;

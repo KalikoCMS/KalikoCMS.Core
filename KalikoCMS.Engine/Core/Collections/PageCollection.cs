@@ -50,6 +50,10 @@ namespace KalikoCMS.Core.Collections {
             _pageIds.Add(pageId);
         }
 
+        public void Remove(Guid pageId) {
+            _pageIds.Remove(pageId);
+        }
+
         public bool Contains(Guid pageId) {
             return _pageIds.Contains(pageId);
         }

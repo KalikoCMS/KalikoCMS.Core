@@ -16,7 +16,7 @@
 
 namespace KalikoCMS.Data {
     using System;
-    using KalikoCMS.Data.EntityProvider;
+    using EntityProvider;
 
     internal class PageInstanceData {
         internal static PageInstanceEntity GetPageInstance(Guid pageId, int languageId) {

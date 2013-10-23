@@ -253,18 +253,7 @@ namespace KalikoCMS {
 
         private static PageCollection GetPagePath(Guid pageId, int languageId) {
             var pageIndex = GetPageIndex(languageId);
-            var pathList = new PageCollection();
-            var currentPageId = pageId;
-
-            for (int i = 0; i < 10000; i++) {
-                pathList.Add(currentPageId);
-                currentPageId = pageIndex.GetPageIndexItem(currentPageId).ParentId;
-                if (currentPageId == Guid.Empty) {
-                    break;
-                }
-            }
-
-            return pathList;
+            return pageIndex.GetPagePath(pageId);
         }
 
 
@@ -286,6 +275,17 @@ namespace KalikoCMS {
 
         public static PageCollection GetPageTreeFromPage(Guid pageId, PublishState pageState) {
             return CurrentIndex.GetPageTreeFromPage(pageId, pageState);
+        }
+
+
+        // TODO: Finish implementation, build predicate out of pagetypes
+/*        public static PageCollection GetPageTreeFromPageOfPageType(Guid pageLink, Type[] type, PublishState pageState) {
+            return CurrentIndex.GetPageTreeByCriteria()
+        }*/
+        
+        
+        public static PageCollection GetPageTreeFromPage(Guid rootPageId, Guid leafPageId, PublishState pageState) {
+            return CurrentIndex.GetPageTreeFromPage(rootPageId, leafPageId, pageState);
         }
 
 

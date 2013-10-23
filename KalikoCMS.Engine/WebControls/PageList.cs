@@ -34,9 +34,6 @@ namespace KalikoCMS.WebControls {
         private Guid _pageLink;
         private bool _pageLinkSet;
 
-        public PageList() {
-        }
-
         #endregion
 
 
@@ -69,7 +66,7 @@ namespace KalikoCMS.WebControls {
         }
 
 
-        protected PageCollection PageSource {
+        private PageCollection PageSource {
             get {
                 if (DataSource != null) {
                     return DataSource;
@@ -78,6 +75,7 @@ namespace KalikoCMS.WebControls {
                 var pageCollection = new PageCollection();
 
                 if(PageTypeList != null) {
+                    // TODO: Replace with predicate
                     foreach (Type i in PageTypeList) {
                         pageCollection += PageFactory.GetChildrenForPageOfPageType(PageLink, i, PageState);
                     }
@@ -130,7 +128,7 @@ namespace KalikoCMS.WebControls {
         }
 
 
-        private List<CmsPage> GetFilteredPageList(PageCollection pageCollection) {
+        protected List<CmsPage> GetFilteredPageList(PageCollection pageCollection) {
             var hasCustomFilter = Filter != null;
             var pageList = new List<CmsPage>();
 
@@ -233,7 +231,7 @@ namespace KalikoCMS.WebControls {
         
         [Bindable(true),
          Category("Data"),
-         DefaultValue(null)]
+         DefaultValue(PublishState.Published)]
         public PublishState PageState { get; set; }
         
         [Bindable(true),
@@ -314,58 +312,5 @@ namespace KalikoCMS.WebControls {
         }
 
         #endregion
-
-
-
-
-
-        /* ??? VAD GÖR DEN HÄR HÄR?!??
-        public IEnumerable GetTreeDataSource(int pagelink, string pagetypelist, IEnumerable orgDataSource, bool getOnlyPagesOfPageTypeList) {
-            PageCollection retPageSource = new PageCollection();
-            if(orgDataSource != null)
-                return orgDataSource;
-
-            if(pagelink > -1) {
-                if(getOnlyPagesOfPageTypeList) {
-                    string[] typelist = pagetypelist.Split(',');
-                    if(pagetypelist.Split(',').Length == 1) {
-                        int pageTypeId = Convert.ToInt32(pagetypelist);
-                        retPageSource = PageFactory.GetPageTreeFromPageOfPageType(pagelink, pageTypeId, false);
-                        if(ShowUnpublishedPageComponentId != null || IgnorePublishDates == false) {
-                            PageCollection unpubPageSource = PageFactory.GetPageTreeFromPageOfPageType(pagelink, pageTypeId, true);
-                            HasUnpublishedItems = unpubPageSource != null && unpubPageSource.Count > 0;
-                            retPageSource = retPageSource + unpubPageSource;
-                        }
-                    }
-                    else {
-                        foreach(string str in typelist) {
-                            int pageTypeId = Convert.ToInt32(str);
-                            retPageSource = retPageSource + PageFactory.GetPageTreeFromPageOfPageType(pagelink, pageTypeId, false);
-                            if(ShowUnpublishedPageComponentId != null || IgnorePublishDates == false) {
-                                PageCollection unpubPageSource = PageFactory.GetPageTreeFromPageOfPageType(pagelink, pageTypeId, true);
-                                HasUnpublishedItems = (unpubPageSource != null && unpubPageSource.Count > 0) || HasUnpublishedItems ? true : false;
-                                retPageSource = retPageSource + unpubPageSource;
-                            }
-                        }
-                    }
-                }
-                else {
-                    retPageSource = retPageSource + PageFactory.GetPageTreeFromPage(pagelink, false, false);
-                    if(ShowUnpublishedPageComponentId != null || IgnorePublishDates == false) {
-                        PageCollection unpubPageSource = PageFactory.GetPageTreeFromPage(pagelink, false, true);
-                        HasUnpublishedItems = unpubPageSource != null && unpubPageSource.Count > 0;
-                        retPageSource = retPageSource + unpubPageSource;
-                    }
-                }
-            }
-            else {   //Empty pagesource
-                retPageSource = new PageCollection();
-            }
-
-            return retPageSource;
-
-        }
-         */
-
     }
 }

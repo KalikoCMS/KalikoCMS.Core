@@ -41,6 +41,11 @@ namespace KalikoCMS.WebControls {
          DefaultValue(null)]
         public Guid PageLink { get; set; }
 
+        [Bindable(true),
+         Category("Data"),
+         DefaultValue(true)]
+        public bool RenderCurrentPage { get; set; }
+
         #endregion
 
         public override void DataBind() {
@@ -57,8 +62,9 @@ namespace KalikoCMS.WebControls {
             }
 
             PageCollection pages = PageFactory.GetPagePath(PageLink);
+            var lastSegment = RenderCurrentPage ? 0 : 1;
 
-            for (int i = pages.Count; i > 0; i--) {
+            for (int i = pages.Count; i > lastSegment; i--) {
                 Guid dataItem = pages.PageIds[i - 1];
                 bool addSeparator = ((i > 0) && (i < pages.Count));
                 CreateItem(dataItem, addSeparator);

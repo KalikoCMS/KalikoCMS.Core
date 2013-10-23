@@ -140,13 +140,14 @@ namespace KalikoCMS.Core {
             return _pageIndex.Find(pi => pi.PageInstanceId == pageInstanceId);
         }
 
-        public PageCollection GetPageTreeByCriteria(Guid pageId, PublishState pageState) {
+        //public PageCollection GetPageTreeByCriteria(Guid pageId, PublishState pageState) {
+        public PageCollection GetPageTreeByCriteria(Guid pageId, Predicate<PageIndexItem> match) {
             var pageCollection = new PageCollection();
             var stack = new Stack();
             int currentId;
             int index = 0;
 
-            Predicate<PageIndexItem> publishStatePredicate = GetPublishStatePredicate(pageState);
+            //Predicate<PageIndexItem> publishStatePredicate = GetPublishStatePredicate(pageState);
 
             if(pageId == Guid.Empty) {
                 currentId = 0;
@@ -162,8 +163,7 @@ namespace KalikoCMS.Core {
             while(currentId > -1) {
                 PageIndexItem item = _pageIndex[currentId];
                 
-                // TODO: hantera opublicerade
-                if (publishStatePredicate(item)) {
+                if (match(item)) {
                     pageCollection.Add(item.PageId);
 
                     if (item.NextPage > -1) {
@@ -189,14 +189,18 @@ namespace KalikoCMS.Core {
             return pageCollection;
         }
 
+        
         public PageCollection GetPageTreeFromPage(Guid pageId) {
-            return GetPageTreeByCriteria(pageId, PublishState.Published);
+            return GetPageTreeFromPage(pageId, PublishState.Published);
         }
 
 
         public PageCollection GetPageTreeFromPage(Guid pageId, PublishState pageState) {
-            return GetPageTreeByCriteria(pageId, pageState);
+            Predicate<PageIndexItem> match = GetPublishStatePredicate(pageState);
+
+            return GetPageTreeByCriteria(pageId, match);
         }
+
 
         public PageCollection GetPagesByCriteria(Predicate<PageIndexItem> match) {
             var pageCollection = new PageCollection();
@@ -205,6 +209,7 @@ namespace KalikoCMS.Core {
 
             return pageCollection;
         }
+
 
         public PageCollection GetRootChildren() {
             Predicate<PageIndexItem> match = IsPublished.And(t => t.ParentId == Guid.Empty);
@@ -444,6 +449,76 @@ namespace KalikoCMS.Core {
 
             InitLinkedList();
             BuildLinkedList();
+        }
+
+        public PageCollection GetPageTreeFromPage(Guid rootPageId, Guid leafPageId, PublishState pageState) {
+            var pageCollection = new PageCollection();
+            var match = GetPublishStatePredicate(pageState);
+            var stack = new Stack();
+            int currentId;
+            int index = 0;
+
+            var pagePath = GetPagePath(leafPageId);
+
+            if (rootPageId == Guid.Empty) {
+                currentId = 0;
+            }
+            else {
+                PageIndexItem firstPage = _pageIndex.Find(t => t.PageId == rootPageId);
+                if (firstPage == null) {
+                    throw new ArgumentException("Page with id " + rootPageId + " not found!");
+                }
+                currentId = firstPage.FirstChild;
+            }
+
+            while (currentId > -1) {
+                PageIndexItem item = _pageIndex[currentId];
+
+                if (match(item)) {
+                    pageCollection.Add(item.PageId);
+
+                    if (item.NextPage > -1) {
+                        stack.Push(item.NextPage);
+                    }
+
+                    if (pagePath.Contains(item.PageId)) {
+                        currentId = item.FirstChild;
+                    }
+                    else {
+                        currentId = -1;
+                    }
+                }
+                else {
+                    currentId = item.NextPage;
+                }
+
+                if ((currentId == -1) && (stack.Count > 0)) {
+                    currentId = (int)stack.Pop();
+                }
+
+                if (index > _pageIndex.Count) {
+                    // TODO: This should never happen, to be removed..
+                    throw new Exception("Unending whileloop detected");
+                }
+                index++;
+            }
+            return pageCollection;
+        }
+
+        // TODO: Cache?
+        public PageCollection GetPagePath(Guid pageId) {
+            var pathList = new PageCollection();
+            var currentPageId = pageId;
+
+            for (int i = 0; i < 10000; i++) {
+                pathList.Add(currentPageId);
+                currentPageId = GetPageIndexItem(currentPageId).ParentId;
+                if (currentPageId == Guid.Empty) {
+                    break;
+                }
+            }
+
+            return pathList;
         }
     }
 }

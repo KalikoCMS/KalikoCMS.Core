@@ -65,7 +65,8 @@ namespace KalikoCMS.Data {
                             PageName = pi.PageName,
                             CreatedDate = pi.CreatedDate,
                             UpdateDate = pi.UpdateDate,
-                            VisibleInMenu = pi.VisibleInMenu
+                            VisibleInMenu = pi.VisibleInMenu,
+                            TreeLevel = p.TreeLevel
                         };
         }
 
