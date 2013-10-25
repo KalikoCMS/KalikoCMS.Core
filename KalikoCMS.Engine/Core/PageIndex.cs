@@ -19,6 +19,7 @@ namespace KalikoCMS.Core {
     using System.Collections;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Text;
     using Kaliko;
     using Configuration;
@@ -132,9 +133,8 @@ namespace KalikoCMS.Core {
             return pageCollection;
         }
 
-        // TODO: Add seconds (sorted?)dictionary PageId, PageIndexItemPosition
         internal PageIndexItem GetPageIndexItem(Guid pageId) {
-            return _pageIndex.GetPageIndex(pageId);
+            return _pageIndex.GetPageIndexItem(pageId);
         }
 
         internal PageIndexItem GetPageIndexItem(int pageInstanceId) {
@@ -274,20 +274,20 @@ namespace KalikoCMS.Core {
         }
 
         private void BuildLinkedList() {
-            foreach (PageIndexItem page in _pageIndex) {
-                Guid pageId = page.PageId;
-                int childId = 0;
+            int count = 0;
+            var lookup = _pageIndex.ToLookup(i => i.ParentId, i => count++);
 
-                for(int i = 0;i < _pageIndex.Count;i++) {
-                    if(_pageIndex[i].ParentId == pageId) {
-                        if(childId == 0) {
-                            page.FirstChild = i;
-                        }
-                        else {
-                            _pageIndex[childId].NextPage = i;
-                        }
-                        childId = i;
+            foreach (PageIndexItem page in _pageIndex) {
+                var pageId = page.PageId;
+                var childId = 0;
+                foreach (int index in lookup[pageId]) {
+                    if (childId == 0) {
+                        page.FirstChild = index;
                     }
+                    else {
+                        _pageIndex[childId].NextPage = index;
+                    }
+                    childId = index;
                 }
             }
         }
@@ -302,7 +302,7 @@ namespace KalikoCMS.Core {
                 DateTime? parentStartDate = DateTime.MinValue;
                 DateTime? parentStopDate = DateTime.MaxValue;
 
-                string fullpath = page.PageUrl;// + ".aspx";
+                string fullpath = page.PageUrl; // + ".aspx";
 
                 Guid currentPageId = page.ParentId;
                 if (currentPageId != Guid.Empty) {
@@ -311,6 +311,7 @@ namespace KalikoCMS.Core {
                     fullpath = pi.PageUrl + "/" + fullpath;
 
                     if (pi.DeletedDate != null) {
+                        throw new NotImplementedException("Should not be reached!");
                         isDeleted = true;
                         parentDeleteDate = pi.DeletedDate;
                     }
@@ -324,25 +325,17 @@ namespace KalikoCMS.Core {
                 fullpath = fullpath.ToLower();
                 page.PageUrl = fullpath.Replace("//", "/") + "/";
 
-                //Is any parent deleted or is the page itself deleted?
-                if ((isDeleted || page.DeletedDate != null) == false) {
 
-                    //The page itself is not deleted but the parrent is, set the childs deletedate to the same value
-                    if (isDeleted && page.DeletedDate == null) {
-                        page.DeletedDate = parentDeleteDate;
-                    }
-
-                    //The page startpublish is older then any parents.. obey the parent!
-                    if (page.StartPublish < parentStartDate) {
-                        page.StartPublish = parentStartDate;
-                    }
-
-                    if (parentStopDate != null && page.StopPublish > parentStopDate) {
-                        page.StopPublish = parentStopDate;
-                    }
-
-                    pages.Add(page);
+                //The page startpublish is older then any parents.. obey the parent!
+                if (page.StartPublish < parentStartDate) {
+                    page.StartPublish = parentStartDate;
                 }
+
+                if (parentStopDate != null && page.StopPublish > parentStopDate) {
+                    page.StopPublish = parentStopDate;
+                }
+
+                pages.Add(page);
             }
 
             return pages;

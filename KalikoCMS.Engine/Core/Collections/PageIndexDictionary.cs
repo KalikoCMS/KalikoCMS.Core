@@ -33,12 +33,10 @@ namespace KalikoCMS.Core.Collections {
             }
         }
 
-
         public PageIndexItem Find(Predicate<PageIndexItem> match) {
             if (match == null) {
                 throw new ArgumentNullException("match");
             }
-
 
             var size = Items.Count;
             for (int index = 0; index < size; ++index) {
@@ -68,7 +66,7 @@ namespace KalikoCMS.Core.Collections {
             return item.PageId;
         }
         
-        public PageIndexItem GetPageIndex(Guid pageId) {
+        public PageIndexItem GetPageIndexItem(Guid pageId) {
             return Contains(pageId) ? base[pageId] : default(PageIndexItem);
         }
 
