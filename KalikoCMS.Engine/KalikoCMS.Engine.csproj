@@ -75,6 +75,7 @@
     <Compile Include="Configuration\SiteSettings.cs" />
     <Compile Include="ContentProvider\IPageExtender.cs" />
     <Compile Include="ContentProvider\PageProvider.cs" />
+    <Compile Include="Core\Collections\PageIndexDictionary.cs" />
     <Compile Include="Core\FileSystemObject.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -3,7 +3,6 @@
 
     public class Caretaker {
         public static void EmptyDatabase() {
-
             DataManager.DeleteAll(DataManager.Instance.PageProperty);
             DataManager.DeleteAll(DataManager.Instance.PageInstance);
             DataManager.DeleteAll(DataManager.Instance.Page);

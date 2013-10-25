@@ -30,13 +30,13 @@ namespace KalikoCMS.Core {
         private static readonly Predicate<PageIndexItem> IsPublished = t => t.StartPublish <= DateTime.Now && (t.StopPublish == null || !(DateTime.Now > t.StopPublish));
         private static readonly Predicate<PageIndexItem> IsUnpublished = t => !(t.StartPublish <= DateTime.Now && !(DateTime.Now > t.StopPublish));
 
-        private readonly List<PageIndexItem> _pageIndex;
+        private readonly PageIndexDictionary _pageIndex;
 
         internal PageIndex() {
-            _pageIndex = new List<PageIndexItem>();
+            _pageIndex = new PageIndexDictionary();
         }
 
-        internal PageIndex(List<PageIndexItem> pageIndex) {
+        internal PageIndex(PageIndexDictionary pageIndex) {
             _pageIndex = pageIndex;
 
             InitLinkedList();
@@ -47,7 +47,7 @@ namespace KalikoCMS.Core {
             get { return _pageIndex.Count; }
         }
 
-        internal List<PageIndexItem> Items {
+        internal PageIndexDictionary Items {
             get { return _pageIndex; }
         }
 
@@ -66,7 +66,7 @@ namespace KalikoCMS.Core {
         }
 
         internal static PageIndex CreatePageIndex(int languageId) {
-            List<PageIndexItem> pageIndexItems = PageData.GetPageStructure(languageId);
+            PageIndexDictionary pageIndexItems = PageData.GetPageStructure(languageId);
 
             var pageIndex = new PageIndex(pageIndexItems) {LanguageId = languageId};
 
@@ -109,7 +109,7 @@ namespace KalikoCMS.Core {
                 pageIndexItem = GetRootPageIndexItem();
             }
             else {
-                pageIndexItem = _pageIndex.Find(t => t.PageId == parentId);
+                pageIndexItem = GetPageIndexItem(parentId);
             }
 
             if(pageIndexItem != null) {
@@ -132,28 +132,26 @@ namespace KalikoCMS.Core {
             return pageCollection;
         }
 
+        // TODO: Add seconds (sorted?)dictionary PageId, PageIndexItemPosition
         internal PageIndexItem GetPageIndexItem(Guid pageId) {
-            return _pageIndex.Find(pi => pi.PageId == pageId);
+            return _pageIndex.GetPageIndex(pageId);
         }
 
         internal PageIndexItem GetPageIndexItem(int pageInstanceId) {
             return _pageIndex.Find(pi => pi.PageInstanceId == pageInstanceId);
         }
 
-        //public PageCollection GetPageTreeByCriteria(Guid pageId, PublishState pageState) {
         public PageCollection GetPageTreeByCriteria(Guid pageId, Predicate<PageIndexItem> match) {
             var pageCollection = new PageCollection();
             var stack = new Stack();
             int currentId;
             int index = 0;
 
-            //Predicate<PageIndexItem> publishStatePredicate = GetPublishStatePredicate(pageState);
-
             if(pageId == Guid.Empty) {
                 currentId = 0;
             }
             else {
-                PageIndexItem firstPage = _pageIndex.Find(t => t.PageId == pageId);
+                PageIndexItem firstPage = GetPageIndexItem(pageId);
                 if(firstPage==null) {
                     throw new ArgumentException("Page with id " + pageId + " not found!");
                 }
@@ -236,7 +234,7 @@ namespace KalikoCMS.Core {
         }
 
         internal void InsertPageIndexItem(PageIndexItem page) {
-            PageIndexItem item = _pageIndex.Find(pi => pi.PageId == page.ParentId);
+            PageIndexItem item = GetPageIndexItem(page.ParentId);
             int insertPosition = _pageIndex.Count;
 
             if (item != null) {
@@ -445,7 +443,7 @@ namespace KalikoCMS.Core {
         //    return -1;
         //}
         public void DeletePages(Collection<Guid> pageIds) {
-            _pageIndex.RemoveAll(i => pageIds.Contains(i.PageId));
+            _pageIndex.Remove(pageIds);
 
             InitLinkedList();
             BuildLinkedList();
@@ -464,7 +462,7 @@ namespace KalikoCMS.Core {
                 currentId = 0;
             }
             else {
-                PageIndexItem firstPage = _pageIndex.Find(t => t.PageId == rootPageId);
+                PageIndexItem firstPage = GetPageIndexItem(rootPageId);
                 if (firstPage == null) {
                     throw new ArgumentException("Page with id " + rootPageId + " not found!");
                 }

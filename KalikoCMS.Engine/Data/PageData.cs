@@ -16,16 +16,16 @@
 
 namespace KalikoCMS.Data {
     using System;
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using Core.Collections;
     using Kaliko;
     using Core;
     using EntityProvider;
 
     internal static class PageData {
 
-        internal static List<PageIndexItem> GetPageStructure(int languageId) {
+        internal static PageIndexDictionary GetPageStructure(int languageId) {
             IQueryable<PageIndexItem> pages;
 
             DataManager.OpenConnection();
@@ -41,7 +41,7 @@ namespace KalikoCMS.Data {
                 DataManager.CloseConnection();
             }
 
-            return pages.ToList();
+            return new PageIndexDictionary(pages);
         }
 
         private static IQueryable<PageIndexItem> GetPages(int languageId) {
