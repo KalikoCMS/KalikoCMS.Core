@@ -17,7 +17,6 @@
 namespace KalikoCMS.Modules {
     using System;
     using System.Web;
-    using Configuration;
     using KalikoCMS.Serialization;
 
     public class ShortUrlModule : IHttpModule {

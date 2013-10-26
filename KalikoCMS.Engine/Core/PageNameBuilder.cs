@@ -42,7 +42,7 @@ namespace KalikoCMS.Core {
             return finalUrl;
         }
 
-        private static string GetUniqueUrl(Guid parentId, string baseUrl) {
+        internal static string GetUniqueUrl(Guid parentId, string baseUrl) {
             PageCollection siblings = PageFactory.GetChildrenForPage(parentId, PublishState.All);
             var siblingNames = new List<string>();
 

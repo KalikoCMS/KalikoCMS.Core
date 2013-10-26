@@ -17,8 +17,8 @@
 namespace KalikoCMS.Core {
     using System;
     using System.Web;
-    using KalikoCMS.Extensions;
-    using KalikoCMS.Serialization;
+    using Extensions;
+    using Serialization;
 
     public abstract class PropertyData {
 

@@ -45,5 +45,9 @@ namespace KalikoCMS.Core {
                     ((StopPublish == null) || (StopPublish > DateTime.Now));
             }
         }
+
+        public bool HasChildren {
+            get { return FirstChild != -1; }
+        }
     }
 }

@@ -21,11 +21,11 @@ namespace KalikoCMS.Core {
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Text;
-    using Kaliko;
-    using Configuration;
     using Collections;
+    using Configuration;
     using Data;
     using Extensions;
+    using Kaliko;
 
     internal class PageIndex {
         private static readonly Predicate<PageIndexItem> IsPublished = t => t.StartPublish <= DateTime.Now && (t.StopPublish == null || !(DateTime.Now > t.StopPublish));
@@ -58,10 +58,6 @@ namespace KalikoCMS.Core {
             _pageIndex.Add(p);
         }
 
-        internal void AddUnordered(PageIndexItem p) {
-            _pageIndex.Add(p);
-        }
-
         internal void Clear() {
             _pageIndex.Clear();
         }
@@ -71,38 +67,38 @@ namespace KalikoCMS.Core {
 
             var pageIndex = new PageIndex(pageIndexItems) {LanguageId = languageId};
 
-            pageIndex = CleanUp(pageIndex);
+            FixDatesForIndex(pageIndex);
 
             pageIndex.WriteIndexToLog();
 
             return pageIndex;
         }
 
-        public PageCollection GetChildren(Guid pageId) {
+        internal PageCollection GetChildren(Guid pageId) {
             return GetChildrenByCriteria(pageId, IsPublished);
         }
 
-        public PageCollection GetChildren(Guid pageId, PublishState pageState) {
+        internal PageCollection GetChildren(Guid pageId, PublishState pageState) {
             Predicate<PageIndexItem> match = GetPublishStatePredicate(pageState);
 
             return GetChildrenByCriteria(pageId, match);
         }
 
 
-        public PageCollection GetChildren(Guid pageId, int pageTypeId) {
+        internal PageCollection GetChildren(Guid pageId, int pageTypeId) {
             Predicate<PageIndexItem> match = IsPublished.And(t => t.PageTypeId == pageTypeId);
 
             return GetChildrenByCriteria(pageId, match);
         }
 
 
-        public PageCollection GetChildren(Guid pageId, int pageTypeId, PublishState pageState) {
+        internal PageCollection GetChildren(Guid pageId, int pageTypeId, PublishState pageState) {
             Predicate<PageIndexItem> match = AddPredicateForPageState(pageState, (t => t.PageTypeId == pageTypeId));
 
             return GetChildrenByCriteria(pageId, match);
         }
 
-        public PageCollection GetChildrenByCriteria(Guid parentId, Predicate<PageIndexItem> match) {
+        internal PageCollection GetChildrenByCriteria(Guid parentId, Predicate<PageIndexItem> match) {
             var pageCollection = new PageCollection();
             PageIndexItem pageIndexItem;
 
@@ -113,10 +109,10 @@ namespace KalikoCMS.Core {
                 pageIndexItem = GetPageIndexItem(parentId);
             }
 
-            if(pageIndexItem != null) {
+            if (pageIndexItem != null) {
                 int currentId = pageIndexItem.FirstChild;
 
-                while(currentId > -1) {
+                while (currentId > -1) {
                     PageIndexItem item = _pageIndex[currentId];
 
                     if (match(item)) {
@@ -141,26 +137,26 @@ namespace KalikoCMS.Core {
             return _pageIndex.Find(pi => pi.PageInstanceId == pageInstanceId);
         }
 
-        public PageCollection GetPageTreeByCriteria(Guid pageId, Predicate<PageIndexItem> match) {
+        internal PageCollection GetPageTreeByCriteria(Guid pageId, Predicate<PageIndexItem> match) {
             var pageCollection = new PageCollection();
             var stack = new Stack();
             int currentId;
             int index = 0;
 
-            if(pageId == Guid.Empty) {
+            if (pageId == Guid.Empty) {
                 currentId = 0;
             }
             else {
                 PageIndexItem firstPage = GetPageIndexItem(pageId);
-                if(firstPage==null) {
+                if (firstPage == null) {
                     throw new ArgumentException("Page with id " + pageId + " not found!");
                 }
                 currentId = firstPage.FirstChild;
             }
 
-            while(currentId > -1) {
+            while (currentId > -1) {
                 PageIndexItem item = _pageIndex[currentId];
-                
+
                 if (match(item)) {
                     pageCollection.Add(item.PageId);
 
@@ -175,7 +171,7 @@ namespace KalikoCMS.Core {
                 }
 
                 if ((currentId == -1) && (stack.Count > 0)) {
-                    currentId = (int) stack.Pop();
+                    currentId = (int)stack.Pop();
                 }
 
                 if (index > _pageIndex.Count) {
@@ -187,20 +183,17 @@ namespace KalikoCMS.Core {
             return pageCollection;
         }
 
-        
-        public PageCollection GetPageTreeFromPage(Guid pageId) {
+        internal PageCollection GetPageTreeFromPage(Guid pageId) {
             return GetPageTreeFromPage(pageId, PublishState.Published);
         }
 
-
-        public PageCollection GetPageTreeFromPage(Guid pageId, PublishState pageState) {
+        internal PageCollection GetPageTreeFromPage(Guid pageId, PublishState pageState) {
             Predicate<PageIndexItem> match = GetPublishStatePredicate(pageState);
 
             return GetPageTreeByCriteria(pageId, match);
         }
 
-
-        public PageCollection GetPagesByCriteria(Predicate<PageIndexItem> match) {
+        internal PageCollection GetPagesByCriteria(Predicate<PageIndexItem> match) {
             var pageCollection = new PageCollection();
 
             _pageIndex.FindAll(match).ForEach(t => pageCollection.Add(t.PageId));
@@ -208,15 +201,13 @@ namespace KalikoCMS.Core {
             return pageCollection;
         }
 
-
-        public PageCollection GetRootChildren() {
+        internal PageCollection GetRootChildren() {
             Predicate<PageIndexItem> match = IsPublished.And(t => t.ParentId == Guid.Empty);
 
             return GetPagesByCriteria(match);
         }
 
-
-        public PageCollection GetRootChildren(PublishState pageState) {
+        internal PageCollection GetRootChildren(PublishState pageState) {
             Predicate<PageIndexItem> match = t => t.ParentId == Guid.Empty;
 
             match = AddPredicateForPageState(pageState, match);
@@ -224,8 +215,7 @@ namespace KalikoCMS.Core {
             return GetPagesByCriteria(match);
         }
 
-
-        public PageCollection GetRootChildren(int pageTypeId, PublishState pageState) {
+        internal PageCollection GetRootChildren(int pageTypeId, PublishState pageState) {
             Predicate<PageIndexItem> match = t => t.ParentId == Guid.Empty && t.PageTypeId == pageTypeId;
 
             match = AddPredicateForPageState(pageState, match);
@@ -243,7 +233,7 @@ namespace KalikoCMS.Core {
                 item.FirstChild = insertPosition;
                 page.NextPage = firstChild;
             }
-            else if(_pageIndex.Count > 0) {
+            else if (_pageIndex.Count > 0) {
                 item = _pageIndex[0];
                 int nextPage = item.NextPage;
 
@@ -275,11 +265,11 @@ namespace KalikoCMS.Core {
 
         private void BuildLinkedList() {
             int count = 0;
-            var lookup = _pageIndex.ToLookup(i => i.ParentId, i => count++);
+            ILookup<Guid, int> lookup = _pageIndex.ToLookup(i => i.ParentId, i => count++);
 
             foreach (PageIndexItem page in _pageIndex) {
-                var pageId = page.PageId;
-                var childId = 0;
+                Guid pageId = page.PageId;
+                int childId = 0;
                 foreach (int index in lookup[pageId]) {
                     if (childId == 0) {
                         page.FirstChild = index;
@@ -292,40 +282,38 @@ namespace KalikoCMS.Core {
             }
         }
 
-        // TODO: No deleted pages in index, remove related code below
-        private static PageIndex CleanUp(PageIndex pageIndex) {
-            var pages = new PageIndex {LanguageId = pageIndex.LanguageId};
-
+        // TODO: Fininsh implementation of date restriction for children (currently commented code below)
+        private static void FixDatesForIndex(PageIndex pageIndex) {
             foreach (PageIndexItem page in pageIndex.Items) {
-                bool isDeleted = false;
+/*                bool isDeleted = false;
                 DateTime? parentDeleteDate = DateTime.MinValue;
                 DateTime? parentStartDate = DateTime.MinValue;
-                DateTime? parentStopDate = DateTime.MaxValue;
+                DateTime? parentStopDate = DateTime.MaxValue;*/
 
-                string fullpath = page.PageUrl; // + ".aspx";
+                string fullpath = page.PageUrl;
 
                 Guid currentPageId = page.ParentId;
                 if (currentPageId != Guid.Empty) {
-                    PageIndexItem pi = pageIndex.GetPageIndexItem(currentPageId);
+                    PageIndexItem parentPage = pageIndex.GetPageIndexItem(currentPageId);
 
-                    fullpath = pi.PageUrl + "/" + fullpath;
+                    fullpath = parentPage.PageUrl + "/" + fullpath;
 
-                    if (pi.DeletedDate != null) {
+/*                    if (parentPage.DeletedDate != null) {
                         throw new NotImplementedException("Should not be reached!");
                         isDeleted = true;
-                        parentDeleteDate = pi.DeletedDate;
+                        parentDeleteDate = parentPage.DeletedDate;
                     }
-                    if (parentStartDate < pi.StartPublish) {
-                        parentStartDate = pi.StartPublish;
+                    if (parentStartDate < parentPage.StartPublish) {
+                        parentStartDate = parentPage.StartPublish;
                     }
-                    if (pi.StopPublish != null && pi.StopPublish < parentStopDate) {
-                        parentStopDate = pi.StopPublish;
-                    }
+                    if (parentPage.StopPublish != null && parentPage.StopPublish < parentStopDate) {
+                        parentStopDate = parentPage.StopPublish;
+                    }*/
                 }
                 fullpath = fullpath.ToLower();
                 page.PageUrl = fullpath.Replace("//", "/") + "/";
 
-
+/*
                 //The page startpublish is older then any parents.. obey the parent!
                 if (page.StartPublish < parentStartDate) {
                     page.StartPublish = parentStartDate;
@@ -333,22 +321,18 @@ namespace KalikoCMS.Core {
 
                 if (parentStopDate != null && page.StopPublish > parentStopDate) {
                     page.StopPublish = parentStopDate;
-                }
-
-                pages.Add(page);
+                }*/
             }
-
-            return pages;
         }
 
         private void InitLinkedList() {
             int pageId = 0;
 
-            for(int i = 0;i < _pageIndex.Count;i++) {
+            for (int i = 0; i < _pageIndex.Count; i++) {
                 _pageIndex[i].NextPage = _pageIndex[i].FirstChild = -1;
 
-                if(_pageIndex[i].ParentId == Guid.Empty) {
-                    if(i != 0) {
+                if (_pageIndex[i].ParentId == Guid.Empty) {
+                    if (i != 0) {
                         _pageIndex[pageId].NextPage = i;
                     }
                     pageId = i;
@@ -370,86 +354,118 @@ namespace KalikoCMS.Core {
         }
 
         private PageIndexItem GetRootPageIndexItem() {
-            var rootPageIndexItem = new PageIndexItem
-                {
-                    CreatedDate = DateTime.MinValue,
-                    FirstChild = 0,
-                    NextPage = -1,
-                    PageId = SiteSettings.RootPage,
-                    PageName = "Root",
-                };
+            var rootPageIndexItem = new PageIndexItem {
+                CreatedDate = DateTime.MinValue,
+                FirstChild = 0,
+                NextPage = -1,
+                PageId = SiteSettings.RootPage,
+                PageName = "Root",
+            };
             return rootPageIndexItem;
         }
 
         private void WriteIndexToLog() {
-#if DEBUG
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("Page index created:\r\n");
+            #if DEBUG
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append("Page index created:\r\n[");
+                int count = 0;
 
-            foreach (PageIndexItem t in _pageIndex) {
-                stringBuilder.Append(string.Format("   {0}, {1}, {2}, {3}\r\n", t.PageUrl, t.ParentId, t.NextPage, t.FirstChild));
-            }
-
-            string log = stringBuilder.ToString();
-            Logger.Write(log, Logger.Severity.Info);
-#endif
-        }
-
-        public void MovePage(Guid pageId, Guid targetId) {
-            PageIndexItem targetPage = GetPageIndexItem(targetId);
-            int firstChild = targetPage.FirstChild;
-            int treeLevel = targetPage.TreeLevel;
-
-            for(int i = 0;i < _pageIndex.Count;i++) {
-                if (_pageIndex[i].PageId == pageId) {
-                    PageIndexItem parentPage = GetPageIndexItem(_pageIndex[i].ParentId);
-                    if(parentPage.FirstChild == i) {
-                        parentPage.FirstChild = _pageIndex[i].NextPage;
-                    }
-
-                    _pageIndex[i].ParentId = targetId;
-                    _pageIndex[i].RootId = targetPage.RootId;
-                    _pageIndex[i].TreeLevel = treeLevel + 1;
-                    _pageIndex[i].NextPage = firstChild;
-                    targetPage.FirstChild = i;
-                    break;
+                foreach (PageIndexItem t in _pageIndex) {
+                    stringBuilder.Append(string.Format("{{ \"Offset\": " + count + ", \"PageUrl\": \"{0}\", \"ParentId\": \"{1}\", \"NextPage\": {2}, \"FirstChild\": {3} }},\r\n", t.PageUrl, t.ParentId, t.NextPage, t.FirstChild));
+                    count++;
                 }
+
+                string log = stringBuilder.ToString();
+                Logger.Write(log, Logger.Severity.Info);
+            #endif
+        }
+
+        internal void MovePage(Guid pageId, Guid targetId) {
+            var targetPage = GetPageIndexItem(targetId);
+            var changedItems = new List<PageIndexItem>();
+
+            for (int i = 0; i < _pageIndex.Count; i++) {
+                var pageIndexItem = _pageIndex[i];
+
+                if (pageIndexItem.PageId != pageId) {
+                    continue;
+                }
+
+                var parentPage = GetPageIndexItem(pageIndexItem.ParentId);
+                if (parentPage.FirstChild == i) {
+                    parentPage.FirstChild = pageIndexItem.NextPage;
+                }
+                else {
+                    var childId = parentPage.FirstChild;
+                    while (childId != -1) {
+                        var childPage = _pageIndex[childId];
+                        if (childPage.NextPage == i) {
+                            childPage.NextPage = pageIndexItem.NextPage;
+                            break;
+                        }
+                        childId = childPage.NextPage;
+                    }
+                }
+
+                pageIndexItem.ParentId = targetId;
+                pageIndexItem.NextPage = targetPage.FirstChild;
+                pageIndexItem.UrlSegment = PageNameBuilder.GetUniqueUrl(targetPage.PageId, pageIndexItem.UrlSegment);
+                pageIndexItem.UrlSegmentHash = pageIndexItem.UrlSegment.GetHashCode();
+                targetPage.FirstChild = i;
+
+                UpdateNodeAfterMove(changedItems, targetPage.PageUrl, targetPage.RootId, targetPage.TreeLevel, pageIndexItem);
+
+                break;
+            }
+
+            PageData.UpdateStructure(changedItems);
+//            WriteIndexToLog();
+        }
+
+        private void UpdateChildrenAfterMove(List<PageIndexItem> changedItems, string parentUrl, int childOffset, Guid rootId, int treeLevel) {
+            var pageIndexItem = _pageIndex[childOffset];
+            UpdateNodeAfterMove(changedItems, parentUrl, rootId, treeLevel, pageIndexItem);
+
+            var nextPage = pageIndexItem.NextPage;
+            while (nextPage != -1) {
+                pageIndexItem = _pageIndex[nextPage];
+                UpdateNodeAfterMove(changedItems, parentUrl, rootId, treeLevel, pageIndexItem);
+
+                nextPage = pageIndexItem.NextPage;
             }
         }
 
-/*        public void DeletePage(Guid pageId) {
-            PageCollection pageTree = GetPageTreeFromPage(pageId, PublishState.All);
-            pageTree.Add(pageId);
+        private void UpdateNodeAfterMove(List<PageIndexItem> changedItems, string parentUrl, Guid rootId, int treeLevel, PageIndexItem pageIndexItem) {
+            #if DEBUG
+                Logger.Write(string.Format("Moving '{0}', {1}, '{2}'", pageIndexItem.PageUrl, pageIndexItem.TreeLevel, pageIndexItem.RootId));
+            #endif
+            
+            pageIndexItem.RootId = rootId;
+            pageIndexItem.TreeLevel = treeLevel + 1;
+            pageIndexItem.PageUrl = parentUrl + pageIndexItem.UrlSegment + "/";
 
-            _pageIndex.RemoveAll(i => pageTree.PageIds.Contains(i.PageId));
+            changedItems.Add(pageIndexItem);
 
-            InitLinkedList();
-            BuildLinkedList();
-        }*/
-
-        //private int FindIndexPositionForPage(Guid pageId) {
-        //    for (int i = 0; i < _pageIndex.Count; i++) {
-        //        if(_pageIndex[i].PageId == pageId) {
-        //            return i;
-        //        }
-        //    }
-        //    return -1;
-        //}
-        public void DeletePages(Collection<Guid> pageIds) {
+            if (pageIndexItem.HasChildren) {
+                UpdateChildrenAfterMove(changedItems, pageIndexItem.PageUrl, pageIndexItem.FirstChild, pageIndexItem.RootId, pageIndexItem.TreeLevel);
+            }
+        }
+        
+        internal void DeletePages(Collection<Guid> pageIds) {
             _pageIndex.Remove(pageIds);
 
             InitLinkedList();
             BuildLinkedList();
         }
 
-        public PageCollection GetPageTreeFromPage(Guid rootPageId, Guid leafPageId, PublishState pageState) {
+        internal PageCollection GetPageTreeFromPage(Guid rootPageId, Guid leafPageId, PublishState pageState) {
             var pageCollection = new PageCollection();
-            var match = GetPublishStatePredicate(pageState);
+            Predicate<PageIndexItem> match = GetPublishStatePredicate(pageState);
             var stack = new Stack();
             int currentId;
             int index = 0;
 
-            var pagePath = GetPagePath(leafPageId);
+            PageCollection pagePath = GetPagePath(leafPageId);
 
             if (rootPageId == Guid.Empty) {
                 currentId = 0;
@@ -496,10 +512,10 @@ namespace KalikoCMS.Core {
             return pageCollection;
         }
 
-        // TODO: Cache?
-        public PageCollection GetPagePath(Guid pageId) {
+        // TODO: Cache-candidate
+        internal PageCollection GetPagePath(Guid pageId) {
             var pathList = new PageCollection();
-            var currentPageId = pageId;
+            Guid currentPageId = pageId;
 
             for (int i = 0; i < 10000; i++) {
                 pathList.Add(currentPageId);

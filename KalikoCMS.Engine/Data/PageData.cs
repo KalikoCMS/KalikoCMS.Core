@@ -16,6 +16,7 @@
 
 namespace KalikoCMS.Data {
     using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
     using Core.Collections;
@@ -72,14 +73,14 @@ namespace KalikoCMS.Data {
 
         //TODO: Add language parameters when going multi-language
         internal static Collection<Guid> DeletePage(Guid pageId) {
-            Collection<Guid> pageIds = PageFactory.GetPageTreeFromPage(pageId, PublishState.All).PageIds;
+            var pageIds = PageFactory.GetPageTreeFromPage(pageId, PublishState.All).PageIds;
             pageIds.Add(pageId);
-            Guid[] pageIdArray = pageIds.ToArray();
+            var pageIdArray = pageIds.ToArray();
 
             DataManager.OpenConnection();
 
             try {
-                IQueryable<PageInstanceEntity> items = DataManager.Instance.PageInstance.Where(p => pageIdArray.Contains(p.PageId));
+                var items = DataManager.Instance.PageInstance.Where(p => pageIdArray.Contains(p.PageId));
 
                 foreach (PageInstanceEntity item in items) {
                     item.DeletedDate = DateTime.Now;
@@ -91,6 +92,28 @@ namespace KalikoCMS.Data {
             }
 
             return pageIds;
+        }
+
+        internal static void UpdateStructure(List<PageIndexItem> changedItems) {
+            var pages = changedItems.ToDictionary(i => i.PageId);
+            var pageIds = pages.Keys;
+
+            DataManager.OpenConnection();
+
+            try {
+                var items = DataManager.Instance.Page.Where(p => pageIds.Contains(p.PageId));
+
+                foreach (var item in items) {
+                    var indexItem = pages[item.PageId];
+                    item.TreeLevel = indexItem.TreeLevel;
+                    item.ParentId = indexItem.ParentId;
+                    item.RootId = indexItem.RootId;
+                    DataManager.Instance.Page.Update(item);
+                }
+            }
+            finally {
+                DataManager.CloseConnection();
+            }
         }
 
         internal static PageEntity GetPageEntity(Guid pageId) {

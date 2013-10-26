@@ -121,7 +121,6 @@ namespace KalikoCMS {
 
             string[] segments = url.Trim('/').Split('/');
             int position = 0;
-            var lastPage = new PageIndexItem();
 
             for (int i = 0; i < segments.Length; i++) {
                 var segment = segments[i];
@@ -140,9 +139,6 @@ namespace KalikoCMS {
                             return Guid.Empty;
                         }
 
-                        lastPage = page;
-
-                        // Fortsätt med nästa segment...
                         break;
                     }
 
@@ -447,8 +443,6 @@ namespace KalikoCMS {
 
 
         public static void MovePage(Guid pageId, Guid targetId) {
-            // TODO: Kolla så att URL:en inte blir fel
-            // TODO: Fixa i databasen också
             foreach (PageIndex pageIndex in _pageLanguageIndex) {
                 pageIndex.MovePage(pageId, targetId);
             }
