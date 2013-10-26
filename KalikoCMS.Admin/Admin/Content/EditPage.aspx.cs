@@ -135,6 +135,10 @@ namespace KalikoCMS.Admin.Content {
                 SaveData();
                 MessageBox.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> saved!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();parent.refreshTreeNode('{1}');</script>", _pageName, _parentId);
                 MessageBox.Visible = true;
+
+                if (_pageTypeId > 0) {
+                    MessageBox.Text += string.Format("<script> document.location = '{0}?id={1}'</script>", Request.Path, _pageId);
+                }
             }
             else {
                 ErrorMessage.Text = "One or more errors occured!";
@@ -172,6 +176,7 @@ namespace KalikoCMS.Admin.Content {
             CmsPage parent = PageFactory.GetPage(_parentId);
             EditablePage editablePage = parent.CreateChildPage(_pageTypeId);
             SavePropertiesForPage(editablePage);
+            _pageId = editablePage.PageId;
         }
 
         private void SaveDataForExistingPage() {
