@@ -15,6 +15,7 @@
 #endregion
 
 namespace KalikoCMS.Framework {
+    using System;
     using Core;
     
     public abstract class PageTemplate<T> : PageTemplate where T : CmsPage {
@@ -29,6 +30,10 @@ namespace KalikoCMS.Framework {
         private static CmsPage GetCurrentPage() {
             var pageId = Utils.GetCurrentPageId();
             var page = PageFactory.GetPage(pageId);
+
+            if (page == null) {
+                Utils.Throw<ApplicationException>("Template loaded without proper page reference.");
+            }
 
             return ConvertToTypedPage(page);
         }

@@ -24,20 +24,13 @@ namespace KalikoCMS.WebControls {
     using Core;
     using Core.Collections;
 
-    public class PageList : BaseList {
-
-        #region Private Member Variables
-
+    public class PageList : BaseList, IPageable {
         private bool _pagingEnabled;
         private int _pageSize;
         private int _pageIndex;
         private Guid _pageLink;
         private bool _pageLinkSet;
 
-        #endregion
-
-
-        #region Private Properties
 
         private string CacheName {
             get {
@@ -45,10 +38,6 @@ namespace KalikoCMS.WebControls {
             }
         }
 
-        #endregion
-
-
-        #region Private Methods
         
         private PageCollection GetCacheablePageSource() {
             if (DataSource != null) {
@@ -184,9 +173,6 @@ namespace KalikoCMS.WebControls {
             }
         }
 
-        #endregion
-
-
         #region Public Properties
 
         // TODO: Bryt ut det här ifall paging ska finnas på fler kontrollrar
@@ -210,7 +196,7 @@ namespace KalikoCMS.WebControls {
             get { return _pageIndex; }
             set {
                 if(value >= 0) {
-                    ViewState["PageIndex"] = _pageIndex = value;
+                    ViewState["PageIndex"] = _pageIndex = value - 1;
                 }
             }
         }
@@ -225,6 +211,10 @@ namespace KalikoCMS.WebControls {
 
         public bool PagerOnLastPage {
             get { return (_pageIndex + 1) >= PageCount; }
+        }
+
+        public void Rebind() {
+            DataBind();
         }
 
         #endregion
@@ -288,9 +278,7 @@ namespace KalikoCMS.WebControls {
 
         #endregion
 
-
-        #region Public Methods
-        
+       
         public override void DataBind() {
             base.DataBind();
 
@@ -298,8 +286,6 @@ namespace KalikoCMS.WebControls {
             CreateControlHierarchy();
             ChildControlsCreated = true;
         }
-
-        #endregion
 
 
         #region Event Handlers

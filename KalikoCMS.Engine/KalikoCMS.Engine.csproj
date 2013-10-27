@@ -174,10 +174,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WebControls\FormMail.cs" />
+    <Compile Include="WebControls\IPageable.cs" />
     <Compile Include="WebControls\MenuList.cs" />
     <Compile Include="WebControls\MenuTree.cs" />
     <Compile Include="WebControls\PageList.cs" />
     <Compile Include="WebControls\PageListItem.cs" />
+    <Compile Include="WebControls\Pager.cs" />
     <Compile Include="WebControls\PageTree.cs" />
     <Compile Include="WebControls\PropertyControl.cs" />
     <Compile Include="Events\SendFormEventArgs.cs" />
