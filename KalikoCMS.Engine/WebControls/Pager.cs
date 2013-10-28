@@ -85,6 +85,13 @@ namespace KalikoCMS.WebControls {
                 Utils.Throw<ArgumentException>("TargetControl not found!");
             }
 
+            if (_activeIndex == 0) {
+                _activeIndex = TargetControl.PageIndex;
+            }
+            if (_activeIndex == 0) {
+                _activeIndex = 1;
+            }
+
             var pageCount = TargetControl.PageCount;
             var linkUrl = LinkUrlTemplate;
             Control container;

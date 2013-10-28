@@ -37,6 +37,7 @@ namespace KalikoCMS.Core {
             var method = methodMessage.MethodBase;
             object returnValue;
 
+
             if (method.IsVirtual) {
                 returnValue = HandleVirtualMethods(method);
             }
@@ -56,15 +57,28 @@ namespace KalikoCMS.Core {
         private object HandleVirtualMethods(MethodBase method) {
             string methodName = method.Name;
 
-            if (methodName.StartsWith("get_")) {
-                var currentPage = (CmsPage)_target;
-                string propertyName = methodName.Substring(4);
-                var propertyData = currentPage.Property[propertyName];
-
-                return propertyData;
+            if (!methodName.StartsWith("get_")) {
+                return null;
             }
 
-            return null;
+            return GetPropertyValue(method, methodName);
+        }
+
+        private object GetPropertyValue(MethodBase method, string methodName) {
+            bool propertyExists;
+            var currentPage = (CmsPage)_target;
+            var propertyName = methodName.Substring(4);
+            var propertyData = currentPage.Property.GetPropertyValue(propertyName, out propertyExists);
+
+            if (!propertyExists) {
+                return null;
+            }
+
+            if (propertyData == null) {
+                return Activator.CreateInstance(((MethodInfo)method).ReturnType);
+            }
+
+            return propertyData;
         }
 
         private static Exception GetExceptionToRethrow(Exception exception) {
@@ -78,5 +92,6 @@ namespace KalikoCMS.Core {
         private static IMessage BuildReturnMessage(IMethodCallMessage methodMessage, object returnValue) {
             return new ReturnMessage(returnValue, methodMessage.Args, methodMessage.ArgCount, methodMessage.LogicalCallContext, methodMessage);
         }
+
     }
 }

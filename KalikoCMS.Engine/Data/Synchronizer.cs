@@ -47,10 +47,12 @@ namespace KalikoCMS.Data {
                 pageType.Type = type;
                 pageType.Instance = (CmsPage)Activator.CreateInstance(type);
 
+                PageTypeData.Update(pageType);
+
                 SynchronizeProperties(pageType, type);
             }
 
-            PageTypeData.BatchUpdate(pageTypes);
+            //PageTypeData.BatchUpdate(pageTypes);
             PageType.PageTypes = pageTypes;
         }
 

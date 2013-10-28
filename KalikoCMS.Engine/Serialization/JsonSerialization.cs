@@ -16,6 +16,7 @@
 
 namespace KalikoCMS.Serialization {
     using System;
+    using System.Text.RegularExpressions;
     using Kaliko;
     using fastJSON;
 
@@ -25,10 +26,10 @@ namespace KalikoCMS.Serialization {
 
         private static readonly JSON JsonSerializer = GetSerializer();
         private static readonly JSONParameters GenericParameters = new JSONParameters {UseExtensions = false};
+        private static readonly JSONParameters TypedParameters = new JSONParameters { UseExtensions = true, UsingGlobalTypes = true };
 
         private static JSON GetSerializer() {
-            JSON instance = JSON.Instance;
-            return instance;
+            return JSON.Instance;
         }
 
         public static T DeserializeJson<T>(string json) {
@@ -37,7 +38,7 @@ namespace KalikoCMS.Serialization {
             }
 
             try {
-                T instance = JsonSerializer.ToObject<T>(json);
+                var instance = JsonSerializer.ToObject<T>(json);
                 return instance;
             }
             catch (Exception e) {
@@ -47,9 +48,43 @@ namespace KalikoCMS.Serialization {
             return default(T);
         }
 
-        public static string SerializeJson(object instance) {
-            string json = JsonSerializer.ToJSON(instance, GenericParameters);
+        public static object DeserializeTypedJson(string json) {
+            if (String.IsNullOrEmpty(json)) {
+                return default(object);
+            }
 
+            try {
+                var instance = JsonSerializer.ToObject(json);
+                return instance;
+            }
+            catch (Exception e) {
+                Logger.Write("Could not deserialize " + json + ": " + e.Message, Logger.Severity.Major);
+            }
+
+            return default(object);
+        }
+
+        public static string SerializeJson(object instance) {
+            return JsonSerializer.ToJSON(instance, GenericParameters);
+        }
+
+        public static string SerializeTypedJson(object instance) {
+            var json = JsonSerializer.ToJSON(instance, TypedParameters);
+
+            json = OptimizeJsonTypes(json);
+
+            return json;
+        }
+
+        private static string OptimizeJsonTypes(string json) {
+            var match = Regex.Match(json, ".*?\\\"\\$types\\\":\\{.*?\\}");
+            if (match.Success) {
+                var types = match.Groups[0].Value;
+                var optimizedTypes = Regex.Replace(types, @", Version=\d+.\d+.\d+.\d+", string.Empty);
+                optimizedTypes = Regex.Replace(optimizedTypes, @", Culture=\w+", string.Empty);
+                optimizedTypes = Regex.Replace(optimizedTypes, @", PublicKeyToken=\w+", string.Empty);
+                json = json.Replace(types, optimizedTypes);
+            }
             return json;
         }
 

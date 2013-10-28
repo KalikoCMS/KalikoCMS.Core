@@ -32,6 +32,23 @@ namespace KalikoCMS.WebControls {
         private bool _pageLinkSet;
 
 
+        public override void DataBind() {
+            base.DataBind();
+
+            EnsureChildControls();
+            CreateControlHierarchy();
+            ChildControlsCreated = true;
+        }
+
+
+        protected override void LoadViewState(object savedState) {
+            base.LoadViewState(savedState);
+
+            if (ViewState["PageIndex"] != null)
+                _pageIndex = (int)ViewState["PageIndex"];
+        }
+
+
         private string CacheName {
             get {
                 return string.Format("PageList:{0}:{1}:{2}:{3}:{4}", PageLink, Language.CurrentLanguage, PageTypeList, (int)SortDirection, SortOrder);
@@ -175,7 +192,6 @@ namespace KalikoCMS.WebControls {
 
         #region Public Properties
 
-        // TODO: Bryt ut det här ifall paging ska finnas på fler kontrollrar
         #region Paging Properties
 
         [Bindable(true),
@@ -278,25 +294,5 @@ namespace KalikoCMS.WebControls {
 
         #endregion
 
-       
-        public override void DataBind() {
-            base.DataBind();
-
-            EnsureChildControls();
-            CreateControlHierarchy();
-            ChildControlsCreated = true;
-        }
-
-
-        #region Event Handlers
-
-        protected override void LoadViewState(object savedState) {
-            base.LoadViewState(savedState);
-
-            if (ViewState["PageIndex"] != null)
-                _pageIndex = (int)ViewState["PageIndex"];
-        }
-
-        #endregion
     }
 }

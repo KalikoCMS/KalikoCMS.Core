@@ -29,9 +29,9 @@ namespace KalikoCMS.Serialization {
 
         public static int Decode(string input) {
             var reversed = input.Reverse();
-            int result = 0;
-            int pos = 0;
-            foreach (char c in reversed) {
+            var result = 0;
+            var pos = 0;
+            foreach (var c in reversed) {
                 result += CharList.IndexOf(c) * (int)Math.Pow(BaseLength, pos);
                 pos++;
             }

@@ -55,5 +55,17 @@ namespace KalikoCMS.Core.Collections {
         IEnumerator IEnumerable.GetEnumerator() {
             return GetEnumerator();
         }
+
+        public PropertyData GetPropertyValue(string propertyName, out bool propertyExists) {
+            PropertyItem property = GetItem(propertyName);
+
+            if (property == null) {
+                propertyExists = false;
+                return null;
+            }
+
+            propertyExists = true;
+            return property.PropertyData;
+        }
     }
 }

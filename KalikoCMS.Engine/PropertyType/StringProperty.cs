@@ -87,6 +87,5 @@ namespace KalikoCMS.PropertyType {
             get { return Utils.GetResourceText("KalikoCMS.Resources.Scripts.PropertyEditor_String.js"); }
         }
 */
-
     }
 }

@@ -23,18 +23,18 @@ namespace KalikoCMS.Attributes {
     internal static class AttributeReader {
 
         internal static IEnumerable<Type> GetTypesWithAttribute(Type attributeType) {
-            List<Type> typesWithAttribute = new List<Type>();
-            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            string attributeAssemblyName = attributeType.Assembly.GetName().Name;
+            var typesWithAttribute = new List<Type>();
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var attributeAssemblyName = attributeType.Assembly.GetName().Name;
 
             typesWithAttribute.AddRange(GetTypesWithAttributeInAssembly(attributeType.Assembly, attributeType));
 
-            IEnumerable<List<Type>> typesWithAttributeInAssembly = from assembly in assemblies
+            var typesWithAttributeInAssembly = from assembly in assemblies
                                      let referencedAssemblies = assembly.GetReferencedAssemblies()
                                      where referencedAssemblies.Count(a => a.Name == attributeAssemblyName) != 0
                                      select GetTypesWithAttributeInAssembly(assembly, attributeType);
 
-            foreach (List<Type> types in typesWithAttributeInAssembly) {
+            foreach (var types in typesWithAttributeInAssembly) {
                 typesWithAttribute.AddRange(types);
             }
 
@@ -43,25 +43,25 @@ namespace KalikoCMS.Attributes {
 
 
         private static List<Type> GetTypesWithAttributeInAssembly(Assembly assembly, Type attributeType) {
-            Type[] types = assembly.GetTypes();
+            var types = assembly.GetTypes();
             return types.Where(type => TypeHasAttribute(type, attributeType)).ToList();
         }
 
 
         private static bool TypeHasAttribute(Type type, Type attributeType) {
-            object[] attributes = type.GetCustomAttributes(true);
+            var attributes = type.GetCustomAttributes(true);
             return attributes.Any(attributeType.IsInstanceOfType);
         }
 
 
         internal static Attribute GetAttribute(Type type, Type attributeType) {
-            object[] attributes = type.GetCustomAttributes(true);
+            var attributes = type.GetCustomAttributes(true);
             return attributes.Where(attributeType.IsInstanceOfType).Cast<Attribute>().FirstOrDefault();
         }
 
 
         internal static T GetAttribute<T>(Type type) where T : Attribute {
-            object[] attributes = type.GetCustomAttributes(true);
+            var attributes = type.GetCustomAttributes(true);
             return (T)attributes.Where(attributeInType => attributeInType is T).Cast<Attribute>().FirstOrDefault();
         }
     }

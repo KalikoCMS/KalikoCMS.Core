@@ -26,5 +26,9 @@ namespace KalikoCMS.Data {
         internal static void BatchUpdate(IEnumerable<PageType> pageTypes) {
             DataManager.BatchUpdate(DataManager.Instance.PageType, pageTypes);
         }
+
+        public static void Update(PageType pageType) {
+            DataManager.InsertOrUpdate(DataManager.Instance.PageType, pageType);
+        }
     }
 }

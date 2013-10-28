@@ -20,24 +20,17 @@ namespace KalikoCMS.Events {
     using System.Web.UI;
 
     public class SendFormEventArgs : EventArgs {
-        private bool _formWasSentCorrectly = true;
         private readonly ControlCollection _formContainer;
 
         public SendFormEventArgs(ControlCollection formContainer) {
+            FormWasSentCorrectly = true;
             _formContainer = formContainer;
         }
 
-        public bool FormWasSentCorrectly {
-            get {
-                return _formWasSentCorrectly;
-            }
-            set {
-                _formWasSentCorrectly = value;
-            }
-        }
+        public bool FormWasSentCorrectly { get; set; }
 
         public Control this[string name] {
-            get { return _formContainer.Cast<Control>().FirstOrDefault(c => c.ID == name); }
+            get { return _formContainer.Cast<Control>().FirstOrDefault(control => control.ID == name); }
         }
     }
 }
