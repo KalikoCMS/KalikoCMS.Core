@@ -16,6 +16,7 @@
 
 namespace KalikoCMS.Search {
     using System;
+    using System.Collections.ObjectModel;
 
     public class NullSearchProvider : SearchProviderBase {
         public override void AddToIndex(IndexItem item) {
@@ -26,6 +27,10 @@ namespace KalikoCMS.Search {
         }
 
         public override void RemoveFromIndex(Guid pageId, int languageId) {
+            throw new Exception("Can't search using NullSearchProvider, change to a valid provider in config.");
+        }
+
+        public override void RemoveFromIndex(Collection<Guid> pageIds, int languageId) {
             throw new Exception("Can't search using NullSearchProvider, change to a valid provider in config.");
         }
 

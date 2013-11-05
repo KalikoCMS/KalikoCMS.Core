@@ -16,9 +16,10 @@
 
 namespace KalikoCMS.Caching {
     using System;
+    using Configuration;
 
     public static class CacheManager {
-        private static readonly ICacheProvider CacheProvider = new WebCache();
+        private static readonly ICacheProvider CacheProvider = GetCacheProviderTypeFromConfig();
 
         public static void Add<T>(string key, T value, CachePriority priority = CachePriority.Medium, int timeout = 30, bool slidingExpiration = true) {
             CacheProvider.Add(key, value, priority, timeout, slidingExpiration);
@@ -38,6 +39,21 @@ namespace KalikoCMS.Caching {
 
         public static void RemoveRelated(Guid pageId) {
             CacheProvider.RemoveRelated(pageId);
+        }
+
+        private static ICacheProvider GetCacheProviderTypeFromConfig() {
+            var cacheProvider = SiteSettings.Instance.CacheProvider;
+
+            if (string.IsNullOrEmpty(cacheProvider)) {
+                return new WebCache();
+            }
+
+            var cacheProviderType = Type.GetType(cacheProvider);
+            if (cacheProviderType == null) {
+                throw new NullReferenceException("Type.GetType(" + cacheProvider + ") returned null.");
+            }
+
+            return (ICacheProvider)Activator.CreateInstance(cacheProviderType);
         }
     }
 }

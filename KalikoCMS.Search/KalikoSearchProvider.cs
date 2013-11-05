@@ -1,6 +1,7 @@
 ﻿
 namespace KalikoCMS.Search {
     using System;
+    using System.Collections.ObjectModel;
     using Events;
     using KalikoSearch.Core;
 
@@ -27,6 +28,13 @@ namespace KalikoCMS.Search {
         public override void RemoveFromIndex(Guid pageId, int languageId) {
             string key = GetKey(pageId, languageId);
             _collection.RemoveDocument(key);
+        }
+
+        public override void RemoveFromIndex(Collection<Guid> pageIds, int languageId) {
+            foreach (var pageId in pageIds) {
+                string key = GetKey(pageId, languageId);
+                _collection.RemoveDocument(key);
+            }
         }
 
         public override void IndexingFinished() {

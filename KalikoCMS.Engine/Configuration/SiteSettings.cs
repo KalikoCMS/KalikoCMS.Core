@@ -31,6 +31,7 @@ namespace KalikoCMS.Configuration {
         private string _filePath;
         private string _imageCachePath;
         private string _blockedFileExtensions;
+        private string _cacheProvider;
 
         public static SiteSettings Instance {
             get {
@@ -45,6 +46,12 @@ namespace KalikoCMS.Configuration {
         [ConfigurationProperty("adminPath", IsRequired = true, DefaultValue = "/Admin/")]
         public string AdminPath {
             get { return _adminPath ?? (_adminPath = (string)base["adminPath"]); }
+        }
+
+
+        [ConfigurationProperty("cacheProvider", IsRequired = false)]
+        public string CacheProvider {
+            get { return _cacheProvider ?? (_cacheProvider = (string)base["cacheProvider"]); }
         }
 
 

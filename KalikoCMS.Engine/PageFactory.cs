@@ -27,6 +27,7 @@ namespace KalikoCMS {
     using Data;
     using Data.EntityProvider;
     using Events;
+    using Search;
 
     public class PageFactory {
         internal const string PageExpiredUrl = "/PageExpired.htm";
@@ -467,7 +468,9 @@ namespace KalikoCMS {
 
             foreach (PageIndex pageIndex in _pageLanguageIndex) {
                 pageIndex.DeletePages(pageIds);
+                SearchManager.Instance.RemoveFromIndex(pageIds, pageIndex.LanguageId);
             }
+
         }
 
     }

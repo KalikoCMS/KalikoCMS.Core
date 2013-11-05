@@ -16,6 +16,7 @@
 
 namespace KalikoCMS.Search {
     using System;
+    using System.Collections.ObjectModel;
     using Core;
 
     public abstract class SearchProviderBase {
@@ -24,6 +25,8 @@ namespace KalikoCMS.Search {
         public abstract void RemoveAll();
 
         public abstract void RemoveFromIndex(Guid pageId, int languageId);
+
+        public abstract void RemoveFromIndex(Collection<Guid> pageIds, int languageId);
 
         public abstract void IndexingFinished();
 
@@ -42,6 +45,5 @@ namespace KalikoCMS.Search {
 
             IndexingFinished();
         }
-
     }
 }
