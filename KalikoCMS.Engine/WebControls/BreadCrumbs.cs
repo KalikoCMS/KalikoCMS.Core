@@ -33,8 +33,24 @@ namespace KalikoCMS.WebControls {
 
         [Browsable(false),
          DefaultValue(null),
+         PersistenceMode(PersistenceMode.InnerProperty),
+         TemplateContainer(typeof(PageListItem))]
+        public virtual ITemplate CurrentItemTemplate { get; set; }
+
+        [Browsable(false),
+         DefaultValue(null),
          PersistenceMode(PersistenceMode.InnerProperty)]
         public virtual ITemplate SeparatorTemplate { get; set; }
+
+        [Browsable(false),
+         DefaultValue(null),
+         PersistenceMode(PersistenceMode.InnerProperty)]
+        public virtual ITemplate HeaderTemplate { get; set; }
+
+        [Browsable(false),
+         DefaultValue(null),
+         PersistenceMode(PersistenceMode.InnerProperty)]
+        public virtual ITemplate FooterTemplate { get; set; }
 
         [Bindable(true),
          Category("Data"),
@@ -43,8 +59,13 @@ namespace KalikoCMS.WebControls {
 
         [Bindable(true),
          Category("Data"),
-         DefaultValue(true)]
+         DefaultValue(false)]
         public bool RenderCurrentPage { get; set; }
+
+        [Bindable(true),
+         Category("Data"),
+         DefaultValue(false)]
+        public bool RenderIfEmpty { get; set; }
 
         #endregion
 
@@ -61,42 +82,58 @@ namespace KalikoCMS.WebControls {
                 PageLink = ((PageTemplate)Page).CurrentPage.PageId;
             }
 
-            PageCollection pages = PageFactory.GetPagePath(PageLink);
+            var pages = PageFactory.GetPagePath(PageLink);
             var lastSegment = RenderCurrentPage ? 0 : 1;
+            var hasPages = (pages.Count - lastSegment) > 0;
+
+            if (!hasPages && !RenderIfEmpty) {
+                return;
+            }
+
+            AddTemplate(HeaderTemplate);
 
             for (int i = pages.Count; i > lastSegment; i--) {
                 Guid dataItem = pages.PageIds[i - 1];
                 bool addSeparator = ((i > 0) && (i < pages.Count));
-                CreateItem(dataItem, addSeparator);
+                
+                if (i == 1 && CurrentItemTemplate != null) {
+                    CreateItem(dataItem, addSeparator, CurrentItemTemplate);
+                }
+                else {
+                    CreateItem(dataItem, addSeparator, ItemTemplate);
+                }
             }
+
+            AddTemplate(FooterTemplate);
         }
 
-        private void CreateItem(Guid pageId, bool useSeparator) {
-            if (ItemTemplate == null) {
+        private void CreateItem(Guid pageId, bool useSeparator, ITemplate template) {
+            if (template == null) {
                 return;
             }
 
             if (useSeparator) {
-                AddSeparator();
+                AddTemplate(SeparatorTemplate);
             }
 
             var item = new PageListItem();
 
-            ItemTemplate.InstantiateIn(item);
+            template.InstantiateIn(item);
 
             item.DataItem = pageId;
             Controls.Add(item);
             item.DataBind();
         }
 
-        private void AddSeparator() {
-            if (SeparatorTemplate != null) {
-                var item = new TemplateItem();
-                SeparatorTemplate.InstantiateIn(item);
-                Controls.Add(item);
+        private void AddTemplate(ITemplate template) {
+            if (template == null) {
+                return;
             }
-        }
 
+            var i = new TemplateItem();
+            template.InstantiateIn(i);
+            Controls.Add(i);
+        }
     }
 }
 
