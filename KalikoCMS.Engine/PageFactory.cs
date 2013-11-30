@@ -74,17 +74,16 @@ namespace KalikoCMS {
                             return GetTemplateUrl(page);
                         }
 
+                        lastPage = page;
                         position = page.FirstChild;
 
                         if (position == -1) {
                             //TODO: För MVC stöd så måste logiken här skrivas om..
 
-                            string pageHandler = TryGetPageExtender(i, segments, lastPage);
+                            string pageHandler = TryGetPageExtender(i + 1, segments, lastPage);
 
                             return pageHandler;
                         }
-
-                        lastPage = page;
 
                         // Fortsätt med nästa segment...
                         break;
@@ -95,7 +94,7 @@ namespace KalikoCMS {
                     if (position == -1) {
                         //TODO: För MVC stöd så måste logiken här skrivas om..
 
-                        string pageHandler = TryGetPageExtender(i, segments, lastPage);
+                        string pageHandler = TryGetPageExtender(i + 1, segments, lastPage);
 
                         return pageHandler;
                     }
