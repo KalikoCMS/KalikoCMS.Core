@@ -14,7 +14,7 @@
  */
 #endregion
 
-namespace KalikoCMS.WebControls {
+namespace KalikoCMS.Core.Collections {
     public enum SortOrder {
         SortIndex,
         StartPublishDate,

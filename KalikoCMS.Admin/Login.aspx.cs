@@ -11,8 +11,6 @@ namespace KalikoCMS.Admin {
             if (Request.QueryString["cmd"] != null) {
                 if (Request.QueryString["cmd"] == "logout") {
                     FormsAuthentication.SignOut();
-                    Session["Administrator"] = null;
-                    Session["PageEditor"] = null;
                     Response.Redirect(Request.Path);
                 }
             }
@@ -26,8 +24,7 @@ namespace KalikoCMS.Admin {
 
         private void Login1_LoggedIn(object sender, EventArgs e) {
             if (Roles.IsUserInRole(Login1.UserName, "WebAdmin")) {
-                Session["Administrator"] = true;
-                Response.Redirect("/Admin/");
+                Response.Redirect("/Admin/");   // TODO: FIX!
             }
         }
 

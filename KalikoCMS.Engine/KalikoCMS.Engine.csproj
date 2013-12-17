@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KalikoCMS</RootNamespace>
     <AssemblyName>KalikoCMS.Engine</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -68,6 +68,7 @@
     <Compile Include="Caching\CachePriority.cs" />
     <Compile Include="Caching\ICacheProvider.cs" />
     <Compile Include="Caching\WebCache.cs" />
+    <Compile Include="Caching\WebCacheRefreshDependency.cs" />
     <Compile Include="Caretaker.cs" />
     <Compile Include="Configuration\SiteHostConfiguration.cs" />
     <Compile Include="Configuration\SiteHostConfigurationLanguage.cs" />
@@ -76,6 +77,12 @@
     <Compile Include="ContentProvider\IPageExtender.cs" />
     <Compile Include="ContentProvider\PageProvider.cs" />
     <Compile Include="Core\Collections\PageIndexDictionary.cs" />
+    <Compile Include="Core\Collections\SortDirection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Core\Collections\SortOrder.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Core\FileSystemObject.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -130,18 +137,6 @@
     <Compile Include="Data\PropertyTypeData.cs" />
     <Compile Include="Data\SiteLanguageData.cs" />
     <Compile Include="Extensions\PredicateExtension.cs" />
-    <Compile Include="Framework\PageMaster.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Framework\PageTemplate.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Framework\PageTemplateTyped.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Framework\WebControlBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Modules\InitModule.cs" />
     <Compile Include="Modules\ShortUrlModule.cs" />
     <Compile Include="PageFactory.cs" />
@@ -166,27 +161,7 @@
     <Compile Include="Serialization\Base62.cs" />
     <Compile Include="Serialization\JsonSerialization.cs" />
     <Compile Include="Utils.cs" />
-    <Compile Include="WebControls\AutoBindableBase.cs" />
-    <Compile Include="WebControls\BaseList.cs" />
-    <Compile Include="WebControls\BreadCrumbs.cs" />
-    <Compile Include="WebControls\CustomWebControl.cs" />
-    <Compile Include="WebControls\FileList.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebControls\FormMail.cs" />
-    <Compile Include="WebControls\IPageable.cs" />
-    <Compile Include="WebControls\MenuList.cs" />
-    <Compile Include="WebControls\MenuTree.cs" />
-    <Compile Include="WebControls\PageList.cs" />
-    <Compile Include="WebControls\PageListItem.cs" />
-    <Compile Include="WebControls\Pager.cs" />
-    <Compile Include="WebControls\PageTree.cs" />
-    <Compile Include="WebControls\PropertyControl.cs" />
     <Compile Include="Events\SendFormEventArgs.cs" />
-    <Compile Include="WebControls\RolePanel.cs" />
-    <Compile Include="WebControls\SortDirection.cs" />
-    <Compile Include="WebControls\SortOrder.cs" />
-    <Compile Include="WebControls\TemplateItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

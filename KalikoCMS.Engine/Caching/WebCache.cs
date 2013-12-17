@@ -23,7 +23,7 @@ namespace KalikoCMS.Caching {
 
     public class WebCache : ICacheProvider {
 
-        public void Add<T>(string key, T value, CachePriority priority, int timeout, bool slidingExpiration) {
+        public void Add<T>(string key, T value, CachePriority priority, int timeout, bool slidingExpiration, bool addRefreshDependency) {
             if (Equals(value, default(T))) {
                 return;
             }
@@ -42,7 +42,13 @@ namespace KalikoCMS.Caching {
                 slidingExpirationTimeSpan = Cache.NoSlidingExpiration;
             }
 
-            HttpContext.Current.Cache.Insert(key, value, null, absoluteExpiration, slidingExpirationTimeSpan, cacheItemPriority, null);
+            CacheDependency dependency = null;
+
+            if (addRefreshDependency) {
+                dependency = new WebCacheRefreshDependency();
+            }
+
+            HttpContext.Current.Cache.Insert(key, value, dependency, absoluteExpiration, slidingExpirationTimeSpan, cacheItemPriority, null);
         }
 
         private static CacheItemPriority TranslateCachePriority(CachePriority priority) {
@@ -71,7 +77,7 @@ namespace KalikoCMS.Caching {
         public void RemoveRelated(Guid pageId) {
             var keys = from DictionaryEntry entry in HttpContext.Current.Cache
                        let key = entry.Key.ToString()
-                       where key.Contains(pageId.ToString()) || key.StartsWith("PageList:")
+                       where key.Contains(pageId.ToString())
                        select key;
 
             foreach (string key in keys) {

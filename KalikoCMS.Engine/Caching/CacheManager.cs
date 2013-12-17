@@ -21,8 +21,8 @@ namespace KalikoCMS.Caching {
     public static class CacheManager {
         private static readonly ICacheProvider CacheProvider = GetCacheProviderTypeFromConfig();
 
-        public static void Add<T>(string key, T value, CachePriority priority = CachePriority.Medium, int timeout = 30, bool slidingExpiration = true) {
-            CacheProvider.Add(key, value, priority, timeout, slidingExpiration);
+        public static void Add<T>(string key, T value, CachePriority priority = CachePriority.Medium, int timeout = 30, bool slidingExpiration = true, bool addRefreshDependency = false) {
+            CacheProvider.Add(key, value, priority, timeout, slidingExpiration, addRefreshDependency);
         }
 
         public static bool Exists(string key) {

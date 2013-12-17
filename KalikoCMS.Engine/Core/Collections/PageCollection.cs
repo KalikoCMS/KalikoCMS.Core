@@ -20,7 +20,6 @@ namespace KalikoCMS.Core.Collections {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
-    using WebControls;
 
     public sealed class PageCollection : IEnumerable<CmsPage> {
         private static readonly object PadLock = new object();

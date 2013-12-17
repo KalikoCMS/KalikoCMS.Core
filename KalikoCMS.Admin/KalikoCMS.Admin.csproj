@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KalikoCMS</RootNamespace>
     <AssemblyName>KalikoCMS.Admin</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -57,12 +57,17 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\Assets\css\jquery.jcrop.min.css" />
@@ -113,7 +118,6 @@
     <Content Include="Admin\Content\PropertyType\LinkPropertyEditor.js" />
     <Content Include="Admin\Content\PropertyType\PageLinkPropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\PageLinkPropertyEditor.js" />
-    <Content Include="Admin\Login.aspx" />
     <Content Include="Admin\Search\Default.aspx" />
     <Content Include="Admin\Templates\Units\TopNavigation.ascx" />
     <Content Include="Admin\Assets\js\bootstrap.min.js" />
@@ -135,6 +139,7 @@
     <Content Include="Admin\Assets\js\jquery.jstree.js" />
     <Content Include="Admin\Assets\css\jstree.classic.css" />
     <Content Include="Global.asax" />
+    <Content Include="Login.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -243,13 +248,6 @@
     <Compile Include="Admin\Content\PropertyType\PageLinkPropertyEditor.ascx.designer.cs">
       <DependentUpon>PageLinkPropertyEditor.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Admin\Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Admin\Templates\MasterPages\Base.Master.cs">
       <DependentUpon>Base.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -348,6 +346,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -398,7 +403,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>53249</DevelopmentServerPort>
+          <DevelopmentServerPort>54744</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

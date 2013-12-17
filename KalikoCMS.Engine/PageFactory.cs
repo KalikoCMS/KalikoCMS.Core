@@ -34,6 +34,7 @@ namespace KalikoCMS {
         private static List<PageIndex> _pageLanguageIndex;
         private static bool _indexing;
         private static PageEventHandler _pageSaved;
+        private static PageEventHandler _pageDeleted;
 
 
         private static PageIndex CurrentIndex {
@@ -236,12 +237,12 @@ namespace KalikoCMS {
         }
 
 
-        internal static PageCollection GetPagePath(CmsPage page) {
+        public static PageCollection GetPagePath(CmsPage page) {
             return GetPagePath(page.PageId, page.LanguageId);
         }
 
 
-        internal static PageCollection GetPagePath(Guid pageId) {
+        public static PageCollection GetPagePath(Guid pageId) {
             var languageId = Language.CurrentLanguageId;
             return GetPagePath(pageId, languageId);
         }
@@ -338,6 +339,12 @@ namespace KalikoCMS {
             }
         }
 
+
+        internal static void RaisePageDeleted(Guid pageId, int languageId) {
+            if (_pageDeleted != null) {
+                _pageDeleted(null, new PageEventArgs(pageId, languageId));
+            }
+        }
 
         public static void UpdatePageIndex(PageInstanceEntity pageInstance, Guid parentId, Guid rootId, int treeLevel, int pageTypeId) {
             if (_pageLanguageIndex == null)
@@ -442,6 +449,17 @@ namespace KalikoCMS {
         }
 
 
+        public static event PageEventHandler PageDeleted {
+            add {
+                _pageDeleted -= value;
+                _pageDeleted += value;
+            }
+            remove {
+                _pageDeleted -= value;
+            }
+        }
+
+
         public static void MovePage(Guid pageId, Guid targetId) {
             foreach (PageIndex pageIndex in _pageLanguageIndex) {
                 pageIndex.MovePage(pageId, targetId);
@@ -470,6 +488,7 @@ namespace KalikoCMS {
                 SearchManager.Instance.RemoveFromIndex(pageIds, pageIndex.LanguageId);
             }
 
+            RaisePageDeleted(pageId, 0);
         }
 
     }

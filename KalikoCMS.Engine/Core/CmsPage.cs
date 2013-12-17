@@ -17,7 +17,6 @@
 namespace KalikoCMS.Core {
     using System;
     using Collections;
-    using Framework;
     using Serialization;
 
     public class CmsPage : MarshalByRefObject {
@@ -80,8 +79,23 @@ namespace KalikoCMS.Core {
         }
 
         public T ConvertToTypedPage<T>() where T : CmsPage {
-            return (T)PageTemplate<T>.ConvertToTypedPage(this);
+            var type = typeof(T);
+            var proxyPage = PageProxy.CreatePageProxy(type);
+
+            ShallowCopyPageToProxy(this, proxyPage);
+
+            return (T)proxyPage;
         }
+
+        /*
+        internal static CmsPage ConvertToTypedPage(CmsPage sourcePage) {
+            var type = typeof(T);
+            var proxyPage = PageProxy.CreatePageProxy(type);
+
+            ShallowCopyPageToProxy(sourcePage, proxyPage);
+
+            return proxyPage;
+        }*/
 
         public bool HasChildren {
             get { return FirstChild > 0; }
@@ -153,6 +167,28 @@ namespace KalikoCMS.Core {
             }
 
             return indexItem;
+        }
+
+        private static void ShallowCopyPageToProxy(CmsPage src, CmsPage pageProxy) {
+            pageProxy.PageName = src.PageName;
+            pageProxy.CreatedDate = src.CreatedDate;
+            pageProxy.DeletedDate = src.DeletedDate;
+            pageProxy.PageId = src.PageId;
+            pageProxy.LanguageId = src.LanguageId;
+            pageProxy.PageUrl = src.PageUrl;
+            pageProxy.PageTypeId = src.PageTypeId;
+            pageProxy.FirstChild = src.FirstChild;
+            pageProxy.NextPage = src.NextPage;
+            pageProxy.ParentId = src.ParentId;
+            pageProxy.RootId = src.RootId;
+            pageProxy.SortOrder = src.SortOrder;
+            pageProxy.StartPublish = src.StartPublish;
+            pageProxy.StopPublish = src.StopPublish;
+            pageProxy.DeletedDate = src.DeletedDate;
+            pageProxy.UpdateDate = src.UpdateDate;
+            pageProxy.UrlSegment = src.UrlSegment;
+            pageProxy.VisibleInMenu = src.VisibleInMenu;
+            pageProxy.VisibleInSiteMap = src.VisibleInSiteMap;
         }
     }
 }

@@ -14,9 +14,9 @@
  */
 #endregion
 
-namespace KalikoCMS.WebControls {
-    using System.Web.UI;
-
-    public class TemplateItem : Control, INamingContainer {
+namespace KalikoCMS.Core.Collections {
+    public enum SortDirection {
+        Descending,
+        Ascending
     }
 }

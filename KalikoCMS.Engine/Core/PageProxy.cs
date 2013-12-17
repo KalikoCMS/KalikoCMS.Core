@@ -20,7 +20,7 @@ namespace KalikoCMS.Core {
     using System.Runtime.Remoting.Messaging;
     using System.Runtime.Remoting.Proxies;
 
-    internal class PageProxy : RealProxy {
+    public class PageProxy : RealProxy {
         private readonly object _target;
 
         protected internal PageProxy(Type type) : base(type) {
