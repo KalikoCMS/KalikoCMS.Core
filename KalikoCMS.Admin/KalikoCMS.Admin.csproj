@@ -138,7 +138,6 @@
     <Content Include="Admin\Assets\js\jquery.cookie.js" />
     <Content Include="Admin\Assets\js\jquery.jstree.js" />
     <Content Include="Admin\Assets\css\jstree.classic.css" />
-    <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -343,9 +342,6 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\WebControls\BootstrapButton.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

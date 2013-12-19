@@ -11,24 +11,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.WebForms", "Kalik
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs16
 		SccProjectUniqueName0 = KalikoCMS.Engine\\KalikoCMS.Engine.csproj
 		SccProjectName0 = KalikoCMS.Engine
-		SccAuxPath0 = https://tfs.codeplex.com/tfs/tfs16
 		SccLocalPath0 = KalikoCMS.Engine
-		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccProjectUniqueName1 = KalikoCMS.Admin\\KalikoCMS.Admin.csproj
 		SccProjectName1 = KalikoCMS.Admin
-		SccAuxPath1 = https://tfs.codeplex.com/tfs/tfs16
 		SccLocalPath1 = KalikoCMS.Admin
-		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccProjectUniqueName2 = KalikoCMS.Search\\KalikoCMS.Search.csproj
 		SccProjectName2 = KalikoCMS.Search
-		SccAuxPath2 = https://tfs.codeplex.com/tfs/tfs16
 		SccLocalPath2 = KalikoCMS.Search
-		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName3 = KalikoCMS.WebForms\\KalikoCMS.WebForms.csproj
+		SccProjectName3 = KalikoCMS.WebForms
+		SccLocalPath3 = KalikoCMS.WebForms
+		SccLocalPath4 = .
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
