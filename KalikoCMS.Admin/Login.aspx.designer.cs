@@ -22,30 +22,21 @@ namespace KalikoCMS.Admin {
         protected global::System.Web.UI.HtmlControls.HtmlForm Form1;
         
         /// <summary>
-        /// Login1 control.
+        /// LoginForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Login Login1;
+        protected global::System.Web.UI.WebControls.Login LoginForm;
         
         /// <summary>
-        /// lnkPassword control.
+        /// FailureText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkPassword;
-        
-        /// <summary>
-        /// PasswordRecovery1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PasswordRecovery PasswordRecovery1;
+        protected global::System.Web.UI.WebControls.Literal FailureText;
     }
 }

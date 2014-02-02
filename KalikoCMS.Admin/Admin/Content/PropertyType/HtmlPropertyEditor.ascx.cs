@@ -15,6 +15,9 @@
 #endregion
 
 namespace KalikoCMS.Admin.Content.PropertyType {
+    using System;
+    using System.Web.UI;
+    using Configuration;
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
 
@@ -32,7 +35,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override string Parameters {
-            set { throw new System.NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
 
         public override bool Validate() {
@@ -41,6 +44,15 @@ namespace KalikoCMS.Admin.Content.PropertyType {
 
         public override bool Validate(bool required) {
             return Validate();
+        }
+
+        protected override void OnLoad(EventArgs e) {
+            base.OnLoad(e);
+
+            ScriptManager.RegisterClientScriptInclude(this, typeof(LinkPropertyEditor), "Admin.Content.PropertyType.LinkPropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/LinkPropertyEditor.js");
+            ScriptManager.RegisterClientScriptInclude(this, typeof(FilePropertyEditor), "Admin.Content.PropertyType.FilePropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/FilePropertyEditor.js?d=" + DateTime.Now.Ticks);
+            ScriptManager.RegisterClientScriptInclude(this, typeof(PageLinkPropertyEditor), "Admin.Content.PropertyType.PageLinkPropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/PageLinkPropertyEditor.js");
+            ScriptManager.RegisterClientScriptInclude(this, typeof(ImagePropertyEditor), "Admin.Content.PropertyType.ImagePropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/ImagePropertyEditor.js");
         }
     }
 }

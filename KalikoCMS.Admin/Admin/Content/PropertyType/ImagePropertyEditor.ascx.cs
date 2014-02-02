@@ -18,6 +18,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
     using System;
     using System.Globalization;
     using System.Web.UI;
+    using Configuration;
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
 
@@ -104,9 +105,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
 
-            ScriptManager.RegisterClientScriptInclude(this, typeof(FilePropertyEditor),
-                                                      "Admin.Content.PropertyType.ImagePropertyEditor",
-                                                      "Content/PropertyType/ImagePropertyEditor.js?d=" + DateTime.Now.Ticks);
+            ScriptManager.RegisterClientScriptInclude(this, typeof(ImagePropertyEditor), "Admin.Content.PropertyType.ImagePropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/ImagePropertyEditor.js");
 
             int width = 0;
             int height = 0;
