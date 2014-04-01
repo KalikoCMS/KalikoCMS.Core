@@ -2,15 +2,18 @@
 /* 
  * Kaliko Content Management System
  * 
- * Copyright (c) Fredrik Schultz and Contributors
+ * Copyright (c) Fredrik Schultz
  * 
- * This source is subject to the Microsoft Public License.
- * See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
- * All other rights reserved.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3.0 of the License, or (at your option) any later version.
  * 
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED 
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ * http://www.gnu.org/licenses/lgpl-3.0.html
  */
 #endregion
 
@@ -20,9 +23,11 @@ namespace KalikoCMS.Data {
     using System.Data;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Reflection;
     using IQToolkit;
     using IQToolkit.Data;
     using Configuration;
+    using IQToolkit.Data.Common;
     using Kaliko;
     using EntityProvider;
 
@@ -70,6 +75,40 @@ namespace KalikoCMS.Data {
             finally {
                 CloseConnection();
             }
+        }
+
+
+        public static void BatchUpdate<T>(IEntityTable<T> entityTable, IEnumerable<T> items, Expression<Func<T, int>> idSelector) {
+            OpenConnection();
+
+            try {
+                var entityType = typeof(T);
+                var primaryKeyName = GetPrimaryKeyName(entityType);
+
+                foreach (var item in items) {
+                    int identity = entityTable.InsertOrUpdate(item, null, idSelector);
+                    entityType.GetProperty(primaryKeyName).SetValue(item, identity);
+                }
+            }
+            catch (Exception e) {
+                Logger.Write(e, Logger.Severity.Major);
+                throw;
+            }
+            finally {
+                CloseConnection();
+            }
+        }
+
+
+        private static string GetPrimaryKeyName(Type entityType) {
+            var mappingEntity = EntityProvider.Mapping.GetEntity(entityType);
+            var primaryKey = EntityProvider.Mapping.GetPrimaryKeyMembers(mappingEntity).SingleOrDefault() as PropertyInfo;
+
+            if (primaryKey == null) {
+                Utils.Throw<Exception>(string.Format("Cannot find primary key for type {0}", entityType.Name), Logger.Severity.Critical);
+            }
+
+            return primaryKey.Name;
         }
 
 
@@ -144,6 +183,24 @@ namespace KalikoCMS.Data {
             }
         }
 
+
+        public static void InsertOrUpdate<T>(IEntityTable<T> entityTable, T item, Expression<Func<T, int>> idSelector) {
+            OpenConnection();
+
+            try {
+                var entityType = typeof(T);
+                var primaryKeyName = GetPrimaryKeyName(entityType);
+                var identity = entityTable.InsertOrUpdate(item, null, idSelector);
+                entityType.GetProperty(primaryKeyName).SetValue(item, identity);
+            }
+            catch (Exception e) {
+                Logger.Write(e, Logger.Severity.Major);
+                throw;
+            }
+            finally {
+                CloseConnection();
+            }
+        }
 
         public static List<T> Select<T>(IEntityTable<T> entityTable, Expression<Func<T, bool>> whereClause) {
             List<T> items;
