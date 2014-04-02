@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.Admin", "KalikoCMS.Admin\KalikoCMS.Admin.csproj", "{5702B060-5F88-4110-9E39-B2F8B748EF9A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.Engine", "KalikoCMS.Engine\KalikoCMS.Engine.csproj", "{FC032B3C-8643-4C35-929C-88959FC980D4}"
@@ -14,19 +16,19 @@ Global
 		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs16
-		SccProjectUniqueName0 = KalikoCMS.Engine\\KalikoCMS.Engine.csproj
-		SccProjectName0 = KalikoCMS.Engine
-		SccLocalPath0 = KalikoCMS.Engine
-		SccProjectUniqueName1 = KalikoCMS.Admin\\KalikoCMS.Admin.csproj
-		SccProjectName1 = KalikoCMS.Admin
-		SccLocalPath1 = KalikoCMS.Admin
-		SccProjectUniqueName2 = KalikoCMS.Search\\KalikoCMS.Search.csproj
-		SccProjectName2 = KalikoCMS.Search
-		SccLocalPath2 = KalikoCMS.Search
-		SccProjectUniqueName3 = KalikoCMS.WebForms\\KalikoCMS.WebForms.csproj
-		SccProjectName3 = KalikoCMS.WebForms
-		SccLocalPath3 = KalikoCMS.WebForms
-		SccLocalPath4 = .
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = KalikoCMS.Engine\\KalikoCMS.Engine.csproj
+		SccProjectName1 = KalikoCMS.Engine
+		SccLocalPath1 = KalikoCMS.Engine
+		SccProjectUniqueName2 = KalikoCMS.Admin\\KalikoCMS.Admin.csproj
+		SccProjectName2 = KalikoCMS.Admin
+		SccLocalPath2 = KalikoCMS.Admin
+		SccProjectUniqueName3 = KalikoCMS.Search\\KalikoCMS.Search.csproj
+		SccProjectName3 = KalikoCMS.Search
+		SccLocalPath3 = KalikoCMS.Search
+		SccProjectUniqueName4 = KalikoCMS.WebForms\\KalikoCMS.WebForms.csproj
+		SccProjectName4 = KalikoCMS.WebForms
+		SccLocalPath4 = KalikoCMS.WebForms
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -364,6 +364,10 @@
       <Project>{D7500A83-6B4F-4D68-B215-D9730DE48044}</Project>
       <Name>KalikoCMS.Search</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KalikoCMS.WebForms\KalikoCMS.WebForms.csproj">
+      <Project>{58B89A38-C3F3-495D-B35A-9BB17AD4199D}</Project>
+      <Name>KalikoCMS.WebForms</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\Content\PageTree\JQueryTreeContent.ashx" />
