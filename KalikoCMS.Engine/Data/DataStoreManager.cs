@@ -33,6 +33,10 @@ namespace KalikoCMS.Data {
             return (DataStore)Activator.CreateInstance(DataStoreType, id);
         }
 
+        public static DataStore GetStore(string key) {
+            return (DataStore)Activator.CreateInstance(DataStoreType, key);
+        }
+
         private static Type GetDataStoreProviderTypeFromConfig() {
             string datastoreProvider = SiteSettings.Instance.DataStoreProvider;
 

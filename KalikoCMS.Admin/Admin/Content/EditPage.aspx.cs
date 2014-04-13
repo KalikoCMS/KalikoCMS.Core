@@ -123,6 +123,8 @@ namespace KalikoCMS.Admin.Content {
             StopPublishDate.PropertyValue = new DateTimeProperty(cmsPage.StopPublish);
             VisibleInMenu.PropertyValue = new BooleanProperty(cmsPage.VisibleInMenu);
 
+            PageId.Text = cmsPage.PageId.ToString();
+
             List<PropertyEntity> propertyDefinitions = PageType.GetPropertyDefinitions(cmsPage.PageTypeId);
 
             foreach (PropertyEntity propertyDefinition in propertyDefinitions) {

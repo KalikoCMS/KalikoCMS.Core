@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("KalikoCMS.Search")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Fredrik Schultz / Kaliko")]
 [assembly: AssemblyProduct("KalikoCMS.Search")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCopyright("Copyright ©  2014 Fredrik Schultz / Kaliko")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

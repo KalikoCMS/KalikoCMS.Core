@@ -42,7 +42,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>..\..\Bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -91,10 +91,12 @@
     <Content Include="Admin\Assets\js\jquery.color.js" />
     <Content Include="Admin\Assets\js\jquery.fileupload-process.js" />
     <Content Include="Admin\Assets\js\jquery.fileupload-ui.js" />
+    <Content Include="Admin\Assets\js\jquery.fileupload-validate.js" />
     <Content Include="Admin\Assets\js\jquery.fileupload.js" />
     <Content Include="Admin\Assets\js\jquery.hotkeys.js" />
     <Content Include="Admin\Assets\js\jquery.iframe-transport.js" />
     <Content Include="Admin\Assets\js\jquery.jcrop.min.js" />
+    <Content Include="Admin\Assets\js\jquery.ui.widget.js" />
     <Content Include="Admin\Assets\js\jquery.wysiwyg.js" />
     <Content Include="Admin\Assets\js\kalikocms.core.js" />
     <Content Include="Admin\Assets\js\tmpl.min.js" />
@@ -390,7 +392,9 @@
   <ItemGroup>
     <Content Include="Admin\Handlers\FileHandler.ashx" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

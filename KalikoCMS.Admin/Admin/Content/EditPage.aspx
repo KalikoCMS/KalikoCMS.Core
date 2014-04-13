@@ -14,6 +14,12 @@
         <cms:DateTimePropertyEditor ID="StopPublishDate" runat="server" />
         <cms:BooleanPropertyEditor ID="VisibleInMenu" runat="server" />
         <asp:Panel ID="EditControls" runat="server" />
+        <div class="control-group">
+          <label class="control-label" for="pageId">Page Id</label>
+          <div class="controls wide-input">
+            <asp:Literal ID="PageId" runat="server" />
+          </div>
+        </div>
         <asp:Literal ID="ErrorMessage" runat="server" />
         <asp:Literal ID="MessageBox" Visible="False" runat="server" />
         <div class="form-actions" style="position: fixed; bottom: 10px; width: 100%; margin: 0;">
