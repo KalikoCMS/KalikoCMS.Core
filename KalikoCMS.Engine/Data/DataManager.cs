@@ -27,7 +27,6 @@ namespace KalikoCMS.Data {
     using IQToolkit;
     using IQToolkit.Data;
     using Configuration;
-    using IQToolkit.Data.Common;
     using Kaliko;
     using EntityProvider;
 
@@ -289,6 +288,25 @@ namespace KalikoCMS.Data {
 
             try {
                 affectedRows = entityTable.Delete(p => true);
+            }
+            catch (Exception e) {
+                Logger.Write(e, Logger.Severity.Major);
+                throw;
+            }
+            finally {
+                CloseConnection();
+            }
+
+            return affectedRows;
+        }
+
+        public static int Delete<T>(IEntityTable<T> entityTable, Expression<Func<T, bool>> whereClause) {
+            int affectedRows;
+
+            OpenConnection();
+
+            try {
+                affectedRows = ((IUpdatable<T>)entityTable).Delete(whereClause);
             }
             catch (Exception e) {
                 Logger.Write(e, Logger.Severity.Major);

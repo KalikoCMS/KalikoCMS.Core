@@ -41,6 +41,7 @@
       <HintPath>..\..\..\Third party tools\DotNetLogger\Bin\Kaliko.Logger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
   </ItemGroup>
@@ -58,6 +59,8 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestManager.cs" />
+    <Compile Include="RequestModule.cs" />
     <Compile Include="WebControls\AutoBindableBase.cs" />
     <Compile Include="WebControls\BaseList.cs" />
     <Compile Include="WebControls\BreadCrumbs.cs" />

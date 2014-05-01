@@ -31,7 +31,6 @@ namespace KalikoCMS.Core {
         public string DisplayName { get; set; }
         public string PageTypeDescription { get; set; }
         public string PageTemplate { get; set; }
-        public bool UseTags { get; set; }
         public bool ShowMetadata { get; set; }
         public bool ShowPublishDates { get; set; }
         public bool ShowSortOrder { get; set; }

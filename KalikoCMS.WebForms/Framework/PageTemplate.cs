@@ -51,9 +51,6 @@ namespace KalikoCMS.WebForms.Framework {
 
         protected override void OnInit(EventArgs e) {
             RewriteOriginalPath();
-
-            //TODO: Haka på editorn här!!
-            //Header.Controls.AddAt(0, new Literal() { Text = "abc" });
         }
 
         private void RewriteOriginalPath() {

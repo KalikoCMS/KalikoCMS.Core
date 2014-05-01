@@ -21,7 +21,6 @@ namespace KalikoCMS {
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Globalization;
     using System.Web;
     using Kaliko;
     using ContentProvider;
@@ -33,7 +32,6 @@ namespace KalikoCMS {
     using Search;
 
     public class PageFactory {
-        internal const string PageExpiredUrl = "/PageExpired.htm";
         private static List<PageIndex> _pageLanguageIndex;
         private static bool _indexing;
         private static PageEventHandler _pageSaved;
@@ -47,23 +45,17 @@ namespace KalikoCMS {
         }
 
 
-        // TODO: Refactor
-        internal static string FindPage(string pageUrl) {
-
+        public static bool FindPage(string pageUrl, IRequestManager requestManager) {
             if (_pageLanguageIndex == null)
                 IndexSite();
 
-            PageIndex pageIndex = GetPageIndex(Language.CurrentLanguageId);
+            var pageIndex = GetPageIndex(Language.CurrentLanguageId);
 
             if (pageIndex.Items.Count == 0) {
-                return string.Empty;
+                return false;
             }
 
-            if(pageUrl.EndsWith(".aspx", StringComparison.InvariantCultureIgnoreCase)) {
-                pageUrl = pageUrl.Substring(0, pageUrl.Length - 5);
-            }
-
-            string[] segments = pageUrl.Trim('/').Split('/');
+            var segments = GetUrlSegments(pageUrl);
             int position = 0;
             var lastPage = new PageIndexItem();
 
@@ -71,41 +63,34 @@ namespace KalikoCMS {
                 var segment = segments[i];
                 int segmentHash = segment.GetHashCode();
 
-                while(true) {
-                    PageIndexItem page = pageIndex.Items[position];
+                while (true) {
+                    var page = pageIndex.Items[position];
                     if ((page.UrlSegmentHash == segmentHash) && (page.UrlSegment == segment)) {
                         if (i == segments.Length - 1) {
-                            return GetTemplateUrl(page);
+                            requestManager.HandlePage(page);
+                            return true;
                         }
 
                         lastPage = page;
                         position = page.FirstChild;
 
                         if (position == -1) {
-                            //TODO: För MVC stöd så måste logiken här skrivas om..
-
-                            string pageHandler = TryGetPageExtender(i + 1, segments, lastPage);
-
-                            return pageHandler;
+                            return TryAsPageExtender(i + 1, segments, lastPage);
                         }
 
-                        // Fortsätt med nästa segment...
+                        // Continue to next segment
                         break;
                     }
 
                     position = page.NextPage;
 
                     if (position == -1) {
-                        //TODO: För MVC stöd så måste logiken här skrivas om..
-
-                        string pageHandler = TryGetPageExtender(i + 1, segments, lastPage);
-
-                        return pageHandler;
+                        return TryAsPageExtender(i + 1, segments, lastPage);
                     }
-                } 
+                }
             }
 
-            return string.Empty;
+            return false;
         }
 
         // TODO: Replace this method
@@ -119,11 +104,7 @@ namespace KalikoCMS {
                 return Guid.Empty;
             }
 
-            if (url.EndsWith(".aspx", StringComparison.InvariantCultureIgnoreCase)) {
-                url = url.Substring(0, url.Length - 5);
-            }
-
-            string[] segments = url.Trim('/').Split('/');
+            var segments = GetUrlSegments(url);
             int position = 0;
 
             for (int i = 0; i < segments.Length; i++) {
@@ -157,25 +138,31 @@ namespace KalikoCMS {
             return Guid.Empty;
         }
 
+        private static string[] GetUrlSegments(string url) {
+            if (url.EndsWith(".aspx", StringComparison.InvariantCultureIgnoreCase)) {
+                url = url.Substring(0, url.Length - 5);
+            }
 
-        private static string TryGetPageExtender(int i, string[] segments, PageIndexItem page) {
-            // TODO: Refactor
+            return url.Trim('/').Split('/');
+        }
+
+
+        private static bool TryAsPageExtender(int i, string[] segments, PageIndexItem page) {
             var pageType = PageType.GetPageType(page.PageTypeId);
-            if(pageType==null) {
-                return string.Empty;
+            if (pageType == null) {
+                return false;
             }
 
             var valueSupport = pageType.Instance as IPageExtender;
-            var pageHandler = string.Empty;
 
-            if (valueSupport != null) {
-                var remainingSegments = new string[segments.Length - i];
-                Array.Copy(segments, i, remainingSegments, 0, remainingSegments.Length);
-
-                pageHandler = valueSupport.GetPageHandler(page.PageId, remainingSegments);
+            if (valueSupport == null) {
+                return false;
             }
+            
+            var remainingSegments = new string[segments.Length - i];
+            Array.Copy(segments, i, remainingSegments, 0, remainingSegments.Length);
 
-            return pageHandler;
+            return valueSupport.HandleRequest(page.PageId, remainingSegments);
         }
 
 
@@ -285,12 +272,6 @@ namespace KalikoCMS {
         
         public static PageCollection GetPageTreeFromPage(Guid rootPageId, Guid leafPageId, PublishState pageState) {
             return CurrentIndex.GetPageTreeFromPage(rootPageId, leafPageId, pageState);
-        }
-
-
-        internal static string GetUrlForPage(Guid pageId) {
-            PageIndexItem page = GetPageIndexItem(pageId, Language.CurrentLanguageId);
-            return page != null ? GetTemplateUrl(page) : string.Empty;
         }
 
 
@@ -419,18 +400,6 @@ namespace KalikoCMS {
 
             PageIndexItem page = pageIndex.GetPageIndexItem(pageId);
             return page;
-        }
-
-
-        private static string GetTemplateUrl(PageIndexItem page) {
-            if (page.IsAvailable) {
-                PageType pageType = PageType.GetPageType(page.PageTypeId);
-                string pageTemplate = pageType.PageTemplate;
-                string url = string.Format(CultureInfo.InvariantCulture, "{0}?id={1}", pageTemplate, page.PageId);
-
-                return url;
-            }
-            return PageExpiredUrl;
         }
 
 

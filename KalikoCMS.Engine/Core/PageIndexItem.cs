@@ -20,15 +20,15 @@
 namespace KalikoCMS.Core {
     using System;
 
-    internal class PageIndexItem {
+    public class PageIndexItem {
         internal DateTime CreatedDate { get; set; }
         internal DateTime? DeletedDate { get; set; }
         internal int FirstChild { get; set; }
         internal int NextPage { get; set; }
-        internal Guid PageId { get; set; }
+        public Guid PageId { get; set; }
         internal int PageInstanceId { get; set; }
         internal string PageName { get; set; }
-        internal int PageTypeId { get; set; }
+        public int PageTypeId { get; set; }
         internal string PageUrl { get; set; }
         internal Guid ParentId { get; set; }
         internal Guid RootId { get; set; }
@@ -41,7 +41,7 @@ namespace KalikoCMS.Core {
         internal int UrlSegmentHash { get; set; }
         internal bool VisibleInMenu { get; set; }
 
-        internal bool IsAvailable {
+        public bool IsAvailable {
             get {
                 return
                     ((StartPublish != null) && (StartPublish <= DateTime.Now)) &&

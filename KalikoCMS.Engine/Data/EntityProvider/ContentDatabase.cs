@@ -50,6 +50,10 @@ namespace KalikoCMS.Data.EntityProvider {
             get { return _provider.GetTable<PagePropertyEntity>("PageProperty"); }
         }
 
+        public virtual IEntityTable<PageTag> PageTag {
+            get { return _provider.GetTable<PageTag>("PageTag"); }
+        }
+
         public virtual IEntityTable<PageType> PageType {
             get { return _provider.GetTable<PageType>("PageType"); }
         }
@@ -64,6 +68,14 @@ namespace KalikoCMS.Data.EntityProvider {
 
         public virtual IEntityTable<Language> SiteLanguage {
             get { return _provider.GetTable<Language>("SiteLanguage"); }
+        }
+
+        public virtual IEntityTable<Tag> Tag {
+            get { return _provider.GetTable<Tag>("Tag"); }
+        }
+
+        public virtual IEntityTable<TagContext> TagContext {
+            get { return _provider.GetTable<TagContext>("TagContext"); }
         }
 
         public virtual IEntityTable<KeyValuePair> DataStore {

@@ -17,10 +17,16 @@
  */
 #endregion
 
-namespace KalikoCMS.ContentProvider {
-    using System;
+namespace KalikoCMS.Core {
+    using System.Collections.Generic;
 
-    public interface IPageExtender {
-        bool HandleRequest(Guid pageId, string[] remainingSegments);
+    public class TagContext {
+        public int TagContextId { get; set; }
+        public string ContextName { get; set; }
+        public Dictionary<string, Tag> Tags { get; set; }
+
+        public TagContext() {
+            Tags = new Dictionary<string, Tag>();
+        }
     }
 }

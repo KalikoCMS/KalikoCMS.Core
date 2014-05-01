@@ -77,12 +77,20 @@ namespace KalikoCMS.Data.EntityProvider {
         }
 
         [Table]
+        [Column(Member = "PageId")]
+        [Column(Member = "TagId")]
+        [Association(Member = "Page", KeyMembers = "PageId", RelatedEntityID = "Page", RelatedKeyMembers = "PageId")]
+        [Association(Member = "Tag", KeyMembers = "TagId", RelatedEntityID = "Tag", RelatedKeyMembers = "TagId")]
+        public override IEntityTable<PageTag> PageTag {
+            get { return base.PageTag; }
+        }
+
+        [Table]
         [Column(Member = "PageTypeId", IsPrimaryKey = true, IsGenerated = true)]
         [Column(Member = "Name")]
         [Column(Member = "DisplayName")]
         [Column(Member = "PageTypeDescription")]
         [Column(Member = "PageTemplate")]
-        [Column(Member = "UseTags")]
         [Column(Member = "ShowMetaData")]
         [Column(Member = "ShowPublishDates")]
         [Column(Member = "ShowSortOrder")]
@@ -123,6 +131,21 @@ namespace KalikoCMS.Data.EntityProvider {
         [Column(Member = "EditControl")]
         public override IEntityTable<PropertyType> PropertyType {
             get { return base.PropertyType; }
+        }
+
+        [Table]
+        [Column(Member = "TagId", IsPrimaryKey = true, IsGenerated = true)]
+        [Column(Member = "TagName")]
+        [Column(Member = "TagContextId")]
+        public override IEntityTable<Tag> Tag {
+            get { return base.Tag; }
+        }
+
+        [Table]
+        [Column(Member = "TagContextId", IsPrimaryKey = true, IsGenerated = true)]
+        [Column(Member = "ContextName")]
+        public override IEntityTable<TagContext> TagContext {
+            get { return base.TagContext; }
         }
 
         [Table]

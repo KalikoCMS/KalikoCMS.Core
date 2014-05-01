@@ -122,7 +122,7 @@ namespace KalikoCMS.Core {
         }
 
 
-        internal static string ReadLanguageFromHostAddress() {
+        public static string ReadLanguageFromHostAddress() {
             string host = HttpContext.Current.Request.ServerVariables["HTTP_HOST"];
             int indexOfLastDot = host.LastIndexOf(".", StringComparison.OrdinalIgnoreCase);
 
@@ -137,7 +137,7 @@ namespace KalikoCMS.Core {
         }
 
 
-        internal static void AttachLanguageToHttpContext() {
+        public static void AttachLanguageToHttpContext() {
             string languageFromCookie = Utils.GetCookie("cms_lang");
 
             Utils.StoreItem("cms_lang", languageFromCookie ?? DefaultLanguage);

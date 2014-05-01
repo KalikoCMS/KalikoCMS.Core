@@ -75,7 +75,7 @@
     <Compile Include="Configuration\SiteHostConfigurationLanguageCollection.cs" />
     <Compile Include="Configuration\SiteSettings.cs" />
     <Compile Include="ContentProvider\IPageExtender.cs" />
-    <Compile Include="ContentProvider\PageProvider.cs" />
+    <Compile Include="ContentProvider\IRequestManager.cs" />
     <Compile Include="Core\Collections\PageIndexDictionary.cs" />
     <Compile Include="Core\Collections\SortDirection.cs">
       <SubType>Code</SubType>
@@ -90,6 +90,10 @@
     <Compile Include="Core\InterfaceReader.cs" />
     <Compile Include="Core\IStartupSequence.cs" />
     <Compile Include="Core\PageProxy.cs" />
+    <Compile Include="Core\PageTag.cs" />
+    <Compile Include="Core\Tag.cs" />
+    <Compile Include="Core\TagContext.cs" />
+    <Compile Include="Core\TagManager.cs" />
     <Compile Include="Data\Synchronizer.cs" />
     <Compile Include="PropertyType\BooleanProperty.cs" />
     <Compile Include="PropertyType\CollectionProperty.cs" />
@@ -109,7 +113,6 @@
     <Compile Include="Core\RootPage.cs" />
     <Compile Include="Data\PageInstanceData.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
-    <Compile Include="Modules\RequestModule.cs" />
     <Compile Include="Core\CmsPage.cs" />
     <Compile Include="Core\EditablePage.cs" />
     <Compile Include="Core\Language.cs" />
@@ -122,7 +125,6 @@
     <Compile Include="Core\Collections\PropertyCollection.cs" />
     <Compile Include="Core\PropertyItem.cs" />
     <Compile Include="Core\PropertyType.cs" />
-    <Compile Include="Core\Security.cs" />
     <Compile Include="Data\DataStoreManager.cs" />
     <Compile Include="Data\EntityProvider\ContentDatabase.cs" />
     <Compile Include="Data\EntityProvider\ContentDatabaseWithAttributes.cs" />

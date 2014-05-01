@@ -17,10 +17,14 @@
  */
 #endregion
 
-namespace KalikoCMS.ContentProvider {
+namespace KalikoCMS.Core {
     using System;
+    using System.Web.UI;
 
-    public interface IPageExtender {
-        bool HandleRequest(Guid pageId, string[] remainingSegments);
+    public class PageTag {
+        public Guid PageId { get; set; }
+        public int TagId { get; set; }
+        public Tag Tag { get; set; }
+        public Page Page { get; set; }
     }
 }
