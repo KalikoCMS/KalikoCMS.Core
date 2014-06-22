@@ -89,17 +89,7 @@ namespace KalikoCMS.Core {
 
             return (T)proxyPage;
         }
-
-        /*
-        internal static CmsPage ConvertToTypedPage(CmsPage sourcePage) {
-            var type = typeof(T);
-            var proxyPage = PageProxy.CreatePageProxy(type);
-
-            ShallowCopyPageToProxy(sourcePage, proxyPage);
-
-            return proxyPage;
-        }*/
-
+        
         public bool HasChildren {
             get { return FirstChild > 0; }
         }

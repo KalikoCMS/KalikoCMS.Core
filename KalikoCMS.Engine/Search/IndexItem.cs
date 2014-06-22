@@ -25,7 +25,7 @@ namespace KalikoCMS.Search {
         public string Title { get; set; }
         public string Summary { get; set; }
         public string Category { get; set; }
-        //public List<string> Tags { get; set; }
+        public string Tags { get; set; }
         public string Content { get; set; }
         public string Path { get; set; }
         public Guid PageId { get; set; }
@@ -37,7 +37,6 @@ namespace KalikoCMS.Search {
         public DateTime? PublishStop { get; set; }
 
         public IndexItem() {
-            //Tags = new List<string>();
             MetaData = new Dictionary<string, string>();
         }
 

@@ -36,9 +36,17 @@ namespace KalikoCMS.Search {
             PageId = item.PageId;
             Path = item.Path;
             Summary = item.Summary;
+            Tags = item.Tags;
             Title = item.Title;
             PublishStart = item.PublishStart ?? DateTime.MaxValue;
             PublishStop = item.PublishStop ?? DateTime.MaxValue;
+        }
+
+        public string Tags {
+            get { return GetFieldValue("tags"); }
+            set {
+                AddField("tags", value, FieldStore.Store, FieldIndex.Analyzed, 3.0f);
+            }
         }
 
         protected DateTime PublishStop {

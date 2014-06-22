@@ -25,7 +25,7 @@ namespace KalikoCMS.Search {
 
     public class KalikoSearchProvider : SearchProviderBase {
         private readonly Collection _collection;
-        private static readonly string[] SearchFields = new[] { "title", "summary", "content", "category" };
+        private static readonly string[] SearchFields = new[] { "title", "summary", "content", "category", "tags" };
 
         public KalikoSearchProvider() {
             _collection = new Collection("KalikoCMS");
@@ -74,6 +74,15 @@ namespace KalikoCMS.Search {
 
         public override SearchResult Search(SearchQuery query) {
             KalikoSearch.Core.SearchResult searchResult = _collection.Search(query.SearchString, SearchFields, query.MetaData, query.ReturnFromPosition, query.NumberOfHitsToReturn);
+
+            SearchResult result = ConvertResult(searchResult);
+
+            return result;
+        }
+
+        public override SearchResult FindSimular(Guid pageId, int languageId, int resultOffset = 0, int resultSize = 10) {
+            string key = GetKey(pageId, languageId);
+            KalikoSearch.Core.SearchResult searchResult = _collection.FindSimular(key, resultOffset, resultSize);
 
             SearchResult result = ConvertResult(searchResult);
 

@@ -75,7 +75,7 @@ namespace KalikoCMS {
                         position = page.FirstChild;
 
                         if (position == -1) {
-                            return TryAsPageExtender(i + 1, segments, lastPage);
+                            return TryAsPageExtender(i, segments, lastPage);
                         }
 
                         // Continue to next segment
@@ -85,7 +85,7 @@ namespace KalikoCMS {
                     position = page.NextPage;
 
                     if (position == -1) {
-                        return TryAsPageExtender(i + 1, segments, lastPage);
+                        return TryAsPageExtender(i, segments, lastPage);
                     }
                 }
             }

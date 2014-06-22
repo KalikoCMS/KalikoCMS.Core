@@ -25,6 +25,7 @@ namespace KalikoCMS.Core {
     using Data.EntityProvider;
     using Caching;
     using Collections;
+    using KalikoCMS.PropertyType;
 
     public class EditablePage : CmsPage {
         public new string PageName { get; set; }
@@ -34,6 +35,11 @@ namespace KalikoCMS.Core {
 
         public void SetProperty(string propertyName, PropertyData value) {
             Property[propertyName] = value;
+        }
+
+        public string SetPageUrl(string pageName) {
+            UrlSegment = PageNameBuilder.PageNameToUrl(pageName, ParentId);
+            return UrlSegment;
         }
 
         internal static EditablePage CreateEditablePage(CmsPage page) {
@@ -199,6 +205,17 @@ namespace KalikoCMS.Core {
             }
 
             Data.PropertyData.SavePagePropertiesForPage(pagePropertiesForPage);
+
+            foreach (var propertyItem in Property) {
+                if (propertyItem == null) {
+                    return;
+                }
+
+                var propertyData = propertyItem.PropertyData as IPageSavedHandler;
+                if (propertyData != null) {
+                    propertyData.PageSaved(this);
+                }
+            }
         }
 
         private static string GetSerializedPropertyValue(PropertyItem propertyItem) {

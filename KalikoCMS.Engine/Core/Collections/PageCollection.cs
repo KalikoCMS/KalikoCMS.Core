@@ -36,6 +36,10 @@ namespace KalikoCMS.Core.Collections {
             _pageIds = new Collection<Guid>();
         }
 
+        public PageCollection(Collection<Guid> pageIds) {
+            _pageIds = pageIds;
+        }
+
         public int Count {
             get { return _pageIds.Count; }
         }

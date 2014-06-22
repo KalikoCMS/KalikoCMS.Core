@@ -26,15 +26,12 @@ namespace KalikoCMS.Search {
         }
 
         public override void RemoveAll() {
-            throw new Exception("Can't search using NullSearchProvider, change to a valid provider in config.");
         }
 
         public override void RemoveFromIndex(Guid pageId, int languageId) {
-            throw new Exception("Can't search using NullSearchProvider, change to a valid provider in config.");
         }
 
         public override void RemoveFromIndex(Collection<Guid> pageIds, int languageId) {
-            throw new Exception("Can't search using NullSearchProvider, change to a valid provider in config.");
         }
 
         public override void IndexingFinished() {
@@ -44,6 +41,10 @@ namespace KalikoCMS.Search {
         }
 
         public override SearchResult Search(SearchQuery query) {
+            throw new Exception("Can't search using NullSearchProvider, change to a valid provider in config.");
+        }
+
+        public override SearchResult FindSimular(Guid pageId, int languageId, int resultOffset = 0, int resultSize = 10) {
             throw new Exception("Can't search using NullSearchProvider, change to a valid provider in config.");
         }
     }

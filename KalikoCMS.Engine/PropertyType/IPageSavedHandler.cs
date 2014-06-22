@@ -17,18 +17,10 @@
  */
 #endregion
 
-namespace KalikoCMS.Core {
-    using System;
-    using System.Collections.ObjectModel;
+namespace KalikoCMS.PropertyType {
+    using Core;
 
-    public class Tag {
-        public int TagId { get; set; }
-        public string TagName { get; set; }
-        public int TagContextId { get; set; }
-        public Collection<Guid> Pages { get; set; }
-
-        public Tag() {
-            Pages = new Collection<Guid>();
-        }
+    public interface IPageSavedHandler {
+        void PageSaved(CmsPage page);
     }
 }

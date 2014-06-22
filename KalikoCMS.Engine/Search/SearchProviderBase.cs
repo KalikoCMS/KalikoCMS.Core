@@ -37,6 +37,8 @@ namespace KalikoCMS.Search {
 
         public abstract SearchResult Search(SearchQuery query);
 
+        public abstract SearchResult FindSimular(Guid pageId, int languageId, int resultOffset = 0, int resultSize = 10);
+
         public void IndexPage(CmsPage page) {
             var pageType = PageType.GetPageType(page.PageTypeId);
             var indexable = pageType.Instance as IIndexable;

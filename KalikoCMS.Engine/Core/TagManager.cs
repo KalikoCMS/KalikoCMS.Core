@@ -20,10 +20,12 @@
 namespace KalikoCMS.Core {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
+    using Collections;
     using Data;
 
-    public class TagManager {
+    public class TagManager : IStartupSequence {
         private static Dictionary<string, TagContext> _tagContexts;
 
         private static Dictionary<string, TagContext> TagContexts {
@@ -44,7 +46,7 @@ namespace KalikoCMS.Core {
 
                 foreach (var tagContext in tagContexts) {
                     AddTagsToContext(tagContext, tags, pageTags);
-                    contexts.Add(tagContext.ContextName, tagContext);
+                    contexts.Add(tagContext.ContextName.ToLowerInvariant(), tagContext);
                 }
             }
             finally {
@@ -61,8 +63,9 @@ namespace KalikoCMS.Core {
 
             foreach (var tag in tagsInContext) {
                 var tagId = tag.TagId;
-                tag.Pages = pageTags.Where(p => p.TagId == tagId).Select(p => p.PageId).ToList();
-                tagContext.Tags.Add(tag.TagName, tag);
+                var enumerable = pageTags.Where(p => p.TagId == tagId).Select(p => p.PageId);
+                tag.Pages = new Collection<Guid>(enumerable.ToList());
+                tagContext.Tags.Add(tag.TagName.ToLowerInvariant(), tag);
             }
         }
 
@@ -76,13 +79,13 @@ namespace KalikoCMS.Core {
             foreach (var tagName in tags) {
                 Tag tag;
 
-                if (context.Tags.TryGetValue(tagName, out tag) == false) { 
+                if (context.Tags.TryGetValue(tagName.ToLowerInvariant(), out tag) == false) { 
                     tag = new Tag {
                         TagContextId = tagContextId,
                         TagName = tagName
                     };
                     DataManager.InsertOrUpdate(DataManager.Instance.Tag, tag, t => t.TagId);
-                    context.Tags.Add(tag.TagName, tag);
+                    context.Tags.Add(tag.TagName.ToLowerInvariant(), tag);
                 }
 
                 tag.Pages.Add(pageId);
@@ -90,18 +93,18 @@ namespace KalikoCMS.Core {
             }
         }
 
-        public static IList<Guid> GetPagesForTag(string contextName, string tagName) {
+        public static PageCollection GetPagesForTag(string contextName, string tagName) {
             TagContext tagContext;
-            if (TagContexts.TryGetValue(contextName, out tagContext) == false) {
-                return new List<Guid>();
+            if (TagContexts.TryGetValue(contextName.ToLowerInvariant(), out tagContext) == false) {
+                return new PageCollection();
             }
 
             Tag tag;
-            if (tagContext.Tags.TryGetValue(tagName, out tag) == false) {
-                return new List<Guid>();
+            if (tagContext.Tags.TryGetValue(tagName.ToLowerInvariant(), out tag) == false) {
+                return new PageCollection();
             }
 
-            return tag.Pages;
+            return new PageCollection(tag.Pages);
         }
 
         private static void RemoveAllTagsForPage(Guid pageId, TagContext context) {
@@ -111,6 +114,18 @@ namespace KalikoCMS.Core {
 
             foreach (var tag in context.Tags) {
                 tag.Value.Pages.Remove(pageId);
+            }
+        }
+
+        private static void RemoveAllTagsForPage(Guid pageId) {
+            foreach (var context in TagContexts.Values) {
+                var tagContextId = context.TagContextId;
+
+                DataManager.Delete(DataManager.Instance.PageTag, p => p.PageId == pageId && p.Tag.TagContextId == tagContextId);
+
+                foreach (var tag in context.Tags) {
+                    tag.Value.Pages.Remove(pageId);
+                }
             }
         }
 
@@ -127,7 +142,21 @@ namespace KalikoCMS.Core {
             
             DataManager.InsertOrUpdate(DataManager.Instance.TagContext, context, c => c.TagContextId);
 
+            TagContexts.Add(context.ContextName.ToLowerInvariant(), context);
+
             return context;
+        }
+
+        public static TagContext GetTags(string contextName) {
+            return TagContexts[contextName];
+        }
+
+        public void Startup() {
+            PageFactory.PageDeleted += PageDeletedHandler;
+        }
+
+        void PageDeletedHandler(object sender, Events.PageEventArgs e) {
+            RemoveAllTagsForPage(e.PageId);
         }
     }
 }
