@@ -17,6 +17,8 @@
  */
 #endregion
 
+using IQToolkit;
+
 namespace KalikoCMS.Data {
     using System;
     using System.Collections.Generic;
@@ -78,16 +80,21 @@ namespace KalikoCMS.Data {
         internal static Collection<Guid> DeletePage(Guid pageId) {
             var pageIds = PageFactory.GetPageTreeFromPage(pageId, PublishState.All).PageIds;
             pageIds.Add(pageId);
-            var pageIdArray = pageIds.ToArray();
-
+            
             DataManager.OpenConnection();
 
             try {
-                var items = DataManager.Instance.PageInstance.Where(p => pageIdArray.Contains(p.PageId));
+                var deleteTimeStamp = DateTime.Now;
+                var pageCount = pageIds.Count() / 100;
 
-                foreach (PageInstanceEntity item in items) {
-                    item.DeletedDate = DateTime.Now;
-                    DataManager.Instance.PageInstance.Update(item);
+                for (var page = 0; page <= pageCount; page++) {
+                    var pageIdArray = pageIds.Skip(page*100).Take(100).ToArray();
+                    var items = DataManager.Instance.PageInstance.Where(p => pageIdArray.Contains(p.PageId));
+
+                    foreach (PageInstanceEntity item in items) {
+                        item.DeletedDate = deleteTimeStamp;
+                        DataManager.Instance.PageInstance.Update(item);
+                    }
                 }
             }
             finally {

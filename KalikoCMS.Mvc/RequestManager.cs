@@ -1,4 +1,4 @@
-#region License and copyright notice
+﻿#region License and copyright notice
 /* 
  * Kaliko Content Management System
  * 
@@ -17,18 +17,18 @@
  */
 #endregion
 
-namespace KalikoCMS.WebForms {
-    using ContentProvider;
-    using Core;
+namespace KalikoCMS.Mvc {
+    using KalikoCMS.ContentProvider;
+    using KalikoCMS.Core;
 
     internal class RequestManager : IRequestManager {
         public void HandlePage(PageIndexItem page) {
-            var templateUrl = RequestModule.GetTemplateUrl(page.IsAvailable, page.PageId, page.PageTypeId);
-            RequestModule.RedirectToTemplate(templateUrl);
+            var cmsPage = new CmsPage(page, Language.CurrentLanguageId);
+            RequestModule.RedirectToController(cmsPage);
         }
 
         public bool HasMvcSupport {
-            get { return false; }
+            get { return true; }
         }
     }
 }

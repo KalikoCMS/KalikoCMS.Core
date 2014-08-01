@@ -51,7 +51,7 @@ namespace KalikoCMS.Core {
         protected CmsPage() {
         }
 
-        internal CmsPage(PageIndexItem pageIndexItem, int languageId) {
+        public CmsPage(PageIndexItem pageIndexItem, int languageId) {
             CreatedDate = pageIndexItem.CreatedDate;
             LanguageId = languageId;
             PageId = pageIndexItem.PageId;

@@ -46,8 +46,9 @@ namespace KalikoCMS {
 
 
         public static bool FindPage(string pageUrl, IRequestManager requestManager) {
-            if (_pageLanguageIndex == null)
+            if (_pageLanguageIndex == null) {
                 IndexSite();
+            }
 
             var pageIndex = GetPageIndex(Language.CurrentLanguageId);
 
@@ -75,7 +76,15 @@ namespace KalikoCMS {
                         position = page.FirstChild;
 
                         if (position == -1) {
-                            return TryAsPageExtender(i, segments, lastPage);
+                            if (TryAsPageExtender(i, segments, lastPage)) {
+                                return true;
+                            }
+                            if (requestManager.HasMvcSupport) {
+                                requestManager.HandlePage(lastPage);
+                                return true;
+                            }
+
+                            return false;
                         }
 
                         // Continue to next segment
@@ -85,7 +94,15 @@ namespace KalikoCMS {
                     position = page.NextPage;
 
                     if (position == -1) {
-                        return TryAsPageExtender(i, segments, lastPage);
+                        if (TryAsPageExtender(i, segments, lastPage)) {
+                            return true;
+                        }
+                        if (requestManager.HasMvcSupport) {
+                            requestManager.HandlePage(lastPage);
+                            return true;
+                        }
+
+                        return false;
                     }
                 }
             }

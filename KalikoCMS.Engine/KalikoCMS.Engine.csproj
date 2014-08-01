@@ -95,6 +95,7 @@
     <Compile Include="Core\TagContext.cs" />
     <Compile Include="Core\TagManager.cs" />
     <Compile Include="Data\Synchronizer.cs" />
+    <Compile Include="Modules\RequestModuleBase.cs" />
     <Compile Include="PropertyType\BooleanProperty.cs" />
     <Compile Include="PropertyType\CollectionProperty.cs" />
     <Compile Include="PropertyType\FileProperty.cs" />

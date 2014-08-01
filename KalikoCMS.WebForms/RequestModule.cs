@@ -22,55 +22,12 @@ namespace KalikoCMS.WebForms {
     using System.Globalization;
     using System.Text;
     using System.Web;
-    using System.Web.SessionState;
-    using ContentProvider;
-    using Core;
+    using KalikoCMS.Core;
+    using KalikoCMS.Modules;
 
-    internal class RequestModule : IHttpModule {
-        internal const string PageExpiredUrl = "/PageExpired.htm";
-
-        private static readonly IRequestManager RequestManager = new RequestManager();
-
-        private RequestModule() {}
-
-        public void Init(HttpApplication context) {
-            context.PostAuthenticateRequest += PostAuthenticateRequest;
-            context.PreRequestHandlerExecute += PreRequestHandlerExecute;
-        }
-
-        private static void PreRequestHandlerExecute(object sender, EventArgs e) {
-            HttpSessionState session = HttpContext.Current.Session;
-
-            if (session == null) return;
-
-            if (session.IsNewSession) {
-                Language.CurrentLanguage = Language.ReadLanguageFromHostAddress();
-                session["__session_is_set"] = "true";
-            }
-        }
-
-        private static void PostAuthenticateRequest(object sender, EventArgs e) {
-            HandleRequest();
-        }
-
-        private static void HandleRequest() {
-            var url = RelativeUrl;
-
-            if (IsUrlToStartPage(url)) {
-                RedirectToStartPage();
-            }
-            else {
-                PageFactory.FindPage(url, RequestManager);
-            }
-        }
-
-        private static string RelativeUrl {
-            get {
-                var url = HttpContext.Current.Request.Path.ToLowerInvariant();
-                int rootPathLength = Utils.ApplicationPath.Length;
-                url = url.Length > rootPathLength ? url.Substring(rootPathLength) : string.Empty;
-                return url;
-            }
+    internal class RequestModule : RequestModuleBase {
+        private RequestModule() {
+            RequestManager = new RequestManager();
         }
 
         private static void RewritePath(string path) {
@@ -104,7 +61,7 @@ namespace KalikoCMS.WebForms {
             Utils.StoreItem("originalquery", HttpContext.Current.Request.QueryString.ToString());
         }
 
-        private static void RedirectToStartPage() {
+        protected override void RedirectToStartPage() {
             var templateUrl = GetUrlForPage(Configuration.SiteSettings.Instance.StartPageId);
             RedirectToTemplate(templateUrl);
         }
@@ -120,10 +77,6 @@ namespace KalikoCMS.WebForms {
             return page != null ? GetTemplateUrl(page.IsAvailable, page.PageId, page.PageTypeId) : string.Empty;
         }
 
-        private static bool IsUrlToStartPage(string url) {
-            return (url.Length == 0 || url == "default.aspx");
-        }
-
         internal static string GetTemplateUrl(bool isAvailable, Guid pageId, int pageTypeId) {
             if (isAvailable) {
                 PageType pageType = PageType.GetPageType(pageTypeId);
@@ -132,9 +85,9 @@ namespace KalikoCMS.WebForms {
 
                 return url;
             }
+
             return PageExpiredUrl;
         }
 
-        public void Dispose() {}
     }
 }

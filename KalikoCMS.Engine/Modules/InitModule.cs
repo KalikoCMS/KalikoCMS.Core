@@ -21,6 +21,7 @@ namespace KalikoCMS.Modules {
     using System;
     using System.Web;
     using Core;
+    using Kaliko;
 
     public class InitModule : IHttpModule {
         private static bool _isRunning;
@@ -45,9 +46,10 @@ namespace KalikoCMS.Modules {
             try {
                 RunInitializingSteps();
             }
-            catch (Exception) {
+            catch (Exception exception) {
                 _firstRun = true;
                 _isRunning = false;
+                Logger.Write(exception, Logger.Severity.Critical);
                 throw;
             }
 
