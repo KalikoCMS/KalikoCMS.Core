@@ -3,6 +3,6 @@
 
     public interface IRequestManager {
         void HandlePage(PageIndexItem page);
-        bool HasMvcSupport { get; }
+        bool TryMvcSupport(int segmentPosition, string[] segments, PageIndexItem page);
     }
 }

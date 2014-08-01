@@ -79,8 +79,7 @@ namespace KalikoCMS {
                             if (TryAsPageExtender(i, segments, lastPage)) {
                                 return true;
                             }
-                            if (requestManager.HasMvcSupport) {
-                                requestManager.HandlePage(lastPage);
+                            if (requestManager.TryMvcSupport(i, segments, lastPage)) {
                                 return true;
                             }
 
@@ -97,8 +96,7 @@ namespace KalikoCMS {
                         if (TryAsPageExtender(i, segments, lastPage)) {
                             return true;
                         }
-                        if (requestManager.HasMvcSupport) {
-                            requestManager.HandlePage(lastPage);
+                        if (requestManager.TryMvcSupport(i, segments, lastPage)) {
                             return true;
                         }
 

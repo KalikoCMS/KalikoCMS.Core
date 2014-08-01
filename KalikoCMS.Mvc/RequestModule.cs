@@ -42,20 +42,14 @@ namespace KalikoCMS.Mvc {
             RedirectToController(page);
         }
 
-        public static void RedirectToController(CmsPage page) {
-            if (_controllerList.All(c => c.Key != page.PageTypeId)) {
-                var exception = new Exception(string.Format("No controller is registered for pagetype of page '{0}'", page.PageName));
-                Logger.Write(exception, Logger.Severity.Critical);
-                throw exception;
-            }
-
-            var type = _controllerList[page.PageTypeId];
+        public static void RedirectToController(CmsPage page, string actionName = "index") {
+            var type = GetControllerType(page);
             var controller = (Controller)Activator.CreateInstance(type);
             var controllerName = StripEnd(type.Name.ToLowerInvariant(), "controller");
 
             var routeData = new RouteData();
             routeData.Values["controller"] = controllerName;
-            routeData.Values["action"] = "index";
+            routeData.Values["action"] = actionName;
             routeData.Values["currentPage"] = ((IPageController)controller).GetTypedPage(page);
 
             HttpContext.Current.Response.Clear();
@@ -64,12 +58,46 @@ namespace KalikoCMS.Mvc {
             HttpContext.Current.Response.End();
         }
 
+        private static Type GetControllerType(CmsPage page) {
+            if (_controllerList.All(c => c.Key != page.PageTypeId)) {
+                var exception =
+                    new Exception(string.Format("No controller is registered for pagetype of page '{0}'", page.PageName));
+                Logger.Write(exception, Logger.Severity.Critical);
+                throw exception;
+            }
+
+            var type = _controllerList[page.PageTypeId];
+            return type;
+        }
+
         private static string StripEnd(string text, string ending) {
             if (text.EndsWith(ending)) {
                 return text.Substring(0, text.Length - ending.Length);
             }
 
             return text;
+        }
+
+        public static void RedirectToControllerAction(CmsPage page, string[] parameters) {
+            var type = GetControllerType(page);
+            var controller = (Controller)Activator.CreateInstance(type);
+            var controllerName = StripEnd(type.Name.ToLowerInvariant(), "controller");
+            var filePath = string.Format("/{0}/{1}/", controllerName, string.Join("/", parameters));
+
+            HttpContext.Current.RewritePath(filePath);
+            var httpContext = new HttpContextWrapper(HttpContext.Current);
+            RouteData routeData = RouteTable.Routes.GetRouteData(httpContext);
+
+            if (routeData == null) {
+                throw new Exception(string.Format("Not an action {0}", filePath));
+            }
+
+            routeData.Values["currentPage"] = ((IPageController)controller).GetTypedPage(page);
+
+            HttpContext.Current.Response.Clear();
+            var requestContext = new RequestContext(new HttpContextWrapper(HttpContext.Current), routeData);
+            ((IController)controller).Execute(requestContext);
+            HttpContext.Current.Response.End();
         }
 
 
@@ -114,5 +142,6 @@ namespace KalikoCMS.Mvc {
         }
 
         #endregion
+
     }
 }

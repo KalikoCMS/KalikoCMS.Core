@@ -18,8 +18,11 @@
 #endregion
 
 namespace KalikoCMS.Mvc {
+    using System;
+    using Kaliko;
     using KalikoCMS.ContentProvider;
     using KalikoCMS.Core;
+
 
     internal class RequestManager : IRequestManager {
         public void HandlePage(PageIndexItem page) {
@@ -27,8 +30,20 @@ namespace KalikoCMS.Mvc {
             RequestModule.RedirectToController(cmsPage);
         }
 
-        public bool HasMvcSupport {
-            get { return true; }
+        public bool TryMvcSupport(int segmentPosition, string[] segments, PageIndexItem page) {
+            try {
+                var parametersCount = segments.Length - segmentPosition - 1;
+                var parameters = new string[parametersCount];
+                Array.Copy(segments, segmentPosition + 1, parameters, 0, parametersCount);
+                var cmsPage = new CmsPage(page, Language.CurrentLanguageId);
+                RequestModule.RedirectToControllerAction(cmsPage, parameters);
+
+                return true;
+            }
+            catch (Exception exception) {
+                Logger.Write(exception, Logger.Severity.Info);
+                return false;
+            }
         }
     }
 }

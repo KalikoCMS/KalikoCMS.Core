@@ -27,8 +27,8 @@ namespace KalikoCMS.WebForms {
             RequestModule.RedirectToTemplate(templateUrl);
         }
 
-        public bool HasMvcSupport {
-            get { return false; }
+        public bool TryMvcSupport(int segmentPosition, string[] segments, PageIndexItem page) {
+            return false;
         }
     }
 }
