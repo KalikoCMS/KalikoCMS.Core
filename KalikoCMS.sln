@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.Search", "KalikoC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.WebForms", "KalikoCMS.WebForms\KalikoCMS.WebForms.csproj", "{58B89A38-C3F3-495D-B35A-9BB17AD4199D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.Mvc", "KalikoCMS.Mvc\KalikoCMS.Mvc.csproj", "{5B74FC71-4204-4AA1-B053-E121D35EA29B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.Mvc", "KalikoCMS.Mvc\KalikoCMS.Mvc.csproj", "{A7E19576-14CD-4EC1-B8F6-BEF651A3F09B}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -56,10 +56,10 @@ Global
 		{58B89A38-C3F3-495D-B35A-9BB17AD4199D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58B89A38-C3F3-495D-B35A-9BB17AD4199D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58B89A38-C3F3-495D-B35A-9BB17AD4199D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B74FC71-4204-4AA1-B053-E121D35EA29B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B74FC71-4204-4AA1-B053-E121D35EA29B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B74FC71-4204-4AA1-B053-E121D35EA29B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B74FC71-4204-4AA1-B053-E121D35EA29B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7E19576-14CD-4EC1-B8F6-BEF651A3F09B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7E19576-14CD-4EC1-B8F6-BEF651A3F09B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7E19576-14CD-4EC1-B8F6-BEF651A3F09B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7E19576-14CD-4EC1-B8F6-BEF651A3F09B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
