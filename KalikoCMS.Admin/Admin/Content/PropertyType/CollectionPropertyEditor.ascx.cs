@@ -72,7 +72,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                     var property = (PropertyData)item;
                     var serializedProperty = SerializeProperty(property);
                     var exerpt = property.Preview;
-                    stringBuilder.AppendFormat("<li class=\"btn collection-item\" data-value='{0}'><i class=\"icon-sort\"></i> {1} <a href=\"#\" onclick=\"top.propertyEditor.collection.editField(this);return false;\" class=\"pull-right\"><i class=\"icon-edit\"></i>edit</a></li>", serializedProperty, exerpt);
+                    stringBuilder.AppendFormat("<li class=\"btn btn-default collection-item\" data-value='{0}'><a href=\"#\" onclick=\"top.propertyEditor.collection.editField(this);return false;\" class=\"pull-right\"><i class=\"icon-edit\"></i>edit</a><i class=\"icon-sort\"></i> {1}</li>", serializedProperty, exerpt);
                 }
             }
 

@@ -32,13 +32,20 @@
             if (Mode == ButtonMode.Primary) {
                 Attributes["class"] += " btn-primary";
             }
+            else if (Mode == ButtonMode.Danger) {
+                Attributes["class"] += " btn-danger";
+            }
+            else {
+                Attributes["class"] += " btn-default";
+            }
 
             Attributes["class"] += " btn";
         }
 
         public enum ButtonMode {
             Standard,
-            Primary
+            Primary,
+            Danger
         }
     }
 }

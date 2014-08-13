@@ -45,23 +45,25 @@ namespace KalikoCMS.Admin.Assets.Images {
         }
 
         private string GetThumbnail() {
-            var path = _context.Server.MapPath(_context.Request.QueryString["path"]);
-            var fileName = Path.GetFileName(path);
+            // TODO: Fix non-ASCII letters in path (åäö for instance)
+            var path = _context.Request.QueryString["path"];
+            var mapPath = _context.Server.MapPath(path);
+            var fileName = Path.GetFileName(mapPath);
             var thumbPath = string.Format("{0}_thumbs/{1}", SiteSettings.Instance.ImageCachePath, fileName);
             var localThumbPath = _context.Server.MapPath(thumbPath);
 
-            if (!File.Exists(path)) {
+            if (!File.Exists(mapPath)) {
                 return "error-image.jpg";
             }
 
             if (!File.Exists(localThumbPath)) {
-                CreateThumb(path, localThumbPath);
+                CreateThumb(mapPath, localThumbPath);
                 return thumbPath;
             }
 
-            if (File.GetLastWriteTime(path) > File.GetLastWriteTime(localThumbPath)) {
+            if (File.GetLastWriteTime(mapPath) > File.GetLastWriteTime(localThumbPath)) {
                 File.Delete(localThumbPath);
-                CreateThumb(path, localThumbPath);
+                CreateThumb(mapPath, localThumbPath);
                 return thumbPath;
             }
 

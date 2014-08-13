@@ -32,7 +32,7 @@
 
 <asp:Content ContentPlaceHolderID="ButtonArea" runat="server">
   <cms:BootstrapButton id="SaveButton" Enabled="false" Icon="icon-ok" Mode="Primary" Text="Save image" runat="server"/>
-  TODO: Remove image
+  <cms:BootstrapButton id="RemoveButton" Icon="icon-delete" Mode="Danger" Text="No image" runat="server"/>
   <button type="button" id="close-button" data-dismiss="modal" class="btn">Cancel</button>
 </asp:Content>
 
@@ -72,6 +72,7 @@
       cropImage.load(function() {
         enableSaveButton();
         image.src = $(this).attr('src');
+        jcropApi.setSelect([0, 0, 999, 999]);
       }).attr("src", localImagePath);
 
       function enableSaveButton() {
@@ -91,10 +92,13 @@
         image.src = filePath;
         $("#<%=ImageSource.ClientID %>").val(filePath);
         localImagePath = filePath;
-        jcropApi.setImage(filePath);
+        jcropApi.setImage(filePath, onImageLoaded);
         enableSaveButton();
-        jcropApi.setSelect([0, 0, 999, 999]);
       }
+
+        function onImageLoaded() {
+            jcropApi.setSelect([0, 0, 999, 999]);
+        }
 
       $(function() {
         $("#close-button").click(abort);

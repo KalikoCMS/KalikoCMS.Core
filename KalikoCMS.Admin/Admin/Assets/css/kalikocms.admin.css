@@ -3,6 +3,31 @@
 /* Generic */
 .full-width { width: 100%;box-sizing: border-box;-moz-box-sizing: border-box;}
 
+
+
+
+
+
+
+
+
+
+#editor-panel { position: fixed; top: 55px; bottom: 65px; left: 0; right: 0; overflow: auto; padding: 10px; }
+
+
+
+
+
+
+
+
+
+
+
+
+.input-group.date .add-on { cursor: pointer; }
+
+
 /* Backgrounds */
 .background-checkered { background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAHUlEQVQoz2P4jwM8xQEYRjXQRAMuCVwGjWqgiQYA9CnWHwuNlqcAAAAASUVORK5CYII=); }
 

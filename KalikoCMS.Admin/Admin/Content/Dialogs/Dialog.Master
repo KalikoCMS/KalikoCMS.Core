@@ -5,7 +5,8 @@
 --%>
 
 <asp:Content ContentPlaceHolderID="AdditionalStyles" runat="server">
-    <link href="assets/css/bootstrap-modal.css" rel="stylesheet" />
+<%--    <link href="assets/css/bootstrap-modal-bs3patch.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap-modal.css" rel="stylesheet" />--%>
     <style type="text/css">
         .modal-body.lock-position { bottom: 58px; left: 0; position: fixed; right: 0; top: 47px; }        
         .modal-footer.lock-position { position: fixed;left: 0;right: 0;bottom: 0;}
@@ -29,14 +30,14 @@
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <form id="MainForm" runat="server">
         <div class="modal-header">
-            <h3><%=Page.Title %></h3>
+            <h4 class="modal-title"><%=Page.Title %></h4>
         </div>
         <div class="modal-body lock-position">
-            <asp:ContentPlaceHolder ID="MainArea" runat="server"/>
+            <asp:ContentPlaceHolder ID="MainArea" runat="server" />
         </div>
         <div class="modal-footer lock-position">
             <asp:ContentPlaceHolder ID="ButtonArea" runat="server">
-              <a data-dismiss="modal" class="btn" href="javascript:close();">Close</a>
+                <a data-dismiss="modal" class="btn btn-default" href="javascript:close();">Close</a>
             </asp:ContentPlaceHolder>
         </div>
     </form>

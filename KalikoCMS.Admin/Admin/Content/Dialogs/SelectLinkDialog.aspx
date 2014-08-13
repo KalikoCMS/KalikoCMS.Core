@@ -46,7 +46,7 @@
         $('#deselect-button').click(noLink);
         $('#close-button').click(abort);
 
-        $('#link-tab a').on('shown', function (e) {
+        $('#link-tab a').on('shown.bs.tab', function (e) {
           $('#<%=SelectedTab.ClientID %>').val($(e.target).attr('href'));
         });
 

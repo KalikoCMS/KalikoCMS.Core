@@ -4,26 +4,22 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
   <form id="MainForm" runat="server">
-    <admin:topnavigation ID="Topnavigation1" runat="server" />
+    <admin:topnavigation runat="server" />
     <div class="container">
       <div class="row">
         <asp:ContentPlaceHolder ID="FullRegion" runat="server">
           <div id="left-block">
             <asp:ContentPlaceHolder ID="LeftRegion" runat="server" />
           </div>
-          <!--/span-->
           <div>
             <asp:ContentPlaceHolder ID="RightRegion" runat="server" />
           </div>
-          <!--/span-->
         </asp:ContentPlaceHolder>
       </div>
-      <!--/row-->
       <footer class="footer container-fluid navbar-fixed-bottom">
         <p>Powered by KalikoCMS version <%=KalikoCMS.Utils.Version %></p>
       </footer>
     </div>
-    <!--/.fluid-container-->
   </form>
   <div class='notifications top-right'></div>
   <div id="modal-container"></div>
@@ -54,7 +50,7 @@
       }
 
       function openModal(url, width, height) {
-        $('<iframe class="modal hide fade" style="height:' + height + 'px;" src="' + url + '"></iframe>')
+        $('<iframe class="modal fade" style="height:' + height + 'px;left:50%" src="' + url + '"></iframe>')
           .modal({ backdrop: 'static', width: width });
       }
 
@@ -66,7 +62,7 @@
 
 <asp:Content ContentPlaceHolderID="AdditionalStyles" runat="server">
     <link href="assets/css/bootstrap-notify.css" rel="stylesheet" />
-    <link href="assets/css/bootstrap-modal.css" rel="stylesheet" />
+<%--    <link href="assets/css/bootstrap-modal.css" rel="stylesheet" />--%>
     <style type="text/css">
       body
       {

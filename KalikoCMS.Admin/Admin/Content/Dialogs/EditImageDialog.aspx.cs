@@ -46,11 +46,16 @@ namespace KalikoCMS.Admin.Content.Dialogs {
             }
 
             SaveButton.ServerClick += SubmitHandler;
+            RemoveButton.ServerClick += RemoveHandler;
         }
 
         private void SubmitHandler(object sender, EventArgs e) {
             var imagePath = SaveImage();
             CreateCallback(imagePath);
+        }
+
+        private void RemoveHandler(object sender, EventArgs e) {
+            CreateCallback(string.Empty);
         }
 
         private void CreateCallback(string imagePath) {
@@ -89,7 +94,8 @@ namespace KalikoCMS.Admin.Content.Dialogs {
             _hasCropValues = int.TryParse(CropX.Value, out _cropX) &&
                              int.TryParse(CropY.Value, out _cropY) &&
                              int.TryParse(CropW.Value, out _cropW) &&
-                             int.TryParse(CropH.Value, out _cropH);
+                             int.TryParse(CropH.Value, out _cropH) &&
+                             _cropW > 0;
 
             _hasDimensions = int.TryParse(Width.Value, out _width) &&
                              int.TryParse(Height.Value, out _height);
@@ -103,7 +109,8 @@ namespace KalikoCMS.Admin.Content.Dialogs {
             _hasCropValues = int.TryParse(Request.QueryString["cropX"], out _cropX) &&
                              int.TryParse(Request.QueryString["cropY"], out _cropY) &&
                              int.TryParse(Request.QueryString["cropW"], out _cropW) &&
-                             int.TryParse(Request.QueryString["cropH"], out _cropH);
+                             int.TryParse(Request.QueryString["cropH"], out _cropH) &&
+                             _cropW > 0;
 
             _hasDimensions = int.TryParse(Request.QueryString["width"], out _width) &&
                              int.TryParse(Request.QueryString["height"], out _height);
@@ -143,6 +150,11 @@ namespace KalikoCMS.Admin.Content.Dialogs {
 
             var image = new KalikoImage(Server.MapPath(_originalPath));
 
+            // TODO: Temporary fix for selecting full image, try to do this without loading the image first..
+            if (IsCropValueFullImage(image)) {
+                return _originalPath;
+            }
+
             if (_hasCropValues) {
                 image.Crop(_cropX, _cropY, _cropW, _cropH);
             }
@@ -165,9 +177,17 @@ namespace KalikoCMS.Admin.Content.Dialogs {
             }
 
             // TODO: Config quality
-            image.SaveJpg(Server.MapPath(imagePath), 80);
+            image.SaveJpg(Server.MapPath(imagePath), 90);
 
             return imagePath;
+        }
+
+        private bool IsCropValueFullImage(KalikoImage image) {
+            if (_cropX == 0 && _cropY == 0 && _cropW == image.Width && _cropH == image.Height) {
+                return true;
+            }
+
+            return false;
         }
 
         private string GetNewImagePath() {

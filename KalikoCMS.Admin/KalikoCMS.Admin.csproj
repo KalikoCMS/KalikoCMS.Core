@@ -71,13 +71,14 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admin\Assets\css\bootstrap-modal-bs3patch.css" />
     <Content Include="Admin\Assets\css\jquery.jcrop.min.css" />
     <Content Include="Admin\Assets\css\kalikocms.admin.css" />
     <Content Include="Admin\Assets\fonts\css\font-awesome-ie7.css" />
     <Content Include="Admin\Assets\fonts\css\font-awesome-ie7.min.css" />
     <Content Include="Admin\Assets\fonts\css\font-awesome.css" />
     <Content Include="Admin\Assets\fonts\css\font-awesome.min.css" />
-    <Content Include="Admin\Assets\fonts\font\fontawesome-webfont.svg" />
+    <Content Include="Admin\Assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Admin\Assets\images\error-image.jpg" />
     <Content Include="Admin\Assets\images\loading.gif" />
     <Content Include="Admin\Assets\images\no-image.jpg" />
@@ -99,13 +100,53 @@
     <Content Include="Admin\Assets\js\jquery.ui.widget.js" />
     <Content Include="Admin\Assets\js\jquery.wysiwyg.js" />
     <Content Include="Admin\Assets\js\kalikocms.core.js" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-cool.gif" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-cry.gif" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-embarassed.gif" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-frown.gif" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-innocent.gif" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-kiss.gif" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-laughing.gif" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-money-mouth.gif" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-sealed.gif" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-smile.gif" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-surprised.gif" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-tongue-out.gif" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-undecided.gif" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-wink.gif" />
+    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-yell.gif" />
+    <Content Include="Admin\Assets\js\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="Admin\Assets\js\skins\lightgray\content.inline.min.css" />
+    <Content Include="Admin\Assets\js\skins\lightgray\content.min.css" />
+    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce-small.svg" />
+    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce.svg" />
+    <Content Include="Admin\Assets\js\skins\lightgray\img\anchor.gif" />
+    <Content Include="Admin\Assets\js\skins\lightgray\img\loader.gif" />
+    <Content Include="Admin\Assets\js\skins\lightgray\img\object.gif" />
+    <Content Include="Admin\Assets\js\skins\lightgray\img\trans.gif" />
+    <Content Include="Admin\Assets\js\skins\lightgray\skin.ie7.min.css" />
+    <Content Include="Admin\Assets\js\skins\lightgray\skin.min.css" />
+    <Content Include="Admin\Assets\js\tinymce.license.txt" />
+    <Content Include="Admin\Assets\js\tinymce.min.js" />
     <Content Include="Admin\Assets\js\tmpl.min.js" />
     <Content Include="Admin\Assets\css\bootstrap-datetimepicker.min.css" />
     <Content Include="Admin\Assets\css\bootstrap-modal.css" />
     <Content Include="Admin\Assets\css\bootstrap-notify.css" />
-    <Content Include="Admin\Assets\css\bootstrap-responsive.min.css" />
-    <Content Include="Admin\Assets\css\bootstrap.min.css" />
     <Content Include="Admin\Assets\css\jquery.fileupload-ui.css" />
+    <Content Include="Admin\Assets\less\LICENSE-bootstrap.txt" />
+    <Content Include="Admin\Assets\themes\default\default.css">
+      <DependentUpon>default.less</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\themes\default\default.min.css">
+      <DependentUpon>default.less</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\themes\default\variables.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\themes\default\variables.min.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
     <Content Include="Admin\Content\Dialogs\EditImageDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectFileDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectLinkDialog.aspx" />
@@ -121,6 +162,7 @@
     <Content Include="Admin\Content\PropertyType\LinkPropertyEditor.js" />
     <Content Include="Admin\Content\PropertyType\PageLinkPropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\PageLinkPropertyEditor.js" />
+    <Content Include="Admin\Content\PropertyType\TagPropertyEditor.ascx" />
     <Content Include="Admin\Search\Default.aspx" />
     <Content Include="Admin\Templates\Units\TopNavigation.ascx" />
     <Content Include="Admin\Assets\js\bootstrap.min.js" />
@@ -180,6 +222,13 @@
     </Compile>
     <Compile Include="Admin\Content\PropertyType\LinkPropertyEditor.ascx.designer.cs">
       <DependentUpon>LinkPropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\TagPropertyEditor.ascx.cs">
+      <DependentUpon>TagPropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\TagPropertyEditor.ascx.designer.cs">
+      <DependentUpon>TagPropertyEditor.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Handlers\FileHandler.ashx.cs">
       <DependentUpon>FileHandler.ashx</DependentUpon>
@@ -381,10 +430,10 @@
     <Content Include="Admin\Assets\images\Thumbnail.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Admin\Assets\fonts\font\fontawesome-webfont.eot" />
-    <Content Include="Admin\Assets\fonts\font\fontawesome-webfont.ttf" />
-    <Content Include="Admin\Assets\fonts\font\fontawesome-webfont.woff" />
-    <Content Include="Admin\Assets\fonts\font\FontAwesome.otf" />
+    <Content Include="Admin\Assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="Admin\Assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Admin\Assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Admin\Assets\fonts\FontAwesome.otf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\Templates\MasterPages\Base.Master" />
@@ -393,7 +442,89 @@
     <Content Include="Admin\Handlers\FileHandler.ashx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce-small.eot" />
+    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce-small.ttf" />
+    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce-small.woff" />
+    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce.eot" />
+    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce.ttf" />
+    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Admin\Assets\less\alerts.less" />
+    <Content Include="Admin\Assets\less\badges.less" />
+    <Content Include="Admin\Assets\less\bootstrap.less" />
+    <Content Include="Admin\Assets\less\breadcrumbs.less" />
+    <Content Include="Admin\Assets\less\button-groups.less" />
+    <Content Include="Admin\Assets\less\buttons.less" />
+    <Content Include="Admin\Assets\less\carousel.less" />
+    <Content Include="Admin\Assets\less\close.less" />
+    <Content Include="Admin\Assets\less\code.less" />
+    <Content Include="Admin\Assets\less\component-animations.less" />
+    <Content Include="Admin\Assets\less\dropdowns.less" />
+    <Content Include="Admin\Assets\less\forms.less" />
+    <Content Include="Admin\Assets\less\glyphicons.less" />
+    <Content Include="Admin\Assets\less\grid.less" />
+    <Content Include="Admin\Assets\less\input-groups.less" />
+    <Content Include="Admin\Assets\less\jumbotron.less" />
+    <Content Include="Admin\Assets\less\labels.less" />
+    <Content Include="Admin\Assets\less\list-group.less" />
+    <Content Include="Admin\Assets\less\media.less" />
+    <Content Include="Admin\Assets\less\mixins.less" />
+    <Content Include="Admin\Assets\less\mixins\alerts.less" />
+    <Content Include="Admin\Assets\less\mixins\background-variant.less" />
+    <Content Include="Admin\Assets\less\mixins\border-radius.less" />
+    <Content Include="Admin\Assets\less\mixins\buttons.less" />
+    <Content Include="Admin\Assets\less\mixins\center-block.less" />
+    <Content Include="Admin\Assets\less\mixins\clearfix.less" />
+    <Content Include="Admin\Assets\less\mixins\forms.less" />
+    <Content Include="Admin\Assets\less\mixins\gradients.less" />
+    <Content Include="Admin\Assets\less\mixins\grid-framework.less" />
+    <Content Include="Admin\Assets\less\mixins\grid.less" />
+    <Content Include="Admin\Assets\less\mixins\hide-text.less" />
+    <Content Include="Admin\Assets\less\mixins\image.less" />
+    <Content Include="Admin\Assets\less\mixins\labels.less" />
+    <Content Include="Admin\Assets\less\mixins\list-group.less" />
+    <Content Include="Admin\Assets\less\mixins\nav-divider.less" />
+    <Content Include="Admin\Assets\less\mixins\nav-vertical-align.less" />
+    <Content Include="Admin\Assets\less\mixins\opacity.less" />
+    <Content Include="Admin\Assets\less\mixins\pagination.less" />
+    <Content Include="Admin\Assets\less\mixins\panels.less" />
+    <Content Include="Admin\Assets\less\mixins\progress-bar.less" />
+    <Content Include="Admin\Assets\less\mixins\reset-filter.less" />
+    <Content Include="Admin\Assets\less\mixins\resize.less" />
+    <Content Include="Admin\Assets\less\mixins\responsive-visibility.less" />
+    <Content Include="Admin\Assets\less\mixins\size.less" />
+    <Content Include="Admin\Assets\less\mixins\tab-focus.less" />
+    <Content Include="Admin\Assets\less\mixins\table-row.less" />
+    <Content Include="Admin\Assets\less\mixins\text-emphasis.less" />
+    <Content Include="Admin\Assets\less\mixins\text-overflow.less" />
+    <Content Include="Admin\Assets\less\mixins\vendor-prefixes.less" />
+    <Content Include="Admin\Assets\less\modals.less" />
+    <Content Include="Admin\Assets\less\navbar.less" />
+    <Content Include="Admin\Assets\less\navs.less" />
+    <Content Include="Admin\Assets\less\normalize.less" />
+    <Content Include="Admin\Assets\less\pager.less" />
+    <Content Include="Admin\Assets\less\pagination.less" />
+    <Content Include="Admin\Assets\less\panels.less" />
+    <Content Include="Admin\Assets\less\popovers.less" />
+    <Content Include="Admin\Assets\less\print.less" />
+    <Content Include="Admin\Assets\less\progress-bars.less" />
+    <Content Include="Admin\Assets\less\responsive-embed.less" />
+    <Content Include="Admin\Assets\less\responsive-utilities.less" />
+    <Content Include="Admin\Assets\less\scaffolding.less" />
+    <Content Include="Admin\Assets\less\tables.less" />
+    <Content Include="Admin\Assets\less\theme.less" />
+    <Content Include="Admin\Assets\less\thumbnails.less" />
+    <Content Include="Admin\Assets\less\tooltip.less" />
+    <Content Include="Admin\Assets\less\type.less" />
+    <Content Include="Admin\Assets\less\utilities.less" />
+    <Content Include="Admin\Assets\less\variables.less" />
+    <Content Include="Admin\Assets\less\wells.less" />
+    <Content Include="Admin\Assets\themes\default\default.less" />
+    <Content Include="Admin\Assets\themes\default\variables.less" />
+    <Content Include="Admin\Assets\less\bootstrap-custom.less" />
     <None Include="Properties\PublishProfiles\Profile1.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Admin\Assets\fonts\font\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

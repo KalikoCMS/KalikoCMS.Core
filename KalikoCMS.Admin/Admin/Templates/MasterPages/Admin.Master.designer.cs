@@ -22,15 +22,6 @@ namespace KalikoCMS.Admin.Templates.MasterPages {
         protected global::System.Web.UI.HtmlControls.HtmlForm MainForm;
         
         /// <summary>
-        /// Topnavigation1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::KalikoCMS.Admin.Templates.Units.TopNavigation Topnavigation1;
-        
-        /// <summary>
         /// FullRegion control.
         /// </summary>
         /// <remarks>

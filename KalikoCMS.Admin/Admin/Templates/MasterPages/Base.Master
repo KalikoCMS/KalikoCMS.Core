@@ -4,16 +4,17 @@
   <head runat="server">
     <title><%=Page.Title %></title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%--<meta name="viewport" content="width=device-width, initial-scale=1.0" />--%>
     <meta name="robots" content="noindex, nofollow" />
     <base href="<%=KalikoCMS.Configuration.SiteSettings.Instance.AdminPath %>" />
     
     <!-- Stylesheets -->
     <asp:ContentPlaceHolder ID="BaseStyles" runat="server">
+      <link href="assets/themes/default/default.min.css" rel="stylesheet" />
+<%--      <link href="assets/fonts/css/font-awesome.min.css" rel="stylesheet" />
       <link href="assets/css/jquery-ui.custom.css" rel="stylesheet" />
       <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-      <link href="assets/fonts/css/font-awesome.min.css" rel="stylesheet" />
-      <link href="assets/css/kalikocms.admin.css?d=<%=DateTime.Now.Ticks %>" rel="stylesheet" />
+      <link href="assets/css/kalikocms.admin.css?d=<%=DateTime.Now.Ticks %>" rel="stylesheet" />--%>
     </asp:ContentPlaceHolder>
     <asp:ContentPlaceHolder ID="AdditionalStyles" runat="server" />
     
