@@ -7,7 +7,7 @@
 <asp:Content ContentPlaceHolderID="ButtonArea" runat="server">
     <button type="button" id="select-button"class="btn btn-primary disabled"><i class="icon-ok"></i> Select page</button>
     <button type="button" id="deselect-button" class="btn btn-danger"><i class="icon-trash icon-white"></i> No page</button>
-    <button type="button" id="close-button" data-dismiss="modal" class="btn">Close</button>
+    <button type="button" id="close-button" data-dismiss="modal" class="btn btn-default">Close</button>
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="ScriptArea" runat="server">

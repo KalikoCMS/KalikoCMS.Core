@@ -23,7 +23,6 @@ namespace KalikoCMS.Mvc {
     using KalikoCMS.ContentProvider;
     using KalikoCMS.Core;
 
-
     internal class RequestManager : IRequestManager {
         public void HandlePage(PageIndexItem page) {
             var cmsPage = new CmsPage(page, Language.CurrentLanguageId);

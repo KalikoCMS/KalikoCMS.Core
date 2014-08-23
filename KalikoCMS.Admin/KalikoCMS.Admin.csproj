@@ -73,7 +73,10 @@
   <ItemGroup>
     <Content Include="Admin\Assets\css\bootstrap-modal-bs3patch.css" />
     <Content Include="Admin\Assets\css\jquery.jcrop.min.css" />
-    <Content Include="Admin\Assets\css\kalikocms.admin.css" />
+    <Content Include="Admin\Assets\less\kalikocms.admin.css.map">
+      <DependentUpon>kalikocms.admin.css</DependentUpon>
+    </Content>
+    <None Include="Admin\Assets\less\kalikocms.admin.less" />
     <Content Include="Admin\Assets\fonts\css\font-awesome-ie7.css" />
     <Content Include="Admin\Assets\fonts\css\font-awesome-ie7.min.css" />
     <Content Include="Admin\Assets\fonts\css\font-awesome.css" />
@@ -134,12 +137,18 @@
     <Content Include="Admin\Assets\css\bootstrap-modal.css" />
     <Content Include="Admin\Assets\css\bootstrap-notify.css" />
     <Content Include="Admin\Assets\css\jquery.fileupload-ui.css" />
+    <Content Include="Admin\Assets\less\kalikocms.admin.css">
+      <DependentUpon>kalikocms.admin.less</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\less\kalikocms.admin.min.css">
+      <DependentUpon>kalikocms.admin.css</DependentUpon>
+    </Content>
     <Content Include="Admin\Assets\less\LICENSE-bootstrap.txt" />
     <Content Include="Admin\Assets\themes\default\default.css">
       <DependentUpon>default.less</DependentUpon>
     </Content>
     <Content Include="Admin\Assets\themes\default\default.min.css">
-      <DependentUpon>default.less</DependentUpon>
+      <DependentUpon>default.css</DependentUpon>
     </Content>
     <Content Include="Admin\Assets\themes\default\variables.css">
       <DependentUpon>variables.less</DependentUpon>
@@ -415,10 +424,6 @@
       <Project>{D7500A83-6B4F-4D68-B215-D9730DE48044}</Project>
       <Name>KalikoCMS.Search</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KalikoCMS.WebForms\KalikoCMS.WebForms.csproj">
-      <Project>{58B89A38-C3F3-495D-B35A-9BB17AD4199D}</Project>
-      <Name>KalikoCMS.WebForms</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\Content\PageTree\JQueryTreeContent.ashx" />
@@ -521,6 +526,9 @@
     <Content Include="Admin\Assets\themes\default\default.less" />
     <Content Include="Admin\Assets\themes\default\variables.less" />
     <Content Include="Admin\Assets\less\bootstrap-custom.less" />
+    <Content Include="Admin\Assets\themes\default\default.css.map">
+      <DependentUpon>default.css</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\Profile1.pubxml" />
   </ItemGroup>
   <ItemGroup>

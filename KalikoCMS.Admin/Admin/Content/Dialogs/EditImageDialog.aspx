@@ -13,7 +13,7 @@
         <asp:Image id="CropImage" runat="server" />
     </div>
     <div id="image-description-field" class="form-inline">
-      <div class="row" style="margin-top:5px;">
+      <div class="row">
         <asp:Label AssociatedControlID="DescriptionField" runat="server" Text="Description" CssClass="span2" />
         <asp:TextBox runat="server" CssClass="span7" ID="DescriptionField" />
       </div>
@@ -33,7 +33,7 @@
 <asp:Content ContentPlaceHolderID="ButtonArea" runat="server">
   <cms:BootstrapButton id="SaveButton" Enabled="false" Icon="icon-ok" Mode="Primary" Text="Save image" runat="server"/>
   <cms:BootstrapButton id="RemoveButton" Icon="icon-delete" Mode="Danger" Text="No image" runat="server"/>
-  <button type="button" id="close-button" data-dismiss="modal" class="btn">Cancel</button>
+  <button type="button" id="close-button" data-dismiss="modal" class="btn btn-default">Cancel</button>
 </asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptArea" runat="server">

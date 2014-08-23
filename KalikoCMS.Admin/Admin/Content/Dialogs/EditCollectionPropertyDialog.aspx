@@ -9,7 +9,7 @@
 <asp:Content ID="ButtonContent" ContentPlaceHolderID="ButtonArea" runat="server">
     <button id="SaveButton" type="button" runat="server" class="btn btn-primary"><i class="icon-ok"></i> Save</button>
     <button id="deselect-button" type="button" class="btn btn-danger"><i class="icon-trash icon-white"></i> Remove item</button>
-    <button id="close-button" type="button" data-dismiss="modal" class="btn">Cancel</button>
+    <button id="close-button" type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
 </asp:Content>
 
 

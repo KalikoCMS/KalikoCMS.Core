@@ -5,7 +5,7 @@
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
   <form id="MainForm" runat="server">
     <admin:topnavigation runat="server" />
-    <div class="container">
+    <div id="main-container">
       <div class="row">
         <asp:ContentPlaceHolder ID="FullRegion" runat="server">
           <div id="left-block">
@@ -62,84 +62,4 @@
 
 <asp:Content ContentPlaceHolderID="AdditionalStyles" runat="server">
     <link href="assets/css/bootstrap-notify.css" rel="stylesheet" />
-<%--    <link href="assets/css/bootstrap-modal.css" rel="stylesheet" />--%>
-    <style type="text/css">
-      body
-      {
-        padding-bottom: 20px;
-        padding-top: 40px;
-      }
-    
-      .sidebar-nav
-      {
-        padding: 9px 0;
-      }
-    
-      .container
-      {
-        min-width: 944px;
-        padding: 20px;
-        width: auto;
-      }
-    
-      .no-scroll
-      {
-        overflow: hidden;
-      }
-      #pagetree
-      {
-        position: absolute;
-        top: 40px;
-        left: 0px;
-        right: 0px;
-        bottom: 0px;
-        overflow: auto;
-      }
-    
-      .navbar-fixed-top .nav li i
-      {
-        opacity: 0.4;
-      }
-      .navbar-fixed-top .nav li:hover i, .navbar-fixed-top .nav li.active i
-      {
-        opacity: 1;
-      }
-    
-      iframe
-      {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        font-size: 100%;
-        font: inherit;
-        vertical-align: baseline;
-      }
-      #modal-popup
-      {
-        overflow: hidden;
-      }
-    
-      #left-block
-      {
-        margin-left: 20px;
-      }
-    
-      .full-height
-      {
-        top: 60px;
-        bottom: 10px;
-        position: absolute;
-        overflow: auto;
-      }
-    
-      .footer
-      {
-        font-size: 12px;
-        color: #666666;
-      }
-      .footer p
-      {
-        margin-bottom: 5px;
-      }
-    </style>
 </asp:Content>

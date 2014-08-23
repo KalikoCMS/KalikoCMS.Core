@@ -3,7 +3,7 @@
 <div class="form-group">
     <asp:Label AssociatedControlID="SelectButton" runat="server" ID="LabelText" CssClass="control-label col-xs-2" />
     <div class="controls col-xs-6">
-        <div style="width: 128px;height:128px;position: relative;">
+        <div class="image-property-control">
             <asp:HyperLink ID="SelectButton" class="btn btn-primary btn-icon" runat="server"><i class="icon-edit icon-light"></i></asp:HyperLink>
             <asp:Image ID="ImagePreview" Width="128" Height="128" runat="server"/>
         </div>

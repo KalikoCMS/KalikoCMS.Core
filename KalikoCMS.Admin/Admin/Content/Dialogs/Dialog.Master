@@ -1,17 +1,4 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Dialog.master.cs" Inherits="KalikoCMS.Admin.Content.Dialogs.Dialog" MasterPageFile="../../Templates/MasterPages/Base.Master" %>
-<%--
-<asp:Content ContentPlaceHolderID="AdditionalStyles" runat="server"></asp:Content>
-<asp:Content ContentPlaceHolderID="MainContent" runat="server"></asp:Content>
---%>
-
-<asp:Content ContentPlaceHolderID="AdditionalStyles" runat="server">
-<%--    <link href="assets/css/bootstrap-modal-bs3patch.css" rel="stylesheet" />
-    <link href="assets/css/bootstrap-modal.css" rel="stylesheet" />--%>
-    <style type="text/css">
-        .modal-body.lock-position { bottom: 58px; left: 0; position: fixed; right: 0; top: 47px; }        
-        .modal-footer.lock-position { position: fixed;left: 0;right: 0;bottom: 0;}
-    </style>
-</asp:Content>
 
 <asp:Content ContentPlaceHolderID="AdditionalScripts" runat="server">
     <script>

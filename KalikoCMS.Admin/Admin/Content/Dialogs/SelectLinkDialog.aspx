@@ -21,13 +21,13 @@
       <asp:HiddenField runat="server" ID="LanguageId" />
       <asp:HiddenField runat="server" ID="PageId" />
       <div class="input-append">
-        <asp:TextBox runat="server" CssClass="medium-input" ID="PageDisplayField" ReadOnly="True" /><asp:HyperLink ID="SelectPageButton" CssClass="btn" runat="server"><i class="icon-file-alt"></i></asp:HyperLink>
+        <asp:TextBox runat="server" CssClass="medium-input" ID="PageDisplayField" ReadOnly="True" /><asp:HyperLink ID="SelectPageButton" CssClass="btn btn-default" runat="server"><i class="icon-file-alt"></i></asp:HyperLink>
       </div>
     </div>
     <div class="tab-pane" id="file">
       <div class="input-append">
         <asp:HiddenField ID="FileUrl" runat="server" />
-        <asp:TextBox runat="server" CssClass="medium-input" ID="FileDisplayField" ReadOnly="True" /><asp:HyperLink ID="SelectFileButton" CssClass="btn" runat="server"><i class="icon-file-alt"></i></asp:HyperLink>
+        <asp:TextBox runat="server" CssClass="medium-input" ID="FileDisplayField" ReadOnly="True" /><asp:HyperLink ID="SelectFileButton" CssClass="btn btn-default" runat="server"><i class="icon-file-alt"></i></asp:HyperLink>
       </div>
     </div>
   </div>
@@ -37,7 +37,7 @@
 <asp:Content ContentPlaceHolderID="ButtonArea" runat="server">
   <cms:BootstrapButton id="SaveButton" Icon="icon-ok" Mode="Primary" Text="Select" runat="server"/>
   <button type="button" id="deselect-button" class="btn btn-danger"><i class="icon-trash icon-white"></i> No link</button>
-  <button type="button" id="close-button" data-dismiss="modal" class="btn">Close</button>
+  <button type="button" id="close-button" data-dismiss="modal" class="btn btn-default">Close</button>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptArea" runat="server">

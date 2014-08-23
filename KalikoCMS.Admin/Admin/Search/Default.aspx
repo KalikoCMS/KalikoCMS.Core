@@ -3,5 +3,5 @@
 
 <asp:Content ContentPlaceHolderID="FullRegion" runat="server">
   <asp:Literal ID="ResultBox" runat="server" />
-  <asp:Button ID="ReindexButton" runat="server" CssClass="btn" Text="Reindex website" />
+  <asp:Button ID="ReindexButton" runat="server" CssClass="btn btn-default" Text="Reindex website" />
 </asp:Content>

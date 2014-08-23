@@ -2,43 +2,7 @@
 <%@ Import Namespace="KalikoCMS.Configuration" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainArea" runat="server">
   <link rel="stylesheet" href="assets/css/jquery.fileupload-ui.css" />
-  <style>
-    .file-list
-    {
-      width: 100%;
-    }
-    .file-list tr
-    {
-      cursor: pointer;
-    }
-    .file-list td
-    {
-      padding: 2px 15px;
-    }
-    .table-striped.file-list tr.selected td
-    {
-      background: #0088CC;
-      color: #ffffff;
-    }
-    
-    .breadcrumb { margin-bottom: 10px;}
-    
-    #file-queue-container,
-    #file-list-container {
-      left: 15px;
-      overflow: auto;
-      right: 15px;
-    }
-    
-    .fileupload-buttonbar .btn, .fileupload-buttonbar .toggle { margin: 0; }
-    .fileupload-progress { margin-top: 3px; }
-    .progress { margin-bottom: 0; }
-    
-    
-    .template-upload .progress { width: 100px; }
-    
-  </style>
-  <div id="filelist" style="position: absolute;width:100%;">
+  <div id="filelist">
     <div class="modal-toolbar">
       <button type="button" data-original-title="Create a new folder in current path." class="btn btn-small" id="create-folder-button"><i class="icon-folder-open-alt"></i> Create folder</button>
       <button type="button" data-original-title="Upload files into current path." class="btn btn-small" id="upload-file-button"><i class="icon-upload-alt"></i> Upload file(s)</button>
@@ -106,7 +70,7 @@
   <a class="btn btn-primary" href="javascript:switchToFileListMode();"><i class="icon-arrow-left"></i> Return to file list</a>
   </span>
 
-  <a data-dismiss="modal" class="btn" href="javascript:abort();">Cancel</a>
+  <a data-dismiss="modal" class="btn btn-default" href="javascript:abort();">Cancel</a>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptArea" runat="server">
