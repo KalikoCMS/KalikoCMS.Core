@@ -101,8 +101,6 @@
     <Content Include="Admin\Assets\js\jquery.iframe-transport.js" />
     <Content Include="Admin\Assets\js\jquery.jcrop.min.js" />
     <Content Include="Admin\Assets\js\jquery.ui.widget.js" />
-    <Content Include="Admin\Assets\js\jquery.wysiwyg.js" />
-    <Content Include="Admin\Assets\js\kalikocms.core.js" />
     <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-cool.gif" />
     <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-cry.gif" />
     <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-embarassed.gif" />
@@ -529,7 +527,7 @@
     <Content Include="Admin\Assets\themes\default\default.css.map">
       <DependentUpon>default.css</DependentUpon>
     </Content>
-    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
+    <None Include="Properties\PublishProfiles\Build.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Admin\Assets\fonts\font\" />
