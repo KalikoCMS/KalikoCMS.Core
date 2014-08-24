@@ -57,18 +57,12 @@
       <HintPath>..\..\..\Third party tools\DotNetLogger\Bin\Kaliko.Logger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\Assets\css\bootstrap-modal-bs3patch.css" />
@@ -417,10 +411,6 @@
     <ProjectReference Include="..\KalikoCMS.Engine\KalikoCMS.Engine.csproj">
       <Project>{FC032B3C-8643-4C35-929C-88959FC980D4}</Project>
       <Name>KalikoCMS.Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KalikoCMS.Search\KalikoCMS.Search.csproj">
-      <Project>{D7500A83-6B4F-4D68-B215-D9730DE48044}</Project>
-      <Name>KalikoCMS.Search</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
