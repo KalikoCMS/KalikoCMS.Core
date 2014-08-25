@@ -17,12 +17,14 @@
  */
 #endregion
 
-using System;
-using System.Linq;
-
 namespace KalikoCMS.Admin.Content.PropertyType {
+    using System;
+    using System.Linq;
+    using System.Web.UI;
+    using Configuration;
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
+    using System.Linq;
 
     public partial class TagPropertyEditor : PropertyEditorBase {
         public override string PropertyLabel {
@@ -36,7 +38,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             }
             get {
                 var tags = ValueField.Text.Split(new[] {','});
-                return new TagProperty("", tags.ToList());
+                return new TagProperty("", tags.Select(t => t.Trim()).Where(t => t.Length > 0).ToList());
             }
         }
 
@@ -54,6 +56,22 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             }
 
             return true;
+        }
+
+        protected override void OnLoad(EventArgs e) {
+            base.OnLoad(e);
+
+            ScriptManager.RegisterClientScriptInclude(this, typeof(TagPropertyEditor), "assets/js/bootstrap-tagsinput.min.js", SiteSettings.Instance.AdminPath + "assets/js/bootstrap-tagsinput.min.js");
+            ScriptManager.RegisterClientScriptInclude(this, typeof(TagPropertyEditor), "assets/js/typeahead.min.js", SiteSettings.Instance.AdminPath + "assets/js/typeahead.min.js");
+        }
+
+        protected override void OnPreRender(EventArgs e) {
+            base.OnPreRender(e);
+
+            var tags = TagManager.GetTags(string.Empty);
+            var tagList = string.Join(",", tags.Tags.Select(t => "'" + t.Value.TagName + "'"));
+
+            Script.Text = @"<script> $(document).ready(function() { var tags = [" + tagList + "]; var tags = new Bloodhound({ datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'), queryTokenizer: Bloodhound.tokenizers.whitespace, local: $.map(tags, function(state) { return { value: state }; }) }); tags.initialize(); $('#" + ValueField.ClientID + "').tagsinput({ tagClass: 'label label-primary', typeaheadjs: {  name: 'tags', displayKey: 'value', valueKey: 'value', source: tags.ttAdapter() } }); });</script>";
         }
     }
 }

@@ -67,9 +67,12 @@
   <ItemGroup>
     <Content Include="Admin\Assets\css\bootstrap-modal-bs3patch.css" />
     <Content Include="Admin\Assets\css\jquery.jcrop.min.css" />
+    <Content Include="Admin\Assets\js\bootstrap-tagsinput.min.js" />
+    <Content Include="Admin\Assets\js\typeahead.js" />
     <Content Include="Admin\Assets\less\kalikocms.admin.css.map">
       <DependentUpon>kalikocms.admin.css</DependentUpon>
     </Content>
+    <Content Include="Admin\Assets\less\bootstrap-tagsinput.less" />
     <None Include="Admin\Assets\less\kalikocms.admin.less" />
     <Content Include="Admin\Assets\fonts\css\font-awesome-ie7.css" />
     <Content Include="Admin\Assets\fonts\css\font-awesome-ie7.min.css" />
