@@ -13,6 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.WebForms", "Kalik
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.Mvc", "KalikoCMS.Mvc\KalikoCMS.Mvc.csproj", "{A7E19576-14CD-4EC1-B8F6-BEF651A3F09B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Referenced Assemblies", "Referenced Assemblies", "{9B941193-EF89-45AB-B91B-CE6D6CFAF96F}"
+	ProjectSection(SolutionItems) = preProject
+		Referenced Assemblies\DotNetLogger\Bin\Kaliko.Logger.dll = Referenced Assemblies\DotNetLogger\Bin\Kaliko.Logger.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 6

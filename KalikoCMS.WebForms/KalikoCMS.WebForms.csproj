@@ -38,7 +38,7 @@
   <ItemGroup>
     <Reference Include="Kaliko.Logger, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Third party tools\DotNetLogger\Bin\Kaliko.Logger.dll</HintPath>
+      <HintPath>..\Referenced Assemblies\DotNetLogger\Bin\Kaliko.Logger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -80,7 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KalikoCMS.Engine\KalikoCMS.Engine.csproj">
-      <Project>{FC032B3C-8643-4C35-929C-88959FC980D4}</Project>
+      <Project>{fc032b3c-8643-4c35-929c-88959fc980d4}</Project>
       <Name>KalikoCMS.Engine</Name>
     </ProjectReference>
   </ItemGroup>
