@@ -33,7 +33,7 @@ namespace KalikoCMS.Admin.Content.Dialogs {
             var stringBuilder = new StringBuilder();
 
             foreach (PageType pageType in pageTypes) {
-                stringBuilder.Append("<li><a href=\"javascript:selectPageType('" + pageType.PageTypeId + "')\">" + pageType.Name + "</a></li>");
+                stringBuilder.Append("<dt><a href=\"javascript:selectPageType('" + pageType.PageTypeId + "')\">" + pageType.DisplayName + "</a></dt><dd>" + pageType.PageTypeDescription + "</dd>");
             }
 
             PageTypeList.Text = stringBuilder.ToString();

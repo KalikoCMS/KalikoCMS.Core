@@ -10,7 +10,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainArea" runat="server">
   <p>Select page type:</p>
-  <ul class="unstyled">
+  <dl class="dl-horizontal">
     <asp:Literal ID="PageTypeList" runat="server" />
-  </ul>
+  </dl>
 </asp:Content>

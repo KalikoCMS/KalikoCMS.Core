@@ -27,6 +27,8 @@ namespace KalikoCMS.Admin.Content.PropertyType {
     using System.Linq;
 
     public partial class TagPropertyEditor : PropertyEditorBase {
+        private TagPropertyAttribute.TagPropertyAttributeValues _attributeValues;
+
         public override string PropertyLabel {
             set { LabelText.Text = value; }
         }
@@ -38,12 +40,17 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             }
             get {
                 var tags = ValueField.Text.Split(new[] {','});
-                return new TagProperty("", tags.Select(t => t.Trim()).Where(t => t.Length > 0).ToList());
+                var tagList = tags.Select(t => t.Trim()).Where(t => t.Length > 0).ToList();
+                var tagContext = TagContext.Value;
+                
+                return new TagProperty(tagContext, tagList);
             }
         }
 
         public override string Parameters {
-            set { throw new System.NotImplementedException(); }
+            set {
+                _attributeValues = Serialization.JsonSerialization.DeserializeJson<TagPropertyAttribute.TagPropertyAttributeValues>(value);
+            }
         }
 
         public override bool Validate() {
@@ -68,7 +75,15 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         protected override void OnPreRender(EventArgs e) {
             base.OnPreRender(e);
 
-            var tags = TagManager.GetTags(string.Empty);
+            var tagContext = string.Empty;
+
+            if (_attributeValues != null) {
+                tagContext = _attributeValues.TagContext;
+            }
+
+            TagContext.Value = tagContext;
+
+            var tags = TagManager.GetTags(tagContext);
             var tagList = string.Join(",", tags.Tags.Select(t => "'" + t.Value.TagName + "'"));
 
             Script.Text = @"<script> $(document).ready(function() { var tags = [" + tagList + "]; var tags = new Bloodhound({ datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'), queryTokenizer: Bloodhound.tokenizers.whitespace, local: $.map(tags, function(state) { return { value: state }; }) }); tags.initialize(); $('#" + ValueField.ClientID + "').tagsinput({ tagClass: 'label label-primary', typeaheadjs: {  name: 'tags', displayKey: 'value', valueKey: 'value', source: tags.ttAdapter() } }); });</script>";

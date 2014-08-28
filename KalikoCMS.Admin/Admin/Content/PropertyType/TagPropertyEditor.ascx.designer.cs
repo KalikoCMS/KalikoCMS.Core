@@ -22,6 +22,15 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         protected global::System.Web.UI.WebControls.Label LabelText;
         
         /// <summary>
+        /// TagContext control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField TagContext;
+        
+        /// <summary>
         /// ValueField control.
         /// </summary>
         /// <remarks>

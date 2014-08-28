@@ -2,6 +2,7 @@
 <div class="form-group">
   <asp:Label AssociatedControlID="ValueField" runat="server" ID="LabelText" CssClass="control-label col-xs-2" />
   <div class="controls col-xs-10">
+    <asp:HiddenField runat="server" ID="TagContext" />
     <asp:TextBox runat="server" CssClass="form-control" ID="ValueField" />
     <asp:Literal ID="ErrorText" runat="server" />
   </div>
