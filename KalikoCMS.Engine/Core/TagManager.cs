@@ -109,8 +109,11 @@ namespace KalikoCMS.Core {
 
         private static void RemoveAllTagsForPage(Guid pageId, TagContext context) {
             var tagContextId = context.TagContextId;
-
             var tags = DataManager.Select(DataManager.Instance.Tag, t => t.TagContextId == tagContextId);
+
+            if (tags.Count == 0) {
+                return;
+            }
 
             DataManager.Delete(DataManager.Instance.PageTag, p => p.PageId == pageId && tags.Any(t => t.TagId == p.TagId));
 
@@ -150,7 +153,11 @@ namespace KalikoCMS.Core {
         }
 
         public static TagContext GetTags(string contextName) {
-            return TagContexts[contextName];
+            if (TagContexts.ContainsKey(contextName)) {
+                return TagContexts[contextName];
+            }
+            
+            return new TagContext { ContextName = contextName };
         }
 
         public void Startup() {

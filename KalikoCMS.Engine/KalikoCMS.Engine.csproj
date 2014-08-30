@@ -103,6 +103,7 @@
     <Compile Include="PropertyType\LinkProperty.cs" />
     <Compile Include="PropertyType\PageLinkProperty.cs" />
     <Compile Include="PropertyType\TagProperty.cs" />
+    <Compile Include="PropertyType\TagPropertyAttribute.cs" />
     <Compile Include="Search\IIndexable.cs" />
     <Compile Include="Core\PageNameBuilder.cs" />
     <Compile Include="Search\IndexItem.cs" />
