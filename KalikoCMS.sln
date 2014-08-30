@@ -23,24 +23,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Referenced Assemblies", "Re
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs16
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = KalikoCMS.Engine\\KalikoCMS.Engine.csproj
-		SccProjectName1 = KalikoCMS.Engine
-		SccLocalPath1 = KalikoCMS.Engine
-		SccProjectUniqueName2 = KalikoCMS.Admin\\KalikoCMS.Admin.csproj
-		SccProjectName2 = KalikoCMS.Admin
-		SccLocalPath2 = KalikoCMS.Admin
-		SccProjectUniqueName3 = KalikoCMS.WebForms\\KalikoCMS.WebForms.csproj
-		SccProjectName3 = KalikoCMS.WebForms
-		SccLocalPath3 = KalikoCMS.WebForms
-		SccProjectUniqueName4 = KalikoCMS.Mvc\\KalikoCMS.Mvc.csproj
-		SccProjectName4 = KalikoCMS.Mvc
-		SccLocalPath4 = KalikoCMS.Mvc
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
