@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.Admin", "KalikoCM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.Engine", "KalikoCMS.Engine\KalikoCMS.Engine.csproj", "{FC032B3C-8643-4C35-929C-88959FC980D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.Search", "KalikoCMS.Search\KalikoCMS.Search.csproj", "{D7500A83-6B4F-4D68-B215-D9730DE48044}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.WebForms", "KalikoCMS.WebForms\KalikoCMS.WebForms.csproj", "{58B89A38-C3F3-495D-B35A-9BB17AD4199D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.Mvc", "KalikoCMS.Mvc\KalikoCMS.Mvc.csproj", "{A7E19576-14CD-4EC1-B8F6-BEF651A3F09B}"
@@ -16,7 +14,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Referenced Assemblies", "Referenced Assemblies", "{9B941193-EF89-45AB-B91B-CE6D6CFAF96F}"
 	ProjectSection(SolutionItems) = preProject
 		Referenced Assemblies\fastJSON\2.0.26\fastJSON.dll = Referenced Assemblies\fastJSON\2.0.26\fastJSON.dll
-		Referenced Assemblies\KalikoSearch\3.0.3.0\HtmlAgilityPack.dll = Referenced Assemblies\KalikoSearch\3.0.3.0\HtmlAgilityPack.dll
 		Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.Access.dll = Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.Access.dll
 		Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.dll = Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.dll
 		Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.MySqlClient.dll = Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.MySqlClient.dll
@@ -26,12 +23,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Referenced Assemblies", "Re
 		Referenced Assemblies\IQToolkit\Bin\IQToolkit.dll = Referenced Assemblies\IQToolkit\Bin\IQToolkit.dll
 		Referenced Assemblies\ImageLibrary\2.0.0\Kaliko.ImageLibrary.dll = Referenced Assemblies\ImageLibrary\2.0.0\Kaliko.ImageLibrary.dll
 		Referenced Assemblies\DotNetLogger\Bin\Kaliko.Logger.dll = Referenced Assemblies\DotNetLogger\Bin\Kaliko.Logger.dll
-		Referenced Assemblies\KalikoSearch\3.0.3.0\KalikoSearch.dll = Referenced Assemblies\KalikoSearch\3.0.3.0\KalikoSearch.dll
 	EndProjectSection
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs16
 		SccLocalPath0 = .
@@ -41,15 +37,12 @@ Global
 		SccProjectUniqueName2 = KalikoCMS.Admin\\KalikoCMS.Admin.csproj
 		SccProjectName2 = KalikoCMS.Admin
 		SccLocalPath2 = KalikoCMS.Admin
-		SccProjectUniqueName3 = KalikoCMS.Search\\KalikoCMS.Search.csproj
-		SccProjectName3 = KalikoCMS.Search
-		SccLocalPath3 = KalikoCMS.Search
-		SccProjectUniqueName4 = KalikoCMS.WebForms\\KalikoCMS.WebForms.csproj
-		SccProjectName4 = KalikoCMS.WebForms
-		SccLocalPath4 = KalikoCMS.WebForms
-		SccProjectUniqueName5 = KalikoCMS.Mvc\\KalikoCMS.Mvc.csproj
-		SccProjectName5 = KalikoCMS.Mvc
-		SccLocalPath5 = KalikoCMS.Mvc
+		SccProjectUniqueName3 = KalikoCMS.WebForms\\KalikoCMS.WebForms.csproj
+		SccProjectName3 = KalikoCMS.WebForms
+		SccLocalPath3 = KalikoCMS.WebForms
+		SccProjectUniqueName4 = KalikoCMS.Mvc\\KalikoCMS.Mvc.csproj
+		SccProjectName4 = KalikoCMS.Mvc
+		SccLocalPath4 = KalikoCMS.Mvc
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,10 +57,6 @@ Global
 		{FC032B3C-8643-4C35-929C-88959FC980D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC032B3C-8643-4C35-929C-88959FC980D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC032B3C-8643-4C35-929C-88959FC980D4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7500A83-6B4F-4D68-B215-D9730DE48044}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7500A83-6B4F-4D68-B215-D9730DE48044}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7500A83-6B4F-4D68-B215-D9730DE48044}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7500A83-6B4F-4D68-B215-D9730DE48044}.Release|Any CPU.Build.0 = Release|Any CPU
 		{58B89A38-C3F3-495D-B35A-9BB17AD4199D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{58B89A38-C3F3-495D-B35A-9BB17AD4199D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58B89A38-C3F3-495D-B35A-9BB17AD4199D}.Release|Any CPU.ActiveCfg = Release|Any CPU
