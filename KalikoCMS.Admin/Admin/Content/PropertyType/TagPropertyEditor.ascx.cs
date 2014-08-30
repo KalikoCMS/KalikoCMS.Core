@@ -82,6 +82,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             }
 
             TagContext.Value = tagContext;
+            ValueField.Attributes.Add("autocomplete", "off");
 
             var tags = TagManager.GetTags(tagContext);
             var tagList = string.Join(",", tags.Tags.Select(t => "'" + t.Value.TagName + "'"));

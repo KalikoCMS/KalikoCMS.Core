@@ -68,7 +68,7 @@
     <Content Include="Admin\Assets\css\bootstrap-modal-bs3patch.css" />
     <Content Include="Admin\Assets\css\jquery.jcrop.min.css" />
     <Content Include="Admin\Assets\js\bootstrap-tagsinput.min.js" />
-    <Content Include="Admin\Assets\js\typeahead.js" />
+    <Content Include="Admin\Assets\js\typeahead.min.js" />
     <Content Include="Admin\Assets\less\kalikocms.admin.css.map">
       <DependentUpon>kalikocms.admin.css</DependentUpon>
     </Content>
