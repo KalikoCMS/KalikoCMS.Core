@@ -38,7 +38,14 @@ namespace KalikoCMS.Mvc {
         }
 
         protected override void RedirectToStartPage() {
-            var page = PageFactory.GetPage(Configuration.SiteSettings.Instance.StartPageId);
+            var startPageId = Configuration.SiteSettings.Instance.StartPageId;
+
+            if (startPageId == Guid.Empty) {
+                HttpContext.Current.Response.Write("Start page hasn't yet been configured in web.config.");
+                HttpContext.Current.Response.End();
+            }
+
+            var page = PageFactory.GetPage(startPageId);
             RedirectToController(page);
         }
 
