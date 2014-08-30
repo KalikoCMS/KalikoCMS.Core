@@ -38,7 +38,7 @@
   <ItemGroup>
     <Reference Include="Kaliko.Logger, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Referenced Assemblies\DotNetLogger\Bin\Kaliko.Logger.dll</HintPath>
+      <HintPath>..\packages\Kaliko.Logger.1.1.0\lib\Kaliko.Logger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -83,6 +83,9 @@
       <Project>{fc032b3c-8643-4c35-929c-88959fc980d4}</Project>
       <Name>KalikoCMS.Engine</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

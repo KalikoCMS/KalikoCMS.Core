@@ -48,13 +48,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Kaliko.ImageLibrary, Version=1.2.6.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Kaliko.ImageLibrary, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Referenced Assemblies\ImageLibrary\2.0.0\Kaliko.ImageLibrary.dll</HintPath>
+      <HintPath>..\packages\ImageLibrary.2.0.0\lib\Kaliko.ImageLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Kaliko.Logger, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Referenced Assemblies\DotNetLogger\Bin\Kaliko.Logger.dll</HintPath>
+      <HintPath>..\packages\Kaliko.Logger.1.1.0\lib\Kaliko.Logger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -520,6 +520,7 @@
     <Content Include="Admin\Assets\themes\default\default.css.map">
       <DependentUpon>default.css</DependentUpon>
     </Content>
+    <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\Build.pubxml" />
   </ItemGroup>
   <ItemGroup>

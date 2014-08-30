@@ -24,6 +24,7 @@ namespace KalikoCMS.Admin.Assets.Images {
     using Configuration;
     using Kaliko;
     using Kaliko.ImageLibrary;
+    using Kaliko.ImageLibrary.Scaling;
 
     public class Thumbnail : IHttpHandler {
         private HttpContext _context;
@@ -74,7 +75,7 @@ namespace KalikoCMS.Admin.Assets.Images {
             EnsureThumbnailPath();
 
             var image = new KalikoImage(path);
-            var thumbnail = image.GetThumbnailImage(128, 128, ThumbnailMethod.Crop);
+            var thumbnail = image.Scale(new CropScaling(128,128));
             thumbnail.SaveJpg(localThumbPath, 85);
         }
 

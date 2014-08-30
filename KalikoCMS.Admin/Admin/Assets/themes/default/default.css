@@ -6054,11 +6054,11 @@ iframe {
 /* Custom buttons */
 .btn-icon {
   border: none;
-  border-radius: 1em;
-  height: 1em;
+  border-radius: 2em;
+  height: 2em;
   margin: 0;
   padding: 0.5em;
-  width: 1em;
+  width: 2em;
   font-size: 1.5em;
   position: absolute;
   z-index: 2;

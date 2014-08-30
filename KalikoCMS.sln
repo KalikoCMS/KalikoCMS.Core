@@ -13,7 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.Mvc", "KalikoCMS.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Referenced Assemblies", "Referenced Assemblies", "{9B941193-EF89-45AB-B91B-CE6D6CFAF96F}"
 	ProjectSection(SolutionItems) = preProject
-		Referenced Assemblies\fastJSON\2.0.26\fastJSON.dll = Referenced Assemblies\fastJSON\2.0.26\fastJSON.dll
 		Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.Access.dll = Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.Access.dll
 		Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.dll = Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.dll
 		Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.MySqlClient.dll = Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.MySqlClient.dll
@@ -21,8 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Referenced Assemblies", "Re
 		Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.SQLite.dll = Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.SQLite.dll
 		Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.SqlServerCe.dll = Referenced Assemblies\IQToolkit\Bin\IQToolkit.Data.SqlServerCe.dll
 		Referenced Assemblies\IQToolkit\Bin\IQToolkit.dll = Referenced Assemblies\IQToolkit\Bin\IQToolkit.dll
-		Referenced Assemblies\ImageLibrary\2.0.0\Kaliko.ImageLibrary.dll = Referenced Assemblies\ImageLibrary\2.0.0\Kaliko.ImageLibrary.dll
-		Referenced Assemblies\DotNetLogger\Bin\Kaliko.Logger.dll = Referenced Assemblies\DotNetLogger\Bin\Kaliko.Logger.dll
 	EndProjectSection
 EndProject
 Global

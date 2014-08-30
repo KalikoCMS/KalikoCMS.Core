@@ -123,10 +123,10 @@ namespace KalikoCMS.Core {
         }
 
         private static void RemoveAllTagsForPage(Guid pageId) {
+            DataManager.Delete(DataManager.Instance.PageTag, p => p.PageId == pageId);
+
             foreach (var context in TagContexts.Values) {
                 var tagContextId = context.TagContextId;
-
-                DataManager.Delete(DataManager.Instance.PageTag, p => p.PageId == pageId && p.Tag.TagContextId == tagContextId);
 
                 foreach (var tag in context.Tags) {
                     tag.Value.Pages.Remove(pageId);

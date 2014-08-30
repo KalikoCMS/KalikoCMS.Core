@@ -24,7 +24,6 @@ namespace KalikoCMS.Admin.Content.PropertyType {
     using Configuration;
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
-    using System.Linq;
 
     public partial class TagPropertyEditor : PropertyEditorBase {
         private TagPropertyAttribute.TagPropertyAttributeValues _attributeValues;

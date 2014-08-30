@@ -27,13 +27,8 @@ namespace KalikoCMS.Serialization {
         private const int RandomlyChosenPrimeNumber = 17;
         private const int RandomlyChosenPrimeNumber2 = 31;
 
-        private static readonly JSON JsonSerializer = GetSerializer();
         private static readonly JSONParameters GenericParameters = new JSONParameters {UseExtensions = false};
         private static readonly JSONParameters TypedParameters = new JSONParameters { UseExtensions = true, UsingGlobalTypes = true };
-
-        private static JSON GetSerializer() {
-            return JSON.Instance;
-        }
 
         public static T DeserializeJson<T>(string json) {
             if (String.IsNullOrEmpty(json)) {
@@ -41,7 +36,7 @@ namespace KalikoCMS.Serialization {
             }
 
             try {
-                var instance = JsonSerializer.ToObject<T>(json);
+                var instance = JSON.ToObject<T>(json);
                 return instance;
             }
             catch (Exception e) {
@@ -57,7 +52,7 @@ namespace KalikoCMS.Serialization {
             }
 
             try {
-                var instance = JsonSerializer.ToObject(json);
+                var instance = JSON.ToObject(json);
                 return instance;
             }
             catch (Exception e) {
@@ -68,11 +63,11 @@ namespace KalikoCMS.Serialization {
         }
 
         public static string SerializeJson(object instance) {
-            return JsonSerializer.ToJSON(instance, GenericParameters);
+            return JSON.ToJSON(instance, GenericParameters);
         }
 
         public static string SerializeTypedJson(object instance) {
-            var json = JsonSerializer.ToJSON(instance, TypedParameters);
+            var json = JSON.ToJSON(instance, TypedParameters);
 
             json = OptimizeJsonTypes(json);
 
