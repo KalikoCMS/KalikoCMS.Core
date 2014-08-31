@@ -51,6 +51,7 @@
           resize: true,
           height: 300,
           menubar: false,
+          extended_valid_elements : "i[class],span",
           toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code",
           file_picker_callback: function (callback, value, meta) {
             if (meta.filetype == 'file') {

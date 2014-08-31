@@ -197,6 +197,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Admin\Assets\themes\default\variables.css.map">
+      <DependentUpon>variables.css</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
