@@ -21,25 +21,25 @@ namespace KalikoCMS.Core {
     using System;
 
     public class PageIndexItem {
-        internal DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
         internal DateTime? DeletedDate { get; set; }
         internal int FirstChild { get; set; }
         internal int NextPage { get; set; }
         public Guid PageId { get; set; }
         internal int PageInstanceId { get; set; }
-        internal string PageName { get; set; }
+        public string PageName { get; set; }
         public int PageTypeId { get; set; }
         internal string PageUrl { get; set; }
-        internal Guid ParentId { get; set; }
-        internal Guid RootId { get; set; }
-        internal int SortOrder { get; set; }
-        internal DateTime? StartPublish { get; set; }
-        internal DateTime? StopPublish { get; set; }
-        internal int TreeLevel { get; set; }
-        internal DateTime UpdateDate { get; set; }
+        public Guid ParentId { get; set; }
+        public Guid RootId { get; set; }
+        public int SortOrder { get; set; }
+        public DateTime? StartPublish { get; set; }
+        public DateTime? StopPublish { get; set; }
+        public int TreeLevel { get; set; }
+        public DateTime UpdateDate { get; set; }
         internal string UrlSegment { get; set; }
         internal int UrlSegmentHash { get; set; }
-        internal bool VisibleInMenu { get; set; }
+        public bool VisibleInMenu { get; set; }
 
         public bool IsAvailable {
             get {

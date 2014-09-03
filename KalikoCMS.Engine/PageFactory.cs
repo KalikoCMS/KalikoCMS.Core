@@ -193,6 +193,11 @@ namespace KalikoCMS {
         }
 
 
+        public static PageCollection GetChildrenForPage(Guid pageId, Predicate<PageIndexItem> match) {
+            return CurrentIndex.GetChildrenByCriteria(pageId, match);
+        }
+
+
         public static PageCollection GetChildrenForPageOfPageType(Guid pageId, int pageTypeId, PublishState pageState = PublishState.Published) {
             if (pageId == Guid.Empty) {
                 return CurrentIndex.GetRootChildren(pageTypeId, pageState);
@@ -278,6 +283,10 @@ namespace KalikoCMS {
             return CurrentIndex.GetPageTreeFromPage(pageId, pageState);
         }
 
+
+        public static PageCollection GetPageTreeFromPage(Guid pageId, Predicate<PageIndexItem> match) {
+            return CurrentIndex.GetPageTreeFromPage(pageId, match);
+        }
 
         // TODO: Finish implementation, build predicate out of pagetypes
 /*        public static PageCollection GetPageTreeFromPageOfPageType(Guid pageLink, Type[] type, PublishState pageState) {
@@ -365,6 +374,7 @@ namespace KalikoCMS {
                                              CreatedDate = pageInstance.CreatedDate,
                                              DeletedDate = pageInstance.DeletedDate,
                                              FirstChild = -1,
+                                             NextPage = -1,
                                              PageId = pageInstance.PageId,
                                              PageName = pageInstance.PageName,
                                              PageTypeId = pageTypeId,

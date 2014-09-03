@@ -196,6 +196,10 @@ namespace KalikoCMS.Core {
             return GetPageTreeByCriteria(pageId, match);
         }
 
+        internal PageCollection GetPageTreeFromPage(Guid pageId, Predicate<PageIndexItem> match) {
+            return GetPageTreeByCriteria(pageId, match);
+        }
+
         internal PageCollection GetPagesByCriteria(Predicate<PageIndexItem> match) {
             var pageCollection = new PageCollection();
 
