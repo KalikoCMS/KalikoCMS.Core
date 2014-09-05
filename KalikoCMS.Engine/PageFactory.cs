@@ -465,7 +465,7 @@ namespace KalikoCMS {
         }
 
 
-        public static string GetUrlForPageInstanceId(int pageInstanceId) {
+        internal static string GetUrlForPageInstanceId(int pageInstanceId) {
             foreach (PageIndex pageIndex in _pageLanguageIndex) {
                 PageIndexItem item = pageIndex.GetPageIndexItem(pageInstanceId);
                 if(item!=null) {

@@ -1,4 +1,4 @@
-﻿/*# sourceMappingURL=kalikocms.admin.css.map */
+﻿/*#region Generic */
 .full-width {
   width: 100%;
   box-sizing: border-box;
@@ -21,8 +21,8 @@ iframe {
 .no-scroll {
   overflow: hidden;
 }
-/*# sourceMappingURL=kalikocms.admin.css.map */
-/*# sourceMappingURL=kalikocms.admin.css.map */
+/*#endregion*/
+/*#region Modals */
 .modal-body.lock-position {
   bottom: 58px;
   left: 0;
@@ -50,8 +50,8 @@ iframe {
   margin: -16px -15px 10px;
   padding: 5px 15px;
 }
-/*# sourceMappingURL=kalikocms.admin.css.map */
-/*# sourceMappingURL=kalikocms.admin.css.map */
+/*#endregion*/
+/*#region Main framework and navigation */
 #left-block {
   margin-left: 10px;
 }
@@ -86,8 +86,8 @@ iframe {
 .footer p {
   margin-bottom: 5px;
 }
-/*# sourceMappingURL=kalikocms.admin.css.map */
-/*# sourceMappingURL=kalikocms.admin.css.map */
+/*#endregion*/
+/*#region Editor controls */
 .background-checkered {
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAHUlEQVQoz2P4jwM8xQEYRjXQRAMuCVwGjWqgiQYA9CnWHwuNlqcAAAAASUVORK5CYII=);
 }
@@ -122,6 +122,10 @@ iframe {
 }
 .btn-icon-normal i {
   display: block;
+}
+a.input-group-button [class^="icon-"],
+a [class*=" icon-"] {
+  display: inline-block;
 }
 /* Collection editor */
 .collection-item {
@@ -198,8 +202,8 @@ iframe {
   margin-bottom: 2px;
 }
 /*.input-group.date .add-on { cursor: pointer; }*/
-/*# sourceMappingURL=kalikocms.admin.css.map */
-/*# sourceMappingURL=kalikocms.admin.css.map */
+/*#endregion*/
+/*#region Custom checkboxes */
 .checkbox {
   position: relative;
   padding-left: 28px;
@@ -230,8 +234,8 @@ iframe {
 .checkbox input:disabled:checked + label:before {
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMlJREFUeNpivHD56t6DR1+/fs1AChAVFXW2t2YWEJP+9u0bA4kAqOXKtRtMDBSAwa9ZVUUJiNAEWYjRqautaW6kB2QI8POdPnuBBJvhOoFAX0sdn7O93RxFxcSw6gSCHQeO4tQcHeovKS7m7WwH0Y+p88njJ9j9DAwPTg4OkBALM1D/nYePNJQV8ehEsfn2nXsXr92EGsnCTFAnurOBIQnXT1AnlgBD049HJ/aoguvHrxNnIgHqR04MQzdjYNcc5OdFnk6gRoAAAwB60VvZKs/n1QAAAABJRU5ErkJggg==) no-repeat;
 }
-/*# sourceMappingURL=kalikocms.admin.css.map */
-/*# sourceMappingURL=kalikocms.admin.css.map */
+/*#endregion*/
+/*#region File dialog */
 .file-list {
   width: 100%;
 }
@@ -271,8 +275,8 @@ iframe {
 .template-upload .progress {
   width: 100px;
 }
-/*# sourceMappingURL=kalikocms.admin.css.map */
-/*# sourceMappingURL=kalikocms.admin.css.map */
+/*#endregion*/
+/*#region Typeahead */
 .twitter-typeahead .tt-query,
 .twitter-typeahead .tt-hint {
   margin-bottom: 0;
@@ -318,5 +322,5 @@ iframe {
   outline: 0;
   background-color: #428bca;
 }
-/*# sourceMappingURL=kalikocms.admin.css.map */
+/*#endregion*/
 /*# sourceMappingURL=kalikocms.admin.css.map */

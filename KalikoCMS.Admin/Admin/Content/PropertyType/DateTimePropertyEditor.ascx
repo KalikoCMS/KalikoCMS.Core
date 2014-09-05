@@ -4,7 +4,7 @@
     <asp:Label AssociatedControlID="ValueField" runat="server" ID="LabelText" CssClass="control-label col-xs-2" />
     <asp:Panel ID="DateControl" runat="server" CssClass="controls col-xs-4">
         <div class="input-group date">
-            <asp:TextBox runat="server" ID="ValueField" CssClass="form-control narrow-input" /><span class="input-group-btn add-on"><i data-time-icon="icon-time" data-date-icon="icon-calendar" class="btn btn-default icon-time"></i></span>
+            <asp:TextBox runat="server" ID="ValueField" CssClass="form-control narrow-input" /><span class="input-group-btn add-on"><button class="btn btn-default" type="button"><i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-time"></i></button></span>
         </div>
         <asp:Label ID="ErrorText" CssClass="help-inline" runat="server" />
     </asp:Panel>
