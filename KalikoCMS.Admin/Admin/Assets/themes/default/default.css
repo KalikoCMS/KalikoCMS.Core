@@ -5360,6 +5360,9 @@ iframe {
 .no-scroll {
   overflow: hidden;
 }
+.top-margin {
+  margin-top: 10px;
+}
 /*#endregion*/
 /*#region Modals */
 .modal-body.lock-position {

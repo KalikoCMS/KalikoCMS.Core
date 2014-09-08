@@ -15,19 +15,27 @@
   <div class="tab-content">
     <asp:HiddenField ID="SelectedTab" Value="#external" runat="server"/>
     <div class="tab-pane active" id="external">
-      <asp:TextBox ID="ExternalUrl" CssClass="medium-input" runat="server" />
+      <div class="top-margin">
+        <asp:TextBox ID="ExternalUrl" CssClass="form-control" runat="server" />
+      </div>
     </div>
     <div class="tab-pane" id="page">
       <asp:HiddenField runat="server" ID="LanguageId" />
       <asp:HiddenField runat="server" ID="PageId" />
-      <div class="input-append">
-        <asp:TextBox runat="server" CssClass="medium-input" ID="PageDisplayField" ReadOnly="True" /><asp:HyperLink ID="SelectPageButton" CssClass="btn btn-default" runat="server"><i class="icon-file-alt"></i></asp:HyperLink>
+      <div class="top-margin">
+        <div class="input-group">
+          <asp:TextBox runat="server" CssClass="form-control" ID="PageDisplayField" ReadOnly="True" /><span class="input-group-btn"><asp:HyperLink ID="SelectPageButton" CssClass="btn btn-default" runat="server"><i class="icon-file-alt"></i></asp:HyperLink></span>
+        </div>
       </div>
     </div>
     <div class="tab-pane" id="file">
       <div class="input-append">
         <asp:HiddenField ID="FileUrl" runat="server" />
-        <asp:TextBox runat="server" CssClass="medium-input" ID="FileDisplayField" ReadOnly="True" /><asp:HyperLink ID="SelectFileButton" CssClass="btn btn-default" runat="server"><i class="icon-file-alt"></i></asp:HyperLink>
+        <div class="top-margin">
+          <div class="input-group">
+            <asp:TextBox runat="server" CssClass="form-control" ID="FileDisplayField" ReadOnly="True" /><span class="input-group-btn"><asp:HyperLink ID="SelectFileButton" CssClass="btn btn-default" runat="server"><i class="icon-file-alt"></i></asp:HyperLink></span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
