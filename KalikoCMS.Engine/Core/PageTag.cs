@@ -19,12 +19,9 @@
 
 namespace KalikoCMS.Core {
     using System;
-    using System.Web.UI;
 
     public class PageTag {
         public Guid PageId { get; set; }
         public int TagId { get; set; }
-        public Tag Tag { get; set; }
-        public Page Page { get; set; }
     }
 }

@@ -19,6 +19,9 @@
 
 namespace KalikoCMS.Data {
     public class KeyValuePair {
+        public string KeyName { get; set; }
+        public string Value { get; set; }
+
         public KeyValuePair() {
         }
 
@@ -26,8 +29,5 @@ namespace KalikoCMS.Data {
             KeyName = key;
             Value = value;
         }
-
-        public string KeyName { get; set; }
-        public string Value { get; set; }
     }
 }

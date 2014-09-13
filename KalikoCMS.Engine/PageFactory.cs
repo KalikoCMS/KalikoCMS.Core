@@ -22,12 +22,12 @@ namespace KalikoCMS {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Web;
+    using Data.Entities;
     using Kaliko;
     using ContentProvider;
     using Core;
     using Core.Collections;
     using Data;
-    using Data.EntityProvider;
     using Events;
     using Search;
 
@@ -353,7 +353,7 @@ namespace KalikoCMS {
             }
         }
 
-        public static void UpdatePageIndex(PageInstanceEntity pageInstance, Guid parentId, Guid rootId, int treeLevel, int pageTypeId) {
+        internal static void UpdatePageIndex(PageInstanceEntity pageInstance, Guid parentId, Guid rootId, int treeLevel, int pageTypeId) {
             if (_pageLanguageIndex == null)
                 IndexSite();
 

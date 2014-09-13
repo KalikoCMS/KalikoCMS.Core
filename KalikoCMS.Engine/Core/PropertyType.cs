@@ -42,7 +42,7 @@ namespace KalikoCMS.Core {
             // TODO: Experimental code to handle typed properties
             if (Type.IsGenericType) {
                 // TODO: Bad code, possible candidate for errors down the road. Fix!
-                Type dynamicClosedGenericClass = Type.MakeGenericType(typeof(PropertyData));
+                var dynamicClosedGenericClass = Type.MakeGenericType(typeof(PropertyData));
                 return (PropertyData)Activator.CreateInstance(dynamicClosedGenericClass, null);
             }
             else {
@@ -69,7 +69,7 @@ namespace KalikoCMS.Core {
                 typeName = type.FullName;
             }
 
-            PropertyType propertyType = PropertyTypes.Find(pt => pt.Class == typeName);
+            var propertyType = PropertyTypes.Find(pt => pt.Class == typeName);
 
             if(propertyType == null) {
                 var exception = new Exception("Cannot find propertytype for type " + type.Name);

@@ -17,8 +17,6 @@
  */
 #endregion
 
-using IQToolkit;
-
 namespace KalikoCMS.Data {
     using System;
     using System.Collections.Generic;
@@ -27,78 +25,68 @@ namespace KalikoCMS.Data {
     using Core.Collections;
     using Kaliko;
     using Core;
-    using EntityProvider;
+    using Telerik.OpenAccess;
 
     internal static class PageData {
 
         internal static PageIndexDictionary GetPageStructure(int languageId) {
-            IQueryable<PageIndexItem> pages;
-
-            DataManager.OpenConnection();
+            var context = new DataContext();
 
             try {
-                pages = GetPages(languageId);
+                var pageIndexDictionary = new PageIndexDictionary(GetPages(context, languageId));
+                return pageIndexDictionary;
             }
             catch (Exception e) {
                 Logger.Write(e, Logger.Severity.Major);
                 throw;
             }
             finally {
-                DataManager.CloseConnection();
+                context.Dispose();
             }
-
-            return new PageIndexDictionary(pages);
         }
 
-        private static IQueryable<PageIndexItem> GetPages(int languageId) {
-            return from p in DataManager.Instance.Page
-                    join pi in DataManager.Instance.PageInstance on p.PageId equals pi.PageId
-                    where pi.LanguageId == languageId && pi.DeletedDate == null
-                    orderby p.TreeLevel, p.ParentId, pi.PageName
-                    select
-                        new PageIndexItem {
-                            PageId = pi.PageId,
-                            PageInstanceId = pi.PageInstanceId,
-                            PageTypeId = p.PageTypeId,
-                            PageUrl = pi.PageUrl,
-                            UrlSegment = pi.PageUrl.ToLowerInvariant(),
-                            UrlSegmentHash = pi.PageUrl.GetHashCode(),
-                            ParentId = p.ParentId,
-                            RootId = p.RootId,
-                            SortOrder = p.SortOrder,
-                            StartPublish = pi.StartPublish,
-                            StopPublish = pi.StopPublish,
-                            PageName = pi.PageName,
-                            CreatedDate = pi.CreatedDate,
-                            UpdateDate = pi.UpdateDate,
-                            VisibleInMenu = pi.VisibleInMenu,
-                            TreeLevel = p.TreeLevel
-                        };
+        private static IEnumerable<PageIndexItem> GetPages(DataContext context, int languageId) {
+            return from p in context.Pages
+                join pi in context.PageInstances on p.PageId equals pi.PageId
+                where pi.LanguageId == languageId && pi.DeletedDate == null
+                orderby p.TreeLevel, p.ParentId, pi.PageName
+                select
+                    new PageIndexItem {
+                        PageId = pi.PageId,
+                        PageInstanceId = pi.PageInstanceId,
+                        PageTypeId = p.PageTypeId,
+                        PageUrl = pi.PageUrl,
+                        UrlSegment = pi.PageUrl.ToLowerInvariant(),
+                        UrlSegmentHash = pi.PageUrl.GetHashCode(),
+                        ParentId = p.ParentId,
+                        RootId = p.RootId,
+                        SortOrder = p.SortOrder,
+                        StartPublish = pi.StartPublish,
+                        StopPublish = pi.StopPublish,
+                        PageName = pi.PageName,
+                        CreatedDate = pi.CreatedDate,
+                        UpdateDate = pi.UpdateDate,
+                        VisibleInMenu = pi.VisibleInMenu,
+                        VisibleInSiteMap = pi.VisibleInSitemap,
+                        TreeLevel = p.TreeLevel
+                    };
         }
 
         //TODO: Add language parameters when going multi-language
         internal static Collection<Guid> DeletePage(Guid pageId) {
             var pageIds = PageFactory.GetPageTreeFromPage(pageId, PublishState.All).PageIds;
             pageIds.Add(pageId);
-            
-            DataManager.OpenConnection();
+
+            var context = new DataContext();
 
             try {
                 var deleteTimeStamp = DateTime.Now;
-                var pageCount = pageIds.Count() / 100;
 
-                for (var page = 0; page <= pageCount; page++) {
-                    var pageIdArray = pageIds.Skip(page*100).Take(100).ToArray();
-                    var items = DataManager.Instance.PageInstance.Where(p => pageIdArray.Contains(p.PageId));
-
-                    foreach (PageInstanceEntity item in items) {
-                        item.DeletedDate = deleteTimeStamp;
-                        DataManager.Instance.PageInstance.Update(item);
-                    }
-                }
+                // TODO: Säkerställ att detta funkar mot stora mängder!!
+                context.PageInstances.Where(p => pageIds.Contains(p.PageId)).UpdateAll(p => p.Set(v => v.DeletedDate, v => deleteTimeStamp));
             }
             finally {
-                DataManager.CloseConnection();
+                context.Dispose();
             }
 
             return pageIds;
@@ -108,30 +96,22 @@ namespace KalikoCMS.Data {
             var pages = changedItems.ToDictionary(i => i.PageId);
             var pageIds = pages.Keys;
 
-            DataManager.OpenConnection();
+            var context = new DataContext();
 
             try {
-                var items = DataManager.Instance.Page.Where(p => pageIds.Contains(p.PageId));
+                var items = context.Pages.Where(p => pageIds.Contains(p.PageId));
 
                 foreach (var item in items) {
                     var indexItem = pages[item.PageId];
                     item.TreeLevel = indexItem.TreeLevel;
                     item.ParentId = indexItem.ParentId;
                     item.RootId = indexItem.RootId;
-                    DataManager.Instance.Page.Update(item);
                 }
+                context.SaveChanges();
             }
             finally {
-                DataManager.CloseConnection();
+                context.Dispose();
             }
-        }
-
-        internal static PageEntity GetPageEntity(Guid pageId) {
-            return DataManager.Instance.Page.SingleOrDefault(p => p.PageId == pageId);
-        }
-
-        internal static void UpdatePageEntity(PageEntity pageEntity) {
-            DataManager.Instance.Page.InsertOrUpdate(pageEntity);
         }
     }
 }

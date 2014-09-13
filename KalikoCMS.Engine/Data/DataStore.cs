@@ -20,7 +20,7 @@
 namespace KalikoCMS.Data {
     using System;
     using System.Globalization;
-    using KalikoCMS.Core;
+    using Core;
 
     public abstract class DataStore {
         private readonly string _prefix;

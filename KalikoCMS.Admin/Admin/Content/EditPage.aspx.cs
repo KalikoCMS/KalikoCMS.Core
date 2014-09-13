@@ -21,8 +21,8 @@ namespace KalikoCMS.Admin.Content {
     using System;
     using System.Collections.Generic;
     using System.Web.UI;
+    using Data.Entities;
     using KalikoCMS.Core;
-    using KalikoCMS.Data.EntityProvider;
     using KalikoCMS.Extensions;
     using KalikoCMS.PropertyType;
 

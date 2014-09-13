@@ -19,49 +19,67 @@
 
 namespace KalikoCMS.Data {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using Attributes;
     using Core;
-    using EntityProvider;
+    using Entities;
     using Kaliko;
 
     internal class Synchronizer {
         private static readonly Type PropertyAttributeType = typeof(PropertyAttribute);
 
         public static void SynchronizePageTypes() {
-            var pageTypes = PageTypeData.GetPageTypes();
-            var typesWithAttribute = AttributeReader.GetTypesWithAttribute(typeof(PageTypeAttribute)).ToList();
 
-            foreach (Type type in typesWithAttribute) {
-                var attribute = AttributeReader.GetAttribute<PageTypeAttribute>(type);
+            using (var context = new DataContext()) {
+                var pageTypeEntities = context.PageTypes.ToList();
+                var pageTypes = new List<PageType>();
+                var typesWithAttribute = AttributeReader.GetTypesWithAttribute(typeof(PageTypeAttribute)).ToList();
 
-                var pageType = pageTypes.SingleOrDefault(pt => pt.Name == attribute.Name);
+                foreach (Type type in typesWithAttribute) {
+                    var attribute = AttributeReader.GetAttribute<PageTypeAttribute>(type);
 
-                if (pageType == null) {
-                    pageType = new PageType();
+                    var pageTypeEntity = pageTypeEntities.SingleOrDefault(pt => pt.Name == attribute.Name);
+
+                    if (pageTypeEntity == null) {
+                        pageTypeEntity = new PageTypeEntity();
+                        pageTypeEntities.Add(pageTypeEntity);
+                    }
+
+                    pageTypeEntity.Name = attribute.Name;
+                    pageTypeEntity.DisplayName = attribute.DisplayName;
+                    pageTypeEntity.PageTemplate = attribute.PageTemplate;
+                    pageTypeEntity.PageTypeDescription = attribute.PageTypeDescription;
+
+                    if (pageTypeEntity.PageTypeId == 0) {
+                        context.Add(pageTypeEntity);
+                    }
+                    context.SaveChanges();
+                    
+                    // TODO: Add mapper!
+                    var pageType = new PageType() {
+                        PageTypeId = pageTypeEntity.PageTypeId,
+                        Name = pageTypeEntity.Name,
+                        DisplayName = pageTypeEntity.DisplayName,
+                        PageTemplate = pageTypeEntity.PageTemplate,
+                        PageTypeDescription = pageTypeEntity.PageTypeDescription,
+                        Type = type,
+                        Instance = (CmsPage)Activator.CreateInstance(type)
+                    };
                     pageTypes.Add(pageType);
+
+                    SynchronizeProperties(context, pageType, type);
                 }
 
-                pageType.Name = attribute.Name;
-                pageType.DisplayName = attribute.DisplayName;
-                pageType.PageTemplate = attribute.PageTemplate;
-                pageType.PageTypeDescription = attribute.PageTypeDescription;
-                pageType.Type = type;
-                pageType.Instance = (CmsPage)Activator.CreateInstance(type);
-
-                PageTypeData.Update(pageType);
-
-                SynchronizeProperties(pageType, type);
+                PageType.PageTypes = pageTypes;
             }
-
-            //PageTypeData.BatchUpdate(pageTypes);
-            PageType.PageTypes = pageTypes;
         }
 
 
-        private static void SynchronizeProperties(PageType pageType, Type type) {
-            var properties = PropertyData.GetPropertyDefinitionsForPagetype(pageType.PageTypeId);
+        private static void SynchronizeProperties(DataContext context, PageType pageType, Type type) {
+            // TODO: Load in one go and cache for all pagetypes!
+            var properties = context.Properties.Where(p => p.PageTypeId == pageType.PageTypeId).OrderBy(p => p.SortOrder).ToList(); //PropertyData.GetPropertyDefinitionsForPagetype(pageType.PageTypeId));
             var sortOrder = 0;
 
             foreach (PropertyInfo propertyInfo in type.GetProperties()) {
@@ -102,10 +120,14 @@ namespace KalikoCMS.Data {
                     else {
                         property.Parameters = propertyAttribute.Parameters;
                     }
+
+                    if (property.PropertyId == 0) {
+                        context.Add(property);
+                    }
                 }
             }
 
-            PropertyData.UpdatePropertyDefinitions(properties);
+            context.SaveChanges();
         }
     }
 }

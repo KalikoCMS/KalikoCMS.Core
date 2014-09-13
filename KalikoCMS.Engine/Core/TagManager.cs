@@ -24,6 +24,7 @@ namespace KalikoCMS.Core {
     using System.Linq;
     using Collections;
     using Data;
+    using Data.Entities;
 
     public class TagManager : IStartupSequence {
         private static Dictionary<string, TagContext> _tagContexts;
@@ -39,18 +40,14 @@ namespace KalikoCMS.Core {
         private static Dictionary<string, TagContext> GetTagContexts() {
             var contexts = new Dictionary<string, TagContext>();
 
-            try {
-                var tagContexts = DataManager.SelectAll(DataManager.Instance.TagContext);
-                var tags = DataManager.SelectAll(DataManager.Instance.Tag);
-                var pageTags = DataManager.SelectAll(DataManager.Instance.PageTag);
+            // TODO: Fix so that DbContext isn't opened and closed repeatedly
+            var tagContexts = DataManager.SelectAll<TagContextEntity, TagContext>();
+            var tags = DataManager.SelectAll<TagEntity, Tag>();
+            var pageTags = DataManager.SelectAll<PageTagEntity, PageTag>();
 
-                foreach (var tagContext in tagContexts) {
-                    AddTagsToContext(tagContext, tags, pageTags);
-                    contexts.Add(tagContext.ContextName.ToLowerInvariant(), tagContext);
-                }
-            }
-            finally {
-                DataManager.CloseConnection();
+            foreach (var tagContext in tagContexts) {
+                AddTagsToContext(tagContext, tags, pageTags);
+                contexts.Add(tagContext.ContextName.ToLowerInvariant(), tagContext);
             }
 
             return contexts;
@@ -63,8 +60,8 @@ namespace KalikoCMS.Core {
 
             foreach (var tag in tagsInContext) {
                 var tagId = tag.TagId;
-                var enumerable = pageTags.Where(p => p.TagId == tagId).Select(p => p.PageId);
-                tag.Pages = new Collection<Guid>(enumerable.ToList());
+                var pages = pageTags.Where(p => p.TagId == tagId).Select(p => p.PageId);
+                tag.Pages = new Collection<Guid>(pages.ToList());
                 tagContext.Tags.Add(tag.TagName.ToLowerInvariant(), tag);
             }
         }
@@ -84,12 +81,12 @@ namespace KalikoCMS.Core {
                         TagContextId = tagContextId,
                         TagName = tagName
                     };
-                    DataManager.InsertOrUpdate(DataManager.Instance.Tag, tag, t => t.TagId);
+                    DataManager.InsertOrUpdate(tag);
                     context.Tags.Add(tag.TagName.ToLowerInvariant(), tag);
                 }
 
                 tag.Pages.Add(pageId);
-                DataManager.Instance.PageTag.Insert(new PageTag { PageId = pageId, TagId = tag.TagId });
+                DataManager.Insert(new PageTag { PageId = pageId, TagId = tag.TagId });
             }
         }
 
@@ -109,13 +106,13 @@ namespace KalikoCMS.Core {
 
         private static void RemoveAllTagsForPage(Guid pageId, TagContext context) {
             var tagContextId = context.TagContextId;
-            var tags = DataManager.Select(DataManager.Instance.Tag, t => t.TagContextId == tagContextId);
-
+            var tags = DataManager.Select<TagEntity, Tag>(t => t.TagContextId == tagContextId);
+            
             if (tags.Count == 0) {
                 return;
             }
 
-            DataManager.Delete(DataManager.Instance.PageTag, p => p.PageId == pageId && tags.Any(t => t.TagId == p.TagId));
+            DataManager.Delete<PageTagEntity>(p => p.PageId == pageId && tags.Any(t => t.TagId == p.TagId));
 
             foreach (var tag in context.Tags) {
                 tag.Value.Pages.Remove(pageId);
@@ -123,7 +120,7 @@ namespace KalikoCMS.Core {
         }
 
         private static void RemoveAllTagsForPage(Guid pageId) {
-            DataManager.Delete(DataManager.Instance.PageTag, p => p.PageId == pageId);
+            DataManager.Delete<PageTag>(p => p.PageId == pageId);
 
             foreach (var context in TagContexts.Values) {
                 var tagContextId = context.TagContextId;
@@ -145,7 +142,7 @@ namespace KalikoCMS.Core {
                 ContextName = contextName
             };
             
-            DataManager.InsertOrUpdate(DataManager.Instance.TagContext, context, c => c.TagContextId);
+            DataManager.InsertOrUpdate(context);
 
             TagContexts.Add(context.ContextName.ToLowerInvariant(), context);
 

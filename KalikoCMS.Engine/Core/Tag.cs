@@ -27,6 +27,8 @@ namespace KalikoCMS.Core {
         public int TagContextId { get; set; }
         public Collection<Guid> Pages { get; set; }
 
+        public virtual TagContext TagContext { get; set; }
+
         public Tag() {
             Pages = new Collection<Guid>();
         }

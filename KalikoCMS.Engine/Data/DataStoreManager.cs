@@ -20,7 +20,7 @@
 namespace KalikoCMS.Data {
     using System;
     using Configuration;
-    using KalikoCMS.Core;
+    using Core;
 
     public class DataStoreManager {
         private static readonly Type DataStoreType = GetDataStoreProviderTypeFromConfig();
@@ -38,15 +38,15 @@ namespace KalikoCMS.Data {
         }
 
         private static Type GetDataStoreProviderTypeFromConfig() {
-            string datastoreProvider = SiteSettings.Instance.DataStoreProvider;
+            var datastoreProvider = SiteSettings.Instance.DataStoreProvider;
 
             if (string.IsNullOrEmpty(datastoreProvider)) {
                 return typeof(StandardDataStore);
             }
 
-            Type datastoreProviderType = Type.GetType(datastoreProvider);
+            var datastoreProviderType = Type.GetType(datastoreProvider);
             if (datastoreProviderType == null) {
-                throw new NullReferenceException("Type.GetType(" + datastoreProvider + ") returned null.");
+                throw new NullReferenceException(string.Format("Type.GetType({0}) returned null.", datastoreProvider));
             }
 
             return datastoreProviderType;

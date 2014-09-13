@@ -38,7 +38,7 @@ namespace KalikoCMS.Core {
 
             Hashtable lookupTable = GetLocalizedData();
 
-            if(!lookupTable.Contains(key.ToUpperInvariant())) {
+            if (!lookupTable.Contains(key.ToUpperInvariant())) {
                 Logger.Write(string.Format("Could not locate the text for the key: {0}. The table contained {1} elements", key, lookupTable.Count), Logger.Severity.Minor);
                 return string.Empty;
             }
@@ -48,15 +48,15 @@ namespace KalikoCMS.Core {
 
         private static Hashtable GetLocalizedData() {
             string currentLanguage = CurrentLanguage.ToUpperInvariant();
-            
-            if(TranslationData.Count == 0) {
+
+            if (TranslationData.Count == 0) {
                 Logger.Write("TranslationData was empty, trying to re-read the xml.", Logger.Severity.Info);
                 ReadLanguages();
             }
-            if(TranslationData.Contains(currentLanguage)) {
+            if (TranslationData.Contains(currentLanguage)) {
                 return (Hashtable)TranslationData[currentLanguage];
             }
-            if(TranslationData.Contains(DefaultLanguageValue)) {
+            if (TranslationData.Contains(DefaultLanguageValue)) {
                 return (Hashtable)TranslationData[DefaultLanguageValue];
             }
 
@@ -67,14 +67,14 @@ namespace KalikoCMS.Core {
             // TODO: Make dynamic
             string folder = HttpContext.Current.Server.MapPath("/lang/");
 
-            if(!Directory.Exists(folder)) {
+            if (!Directory.Exists(folder)) {
                 Logger.Write("Could not find the lang xml folder: " + folder, Logger.Severity.Major);
                 return;
             }
 
             string[] xmlFilenames = Directory.GetFiles(folder, "*.xml");
 
-            foreach(string file in xmlFilenames) {
+            foreach (string file in xmlFilenames) {
                 try {
                     ParseXmlFile(file);
                 }

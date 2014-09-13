@@ -39,9 +39,10 @@ namespace KalikoCMS.WebForms.Framework {
             }
         }
 
-        public static string Translate(string key) {
-            return Language.Translate(key);
-        }
+        // TODO: Reimplement
+        //public static string Translate(string key) {
+        //    return Language.Translate(key);
+        //}
 
         private CmsPage GetCurrentPageOrDefault() {
             _pageId = Utils.GetCurrentPageId();

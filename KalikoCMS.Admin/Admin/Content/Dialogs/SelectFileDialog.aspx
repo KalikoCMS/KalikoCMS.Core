@@ -233,7 +233,7 @@
       breadcrumbs.empty();
       $.each(pathArray, function (index, value) {
         newPath += value + "/";
-        breadcrumbs.append('<li><a href="javascript:changePath(\'' + newPath + '\');">' + value + '</a>' + ((index + 1) < pathArray.length ? ' <span class="divider">/</span>' : '') + '</li>');
+        breadcrumbs.append('<li><a href="javascript:changePath(\'' + newPath + '\');">' + value + '</a></li>');
       });
     }
 

@@ -71,6 +71,12 @@ namespace KalikoCMS.WebForms {
             }
 
             var templateUrl = GetUrlForPage(startPageId);
+
+            if (string.IsNullOrEmpty(templateUrl)) {
+                HttpContext.Current.Response.Write("Can't find start page. Please check your siteSettings configuration in web.config.");
+                HttpContext.Current.Response.End();
+            }
+
             RedirectToTemplate(templateUrl);
         }
 

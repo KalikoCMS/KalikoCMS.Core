@@ -21,8 +21,8 @@ namespace KalikoCMS.Core {
     using System.Collections.Generic;
 
     public class TagContext {
-        public int TagContextId { get; set; }
-        public string ContextName { get; set; }
+        public virtual int TagContextId { get; set; }
+        public virtual string ContextName { get; set; }
         public Dictionary<string, Tag> Tags { get; set; }
 
         public TagContext() {

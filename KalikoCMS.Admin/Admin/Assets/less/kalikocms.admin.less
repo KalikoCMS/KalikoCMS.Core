@@ -9,8 +9,8 @@ iframe { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; verti
 
 
 /*#region Modals */
-.modal-body.lock-position { bottom: 58px; left: 0; position: fixed; right: 0; top: 47px; }   
-.modal-body.lock-position #pagetree { height: 100%; overflow: auto; }
+.modal-body.lock-position { left: 0; position: fixed; right: 0; }
+.modal-body.lock-position #pagetree { overflow: auto; }
 .modal-footer.lock-position { position: fixed;left: 0;right: 0;bottom: 0;}
 #modal-popup { overflow: hidden; }
 .modal-toolbar { background: #EEEEEE; border-bottom: 1px solid #E0E0E0; border-top: 1px solid #D8D8D8; margin: -16px -15px 10px; padding: 5px 15px; }
@@ -59,7 +59,7 @@ a.input-group-button [class^="icon-"], a [class*=" icon-"] { display:inline-bloc
 .page-editor h1 i { color:#ffffff; -webkit-text-shadow: 1px 1px 2px rgba(0,0,0,0.3); text-shadow: 1px 1px 2px rgba(0,0,0,0.3); padding-left:4px; }
 .page-editor .form-actions { position: fixed; bottom: 10px; width: 100%; margin: 0; }
 
-#pagetree { position: absolute; top: 40px; left: 0; right: 0; bottom: 0; overflow: auto; }
+#pagetree { position: absolute; top: 0px; left: 0; right: 0; bottom: 0; overflow: auto; padding:15px; }
 .pagetree-controls { margin-left:4px;margin-top:-4px;margin-bottom:4px; }
 
 .sortable-collection { padding-left:0; }
@@ -142,7 +142,6 @@ a.input-group-button [class^="icon-"], a [class*=" icon-"] { display:inline-bloc
 }
 
 #filelist {
-    position: absolute;
     width: 100%;
 }
 

@@ -5366,14 +5366,11 @@ iframe {
 /*#endregion*/
 /*#region Modals */
 .modal-body.lock-position {
-  bottom: 58px;
   left: 0;
   position: fixed;
   right: 0;
-  top: 47px;
 }
 .modal-body.lock-position #pagetree {
-  height: 100%;
   overflow: auto;
 }
 .modal-footer.lock-position {
@@ -5524,11 +5521,12 @@ a [class*=" icon-"] {
 }
 #pagetree {
   position: absolute;
-  top: 40px;
+  top: 0px;
   left: 0;
   right: 0;
   bottom: 0;
   overflow: auto;
+  padding: 15px;
 }
 .pagetree-controls {
   margin-left: 4px;
@@ -5611,7 +5609,6 @@ a [class*=" icon-"] {
   margin-bottom: 0;
 }
 #filelist {
-  position: absolute;
   width: 100%;
 }
 .template-upload .progress {

@@ -19,8 +19,8 @@
 
 namespace KalikoCMS.Data {
     using System;
-    using KalikoCMS.Core;
-    using KalikoCMS.Serialization;
+    using Core;
+    using Serialization;
 
     public class StandardDataStore : DataStore {
         public StandardDataStore(CmsPage page)

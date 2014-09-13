@@ -31,9 +31,10 @@ namespace KalikoCMS.WebForms.Framework {
             return (_currentPage = ((PageTemplate) Page).CurrentPage);
         }
 
-        public static string Translate(string key) {
-            return Language.Translate(key);
-        }
+        // TODO: Reimplement
+        //public static string Translate(string key) {
+        //    return Language.Translate(key);
+        //}
 
     }
 }

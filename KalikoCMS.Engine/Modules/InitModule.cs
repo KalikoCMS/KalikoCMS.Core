@@ -19,8 +19,12 @@
 
 namespace KalikoCMS.Modules {
     using System;
+    using System.Data.Common;
+    using System.Linq;
     using System.Web;
     using Core;
+    using Data;
+    using Data.Entities;
     using Kaliko;
 
     public class InitModule : IHttpModule {
@@ -52,21 +56,42 @@ namespace KalikoCMS.Modules {
                 Logger.Write(exception, Logger.Severity.Critical);
                 throw;
             }
+            finally {
+                _isRunning = false;
+            }
 
             _firstRun = false;
-            _isRunning = false;
         }
 
         private static void RunInitializingSteps() {
+            AutoMapperConfiguration.Configure();
+            KeepDatabaseUpToDate();
             PageType.LoadPageTypes();
             PageFactory.IndexSite();
             RunStartupSequence();
         }
 
+        private static void KeepDatabaseUpToDate() {
+            // TODO: Version database to prevent downgrade + read languages from web.config (i.e. don't hard code 'English')
+            using (var context = new DataContext()) {
+                // Keep schema up to date
+                context.UpdateSchema();
+
+                // Ensure that at least one language is available
+                if (context.SiteLanguages.Count() == 0) {
+                    context.Add(new SiteLanguageEntity {
+                        ShortName = "en",
+                        LongName = "English"
+                    });
+                    context.SaveChanges();
+                }
+            }
+        }
+
         private static void RunStartupSequence() {
             var types = InterfaceReader.GetTypesWithInterface(typeof(IStartupSequence));
             
-            foreach (Type type in types) {
+            foreach (var type in types) {
                 if(type.IsInterface) {
                     continue;
                 }
@@ -79,13 +104,14 @@ namespace KalikoCMS.Modules {
         }
 
         private static void BreakIfAlreadyRunning() {
-            if (_isRunning) {
-                HttpResponse httpResponse = HttpContext.Current.Response;
-
-                httpResponse.StatusCode = 503;
-                httpResponse.Write("Starting up..");
-                httpResponse.End();
+            if (!_isRunning) {
+                return;
             }
+
+            var httpResponse = HttpContext.Current.Response;
+            httpResponse.StatusCode = 503;
+            httpResponse.Write("System is starting up.. Please check back in a few seconds.");
+            httpResponse.End();
         }
 
         public void Dispose() {

@@ -18,16 +18,6 @@
 #endregion
 
 namespace KalikoCMS.Data {
-    using System;
-    using EntityProvider;
-
     internal class PageInstanceData {
-        internal static PageInstanceEntity GetPageInstance(Guid pageId, int languageId) {
-            return DataManager.Single(DataManager.Instance.PageInstance, i => i.PageId == pageId && i.LanguageId == languageId);
-        }
-
-        internal static void UpdatePageInstance(PageInstanceEntity pageInstance) {
-            DataManager.InsertOrUpdate(DataManager.Instance.PageInstance, pageInstance);
-        }
     }
 }

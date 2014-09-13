@@ -18,20 +18,7 @@
 #endregion
 
 namespace KalikoCMS.Data {
-    using System.Collections.Generic;
-    using Core;
 
     internal static class PageTypeData {
-        internal static List<PageType> GetPageTypes() {
-            return DataManager.SelectAll(DataManager.Instance.PageType);
-        }
-
-        internal static void BatchUpdate(IEnumerable<PageType> pageTypes) {
-            DataManager.BatchUpdate(DataManager.Instance.PageType, pageTypes);
-        }
-
-        public static void Update(PageType pageType) {
-            DataManager.InsertOrUpdate(DataManager.Instance.PageType, pageType, p => p.PageTypeId);
-        }
     }
 }

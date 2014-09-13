@@ -32,9 +32,15 @@
             close();
         }
 
+        function fillHeight(selector, bottom) {
+          var element = $(selector);
+          element.css({ position: 'fixed', top: element.offset().top, bottom: $(bottom).outerHeight() });
+        }
 
         $(document).ready(function () {
           initTreeView();
+
+          fillHeight(".modal-body", ".modal-footer");
 
           $('#select-button').click(selectPage);
           $('#deselect-button').click(noPage);

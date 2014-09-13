@@ -21,24 +21,12 @@ namespace KalikoCMS.Data {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Entities;
     using KalikoCMS.Caching;
     using KalikoCMS.Core;
     using KalikoCMS.Core.Collections;
-    using KalikoCMS.Data.EntityProvider;
 
     public static class PropertyData {
-        internal static List<PropertyEntity> GetPropertyDefinitionsForPagetype(int pageTypeId) {
-            return DataManager.Select(DataManager.Instance.Property, p => p.PageTypeId == pageTypeId, p => p.SortOrder);
-        }
-
-        internal static List<PropertyEntity> GetAllPropertyDefinitions() {
-            return DataManager.SelectAll(DataManager.Instance.Property);
-        }
-
-        internal static void UpdatePropertyDefinitions(IEnumerable<PropertyEntity> propertyDefinitions) {
-            DataManager.BatchUpdate(DataManager.Instance.Property, propertyDefinitions, p => p.PropertyId);
-        }
-        
         //TODO: Refactor
         internal static PropertyCollection GetPropertiesForPage(Guid pageId, int languageId, int pageTypeId) {
             string cacheName = GetCacheName(pageId, languageId);
@@ -51,11 +39,11 @@ namespace KalikoCMS.Data {
             }
             else {
                 IQueryable<PropertyItem> properties;
-                DataManager.OpenConnection();
+                var context = new DataContext();
 
                 try {
-                    properties = from p in DataManager.Instance.Property
-                                 join pp in DataManager.Instance.PageProperty on p.PropertyId equals pp.PropertyId into merge
+                    properties = from p in context.Properties
+                                 join pp in context.PageProperties on p.PropertyId equals pp.PropertyId into merge
                                  from prop in merge.Where(pp => pp.PageId == pageId && pp.LanguageId == languageId).DefaultIfEmpty()
                                  where p.PageTypeId == pageTypeId
                                  select
@@ -68,7 +56,7 @@ namespace KalikoCMS.Data {
                                                       };
                 }
                 finally {
-                    DataManager.CloseConnection();
+                    context.Dispose();
                 }
 
                 propertyCollection.Properties = properties.ToList();
@@ -79,14 +67,6 @@ namespace KalikoCMS.Data {
             return propertyCollection;
         }
 
-        internal static List<PagePropertyEntity> GetPagePropertiesForPage(Guid pageId, int languageId) {
-            List<PagePropertyEntity> pagePropertyEntities = DataManager.Select(DataManager.Instance.PageProperty, pp => pp.PageId == pageId && pp.LanguageId == languageId);
-            return pagePropertyEntities;
-        }
-
-        internal static void SavePagePropertiesForPage(List<PagePropertyEntity> pagePropertyEntities) {
-            DataManager.BatchUpdate(DataManager.Instance.PageProperty, pagePropertyEntities);
-        }
 
         internal static void RemovePropertiesFromCache(Guid pageId, int languageId) {
             string cacheName = GetCacheName(pageId, languageId);

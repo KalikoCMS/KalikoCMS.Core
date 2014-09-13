@@ -40,6 +40,7 @@ namespace KalikoCMS.Core {
         internal string UrlSegment { get; set; }
         internal int UrlSegmentHash { get; set; }
         public bool VisibleInMenu { get; set; }
+        public bool VisibleInSiteMap { get; set; }
 
         public bool IsAvailable {
             get {

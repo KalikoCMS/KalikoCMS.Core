@@ -20,303 +20,167 @@
 namespace KalikoCMS.Data {
     using System;
     using System.Collections.Generic;
-    using System.Data;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Reflection;
-    using IQToolkit;
-    using IQToolkit.Data;
-    using Configuration;
+    using AutoMapper;
     using Kaliko;
-    using EntityProvider;
+    using Telerik.OpenAccess;
 
     public static class DataManager {
-        private static readonly DbEntityProvider EntityProvider = GetDbEntityProvider();
-
-        private static DbEntityProvider GetDbEntityProvider() {
-            return DbEntityProvider.From(SiteSettings.Instance.DataProvider,
-                                         SiteSettings.Instance.ConnectionString,
-                                         "KalikoCMS.Data.EntityProvider.ContentDatabaseWithAttributes");
-        }
-
-        public static DbEntityProvider Provider {
-            get { return EntityProvider; }
-        }
-
-        public static ContentDatabase Instance {
-            get { return new ContentDatabase(EntityProvider); }
-        }
-
-        public static void OpenConnection() {
-            if (EntityProvider.Connection.State == ConnectionState.Open) {
-                EntityProvider.Connection.Close();
-            }
-            Provider.Connection.Open();
-        }
-
-        public static void CloseConnection() {
-            EntityProvider.Connection.Close();
-        }
-
-
-        public static void BatchUpdate<T>(IEntityTable<T> entityTable, IEnumerable<T> items) {
-            OpenConnection();
+        public static void BatchUpdate<T>(IEnumerable<T> items) {
+            var context = new DataContext();
 
             try {
                 foreach (var item in items) {
-                    entityTable.InsertOrUpdate(item);
+                    context.AttachCopy(item);
                 }
+                context.SaveChanges();
             }
             catch (Exception e) {
                 Logger.Write(e, Logger.Severity.Major);
                 throw;
             }
             finally {
-                CloseConnection();
+                context.Dispose();
             }
         }
 
-
-        public static void BatchUpdate<T>(IEntityTable<T> entityTable, IEnumerable<T> items, Expression<Func<T, int>> idSelector) {
-            OpenConnection();
+        
+        public static void Insert<T>(T item) {
+            var context = new DataContext();
 
             try {
-                var entityType = typeof(T);
-                var primaryKeyName = GetPrimaryKeyName(entityType);
-
-                foreach (var item in items) {
-                    int identity = entityTable.InsertOrUpdate(item, null, idSelector);
-                    entityType.GetProperty(primaryKeyName).SetValue(item, identity);
-                }
+                context.Add(item);
+                context.SaveChanges();
             }
             catch (Exception e) {
                 Logger.Write(e, Logger.Severity.Major);
                 throw;
             }
             finally {
-                CloseConnection();
+                context.Dispose();
             }
         }
 
 
-        private static string GetPrimaryKeyName(Type entityType) {
-            var mappingEntity = EntityProvider.Mapping.GetEntity(entityType);
-            var primaryKey = EntityProvider.Mapping.GetPrimaryKeyMembers(mappingEntity).SingleOrDefault() as PropertyInfo;
-
-            if (primaryKey == null) {
-                Utils.Throw<Exception>(string.Format("Cannot find primary key for type {0}", entityType.Name), Logger.Severity.Critical);
-            }
-
-            return primaryKey.Name;
-        }
-
-
-        public static T GetById<T>(IEntityTable<T> entityTable, int id) {
-            T item;
-
-            OpenConnection();
+        public static void InsertOrUpdate<T>(T item) {
+            var context = new DataContext();
 
             try {
-                item = entityTable.GetById(id);
+                context.AttachCopy(item);
+                context.SaveChanges();
             }
             catch (Exception e) {
                 Logger.Write(e, Logger.Severity.Major);
                 throw;
             }
             finally {
-                CloseConnection();
+                context.Dispose();
             }
-
-            return item;
         }
 
-
-        public static T GetById<T>(IEntityTable<T> entityTable, Guid id) {
-            T item;
-
-            OpenConnection();
+        
+        public static List<TCast> Select<T,TCast>(Expression<Func<T, bool>> predicate) {
+            var context = new DataContext();
 
             try {
-                item = entityTable.GetById(id);
+                var entities = context.GetAll<T>().Where(predicate).ToList();
+                return Mapper.Map<List<T>, List<TCast>>(entities);
             }
             catch (Exception e) {
                 Logger.Write(e, Logger.Severity.Major);
                 throw;
             }
             finally {
-                CloseConnection();
-            }
-
-            return item;
-        }
-
-
-        public static void Insert<T>(IEntityTable<T> entityTable, T item) {
-            OpenConnection();
-
-            try {
-                entityTable.Insert(item);
-            }
-            catch (Exception e) {
-                Logger.Write(e, Logger.Severity.Major);
-                throw;
-            }
-            finally {
-                CloseConnection();
+                context.Dispose();
             }
         }
 
 
-        public static void InsertOrUpdate<T>(IEntityTable<T> entityTable, T item) {
-            OpenConnection();
+        public static List<TCast> SelectAll<T,TCast>() {
+            var context = new DataContext();
 
             try {
-                entityTable.InsertOrUpdate(item);
+                var entities = context.GetAll<T>().ToList();
+                var mappedEntities = Mapper.Map<List<T>, List<TCast>>(entities);
+                return mappedEntities;
             }
             catch (Exception e) {
                 Logger.Write(e, Logger.Severity.Major);
                 throw;
             }
             finally {
-                CloseConnection();
+                context.Dispose();
             }
         }
 
 
-        public static void InsertOrUpdate<T>(IEntityTable<T> entityTable, T item, Expression<Func<T, int>> idSelector) {
-            OpenConnection();
+        internal static int DeleteAll<T>() {
+            var context = new DataContext();
 
             try {
-                var entityType = typeof(T);
-                var primaryKeyName = GetPrimaryKeyName(entityType);
-                var identity = entityTable.InsertOrUpdate(item, null, idSelector);
-                entityType.GetProperty(primaryKeyName).SetValue(item, identity);
+                var affectedRows = context.GetAll<T>().DeleteAll();
+                return affectedRows;
             }
             catch (Exception e) {
                 Logger.Write(e, Logger.Severity.Major);
                 throw;
             }
             finally {
-                CloseConnection();
+                context.Dispose();
             }
         }
 
-        public static List<T> Select<T>(IEntityTable<T> entityTable, Expression<Func<T, bool>> whereClause) {
-            List<T> items;
 
-            OpenConnection();
+        public static int Delete<T>(Expression<Func<T, bool>> predicate) {
+            var affectedRows = 0;
+            var context = new DataContext();
 
             try {
-                items = entityTable.Where(whereClause).ToList();
+                affectedRows = context.GetAll<T>().Where(predicate).DeleteAll();
             }
             catch (Exception e) {
                 Logger.Write(e, Logger.Severity.Major);
                 throw;
             }
             finally {
-                CloseConnection();
-            }
-
-            return items;
-        }
-
-
-        public static List<T> Select<T, TKey>(IEntityTable<T> entityTable, Expression<Func<T, bool>> whereClause, Expression<Func<T, TKey>> orderBy) {
-            List<T> items;
-
-            OpenConnection();
-
-            try {
-                items = entityTable.Where(whereClause).OrderBy(orderBy).ToList();
-            }
-            catch (Exception e) {
-                Logger.Write(e, Logger.Severity.Major);
-                throw;
-            }
-            finally {
-                CloseConnection();
-            }
-
-            return items;
-        }
-
-
-        public static List<T> SelectAll<T>(IEntityTable<T> entityTable) {
-            List<T> items;
-
-            OpenConnection();
-
-            try {
-                items = entityTable.Select(p => p).ToList();
-            }
-            catch (Exception e) {
-                Logger.Write(e, Logger.Severity.Major);
-                throw;
-            }
-            finally {
-                CloseConnection();
-            }
-
-            return items;
-        }
-
-
-        public static T Single<T>(IEntityTable<T> entityTable, Expression<Func<T, bool>> whereClause) {
-            T item;
-
-            OpenConnection();
-
-            try {
-                item = entityTable.SingleOrDefault(whereClause);
-            }
-            catch (Exception e) {
-                Logger.Write(e, Logger.Severity.Major);
-                throw;
-            }
-            finally {
-                CloseConnection();
-            }
-
-            return item;
-        }
-
-
-        internal static int DeleteAll<T>(IEntityTable<T> entityTable) {
-            int affectedRows;
-
-            OpenConnection();
-
-            try {
-                affectedRows = entityTable.Delete(p => true);
-            }
-            catch (Exception e) {
-                Logger.Write(e, Logger.Severity.Major);
-                throw;
-            }
-            finally {
-                CloseConnection();
+                context.Dispose();
             }
 
             return affectedRows;
         }
 
-        public static int Delete<T>(IEntityTable<T> entityTable, Expression<Func<T, bool>> whereClause) {
-            int affectedRows;
 
-            OpenConnection();
+        public static TCast Single<T, TCast>(Func<T, bool> predicate) {
+            var context = new DataContext();
 
             try {
-                affectedRows = ((IUpdatable<T>)entityTable).Delete(whereClause);
+                var entity = context.GetAll<T>().SingleOrDefault(predicate);
+                return Mapper.Map<T, TCast>(entity);
             }
             catch (Exception e) {
                 Logger.Write(e, Logger.Severity.Major);
                 throw;
             }
             finally {
-                CloseConnection();
+                context.Dispose();
             }
+        }
 
-            return affectedRows;
+
+        public static T Single<T>(Func<T, bool> predicate) {
+            var context = new DataContext();
+
+            try {
+                return context.GetAll<T>().SingleOrDefault(predicate);
+            }
+            catch (Exception e) {
+                Logger.Write(e, Logger.Severity.Major);
+                throw;
+            }
+            finally {
+                context.Dispose();
+            }
         }
     }
 }

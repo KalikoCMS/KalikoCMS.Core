@@ -22,11 +22,15 @@ namespace KalikoCMS.Data {
     using System.Collections.Generic;
     using System.Linq;
     using Attributes;
+    using AutoMapper;
+    using Core;
+    using Entities;
 
     internal static class PropertyTypeData {
-        private static List<Core.PropertyType> _propertyTypes;
+        private static List<PropertyType> _propertyTypes;
 
-        internal static List<Core.PropertyType> GetPropertyTypes() {
+
+        internal static List<PropertyType> GetPropertyTypes() {
             GetPropertyTypesFromDatabase();
             UpdatePropertyTypesFromBinaries();
             UpdatePropertyTypesInDatabase();
@@ -34,14 +38,14 @@ namespace KalikoCMS.Data {
             return _propertyTypes;
         }
 
-        private static void UpdatePropertyTypesFromBinaries() {
-            IEnumerable<Type> typesWithAttribute = AttributeReader.GetTypesWithAttribute(typeof (PropertyTypeAttribute));
 
-            foreach (Type type in typesWithAttribute) {
+        private static void UpdatePropertyTypesFromBinaries() {
+            var typesWithAttribute = AttributeReader.GetTypesWithAttribute(typeof (PropertyTypeAttribute));
+
+            foreach (var type in typesWithAttribute) {
                 var customAttribute = (PropertyTypeAttribute) type.GetCustomAttributes(typeof (PropertyTypeAttribute), false)[0];
                 var proptertyTypeId = new Guid(customAttribute.PropertyTypeId);
-
-                Core.PropertyType propertyType = GetExistingPropertyTypeOrCreateNew(proptertyTypeId);
+                var propertyType = GetExistingPropertyTypeOrCreateNew(proptertyTypeId);
 
                 propertyType.Name = customAttribute.Name;
                 propertyType.EditControl = customAttribute.EditorControl;
@@ -50,11 +54,12 @@ namespace KalikoCMS.Data {
             }
         }
 
-        private static Core.PropertyType GetExistingPropertyTypeOrCreateNew(Guid propertyTypeId) {
-            Core.PropertyType propertyType = _propertyTypes.SingleOrDefault(p => p.PropertyTypeId == propertyTypeId);
 
-            if(propertyType==null) {
-                propertyType = new Core.PropertyType {PropertyTypeId = propertyTypeId};
+        private static PropertyType GetExistingPropertyTypeOrCreateNew(Guid propertyTypeId) {
+            var propertyType = _propertyTypes.SingleOrDefault(p => p.PropertyTypeId == propertyTypeId);
+
+            if (propertyType == null) {
+                propertyType = new PropertyType {PropertyTypeId = propertyTypeId};
                 _propertyTypes.Add(propertyType);
             }
 
@@ -63,12 +68,13 @@ namespace KalikoCMS.Data {
 
 
         private static void GetPropertyTypesFromDatabase() {
-            _propertyTypes = DataManager.SelectAll(DataManager.Instance.PropertyType);
+            _propertyTypes = DataManager.SelectAll<PropertyTypeEntity, PropertyType>();
         }
 
-        
+
         private static void UpdatePropertyTypesInDatabase() {
-            DataManager.BatchUpdate(DataManager.Instance.PropertyType, _propertyTypes);
+            var propertyTypeEntities = Mapper.Map<List<PropertyType>, List<PropertyTypeEntity>>(_propertyTypes);
+            DataManager.BatchUpdate(propertyTypeEntities);
         }
     }
 }

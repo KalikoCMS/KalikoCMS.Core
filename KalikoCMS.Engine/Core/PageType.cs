@@ -21,7 +21,7 @@ namespace KalikoCMS.Core {
     using System;
     using System.Collections.Generic;
     using Data;
-    using Data.EntityProvider;
+    using Data.Entities;
 
     public class PageType {
         public static List<PageType> PageTypes { get; internal set; }
@@ -31,10 +31,10 @@ namespace KalikoCMS.Core {
         public string DisplayName { get; set; }
         public string PageTypeDescription { get; set; }
         public string PageTemplate { get; set; }
-        public bool ShowMetadata { get; set; }
         public bool ShowPublishDates { get; set; }
         public bool ShowSortOrder { get; set; }
         public bool ShowVisibleInMenu { get; set; }
+
         internal Type Type { get; set; }
         internal CmsPage Instance { get; set; }
 
@@ -50,8 +50,10 @@ namespace KalikoCMS.Core {
             Synchronizer.SynchronizePageTypes();
         }
 
+        // TODO: Replace with in memory list
         public static List<PropertyEntity> GetPropertyDefinitions(int pagetypeId) {
-            return Data.PropertyData.GetPropertyDefinitionsForPagetype(pagetypeId);
+            throw new NotImplementedException();
+            //    return Data.PropertyData.GetPropertyDefinitionsForPagetype(pagetypeId);
         }
     }
 }

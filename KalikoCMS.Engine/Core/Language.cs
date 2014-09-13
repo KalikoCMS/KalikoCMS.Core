@@ -23,6 +23,7 @@ namespace KalikoCMS.Core {
     using System.Collections.ObjectModel;
     using System.Web;
     using Configuration;
+    using Data.Entities;
 
     public partial class Language {
         private static readonly List<Language> LanguageList;
@@ -31,7 +32,6 @@ namespace KalikoCMS.Core {
         public int LanguageId { get; set; }
         public string LongName { get; set; }
         public string ShortName { get; set; }
-
 
         static Language() {
             LanguageList = Data.SiteLanguageData.GetLanguages();
@@ -42,7 +42,7 @@ namespace KalikoCMS.Core {
 
             DefaultLanguageValue = ReadDefaultLanguage();
         }
-
+        
 
         public static Collection<Language> Languages {
             get { return new Collection<Language>(LanguageList); }

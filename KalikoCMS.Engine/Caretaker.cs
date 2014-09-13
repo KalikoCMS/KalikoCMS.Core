@@ -19,14 +19,13 @@
 
 namespace KalikoCMS {
     using Data;
+    using Data.Entities;
 
     public class Caretaker {
         public static void EmptyDatabase() {
-            DataManager.DeleteAll(DataManager.Instance.PageProperty);
-            DataManager.DeleteAll(DataManager.Instance.PageInstance);
-            DataManager.DeleteAll(DataManager.Instance.Page);
-            //DataManager.DeleteAll(DataManager.Instance.Property);
-            //DataManager.DeleteAll(DataManager.Instance.DataStore);
+            DataManager.DeleteAll<PagePropertyEntity>();
+            DataManager.DeleteAll<PageInstanceEntity>();
+            DataManager.DeleteAll<PageEntity>();
             
             PageFactory.IndexSite();
         }

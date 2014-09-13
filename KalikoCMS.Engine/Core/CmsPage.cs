@@ -52,6 +52,7 @@ namespace KalikoCMS.Core {
         }
 
         public CmsPage(PageIndexItem pageIndexItem, int languageId) {
+            // TODO: Mapper
             CreatedDate = pageIndexItem.CreatedDate;
             LanguageId = languageId;
             PageId = pageIndexItem.PageId;
@@ -69,6 +70,7 @@ namespace KalikoCMS.Core {
             UpdateDate = pageIndexItem.UpdateDate;
             UrlSegment = pageIndexItem.UrlSegment;
             VisibleInMenu = pageIndexItem.VisibleInMenu;
+            VisibleInSiteMap = pageIndexItem.VisibleInSiteMap;
             //TODO: VisibleInSiteMap
 
             FirstChild = pageIndexItem.FirstChild;
@@ -163,6 +165,7 @@ namespace KalikoCMS.Core {
         }
 
         private static void ShallowCopyPageToProxy(CmsPage src, CmsPage pageProxy) {
+            // TODO: MApper!!!
             pageProxy.PageName = src.PageName;
             pageProxy.CreatedDate = src.CreatedDate;
             pageProxy.DeletedDate = src.DeletedDate;

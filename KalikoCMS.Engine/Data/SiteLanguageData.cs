@@ -19,11 +19,12 @@
 
 namespace KalikoCMS.Data {
     using System.Collections.Generic;
-    using KalikoCMS.Core;
+    using Entities;
+    using Core;
 
     internal static class SiteLanguageData {
         internal static List<Language> GetLanguages() {
-            return DataManager.SelectAll(DataManager.Instance.SiteLanguage);
+            return DataManager.SelectAll<SiteLanguageEntity, Language>();
         }
     }
 }
