@@ -104,6 +104,7 @@
     <Compile Include="Core\IStartupSequence.cs" />
     <Compile Include="Core\PageProxy.cs" />
     <Compile Include="Core\PageTag.cs" />
+    <Compile Include="Core\PropertyDefinition.cs" />
     <Compile Include="Core\Tag.cs" />
     <Compile Include="Core\TagContext.cs" />
     <Compile Include="Core\TagManager.cs" />

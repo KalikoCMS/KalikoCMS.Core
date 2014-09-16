@@ -30,11 +30,11 @@ namespace KalikoCMS.Data.Maps {
             HasProperty(x => x.PropertyId).IsIdentity(KeyGenerator.Autoinc).ToColumn("PropertyId").IsNotNullable();
             HasProperty(x => x.PageTypeId).ToColumn("PageTypeId").IsNotNullable();
             HasProperty(x => x.PropertyTypeId).ToColumn("PropertyTypeId").IsNotNullable();
-            HasProperty(x => x.Name).ToColumn("Name").IsNotNullable().WithVariableLength(50);
-            HasProperty(x => x.Header).ToColumn("Header").IsNotNullable().WithVariableLength(50);
+            HasProperty(x => x.Name).ToColumn("Name").IsNotNullable().IsUnicode().WithVariableLength(50);
+            HasProperty(x => x.Header).ToColumn("Header").IsNotNullable().IsUnicode().WithVariableLength(50);
             HasProperty(x => x.ShowInAdmin).ToColumn("ShowInAdmin").IsNotNullable().HasDefaultValue();
             HasProperty(x => x.SortOrder).ToColumn("SortOrder").IsNullable();
-            HasProperty(x => x.Parameters).ToColumn("Parameters").IsNullable().WithInfiniteLength();
+            HasProperty(x => x.Parameters).ToColumn("Parameters").IsNullable().IsUnicode().WithInfiniteLength();
 
             HasAssociation(x => x.PageType).WithOpposite(x => x.Properties).ToColumn("PageTypeId").HasConstraint((x, y) => x.PageTypeId == y.PageTypeId).IsRequired();
             HasAssociation(x => x.PropertyType).WithOpposite(x => x.Properties).ToColumn("PropertyTypeId").HasConstraint((x, y) => x.PropertyTypeId == y.PropertyTypeId);

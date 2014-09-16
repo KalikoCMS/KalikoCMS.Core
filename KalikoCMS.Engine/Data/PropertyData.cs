@@ -21,20 +21,19 @@ namespace KalikoCMS.Data {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Entities;
-    using KalikoCMS.Caching;
-    using KalikoCMS.Core;
-    using KalikoCMS.Core.Collections;
+    using Caching;
+    using Core;
+    using Core.Collections;
+    using Telerik.OpenAccess.Exceptions;
 
     public static class PropertyData {
-        //TODO: Refactor
         internal static PropertyCollection GetPropertiesForPage(Guid pageId, int languageId, int pageTypeId) {
-            string cacheName = GetCacheName(pageId, languageId);
-            
-            PropertyCollection propertyCollection = new PropertyCollection();
-            List<PropertyItem> propertyItems = CacheManager.Get<List<PropertyItem>>(cacheName);
+            var cacheName = GetCacheName(pageId, languageId);
 
-            if(propertyItems!=null) {
+            var propertyCollection = new PropertyCollection();
+            var propertyItems = CacheManager.Get<List<PropertyItem>>(cacheName);
+
+            if (propertyItems != null) {
                 propertyCollection.Properties = propertyItems;
             }
             else {
@@ -42,24 +41,24 @@ namespace KalikoCMS.Data {
                 var context = new DataContext();
 
                 try {
-                    properties = from p in context.Properties
-                                 join pp in context.PageProperties on p.PropertyId equals pp.PropertyId into merge
-                                 from prop in merge.Where(pp => pp.PageId == pageId && pp.LanguageId == languageId).DefaultIfEmpty()
-                                 where p.PageTypeId == pageTypeId
-                                 select
-                                     new PropertyItem {
-                                                          PagePropertyId = prop.PagePropertyId,
-                                                          PropertyName = p.Name.ToLower(),
-                                                          PropertyData = CreatePropertyData(p.PropertyTypeId, prop.PageData),
-                                                          PropertyId = p.PropertyId,
-                                                          PropertyTypeId = p.PropertyTypeId
-                                                      };
+                    properties =
+                        from p in context.Properties
+                        join pp in context.PageProperties on new { PropertyId = p.PropertyId, PageId = pageId, LanguageId = languageId } equals new { pp.PropertyId, pp.PageId, pp.LanguageId } into merge
+                        from m in merge.DefaultIfEmpty()
+                        where p.PageTypeId == pageTypeId
+                        orderby p.SortOrder
+                        select new PropertyItem {
+                            PagePropertyId = m.PagePropertyId,
+                            PropertyName = p.Name.ToLower(),
+                            PropertyData = CreatePropertyData(p.PropertyTypeId, m.PageData),
+                            PropertyId = p.PropertyId,
+                            PropertyTypeId = p.PropertyTypeId
+                        };
+                    propertyCollection.Properties = properties.ToList();
                 }
                 finally {
                     context.Dispose();
                 }
-
-                propertyCollection.Properties = properties.ToList();
 
                 CacheManager.Add(cacheName, propertyCollection.Properties);
             }

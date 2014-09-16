@@ -24,7 +24,18 @@ namespace KalikoCMS.Data {
 
     internal static class AutoMapperConfiguration {
         internal static void Configure() {
-            Mapper.CreateMap<SiteLanguageEntity, Language>()
+            Mapper.CreateMap<CmsPage, EditablePage>()
+                .ReverseMap();
+
+            Mapper.CreateMap<PageTagEntity, PageTag>()
+                .ReverseMap();
+            
+            Mapper.CreateMap<PageTypeEntity, PageType>()
+                .ReverseMap();
+
+            Mapper.CreateMap<PropertyItem, PropertyItem>();
+
+            Mapper.CreateMap<PropertyEntity, PropertyDefinition>()
                 .ReverseMap();
 
             Mapper.CreateMap<PropertyTypeEntity, PropertyType>()
@@ -44,14 +55,6 @@ namespace KalikoCMS.Data {
                 .ReverseMap()
                 .ForMember(m => m.Pages, o => o.Ignore())
                 .ForMember(m => m.TagContext, o => o.Ignore());
-
-            Mapper.CreateMap<PageTagEntity, PageTag>()
-                .ReverseMap();
-
-            Mapper.CreateMap<CmsPage, EditablePage>()
-                .ReverseMap();
-
-            Mapper.CreateMap<PropertyItem, PropertyItem>();
         }
     }
 }

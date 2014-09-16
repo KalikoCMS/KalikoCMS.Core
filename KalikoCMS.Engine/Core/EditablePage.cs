@@ -19,8 +19,6 @@
 
 namespace KalikoCMS.Core {
     using System;
-    using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using AutoMapper;
     using Configuration;
@@ -108,11 +106,6 @@ namespace KalikoCMS.Core {
             PageInstanceEntity pageInstance;
 
             using (var context = new DataContext()) {
-
-#if DEBUG
-                TextWriter writer = File.CreateText("C:\\temp\\EditablePage_Save.txt");
-                context.Log = writer;
-#endif
                 var pageEntity = context.Pages.SingleOrDefault(p => p.PageId == PageId);
 
                 if (pageEntity == null) {
@@ -179,11 +172,6 @@ namespace KalikoCMS.Core {
                 }
 
                 context.SaveChanges();
-
-#if DEBUG
-                writer.Close();
-                writer.Dispose();
-#endif
             }
 
             // Allow property types to execute code when a property of that type is saved
@@ -198,9 +186,7 @@ namespace KalikoCMS.Core {
                 }
             }
 
-            //TODO: Minska till mindre mängd parametrar
             PageFactory.UpdatePageIndex(pageInstance, ParentId, RootId, TreeLevel, PageTypeId);
-
             Data.PropertyData.RemovePropertiesFromCache(PageId, LanguageId);
             CacheManager.RemoveRelated(ParentId);
 

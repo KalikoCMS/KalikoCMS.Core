@@ -38,7 +38,7 @@ namespace KalikoCMS.Data.Maps {
             HasAssociation(x => x.PageProperties).WithOpposite(x => x.Page).ToColumn("PageId").HasConstraint((y, x) => x.PageId == y.PageId);
             HasAssociation(x => x.PageInstances).WithOpposite(x => x.Page).ToColumn("PageId").HasConstraint((y, x) => x.PageId == y.PageId);
             HasAssociation(x => x.PageType).WithOpposite(x => x.Pages).ToColumn("PageTypeId").HasConstraint((x, y) => x.PageTypeId == y.PageTypeId).IsRequired();
-            HasAssociation(x => x.Tags).WithOpposite(x => x.Pages).MapJoinTable("PageTag", (x, y) => new {x.PageId, y.TagId }).CreatePrimaryKeyFromForeignKeys();
+            HasAssociation(x => x.Tags).WithOpposite(x => x.Pages).MapJoinTable("PageTag", (x, y) => new { x.PageId, y.TagId }).CreatePrimaryKeyFromForeignKeys();
 
             this.HasIndex().WithMember(x => x.PageTypeId).Ascending().WithName("IX_Page_PageTypeId");
         }

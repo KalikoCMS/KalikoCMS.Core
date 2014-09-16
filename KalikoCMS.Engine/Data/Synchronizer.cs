@@ -21,23 +21,27 @@ namespace KalikoCMS.Data {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using Attributes;
+    using AutoMapper;
     using Core;
     using Entities;
     using Kaliko;
+    using Telerik.OpenAccess.FetchOptimization;
 
     internal class Synchronizer {
-        private static readonly Type PropertyAttributeType = typeof(PropertyAttribute);
 
         public static void SynchronizePageTypes() {
-
             using (var context = new DataContext()) {
+                var fetchStrategy = new FetchStrategy {MaxFetchDepth = 1};
+                fetchStrategy.LoadWith<PageTypeEntity>(pt => pt.Properties);
+                fetchStrategy.LoadWith<PropertyEntity>(p => p.PropertyType);
+                context.FetchStrategy = fetchStrategy;
+
                 var pageTypeEntities = context.PageTypes.ToList();
                 var pageTypes = new List<PageType>();
                 var typesWithAttribute = AttributeReader.GetTypesWithAttribute(typeof(PageTypeAttribute)).ToList();
 
-                foreach (Type type in typesWithAttribute) {
+                foreach (var type in typesWithAttribute) {
                     var attribute = AttributeReader.GetAttribute<PageTypeAttribute>(type);
 
                     var pageTypeEntity = pageTypeEntities.SingleOrDefault(pt => pt.Name == attribute.Name);
@@ -57,19 +61,13 @@ namespace KalikoCMS.Data {
                     }
                     context.SaveChanges();
                     
-                    // TODO: Add mapper!
-                    var pageType = new PageType() {
-                        PageTypeId = pageTypeEntity.PageTypeId,
-                        Name = pageTypeEntity.Name,
-                        DisplayName = pageTypeEntity.DisplayName,
-                        PageTemplate = pageTypeEntity.PageTemplate,
-                        PageTypeDescription = pageTypeEntity.PageTypeDescription,
-                        Type = type,
-                        Instance = (CmsPage)Activator.CreateInstance(type)
-                    };
+                    var pageType = Mapper.Map<PageTypeEntity, PageType>(pageTypeEntity);
+                    pageType.Type = type;
+                    pageType.Instance = (CmsPage)Activator.CreateInstance(type);
+
                     pageTypes.Add(pageType);
 
-                    SynchronizeProperties(context, pageType, type);
+                    SynchronizeProperties(context, pageType, type, pageTypeEntity.Properties);
                 }
 
                 PageType.PageTypes = pageTypes;
@@ -77,15 +75,15 @@ namespace KalikoCMS.Data {
         }
 
 
-        private static void SynchronizeProperties(DataContext context, PageType pageType, Type type) {
-            // TODO: Load in one go and cache for all pagetypes!
-            var properties = context.Properties.Where(p => p.PageTypeId == pageType.PageTypeId).OrderBy(p => p.SortOrder).ToList(); //PropertyData.GetPropertyDefinitionsForPagetype(pageType.PageTypeId));
+        private static void SynchronizeProperties(DataContext context, PageType pageType, Type type, IList<PropertyEntity> propertyEntities) {
+            var propertyAttributeType = typeof(PropertyAttribute);
+            var properties = propertyEntities;
             var sortOrder = 0;
 
-            foreach (PropertyInfo propertyInfo in type.GetProperties()) {
+            foreach (var propertyInfo in type.GetProperties()) {
                 var attributes = propertyInfo.GetCustomAttributes(true);
 
-                var propertyAttribute = (PropertyAttribute)attributes.SingleOrDefault(PropertyAttributeType.IsInstanceOfType);
+                var propertyAttribute = (PropertyAttribute)attributes.SingleOrDefault(propertyAttributeType.IsInstanceOfType);
 
                 if (propertyAttribute != null) {
                     var propertyName = propertyInfo.Name;
@@ -124,6 +122,7 @@ namespace KalikoCMS.Data {
                     if (property.PropertyId == 0) {
                         context.Add(property);
                     }
+                    pageType.Properties.Add(Mapper.Map<PropertyEntity, PropertyDefinition>(property));
                 }
             }
 

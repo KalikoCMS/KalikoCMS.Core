@@ -22,8 +22,8 @@ namespace KalikoCMS.Admin.Content {
     using System.Collections.Generic;
     using System.Web.UI;
     using Data.Entities;
-    using KalikoCMS.Core;
-    using KalikoCMS.Extensions;
+    using Core;
+    using Extensions;
     using KalikoCMS.PropertyType;
 
     public partial class EditPage : Page {
@@ -96,9 +96,9 @@ namespace KalikoCMS.Admin.Content {
             PageHeader.Text = "Create new page";
             SetStandardFieldLabels();
 
-            List<PropertyEntity> propertyDefinitions = PageType.GetPropertyDefinitions(_pageTypeId);
+            var propertyDefinitions = PageType.GetPropertyDefinitions(_pageTypeId);
 
-            foreach (PropertyEntity propertyDefinition in propertyDefinitions) {
+            foreach (var propertyDefinition in propertyDefinitions) {
                 AddControl(propertyDefinition.Name, null, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters);
             }
         }
@@ -111,7 +111,7 @@ namespace KalikoCMS.Admin.Content {
         }
 
         private void LoadFormForExistingPage() {
-            CmsPage cmsPage = PageFactory.GetPage(_pageId);
+            var cmsPage = PageFactory.GetPage(_pageId);
 
             _pageName = cmsPage.PageName;
             PageHeader.Text = _pageName;
@@ -125,11 +125,11 @@ namespace KalikoCMS.Admin.Content {
 
             PageId.Text = cmsPage.PageId.ToString();
 
-            List<PropertyEntity> propertyDefinitions = PageType.GetPropertyDefinitions(cmsPage.PageTypeId);
+            var propertyDefinitions = PageType.GetPropertyDefinitions(cmsPage.PageTypeId);
 
-            foreach (PropertyEntity propertyDefinition in propertyDefinitions) {
-                string propertyName = propertyDefinition.Name;
-                PropertyData propertyData = cmsPage.Property[propertyName];
+            foreach (var propertyDefinition in propertyDefinitions) {
+                var propertyName = propertyDefinition.Name;
+                var propertyData = cmsPage.Property[propertyName];
 
                 AddControl(propertyName, propertyData, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters);
             }

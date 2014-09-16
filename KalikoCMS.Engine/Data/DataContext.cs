@@ -22,6 +22,7 @@ namespace KalikoCMS.Data {
     using Core;
     using Entities;
     using Telerik.OpenAccess;
+    using Telerik.OpenAccess.FetchOptimization;
     using Telerik.OpenAccess.Metadata;
 
     public class DataContext : OpenAccessContext {
@@ -30,6 +31,9 @@ namespace KalikoCMS.Data {
         private static readonly BackendConfiguration BackendConfiguration = new BackendConfiguration();
 
         public DataContext() : base(ConnectionStringName, BackendConfiguration, MetadataContainer) {
+            FetchStrategy = new FetchStrategy {
+                MaxFetchDepth = 1
+            };
         }
 
         public IQueryable<PageEntity> Pages {
@@ -44,9 +48,9 @@ namespace KalikoCMS.Data {
             get { return GetAll<PagePropertyEntity>(); }
         }
 
-        //public IQueryable<PageTagEntity> PageTags {
-        //    get { return GetAll<PageTagEntity>(); }
-        //}
+        public IQueryable<PageTagEntity> PageTags {
+            get { return GetAll<PageTagEntity>(); }
+        }
 
         public IQueryable<PageTypeEntity> PageTypes {
             get { return GetAll<PageTypeEntity>(); }

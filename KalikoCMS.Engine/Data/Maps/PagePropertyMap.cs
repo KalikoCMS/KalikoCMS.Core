@@ -31,7 +31,7 @@ namespace KalikoCMS.Data.Maps {
             HasProperty(x => x.PageId).ToColumn("PageId").IsNotNullable();
             HasProperty(x => x.PropertyId).ToColumn("PropertyId").IsNotNullable();
             HasProperty(x => x.LanguageId).ToColumn("LanguageId").IsNotNullable();
-            HasProperty(x => x.PageData).ToColumn("PageData").IsNullable().WithInfiniteLength();
+            HasProperty(x => x.PageData).ToColumn("PageData").IsNullable().IsUnicode().WithInfiniteLength();
             HasProperty(x => x.Version).ToColumn("Version").IsNotNullable().HasDefaultValue();
 
             HasAssociation(x => x.Page).WithOpposite(x => x.PageProperties).ToColumn("PageId").HasConstraint((x, y) => x.PageId == y.PageId).IsRequired();

@@ -22,9 +22,12 @@ namespace KalikoCMS.Core {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using System.Web.Management;
+    using AutoMapper;
     using Collections;
     using Data;
     using Data.Entities;
+    using Telerik.OpenAccess;
 
     public class TagManager : IStartupSequence {
         private static Dictionary<string, TagContext> _tagContexts;
@@ -40,14 +43,19 @@ namespace KalikoCMS.Core {
         private static Dictionary<string, TagContext> GetTagContexts() {
             var contexts = new Dictionary<string, TagContext>();
 
-            // TODO: Fix so that DbContext isn't opened and closed repeatedly
-            var tagContexts = DataManager.SelectAll<TagContextEntity, TagContext>();
-            var tags = DataManager.SelectAll<TagEntity, Tag>();
-            var pageTags = DataManager.SelectAll<PageTagEntity, PageTag>();
+            // TODO: Replace with single query if possible
+            using (var context = new DataContext()) {
+                var tagContexts = Mapper.Map<List<TagContextEntity>, List<TagContext>>(context.TagContexts.ToList());
+                var tags = Mapper.Map<List<TagEntity>, List<Tag>>(context.Tags.ToList());
+                var pageTags = (from t in context.Tags
+                    from p in context.Pages
+                    where t.Pages.Select(x => x.PageId).Contains(p.PageId)
+                    select new PageTag() { PageId = p.PageId, TagId = t.TagId }).ToList();
 
-            foreach (var tagContext in tagContexts) {
-                AddTagsToContext(tagContext, tags, pageTags);
-                contexts.Add(tagContext.ContextName.ToLowerInvariant(), tagContext);
+                foreach (var tagContext in tagContexts) {
+                    AddTagsToContext(tagContext, tags, pageTags);
+                    contexts.Add(tagContext.ContextName.ToLowerInvariant(), tagContext);
+                }
             }
 
             return contexts;
@@ -81,7 +89,8 @@ namespace KalikoCMS.Core {
                         TagContextId = tagContextId,
                         TagName = tagName
                     };
-                    DataManager.InsertOrUpdate(tag);
+                    var tagEntity = Mapper.Map<Tag, TagEntity>(tag);
+                    DataManager.InsertOrUpdate(tagEntity);
                     context.Tags.Add(tag.TagName.ToLowerInvariant(), tag);
                 }
 
@@ -106,13 +115,13 @@ namespace KalikoCMS.Core {
 
         private static void RemoveAllTagsForPage(Guid pageId, TagContext context) {
             var tagContextId = context.TagContextId;
-            var tags = DataManager.Select<TagEntity, Tag>(t => t.TagContextId == tagContextId);
+            var tags = DataManager.Select<TagEntity>(t => t.TagContextId == tagContextId);
             
             if (tags.Count == 0) {
                 return;
             }
 
-            DataManager.Delete<PageTagEntity>(p => p.PageId == pageId && tags.Any(t => t.TagId == p.TagId));
+            DataManager.Delete<PageTagEntity>(p => p.PageId == pageId && tags.Exists(t => t.TagId == p.TagId));
 
             foreach (var tag in context.Tags) {
                 tag.Value.Pages.Remove(pageId);
@@ -120,11 +129,9 @@ namespace KalikoCMS.Core {
         }
 
         private static void RemoveAllTagsForPage(Guid pageId) {
-            DataManager.Delete<PageTag>(p => p.PageId == pageId);
+            DataManager.Delete<PageTagEntity>(p => p.PageId == pageId);
 
             foreach (var context in TagContexts.Values) {
-                var tagContextId = context.TagContextId;
-
                 foreach (var tag in context.Tags) {
                     tag.Value.Pages.Remove(pageId);
                 }

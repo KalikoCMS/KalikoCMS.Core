@@ -21,7 +21,6 @@ namespace KalikoCMS.Core {
     using System;
     using System.Collections.Generic;
     using Data;
-    using Data.Entities;
 
     public class PageType {
         public static List<PageType> PageTypes { get; internal set; }
@@ -37,6 +36,11 @@ namespace KalikoCMS.Core {
 
         internal Type Type { get; set; }
         internal CmsPage Instance { get; set; }
+        internal List<PropertyDefinition> Properties { get; set; }
+
+        public PageType() {
+            Properties = new List<PropertyDefinition>();
+        }
 
         public static PageType GetPageType(int pageTypeId) {
             return PageTypes.Find(pt => pt.PageTypeId == pageTypeId);
@@ -50,10 +54,14 @@ namespace KalikoCMS.Core {
             Synchronizer.SynchronizePageTypes();
         }
 
-        // TODO: Replace with in memory list
-        public static List<PropertyEntity> GetPropertyDefinitions(int pagetypeId) {
-            throw new NotImplementedException();
-            //    return Data.PropertyData.GetPropertyDefinitionsForPagetype(pagetypeId);
+        public static List<PropertyDefinition> GetPropertyDefinitions(int pagetypeId) {
+            var pageType = GetPageType(pagetypeId);
+
+            if (pageType == null) {
+                throw new Exception("Pagetype " + pagetypeId + " was not found!");
+            }
+
+            return pageType.Properties;
         }
     }
 }

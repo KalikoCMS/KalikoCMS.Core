@@ -79,6 +79,22 @@ namespace KalikoCMS.Data {
             }
         }
 
+
+        public static List<T> Select<T>(Expression<Func<T, bool>> predicate) {
+            var context = new DataContext();
+
+            try {
+                return context.GetAll<T>().Where(predicate).ToList();
+            }
+            catch (Exception e) {
+                Logger.Write(e, Logger.Severity.Major);
+                throw;
+            }
+            finally {
+                context.Dispose();
+            }
+        }
+
         
         public static List<TCast> Select<T,TCast>(Expression<Func<T, bool>> predicate) {
             var context = new DataContext();

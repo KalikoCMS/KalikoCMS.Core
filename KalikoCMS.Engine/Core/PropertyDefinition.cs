@@ -17,22 +17,17 @@
  */
 #endregion
 
-namespace KalikoCMS.WebForms.Framework {
-    using KalikoCMS.Core;
+namespace KalikoCMS.Core {
+    using System;
 
-    public class WebControlBase : System.Web.UI.UserControl {
-        private CmsPage _currentPage;
-
-        public CmsPage CurrentPage {
-            get { return _currentPage ?? GetCurrentPage(); }
-        }
-
-        private CmsPage GetCurrentPage() {
-            return (_currentPage = ((PageTemplate) Page).CurrentPage);
-        }
-
-        public static string Translate(string key) {
-            return Language.Translate(key);
-        }
+    public class PropertyDefinition {
+        public int PropertyId { get; set; }
+        public Guid PropertyTypeId { get; set; }
+        public int PageTypeId { get; set; }
+        public string Name { get; set; }
+        public string Header { get; set; }
+        public bool ShowInAdmin { get; set; }
+        public int SortOrder { get; set; }
+        public string Parameters { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace KalikoCMS.Data.Maps {
             MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("TagContext");
 
             HasProperty(x => x.TagContextId).IsIdentity(KeyGenerator.Autoinc).ToColumn("TagContextId").IsNotNullable();
-            HasProperty(x => x.ContextName).ToColumn("ContextName").IsNotNullable().WithVariableLength(50);
+            HasProperty(x => x.ContextName).ToColumn("ContextName").IsNotNullable().IsUnicode().WithVariableLength(50);
 
             HasAssociation(x => x.Tags).WithOpposite(x => x.TagContext).ToColumn("TagContextId").HasConstraint((y, x) => x.TagContextId == y.TagContextId);
 
