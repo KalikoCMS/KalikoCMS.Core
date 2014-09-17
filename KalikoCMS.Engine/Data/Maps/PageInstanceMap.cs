@@ -22,13 +22,15 @@ namespace KalikoCMS.Data.Maps {
     using Telerik.OpenAccess;
     using Telerik.OpenAccess.Metadata;
     using Telerik.OpenAccess.Metadata.Fluent;
+    using Telerik.OpenAccess.Metadata.Fluent.Advanced;
 
     internal class PageInstanceMap : MappingConfiguration<PageInstanceEntity> {
         internal PageInstanceMap() {
             MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("PageInstance");
 
-            HasProperty(x => x.PageId).IsIdentity(KeyGenerator.Guid).ToColumn("PageId").IsNotNullable();
-            HasProperty(x => x.LanguageId).IsIdentity().ToColumn("LanguageId").IsNotNullable();
+            HasProperty(x => x.PageInstanceId).IsIdentity(KeyGenerator.Autoinc).ToColumn("PageInstanceId").IsNotNullable();
+            HasProperty(x => x.PageId).ToColumn("PageId").IsNotNullable();
+            HasProperty(x => x.LanguageId).ToColumn("LanguageId").IsNotNullable();
             HasProperty(x => x.PageName).ToColumn("PageName").IsNotNullable().IsUnicode().WithVariableLength(100);
             HasProperty(x => x.PageUrl).ToColumn("PageUrl").IsNotNullable().WithVariableLength(100);
             HasProperty(x => x.CreatedDate).ToColumn("CreatedDate").IsNullable();
@@ -36,13 +38,14 @@ namespace KalikoCMS.Data.Maps {
             HasProperty(x => x.DeletedDate).ToColumn("DeletedDate").IsNullable();
             HasProperty(x => x.StartPublish).ToColumn("StartPublish").IsNullable();
             HasProperty(x => x.StopPublish).ToColumn("StopPublish").IsNullable();
-            HasProperty(x => x.PageInstanceId).ToColumn("PageInstanceId").IsNotNullable();
             HasProperty(x => x.VisibleInMenu).ToColumn("VisibleInMenu").IsNullable();
             HasProperty(x => x.VisibleInSitemap).ToColumn("VisibleInSitemap").IsNullable();
             HasProperty(x => x.CurrentVersion).ToColumn("CurrentVersion").IsNotNullable().HasDefaultValue();
 
             HasAssociation(x => x.Page).WithOpposite(x => x.PageInstances).ToColumn("PageId").HasConstraint((x, y) => x.PageId == y.PageId).IsRequired();
             HasAssociation(x => x.SiteLanguage).WithOpposite(x => x.PageInstances).ToColumn("LanguageId").HasConstraint((x, y) => x.LanguageId == y.LanguageId).IsRequired();
+
+            this.HasIndex().WithMember(x => x.PageId).Ascending().WithMember(x => x.LanguageId).Ascending().WithName("IX_Page_PageIdLanguageId");
         }
     }
 }

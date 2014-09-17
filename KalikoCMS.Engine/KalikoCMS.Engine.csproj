@@ -121,6 +121,7 @@
     <Compile Include="Data\Maps\PageInstanceMap.cs" />
     <Compile Include="Data\Maps\PageMap.cs" />
     <Compile Include="Data\Maps\PagePropertyMap.cs" />
+    <Compile Include="Data\Maps\PageTagMap.cs" />
     <Compile Include="Data\Maps\PageTypeMap.cs" />
     <Compile Include="Data\Maps\PropertyMap.cs" />
     <Compile Include="Data\Maps\PropertyTypeMap.cs" />

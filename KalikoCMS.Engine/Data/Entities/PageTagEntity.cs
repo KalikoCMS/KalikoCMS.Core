@@ -23,5 +23,8 @@ namespace KalikoCMS.Data.Entities {
     public class PageTagEntity {
         public virtual Guid PageId { get; set; }
         public virtual int TagId { get; set; }
+
+        public virtual PageEntity Page { get; set; }
+        public virtual TagEntity Tag { get; set; }
     }
 }

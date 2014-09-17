@@ -103,7 +103,8 @@ namespace KalikoCMS.Data {
             }
 
             if (string.IsNullOrEmpty(script) == false) {
-                handler.ExecuteDDLScript(script);
+                handler.ForceExecuteDDLScript(script);
+                //handler.ExecuteDDLScript(script);
             }
         }
     }

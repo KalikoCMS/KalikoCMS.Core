@@ -165,6 +165,7 @@ namespace KalikoCMS.Core {
                             PageId = PageId,
                             PropertyId = propertyItem.PropertyId
                         };
+                        context.Add(propertyEntity);
                         pagePropertiesForPage.Add(propertyEntity);
                     }
 

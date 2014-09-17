@@ -32,7 +32,6 @@ namespace KalikoCMS.Data.Maps {
             HasProperty(x => x.TagContextId).ToColumn("TagContextId").IsNotNullable();
 
             HasAssociation(x => x.TagContext).ToColumn("TagContextId").HasConstraint((x, y) => x.TagContextId == y.TagContextId).IsRequired();
-            HasAssociation(x => x.Pages).WithOpposite(x => x.Tags);
         }
     }
 }

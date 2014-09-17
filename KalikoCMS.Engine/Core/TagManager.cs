@@ -47,10 +47,7 @@ namespace KalikoCMS.Core {
             using (var context = new DataContext()) {
                 var tagContexts = Mapper.Map<List<TagContextEntity>, List<TagContext>>(context.TagContexts.ToList());
                 var tags = Mapper.Map<List<TagEntity>, List<Tag>>(context.Tags.ToList());
-                var pageTags = (from t in context.Tags
-                    from p in context.Pages
-                    where t.Pages.Select(x => x.PageId).Contains(p.PageId)
-                    select new PageTag() { PageId = p.PageId, TagId = t.TagId }).ToList();
+                var pageTags = Mapper.Map<List<PageTagEntity>, List<PageTag>>(context.PageTags.ToList());
 
                 foreach (var tagContext in tagContexts) {
                     AddTagsToContext(tagContext, tags, pageTags);
@@ -85,17 +82,17 @@ namespace KalikoCMS.Core {
                 Tag tag;
 
                 if (context.Tags.TryGetValue(tagName.ToLowerInvariant(), out tag) == false) { 
-                    tag = new Tag {
+                    var tagEntity = new TagEntity {
                         TagContextId = tagContextId,
                         TagName = tagName
                     };
-                    var tagEntity = Mapper.Map<Tag, TagEntity>(tag);
-                    DataManager.InsertOrUpdate(tagEntity);
+                    DataManager.Insert(tagEntity);
+                    tag = Mapper.Map<TagEntity, Tag>(tagEntity);
                     context.Tags.Add(tag.TagName.ToLowerInvariant(), tag);
                 }
 
                 tag.Pages.Add(pageId);
-                DataManager.Insert(new PageTag { PageId = pageId, TagId = tag.TagId });
+                DataManager.Insert(new PageTagEntity { PageId = pageId, TagId = tag.TagId });
             }
         }
 
@@ -121,7 +118,7 @@ namespace KalikoCMS.Core {
                 return;
             }
 
-            DataManager.Delete<PageTagEntity>(p => p.PageId == pageId && tags.Exists(t => t.TagId == p.TagId));
+            DataManager.Delete<PageTagEntity>(p => p.PageId == pageId && p.Tag.TagContextId == tagContextId);
 
             foreach (var tag in context.Tags) {
                 tag.Value.Pages.Remove(pageId);
@@ -145,11 +142,13 @@ namespace KalikoCMS.Core {
                 return context;
             }
             
-            context = new TagContext {
+            var contextEntity = new TagContextEntity {
                 ContextName = contextName
             };
             
-            DataManager.InsertOrUpdate(context);
+            DataManager.Insert(contextEntity);
+
+            context = Mapper.Map<TagContextEntity, TagContext>(contextEntity);
 
             TagContexts.Add(context.ContextName.ToLowerInvariant(), context);
 

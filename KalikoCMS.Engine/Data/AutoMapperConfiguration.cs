@@ -53,7 +53,7 @@ namespace KalikoCMS.Data {
                 .ForMember(m => m.Pages, o => o.Ignore())
                 .ForMember(m => m.TagContext, o => o.Ignore())
                 .ReverseMap()
-                .ForMember(m => m.Pages, o => o.Ignore())
+                .ForMember(m => m.PageTags, o => o.Ignore())
                 .ForMember(m => m.TagContext, o => o.Ignore());
         }
     }

@@ -30,14 +30,14 @@ namespace KalikoCMS.Data.Entities {
         public virtual int SortOrder { get; set; }
         public virtual PageTypeEntity PageType { get; set; }
 
-        public virtual IList<TagEntity> Tags { get; private set; }
+        public virtual IList<PageTagEntity> PageTags { get; private set; }
         public virtual IList<PagePropertyEntity> PageProperties { get; private set; }
         public virtual IList<PageInstanceEntity> PageInstances { get; private set; }
 
         public PageEntity() {
             PageInstances = new List<PageInstanceEntity>();
             PageProperties = new List<PagePropertyEntity>();
-            Tags = new List<TagEntity>();
+            PageTags = new List<PageTagEntity>();
         }
     }
 }

@@ -25,10 +25,10 @@ namespace KalikoCMS.Data.Entities {
         public virtual string TagName { get; set; }
         public virtual int TagContextId { get; set; }
         public virtual TagContextEntity TagContext { get; set; }
-        public virtual IList<PageEntity> Pages { get; private set; }
+        public virtual IList<PageTagEntity> PageTags { get; private set; }
 
         public TagEntity() {
-            Pages = new List<PageEntity>();
+            PageTags = new List<PageTagEntity>();
         }
 
     }
