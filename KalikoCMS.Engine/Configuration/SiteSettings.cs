@@ -28,8 +28,6 @@ namespace KalikoCMS.Configuration {
         private string _datastoreProvider;
         private string _datastorePath;
         private string _searchProvider;
-        //private string _dataProvider;
-        //private string _connectionString;
         private string _dateFormat;
         private string _filePath;
         private string _imageCachePath;
@@ -56,18 +54,6 @@ namespace KalikoCMS.Configuration {
         public string CacheProvider {
             get { return _cacheProvider ?? (_cacheProvider = (string)base["cacheProvider"]); }
         }
-
-
-        //[ConfigurationProperty("connectionString", IsRequired = true)]
-        //public string ConnectionString {
-        //    get { return _connectionString ?? (_connectionString = (string)base["connectionString"]); }
-        //}
-
-
-        //[ConfigurationProperty("dataProvider", IsRequired = true)]
-        //public string DataProvider {
-        //    get { return _dataProvider ??( _dataProvider = (string)base["dataProvider"]); }
-        //}
 
 
         [ConfigurationProperty("datastoreProvider", IsRequired = false)]

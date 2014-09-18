@@ -19,14 +19,15 @@
 
 namespace KalikoCMS.Data {
     using System.Linq;
-    using Core;
     using Entities;
     using Telerik.OpenAccess;
+    using Telerik.OpenAccess.Diagnostics;
     using Telerik.OpenAccess.FetchOptimization;
     using Telerik.OpenAccess.Metadata;
 
     public class DataContext : OpenAccessContext {
         private const string ConnectionStringName = "KalikoCMS";
+        private const int DatabaseVersion = 1;
         private static readonly MetadataContainer MetadataContainer = new DataMetadataSource().GetModel();
         private static readonly BackendConfiguration BackendConfiguration = new BackendConfiguration();
 
@@ -60,12 +61,16 @@ namespace KalikoCMS.Data {
             get { return GetAll<PropertyEntity>(); }
         }
 
-        public IQueryable<PropertyType> PropertyTypes {
-            get { return GetAll<PropertyType>(); }
+        public IQueryable<PropertyTypeEntity> PropertyTypes {
+            get { return GetAll<PropertyTypeEntity>(); }
         }
 
-        public IQueryable<SiteLanguageEntity > SiteLanguages {
-            get { return GetAll<SiteLanguageEntity >(); }
+        public IQueryable<SiteLanguageEntity> SiteLanguages {
+            get { return GetAll<SiteLanguageEntity>(); }
+        }
+
+        public IQueryable<SystemInfoEntity> SystemInfo {
+            get { return GetAll<SystemInfoEntity>(); }
         }
 
         public IQueryable<TagEntity> Tags {
@@ -80,32 +85,51 @@ namespace KalikoCMS.Data {
             get { return GetAll<KeyValuePair>(); }
         }
 
-
         public void UpdateSchema() {
-            var handler = GetSchemaHandler();
-            string script = null;
+            var schemaHandler = GetSchemaHandler();
+            string script;
 
+            if (schemaHandler.DatabaseExists()) {
+                int currentVersion = GetCurrentVersion();
+                if (currentVersion >= DatabaseVersion) {
+                    return;
+                }
+                script = schemaHandler.CreateUpdateDDLScript(null);
+            }
+            else {
+                schemaHandler.CreateDatabase();
+                script = schemaHandler.CreateDDLScript();
+            }
+
+
+            if (string.IsNullOrEmpty(script)) {
+                return;
+            }
+
+            schemaHandler.ForceExecuteDDLScript(script);
+            SetDatabaseVersion();
+        }
+
+        private void SetDatabaseVersion() {
+            var systemInfo = SystemInfo.FirstOrDefault() ?? new SystemInfoEntity();
+            systemInfo.DatabaseVersion = DatabaseVersion;
+            AttachCopy(systemInfo);
+            SaveChanges();
+        }
+
+        private int GetCurrentVersion() {
             try {
-                script = handler.CreateUpdateDDLScript(null);
+                var systemInfo = SystemInfo.FirstOrDefault();
+                if (systemInfo == null) {
+                    return 0;
+                }
+                return systemInfo.DatabaseVersion;
             }
             catch {
-                bool throwException = false;
-                try {
-                    handler.CreateDatabase();
-                    script = handler.CreateDDLScript();
-                }
-                catch {
-                    throwException = true;
-                }
-
-                if (throwException)
-                    throw;
-            }
-
-            if (string.IsNullOrEmpty(script) == false) {
-                handler.ForceExecuteDDLScript(script);
-                //handler.ExecuteDDLScript(script);
+                return 0;
             }
         }
+
+        
     }
 }

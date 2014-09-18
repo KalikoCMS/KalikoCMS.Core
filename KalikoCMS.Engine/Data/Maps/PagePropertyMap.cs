@@ -24,7 +24,7 @@ namespace KalikoCMS.Data.Maps {
     using Telerik.OpenAccess.Metadata.Fluent;
 
     internal class PagePropertyMap : MappingConfiguration<PagePropertyEntity> {
-        public PagePropertyMap() {
+        internal PagePropertyMap() {
             MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("PageProperty");
 
             HasProperty(x => x.PagePropertyId).IsIdentity(KeyGenerator.Autoinc).ToColumn("PagePropertyId").IsNotNullable();

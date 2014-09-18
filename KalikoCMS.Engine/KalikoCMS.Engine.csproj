@@ -115,6 +115,7 @@
     <Compile Include="Data\Entities\SiteLanguageEntity.cs" />
     <Compile Include="Data\Entities\PageTagEntity.cs" />
     <Compile Include="Data\Entities\PageTypeEntity.cs" />
+    <Compile Include="Data\Entities\SystemInfoEntity.cs" />
     <Compile Include="Data\Entities\TagContextEntity.cs" />
     <Compile Include="Data\Entities\TagEntity.cs" />
     <Compile Include="Data\Maps\DataStoreMap.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Data\Maps\PropertyMap.cs" />
     <Compile Include="Data\Maps\PropertyTypeMap.cs" />
     <Compile Include="Data\Maps\SiteLanguageMap.cs" />
+    <Compile Include="Data\Maps\SystemInfoMap.cs" />
     <Compile Include="Data\Maps\TagContextMap.cs" />
     <Compile Include="Data\Maps\TagMap.cs" />
     <Compile Include="Data\Synchronizer.cs" />

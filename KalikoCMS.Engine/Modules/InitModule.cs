@@ -64,21 +64,21 @@ namespace KalikoCMS.Modules {
         }
 
         private static void RunInitializingSteps() {
-            AutoMapperConfiguration.Configure();
             KeepDatabaseUpToDate();
+            AutoMapperConfiguration.Configure();
             PageType.LoadPageTypes();
             PageFactory.IndexSite();
             RunStartupSequence();
         }
 
         private static void KeepDatabaseUpToDate() {
-            // TODO: Version database to prevent downgrade + read languages from web.config (i.e. don't hard code 'English')
             using (var context = new DataContext()) {
                 // Keep schema up to date
                 context.UpdateSchema();
 
+                // TODO: Read languages from web.config (i.e. don't hard code 'English')
                 // Ensure that at least one language is available
-                if (context.SiteLanguages.Count() == 0) {
+                if (!context.SiteLanguages.Any()) {
                     context.Add(new SiteLanguageEntity {
                         ShortName = "en",
                         LongName = "English"
