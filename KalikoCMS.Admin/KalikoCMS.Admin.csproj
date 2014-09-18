@@ -159,12 +159,6 @@
     <Content Include="Admin\Assets\themes\default\default.min.css">
       <DependentUpon>default.css</DependentUpon>
     </Content>
-    <Content Include="Admin\Assets\themes\default\variables.css">
-      <DependentUpon>variables.less</DependentUpon>
-    </Content>
-    <Content Include="Admin\Assets\themes\default\variables.min.css">
-      <DependentUpon>variables.less</DependentUpon>
-    </Content>
     <Content Include="Admin\Content\Dialogs\EditImageDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectFileDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectLinkDialog.aspx" />
@@ -210,9 +204,6 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Admin\Assets\themes\default\variables.css.map">
-      <DependentUpon>variables.css</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
   </ItemGroup>
