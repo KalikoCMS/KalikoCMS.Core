@@ -24,8 +24,8 @@ namespace KalikoCMS.Data.Maps {
     internal class DataStoreMap : MappingConfiguration<KeyValuePair> {
         internal DataStoreMap() {
             MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("DataStore");
-            HasProperty(x => x.KeyName).IsIdentity().ToColumn("KeyName").IsNotNullable().WithVariableLength(255);
-            HasProperty(x => x.Value).ToColumn("Value").IsNullable().WithInfiniteLength();
+            HasProperty(x => x.KeyName).IsIdentity().ToColumn("KeyName").IsUnicode().IsNotNullable().WithVariableLength(256);
+            HasProperty(x => x.Value).ToColumn("Value").IsUnicode().IsNullable().WithInfiniteLength();
         }
     }
 }

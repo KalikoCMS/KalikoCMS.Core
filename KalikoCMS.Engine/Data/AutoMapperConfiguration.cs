@@ -25,6 +25,10 @@ namespace KalikoCMS.Data {
     internal static class AutoMapperConfiguration {
         internal static void Configure() {
             Mapper.CreateMap<CmsPage, EditablePage>()
+                .ForMember(m => m.PageInstanceId, o => o.MapFrom(m => m.PageInstanceId))
+                .ForMember(m => m.FirstChild, o => o.MapFrom(m => m.FirstChild))
+                .ForMember(m => m.NextPage, o => o.MapFrom(m => m.NextPage))
+                .ForMember(m => m.UrlSegment, o => o.MapFrom(m => m.UrlSegment))
                 .ReverseMap();
 
             Mapper.CreateMap<PageTagEntity, PageTag>()

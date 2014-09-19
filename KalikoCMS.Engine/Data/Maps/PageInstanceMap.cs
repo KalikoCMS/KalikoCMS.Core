@@ -33,7 +33,7 @@ namespace KalikoCMS.Data.Maps {
             HasProperty(x => x.LanguageId).ToColumn("LanguageId").IsNotNullable();
             HasProperty(x => x.PageName).ToColumn("PageName").IsNotNullable().IsUnicode().WithVariableLength(100);
             HasProperty(x => x.PageUrl).ToColumn("PageUrl").IsNotNullable().WithVariableLength(100);
-            HasProperty(x => x.CreatedDate).ToColumn("CreatedDate").IsNullable();
+            HasProperty(x => x.CreatedDate).ToColumn("CreatedDate").WithOpenAccessType(OpenAccessType.DateTime).IsNullable();
             HasProperty(x => x.UpdateDate).ToColumn("UpdateDate").IsNullable();
             HasProperty(x => x.DeletedDate).ToColumn("DeletedDate").IsNullable();
             HasProperty(x => x.StartPublish).ToColumn("StartPublish").IsNullable();
