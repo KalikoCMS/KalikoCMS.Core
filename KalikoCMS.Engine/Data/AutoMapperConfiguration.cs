@@ -29,6 +29,12 @@ namespace KalikoCMS.Data {
                 .ForMember(m => m.FirstChild, o => o.MapFrom(m => m.FirstChild))
                 .ForMember(m => m.NextPage, o => o.MapFrom(m => m.NextPage))
                 .ForMember(m => m.UrlSegment, o => o.MapFrom(m => m.UrlSegment))
+                .ForMember(m => m.Children, o => o.Ignore())
+                .ForMember(m => m.HasChildren, o => o.Ignore())
+                .ForMember(m => m.IsAvailable, o => o.Ignore())
+                .ForMember(m => m.Parent, o => o.Ignore())
+                .ForMember(m => m.ShortUrl, o => o.Ignore())
+                .ForMember(m => m.ParentPath, o => o.Ignore())
                 .ReverseMap();
 
             Mapper.CreateMap<PageTagEntity, PageTag>()
@@ -43,6 +49,8 @@ namespace KalikoCMS.Data {
                 .ReverseMap();
 
             Mapper.CreateMap<PropertyTypeEntity, PropertyType>()
+                .ForMember(m => m.ClassInstance, o => o.Ignore())
+                .ForMember(m => m.Type, o => o.Ignore())
                 .ReverseMap();
 
             Mapper.CreateMap<SiteLanguageEntity, Language>()
@@ -59,6 +67,8 @@ namespace KalikoCMS.Data {
                 .ReverseMap()
                 .ForMember(m => m.PageTags, o => o.Ignore())
                 .ForMember(m => m.TagContext, o => o.Ignore());
+
+            Mapper.AssertConfigurationIsValid();
         }
     }
 }
