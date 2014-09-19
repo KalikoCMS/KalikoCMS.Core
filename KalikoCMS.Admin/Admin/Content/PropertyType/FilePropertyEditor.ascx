@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="FilePropertyEditor.ascx.cs" Inherits="KalikoCMS.Admin.Content.PropertyType.FilePropertyEditor" %>
 
 <div class="form-group">
-    <asp:Label AssociatedControlID="FilePath" runat="server" ID="LabelText" CssClass="control-label col-xs-2" />
+    <asp:Label AssociatedControlID="FilePath" runat="server" ID="LabelText" Text="File" CssClass="control-label col-xs-2" />
     <div class="controls  col-xs-6">
         <div class="input-group">
             <asp:HiddenField ID="FilePath" runat="server" />

@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LinkPropertyEditor.ascx.cs" Inherits="KalikoCMS.Admin.Content.PropertyType.LinkPropertyEditor" %>
 
 <div class="form-group">
-    <asp:Label AssociatedControlID="DisplayField" runat="server" ID="LabelText" CssClass="control-label col-xs-2" />
+    <asp:Label AssociatedControlID="DisplayField" runat="server" ID="LabelText" Text="Link" CssClass="control-label col-xs-2" />
     <div class="controls col-xs-6">
         <asp:HiddenField runat="server" ID="Url" />
         <asp:HiddenField runat="server" ID="Type" />

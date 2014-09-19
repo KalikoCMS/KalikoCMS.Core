@@ -1,8 +1,10 @@
 ﻿<%@ Page Title="Edit item" Language="C#" AutoEventWireup="true" MasterPageFile="Dialog.Master" CodeBehind="EditCollectionPropertyDialog.aspx.cs" Inherits="KalikoCMS.Admin.Content.Dialogs.EditCollectionPropertyDialog" %>
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="MainArea" runat="server">
+  <div class="form-horizontal">
   <asp:PlaceHolder runat="server" ID="PropertyEditor" />
   <asp:Literal runat="server" ID="PostbackResult" />  
+  </div>
 </asp:Content>
 
 

@@ -40,7 +40,7 @@
 
 (function (dialogs) {
     dialogs.openEditCollectionPropertyDialog = function(className, value) {
-        parent.openModal('Content/Dialogs/EditCollectionPropertyDialog.aspx?propertyType=' + className + '&value=' + escape(value), 500, 400);
+        parent.openModal('Content/Dialogs/EditCollectionPropertyDialog.aspx?propertyType=' + className + '&value=' + escape(value), 780, 460);
         return false;
     };
 })(top.propertyEditor.dialogs || (top.propertyEditor.dialogs = {}));

@@ -5528,6 +5528,10 @@ a [class*=" icon-"] {
   overflow: auto;
   padding: 15px;
 }
+.sidebar-nav #pagetree {
+  top: 40px;
+  padding: 0;
+}
 .pagetree-controls {
   margin-left: 4px;
   margin-top: -4px;
