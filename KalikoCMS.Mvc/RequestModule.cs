@@ -41,11 +41,17 @@ namespace KalikoCMS.Mvc {
             var startPageId = Configuration.SiteSettings.Instance.StartPageId;
 
             if (startPageId == Guid.Empty) {
-                HttpContext.Current.Response.Write("Start page hasn't yet been configured in web.config.");
-                HttpContext.Current.Response.End();
+                Utils.RenderSimplePage(HttpContext.Current.Response, "Set a start page", "Start page hasn't yet been configured in web.config.");
+                return;
             }
 
             var page = PageFactory.GetPage(startPageId);
+
+            if (page == null) {
+                Utils.RenderSimplePage(HttpContext.Current.Response, "Can't find start page", "Please check your siteSettings configuration in web.config.");
+                return;
+            }
+
             RedirectToController(page);
         }
 
@@ -67,8 +73,7 @@ namespace KalikoCMS.Mvc {
 
         private static Type GetControllerType(CmsPage page) {
             if (_controllerList.All(c => c.Key != page.PageTypeId)) {
-                var exception =
-                    new Exception(string.Format("No controller is registered for pagetype of page '{0}'", page.PageName));
+                var exception = new Exception(string.Format("No controller is registered for pagetype of page '{0}'", page.PageName));
                 Logger.Write(exception, Logger.Severity.Critical);
                 throw exception;
             }

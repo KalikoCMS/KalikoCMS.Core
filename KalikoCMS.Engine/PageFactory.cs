@@ -20,7 +20,6 @@
 namespace KalikoCMS {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Web;
     using Data.Entities;
     using Kaliko;
@@ -57,12 +56,12 @@ namespace KalikoCMS {
             }
 
             var segments = GetUrlSegments(pageUrl);
-            int position = 0;
+            var position = 0;
             var lastPage = new PageIndexItem();
 
-            for (int i = 0; i < segments.Length; i++) {
+            for (var i = 0; i < segments.Length; i++) {
                 var segment = segments[i];
-                int segmentHash = segment.GetHashCode();
+                var segmentHash = segment.GetHashCode();
 
                 while (true) {
                     var page = pageIndex.Items[position];
@@ -108,26 +107,25 @@ namespace KalikoCMS {
             return false;
         }
 
-        // TODO: Replace this method
         public static Guid GetPageIdFromUrl(string url) {
             if (_pageLanguageIndex == null)
                 IndexSite();
 
-            PageIndex pageIndex = GetPageIndex(Language.CurrentLanguageId);
+            var pageIndex = GetPageIndex(Language.CurrentLanguageId);
 
             if (pageIndex.Items.Count == 0) {
                 return Guid.Empty;
             }
 
             var segments = GetUrlSegments(url);
-            int position = 0;
+            var position = 0;
 
-            for (int i = 0; i < segments.Length; i++) {
+            for (var i = 0; i < segments.Length; i++) {
                 var segment = segments[i];
-                int segmentHash = segment.GetHashCode();
+                var segmentHash = segment.GetHashCode();
 
                 while (true) {
-                    PageIndexItem page = pageIndex.Items[position];
+                    var page = pageIndex.Items[position];
                     if ((page.UrlSegmentHash == segmentHash) && (page.UrlSegment == segment)) {
                         if (i == segments.Length - 1) {
                             return page.PageId;
@@ -182,14 +180,13 @@ namespace KalikoCMS {
 
 
         public static PageCollection GetChildrenForPage(Guid pageId, PublishState pageState = PublishState.Published) {
-            PageIndex pageIndex = CurrentIndex;
+            var pageIndex = CurrentIndex;
 
             if (pageId == Guid.Empty) {
                 return pageIndex.GetRootChildren(pageState);
             }
-            else {
-                return pageIndex.GetChildren(pageId, pageState);
-            }
+            
+            return pageIndex.GetChildren(pageId, pageState);
         }
 
 
@@ -202,14 +199,13 @@ namespace KalikoCMS {
             if (pageId == Guid.Empty) {
                 return CurrentIndex.GetRootChildren(pageTypeId, pageState);
             }
-            else {
-                return CurrentIndex.GetChildren(pageId, pageTypeId, pageState);
-            }
+            
+            return CurrentIndex.GetChildren(pageId, pageTypeId, pageState);
         }
 
 
         public static PageCollection GetChildrenForPageOfPageType(Guid pageId, Type pageType, PublishState pageState = PublishState.Published) {
-            PageType pageTypeItem = PageType.GetPageType(pageType);
+            var pageTypeItem = PageType.GetPageType(pageType);
 
             return GetChildrenForPageOfPageType(pageId, pageTypeItem.PageTypeId, pageState);
         }
@@ -225,7 +221,7 @@ namespace KalikoCMS {
                 return new RootPage(languageId);
             }
 
-            PageIndexItem pageIndexItem = GetPageIndexItem(pageId, languageId);
+            var pageIndexItem = GetPageIndexItem(pageId, languageId);
 
             if (pageIndexItem == null) {
                 return null;
@@ -241,7 +237,7 @@ namespace KalikoCMS {
 
 
         public static T GetPage<T>(Guid pageId, int languageId) where T : CmsPage {
-            CmsPage page = GetPage(pageId, Language.CurrentLanguageId);
+            var page = GetPage(pageId, Language.CurrentLanguageId);
             return page.ConvertToTypedPage<T>();
         }
 
@@ -287,11 +283,6 @@ namespace KalikoCMS {
         public static PageCollection GetPageTreeFromPage(Guid pageId, Predicate<PageIndexItem> match) {
             return CurrentIndex.GetPageTreeFromPage(pageId, match);
         }
-
-        // TODO: Finish implementation, build predicate out of pagetypes
-/*        public static PageCollection GetPageTreeFromPageOfPageType(Guid pageLink, Type[] type, PublishState pageState) {
-            return CurrentIndex.GetPageTreeByCriteria()
-        }*/
         
         
         public static PageCollection GetPageTreeFromPage(Guid rootPageId, Guid leafPageId, PublishState pageState) {
@@ -304,7 +295,7 @@ namespace KalikoCMS {
                 _indexing = true;
 
                 try {
-                    // TODO: Släpp tag-cachen
+                    TagManager.ClearCache();
 
                     if (_pageLanguageIndex != null) {
                         _pageLanguageIndex.Clear();
@@ -312,9 +303,9 @@ namespace KalikoCMS {
 
                     _pageLanguageIndex = new List<PageIndex>();
 
-                    Collection<Language> languages = Language.Languages;
+                    var languages = Language.Languages;
 
-                    foreach (Language language in languages) {
+                    foreach (var language in languages) {
                         IndexSite(language.LanguageId);
                     }
                 }
@@ -329,13 +320,7 @@ namespace KalikoCMS {
             else {
                 // TODO: Fin sida med felmeddelande här kanske..? :)
                 HttpContext.Current.Response.Clear();
-                HttpContext.Current.Response.Write("Indexing.. Please check back in 10 seconds..");
-                try {
-                    HttpContext.Current.Response.End();
-                }
-                catch (System.Threading.ThreadAbortException) {
-                    // No problem
-                }
+                Utils.RenderSimplePage(HttpContext.Current.Response, "Reindexing the site..", "Please check back in 10 seconds..");
             }
         }
 
@@ -357,8 +342,8 @@ namespace KalikoCMS {
             if (_pageLanguageIndex == null)
                 IndexSite();
 
-            PageIndex pageIndex = GetPageIndex(pageInstance.LanguageId);
-            PageIndexItem page = pageIndex.GetPageIndexItem(pageInstance.PageId);
+            var pageIndex = GetPageIndex(pageInstance.LanguageId);
+            var page = pageIndex.GetPageIndexItem(pageInstance.PageId);
 
             if (page != null) {
                 page.PageName = pageInstance.PageName;
@@ -366,7 +351,7 @@ namespace KalikoCMS {
                 page.StartPublish = pageInstance.StartPublish;
                 page.StopPublish = pageInstance.StopPublish;
                 page.VisibleInMenu = pageInstance.VisibleInMenu;
-                // TODO: VisibleInSitemap
+                page.VisibleInSiteMap = pageInstance.VisibleInSitemap;
                 pageIndex.SavePageIndexItem(page);
             }
             else {
@@ -384,7 +369,7 @@ namespace KalikoCMS {
                                              StartPublish = pageInstance.StartPublish,
                                              StopPublish = pageInstance.StopPublish,
                                              VisibleInMenu = pageInstance.VisibleInMenu,
-                                             // TODO: VisibleInSitemap
+                                             VisibleInSiteMap = pageInstance.VisibleInSitemap,
                                              UpdateDate = pageInstance.UpdateDate,
                                              UrlSegment = pageInstance.PageUrl
                                          };
@@ -397,9 +382,9 @@ namespace KalikoCMS {
 
 
         private static string BuildPageUrl(PageInstanceEntity pageInstance, Guid parentId) {
-            CmsPage parent = GetPage(parentId);
-            string parentUrl = parent.PageUrl.ToString();
-            string url = string.Format("{0}{1}/", parentUrl, pageInstance.PageUrl);
+            var parent = GetPage(parentId);
+            var parentUrl = parent.PageUrl.ToString();
+            var url = string.Format("{0}{1}/", parentUrl, pageInstance.PageUrl);
             url = url.TrimStart('/');
 
             return url;
@@ -415,21 +400,20 @@ namespace KalikoCMS {
             if (_pageLanguageIndex == null)
                 IndexSite();
 
-            PageIndex pageIndex = GetPageIndex(languageId);
+            var pageIndex = GetPageIndex(languageId);
 
-            //TODO: Se över nedan
             if ((pageIndex == null) || (pageIndex.Count < 1)) {
                 IndexSite();
                 return null;
             }
 
-            PageIndexItem page = pageIndex.GetPageIndexItem(pageId);
+            var page = pageIndex.GetPageIndexItem(pageId);
             return page;
         }
 
 
         private static void IndexSite(int languageId) {
-            PageIndex pageIndex = PageIndex.CreatePageIndex(languageId);
+            var pageIndex = PageIndex.CreatePageIndex(languageId);
 
             _pageLanguageIndex.RemoveAll(i => i.LanguageId == languageId);
             _pageLanguageIndex.Add(pageIndex);
@@ -466,8 +450,8 @@ namespace KalikoCMS {
 
 
         internal static string GetUrlForPageInstanceId(int pageInstanceId) {
-            foreach (PageIndex pageIndex in _pageLanguageIndex) {
-                PageIndexItem item = pageIndex.GetPageIndexItem(pageInstanceId);
+            foreach (var pageIndex in _pageLanguageIndex) {
+                var item = pageIndex.GetPageIndexItem(pageInstanceId);
                 if(item!=null) {
                     return item.PageUrl;
                 }
@@ -479,9 +463,9 @@ namespace KalikoCMS {
 
         public static void DeletePage(Guid pageId) {
             // TODO: Only remove per language
-            Collection<Guid> pageIds = PageData.DeletePage(pageId);
+            var pageIds = PageData.DeletePage(pageId);
 
-            foreach (PageIndex pageIndex in _pageLanguageIndex) {
+            foreach (var pageIndex in _pageLanguageIndex) {
                 pageIndex.DeletePages(pageIds);
                 SearchManager.Instance.RemoveFromIndex(pageIds, pageIndex.LanguageId);
             }

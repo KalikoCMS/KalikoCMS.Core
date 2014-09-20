@@ -82,7 +82,6 @@
     <Compile Include="Caching\ICacheProvider.cs" />
     <Compile Include="Caching\WebCache.cs" />
     <Compile Include="Caching\WebCacheRefreshDependency.cs" />
-    <Compile Include="Caretaker.cs" />
     <Compile Include="Configuration\SiteHostConfiguration.cs" />
     <Compile Include="Configuration\SiteHostConfigurationLanguage.cs" />
     <Compile Include="Configuration\SiteHostConfigurationLanguageCollection.cs" />

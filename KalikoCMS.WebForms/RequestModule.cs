@@ -22,7 +22,6 @@ namespace KalikoCMS.WebForms {
     using System.Globalization;
     using System.Text;
     using System.Web;
-    using System.Web.Caching;
     using KalikoCMS.Core;
     using KalikoCMS.Modules;
 
@@ -66,15 +65,13 @@ namespace KalikoCMS.WebForms {
             var startPageId = Configuration.SiteSettings.Instance.StartPageId;
 
             if (startPageId == Guid.Empty) {
-                HttpContext.Current.Response.Write("Start page hasn't yet been configured in web.config.");
-                HttpContext.Current.Response.End();
+                Utils.RenderSimplePage(HttpContext.Current.Response, "Set a start page", "Start page hasn't yet been configured in web.config.");
             }
 
             var templateUrl = GetUrlForPage(startPageId);
 
             if (string.IsNullOrEmpty(templateUrl)) {
-                HttpContext.Current.Response.Write("Can't find start page. Please check your siteSettings configuration in web.config.");
-                HttpContext.Current.Response.End();
+                Utils.RenderSimplePage(HttpContext.Current.Response, "Can't find start page", "Please check your siteSettings configuration in web.config.");
             }
 
             RedirectToTemplate(templateUrl);

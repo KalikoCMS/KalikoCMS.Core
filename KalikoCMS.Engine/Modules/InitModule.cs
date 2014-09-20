@@ -109,9 +109,7 @@ namespace KalikoCMS.Modules {
             }
 
             var httpResponse = HttpContext.Current.Response;
-            httpResponse.StatusCode = 503;
-            httpResponse.Write("System is starting up.. Please check back in a few seconds.");
-            httpResponse.End();
+            Utils.RenderSimplePage(httpResponse, "System is starting up..", "Please check back in a few seconds.", 503);
         }
 
         public void Dispose() {
