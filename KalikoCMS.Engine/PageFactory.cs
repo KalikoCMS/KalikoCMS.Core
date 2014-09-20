@@ -76,7 +76,7 @@ namespace KalikoCMS {
                         position = page.FirstChild;
 
                         if (position == -1) {
-                            if (TryAsPageExtender(i, segments, lastPage)) {
+                            if (TryAsPageExtender(i + 1, segments, lastPage)) {
                                 return true;
                             }
                             if (requestManager.TryMvcSupport(i, segments, lastPage)) {
