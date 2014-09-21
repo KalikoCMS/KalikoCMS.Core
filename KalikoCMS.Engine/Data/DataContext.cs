@@ -31,7 +31,11 @@ namespace KalikoCMS.Data {
         private static readonly MetadataContainer MetadataContainer = new DataMetadataSource().GetModel();
         private static readonly BackendConfiguration BackendConfiguration = new BackendConfiguration();
 
-        public DataContext() : base(ConnectionStringName, BackendConfiguration, MetadataContainer) {
+        public DataContext(bool defaultFetchStrategy = false) : base(ConnectionStringName, BackendConfiguration, MetadataContainer) {
+            if (defaultFetchStrategy) {
+                return;
+            }
+
             FetchStrategy = new FetchStrategy {
                 MaxFetchDepth = 1
             };
@@ -90,7 +94,7 @@ namespace KalikoCMS.Data {
             string script;
 
             if (schemaHandler.DatabaseExists()) {
-                int currentVersion = GetCurrentVersion();
+                var currentVersion = GetCurrentVersion();
                 if (currentVersion >= DatabaseVersion) {
                     return;
                 }
@@ -106,7 +110,7 @@ namespace KalikoCMS.Data {
                 return;
             }
 
-            schemaHandler.ForceExecuteDDLScript(script);
+            schemaHandler.ExecuteDDLScript(script);
             SetDatabaseVersion();
         }
 

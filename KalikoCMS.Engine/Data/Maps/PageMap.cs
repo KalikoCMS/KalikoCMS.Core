@@ -20,7 +20,6 @@
 namespace KalikoCMS.Data.Maps {
     using Entities;
     using Telerik.OpenAccess;
-    using Telerik.OpenAccess.Metadata;
     using Telerik.OpenAccess.Metadata.Fluent;
     using Telerik.OpenAccess.Metadata.Fluent.Advanced;
 
@@ -28,7 +27,7 @@ namespace KalikoCMS.Data.Maps {
         internal PageMap() {
             MapType(x => new { }).WithConcurencyControl(OptimisticConcurrencyControlStrategy.Changed).ToTable("Page");
 
-            HasProperty(x => x.PageId).IsIdentity(KeyGenerator.Autoinc).ToColumn("PageId").IsNotNullable();
+            HasProperty(x => x.PageId).IsIdentity().ToColumn("PageId").IsNotNullable();
             HasProperty(x => x.PageTypeId).ToColumn("PageTypeId").IsNotNullable();
             HasProperty(x => x.ParentId).ToColumn("ParentId").IsNotNullable();
             HasProperty(x => x.RootId).ToColumn("RootId").IsNotNullable();

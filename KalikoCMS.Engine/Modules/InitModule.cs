@@ -72,7 +72,7 @@ namespace KalikoCMS.Modules {
         }
 
         private static void KeepDatabaseUpToDate() {
-            using (var context = new DataContext()) {
+            using (var context = new DataContext(true)) {
                 // Keep schema up to date
                 context.UpdateSchema();
 

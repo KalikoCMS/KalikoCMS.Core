@@ -130,25 +130,23 @@ namespace KalikoCMS.Core {
                     pageInstance = new PageInstanceEntity {
                         PageId = PageId,
                         LanguageId = LanguageId,
-                        CreatedDate = DateTime.Now,
-                        UpdateDate = DateTime.Now,
-                        VisibleInMenu = true
+                        CreatedDate = DateTime.Now
                     };
 
                     context.Add(pageInstance);
-                    context.SaveChanges();
                 }
 
                 pageInstance.PageName = PageName;
+                pageInstance.UpdateDate = DateTime.Now;
                 pageInstance.StartPublish = StartPublish;
                 pageInstance.StopPublish = StopPublish;
                 pageInstance.VisibleInMenu = VisibleInMenu;
+                pageInstance.VisibleInSitemap = VisibleInSiteMap;
 
                 EnsurePageUrl();
 
                 //TODO: Allow changing Url
                 pageInstance.PageUrl = UrlSegment;
-                pageInstance.UpdateDate = DateTime.Now;
 
                 context.SaveChanges();
 
