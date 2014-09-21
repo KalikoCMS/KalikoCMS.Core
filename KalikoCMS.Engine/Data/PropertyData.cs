@@ -24,9 +24,8 @@ namespace KalikoCMS.Data {
     using Caching;
     using Core;
     using Core.Collections;
-    using Telerik.OpenAccess.Exceptions;
 
-    public static class PropertyData {
+    internal static class PropertyData {
         internal static PropertyCollection GetPropertiesForPage(Guid pageId, int languageId, int pageTypeId) {
             var cacheName = GetCacheName(pageId, languageId);
 
@@ -37,12 +36,10 @@ namespace KalikoCMS.Data {
                 propertyCollection.Properties = propertyItems;
             }
             else {
-                IQueryable<PropertyItem> properties;
                 var context = new DataContext();
 
                 try {
-                    properties =
-                        from p in context.Properties
+                    var properties = from p in context.Properties
                         join pp in context.PageProperties on new { PropertyId = p.PropertyId, PageId = pageId, LanguageId = languageId } equals new { pp.PropertyId, pp.PageId, pp.LanguageId } into merge
                         from m in merge.DefaultIfEmpty()
                         where p.PageTypeId == pageTypeId
@@ -68,12 +65,12 @@ namespace KalikoCMS.Data {
 
 
         internal static void RemovePropertiesFromCache(Guid pageId, int languageId) {
-            string cacheName = GetCacheName(pageId, languageId);
+            var cacheName = GetCacheName(pageId, languageId);
             CacheManager.Remove(cacheName);
         }
 
         private static Core.PropertyData CreatePropertyData(Guid propertyTypeId, string pageData) {
-            PropertyType propertyType = PropertyType.GetPropertyType(propertyTypeId);
+            var propertyType = PropertyType.GetPropertyType(propertyTypeId);
             return propertyType.ClassInstance.Deserialize(pageData);
         }
 
