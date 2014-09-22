@@ -22,12 +22,13 @@ namespace KalikoCMS.Attributes {
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Web.Compilation;
 
     internal static class AttributeReader {
 
         internal static IEnumerable<Type> GetTypesWithAttribute(Type attributeType) {
             var typesWithAttribute = new List<Type>();
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var assemblies = BuildManager.GetReferencedAssemblies().Cast<Assembly>();
             var attributeAssemblyName = attributeType.Assembly.GetName().Name;
 
             typesWithAttribute.AddRange(GetTypesWithAttributeInAssembly(attributeType.Assembly, attributeType));

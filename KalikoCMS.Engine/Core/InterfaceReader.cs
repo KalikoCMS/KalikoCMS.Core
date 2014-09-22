@@ -21,13 +21,15 @@ namespace KalikoCMS.Core {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
+    using System.Web.Compilation;
 
     internal class InterfaceReader {
         internal static IEnumerable<Type> GetTypesWithInterface(Type interfaceType) {
-            var types = AppDomain.CurrentDomain.GetAssemblies()
-                .ToList()
+            var types = BuildManager.GetReferencedAssemblies().Cast<Assembly>()
                 .SelectMany(s => s.GetTypes())
-                .Where(interfaceType.IsAssignableFrom);
+                .Where(interfaceType.IsAssignableFrom)
+                .ToList();
 
             return types;
         }

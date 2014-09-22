@@ -23,6 +23,7 @@ namespace KalikoCMS.Mvc {
     using System.Linq;
     using System.Reflection;
     using System.Web;
+    using System.Web.Compilation;
     using System.Web.Routing;
     using System.Web.Mvc;
     using Kaliko;
@@ -121,7 +122,7 @@ namespace KalikoCMS.Mvc {
 
         private static Dictionary<int, Type> BuildControllerList() {
             var controllerList = new Dictionary<int, Type>();
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var assemblies = BuildManager.GetReferencedAssemblies().Cast<Assembly>();
 
             foreach (var assembly in assemblies) {
                 if (IsGenericAssembly(assembly)) {
@@ -147,7 +148,7 @@ namespace KalikoCMS.Mvc {
         }
 
         private static bool IsGenericAssembly(Assembly assembly) {
-            var knownAssemblyNames = new[] { "System.", "Microsoft.", "KalikoCMS." };
+            var knownAssemblyNames = new[] { "System.", "Microsoft.", "KalikoCMS.", "Telerik.", "Lucene." };
             var isGenericAssembly = knownAssemblyNames.Any(knownAssemblyName => assembly.FullName.StartsWith(knownAssemblyName));
 
             return isGenericAssembly;
