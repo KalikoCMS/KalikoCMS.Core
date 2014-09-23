@@ -45,6 +45,7 @@
     <OutputPath>..\..\Bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
+    <ExcludeFoldersFromDeployment>Admin\Assets\less</ExcludeFoldersFromDeployment>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>

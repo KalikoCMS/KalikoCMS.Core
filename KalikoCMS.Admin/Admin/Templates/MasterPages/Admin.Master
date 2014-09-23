@@ -59,7 +59,3 @@
       }
     </script>
 </asp:Content>
-
-<asp:Content ContentPlaceHolderID="AdditionalStyles" runat="server">
-    <link href="assets/css/bootstrap-notify.css" rel="stylesheet" />
-</asp:Content>
