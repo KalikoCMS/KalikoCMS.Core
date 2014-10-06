@@ -21,42 +21,38 @@ namespace KalikoCMS.Admin.Content.PageTree {
     using System;
     using System.Text;
     using System.Web;
-    using KalikoCMS.Core;
-    using KalikoCMS.Core.Collections;
+    using Core;
 
     public class JQueryTreeContent : IHttpHandler {
         private void GetChildren(HttpContext context) {
-            var pageId = new Guid(context.Request.Form["id"]);
-            string separator = string.Empty;
+            context.Response.ContentType = "application/json";
 
-            PageCollection children = PageFactory.GetChildrenForPage(pageId, PublishState.All);
+            var id = context.Request.Form["id"];
+            if (id == "#") {
+                context.Response.Write("[{\"text\":\"Root\",\"children\":true,\"id\":\"" + Guid.Empty + "\"}]");
+                context.Response.End();
+            }
+
+            var pageId = new Guid(id);
+            var separator = string.Empty;
+
+
+            var children = PageFactory.GetChildrenForPage(pageId, PublishState.All);
             var stringBuilder = new StringBuilder();
             stringBuilder.Append("[");
 
 
             foreach (Guid childId in children.PageIds) {
-                CmsPage page = PageFactory.GetPage(childId);
-                string type = GetItemType(page);
-                stringBuilder.AppendFormat("{0}{{\"attr\":{{\"id\":\"node_{1}\",\"rel\":\"default\",\"url\":\"{2}\"}},\"data\":\"{3}\",\"state\":\"{4}\"}}", separator, childId, page.PageUrl, page.PageName, type);
+                var page = PageFactory.GetPage(childId);
+                stringBuilder.Append(separator + "{\"text\": \"" + page.PageName + "\", \"id\": \"" + childId + "\", \"children\": " + (page.HasChildren ? "true" : "false") + ", \"a_attr\": { \"href\": \"" + page.PageUrl + "\" }}");
                 separator = ",";
             }
 
             stringBuilder.Append("]");
 
-            context.Response.ContentType = "application/json";
             context.Response.Write(stringBuilder.ToString());
         }
-
-        private string GetItemType(CmsPage page) {
-            if (page.HasChildren) {
-                return "closed";
-            }
-            else {
-                return string.Empty;
-            }
-        }
-
-
+        
         private void MoveNode(HttpContext context) {
             var pageId = new Guid(context.Request.Form["id"]);
             var targetId = new Guid(context.Request.Form["ref"]);

@@ -13,10 +13,8 @@
         <asp:Image id="CropImage" runat="server" />
     </div>
     <div id="image-description-field" class="form-inline">
-      <div class="row">
-        <asp:Label AssociatedControlID="DescriptionField" runat="server" Text="Description" CssClass="span2" />
-        <asp:TextBox runat="server" CssClass="span7" ID="DescriptionField" />
-      </div>
+      <asp:Label AssociatedControlID="DescriptionField" runat="server" Text="Description" CssClass="span2" />
+      <asp:TextBox runat="server" CssClass="span7" ID="DescriptionField" />
     </div>
   </div>
   
@@ -31,15 +29,14 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="ButtonArea" runat="server">
-  <cms:BootstrapButton id="SaveButton" Enabled="false" Icon="icon-ok" Mode="Primary" Text="Save image" runat="server"/>
-  <cms:BootstrapButton id="RemoveButton" Icon="icon-delete" Mode="Danger" Text="No image" runat="server"/>
+  <cms:BootstrapButton id="SaveButton" Enabled="false" Icon="icon-thumbs-up icon-white" Mode="Primary" Text="Save image" runat="server"/>
+  <cms:BootstrapButton id="RemoveButton" Icon="icon-remove" Mode="Danger" Text="No image" runat="server"/>
   <button type="button" id="close-button" data-dismiss="modal" class="btn btn-default">Cancel</button>
 </asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptArea" runat="server">
-  <link rel="stylesheet" href="assets/css/jquery.jcrop.min.css" />
-  <script src="assets/js/jquery.color.js"></script>
-  <script src="assets/js/jquery.jcrop.min.js"></script>
+  <link rel="stylesheet" href="assets/vendors/jquery/css/jquery.jcrop.min.css" />
+  <script src="assets/js/kalikocms.admin.imageeditor.min.js"></script>
   <script>
     (function(iife) {
       iife(jQuery, window);
@@ -61,8 +58,8 @@
       $(window).load(function() {
         cropImage.Jcrop({
           <%=PostedParameters %>
-          boxWidth: 500,
-          boxHeight: 300,
+          boxWidth: 678,
+          boxHeight: 280,
           onChange: storeCoords,
           onSelect: storeCoords,
           trueSize: trueSize

@@ -5,15 +5,12 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="ButtonArea" runat="server">
-    <button type="button" id="select-button"class="btn btn-primary disabled"><i class="icon-ok"></i> Select page</button>
+    <button type="button" id="select-button"class="btn btn-primary disabled"><i class="icon-thumbs-up icon-white"></i> Select page</button>
     <button type="button" id="deselect-button" class="btn btn-danger"><i class="icon-trash icon-white"></i> No page</button>
     <button type="button" id="close-button" data-dismiss="modal" class="btn btn-default">Close</button>
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="ScriptArea" runat="server">
-
-    <script src="assets/js/jquery.hotkeys.js"></script>
-    <script src="assets/js/jquery.jstree.js"></script>
     <script type="text/javascript">
         var currentPageId = "";
         var pageName = "";
@@ -32,15 +29,9 @@
             close();
         }
 
-        function fillHeight(selector, bottom) {
-          var element = $(selector);
-          element.css({ position: 'fixed', top: element.offset().top, bottom: $(bottom).outerHeight() });
-        }
 
         $(document).ready(function () {
           initTreeView();
-
-          fillHeight(".modal-body", ".modal-footer");
 
           $('#select-button').click(selectPage);
           $('#deselect-button').click(noPage);
@@ -56,7 +47,7 @@
 
             $("#pagetree").jstree({
               "plugins": plugins,
-              "themes": { "theme": "classic", "url": "assets/css/jstree.classic.css" },
+              "themes": { "theme": "classic", "url": "assets/vendors/jstree/css/jstree.classic.css" },
               "json_data": {
                 "ajax": {
                   "url": "Content/PageTree/JQueryTreeContent.ashx",

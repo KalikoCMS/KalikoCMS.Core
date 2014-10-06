@@ -1,24 +1,20 @@
 ﻿<%@ Master Language="C#" MasterPageFile="Base.Master" CodeBehind="Admin.master.cs" Inherits="KalikoCMS.Admin.Templates.MasterPages.Admin" %>
 <%@ Register TagPrefix="admin" TagName="TopNavigation" Src="../Units/TopNavigation.ascx" %>
+<%@ Register TagPrefix="admin" TagName="SideNavigation" Src="../Units/SideNavigation.ascx" %>
 
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
   <form id="MainForm" runat="server">
-    <admin:topnavigation runat="server" />
-    <div id="main-container">
-      <div class="row">
+    <admin:SideNavigation runat="server" />
+    <div id="main">
+      <admin:topnavigation runat="server" />
+
+      <div id="content">
         <asp:ContentPlaceHolder ID="FullRegion" runat="server">
-          <div id="left-block">
-            <asp:ContentPlaceHolder ID="LeftRegion" runat="server" />
-          </div>
-          <div>
-            <asp:ContentPlaceHolder ID="RightRegion" runat="server" />
-          </div>
+          <asp:ContentPlaceHolder ID="LeftRegion" runat="server" />
+          <asp:ContentPlaceHolder ID="RightRegion" runat="server" />
         </asp:ContentPlaceHolder>
       </div>
-      <footer class="footer container-fluid navbar-fixed-bottom">
-        <p>Powered by KalikoCMS version <%=KalikoCMS.Utils.Version %></p>
-      </footer>
     </div>
   </form>
   <div class='notifications top-right'></div>
@@ -27,35 +23,29 @@
 
 
 <asp:Content ContentPlaceHolderID="AdditionalScripts" runat="server">
-    <script src="assets/js/jquery.cookie.js"></script>
-    <script src="assets/js/jquery.hotkeys.js"></script>
-    <script src="assets/js/jquery.jstree.js"></script>
-    <script src="assets/js/bootstrap-notify.js"></script>
-    <script src="assets/js/bootstrap-modal.js"></script>
-    <script src="assets/js/bootstrap-modalmanager.js"></script>
-    <script>
-      var callbackStack = [];
+  <script>
+    var callbackStack = [];
 
-      function registerCallback(callback) {
-        callbackStack.push(callback);
-      }
+    function registerCallback(callback) {
+      callbackStack.push(callback);
+    }
 
-      function executeCallback(args) {
-        var callback = callbackStack.pop();
-        callback.apply(this, arguments);
-      }
-      
-      function abortCallback() {
-        callbackStack.pop();
-      }
+    function executeCallback(args) {
+      var callback = callbackStack.pop();
+      callback.apply(this, arguments);
+    }
 
-      function openModal(url, width, height) {
-        $('<iframe class="modal fade" style="height:' + height + 'px;left:50%" src="' + url + '"></iframe>')
-          .modal({ backdrop: 'static', width: width });
-      }
+    function abortCallback() {
+      callbackStack.pop();
+    }
 
-      function closeModal() {
-        $("iframe.modal:last").modal('hide');
-      }
-    </script>
+    function openModal(url, width, height) {
+      $('<iframe class="modal fade" style="height:' + height + 'px;left:50%" src="' + url + '"></iframe>')
+        .modal({ backdrop: 'static', width: width });
+    }
+
+    function closeModal() {
+      $("iframe.modal:last").modal('hide');
+    }
+  </script>
 </asp:Content>

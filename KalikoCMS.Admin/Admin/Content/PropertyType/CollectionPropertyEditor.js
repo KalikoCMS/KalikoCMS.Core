@@ -3,7 +3,7 @@
         openDialog: function (container, valueField, className) {
             var callback = function (val, exerpt) {
                 var list = $(container).find("ul.sortable-collection");
-                var content = '<a href="#" onclick="top.propertyEditor.collection.editField(this);return false;" class="pull-right"><i class="icon-edit"></i>edit</a><i class="icon-sort"></i> ' + exerpt;
+                var content = '<a href="#" onclick="top.propertyEditor.collection.editField(this);return false;" class="pull-right"><i class="icon icon-edit"></i>edit</a><i class="icon icon-sort"></i> ' + exerpt;
                 if (valueField == null && val != null) {
                     list.append('<li class="btn btn-default collection-item" data-value=\'' + val + '\'>' + content + '</li>');
                 }

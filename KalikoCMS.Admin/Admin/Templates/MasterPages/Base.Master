@@ -4,14 +4,13 @@
   <head runat="server">
     <title><%=Page.Title %></title>
     <meta charset="utf-8" />
-    <%--<meta name="viewport" content="width=device-width, initial-scale=1.0" />--%>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
     <base href="<%=KalikoCMS.Configuration.SiteSettings.Instance.AdminPath %>" />
     
     <!-- Stylesheets -->
     <asp:ContentPlaceHolder ID="BaseStyles" runat="server">
-      <link href="assets/themes/default/default.min.css" rel="stylesheet" />
-      <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+      <link href="assets/themes/denim/theme.min.css" rel="stylesheet" />
     </asp:ContentPlaceHolder>
     <asp:ContentPlaceHolder ID="AdditionalStyles" runat="server" />
     
@@ -19,13 +18,14 @@
     <!--[if lt IE 9]>
       <script src="assets/js/html5shiv.min.js"></script>
     <![endif]-->
-    <script src="assets/js/jquery-1.10.2.min.js"></script>
+    <script src="assets/vendors/jquery/js/jquery-1.10.2.min.js"></script>
   </head>
   <body>
     <asp:ContentPlaceHolder ID="MainContent" runat="server" />
     
     <!-- Scripts -->
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/kalikocms.admin.core.min.js"></script>
     <asp:ContentPlaceHolder ID="AdditionalScripts" runat="server" />
+    <script src="assets/themes/denim/theme.js"></script>
   </body>
 </html>

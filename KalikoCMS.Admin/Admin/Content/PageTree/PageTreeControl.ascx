@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PageTreeControl.ascx.cs" Inherits="KalikoCMS.Admin.Content.PageTree.PageTreeControl" %>
     
     <div class="btn-group pagetree-controls">
-        <a href="#" id="new-page-button" class="btn btn-sm btn-default" rel="tooltip" data-original-title="Add a new page under the selected page below." data-container="body"><i class="icon-plus"></i> Add page</a>        
-        <a href="#" id="remove-page-button" class="btn btn-sm btn-default" rel="tooltip" data-original-title="Remove the selected page." data-container="body"><i class="icon-trash"></i> Remove page</a>
+        <a href="#" id="new-page-button" class="btn btn-sm btn-default" rel="tooltip" data-original-title="Add a new page under the selected page below." data-container="body"><i class="icon icon-plus"></i> Add page</a>        
+        <a href="#" id="remove-page-button" class="btn btn-sm btn-default" rel="tooltip" data-original-title="Remove the selected page." data-container="body"><i class="icon icon-trash"></i> Remove page</a>
     </div>
 
     <div id="pagetree"></div>
@@ -63,13 +63,10 @@
       }
 
       function initTreeView() {
-        var plugins = ["themes", "json_data", "ui", "crrm", "cookies", "dnd", "search", "types", "hotkeys"];
-
         $("#pagetree")
           .jstree({
-            "plugins": plugins,
-            "themes": { "theme": "classic", "url": "assets/css/jstree.classic.css" },
-            "json_data": {
+            "plugins": ["state", "dnd", "types"],
+<%--            "json_data": {
               "ajax": {
                 "url": "Content/PageTree/JQueryTreeContent.ashx",
                 "type": 'POST',
@@ -87,7 +84,7 @@
                   "state": "closed"
                 }
               ]
-            },
+            },--%>
             "types": {
               "max_depth": -2,
               "max_children": -2,
@@ -109,9 +106,19 @@
                 }
               }
             },
-            "ui": { "disable_selecting_children": true },
             "core": {
-              "initially_open": ["<%=Guid.Empty %>"]
+              "data":
+                  {
+                    'url': 'Content/PageTree/JQueryTreeContent.ashx',
+                      'type': 'POST',
+                      'dataType': 'JSON',
+                      'data': function(n) {
+                          return {
+                              "operation": "get_children",
+                              "id": n.id
+                          };
+                      }
+                  }
             }
           })
           .bind("before.jstree", function (e, data) {
@@ -121,41 +128,41 @@
             }
           })
           .bind("select_node.jstree", function (event, data) {
-            var pageId = data.rslt.obj.attr("id").replace("node_", "");
+            var pageId = data.selected[0];
 
             currentPageId = pageId;
 
             $("#maincontent").attr("src", "Content/EditPage.aspx?id=" + pageId);
           })
           .bind("move_node.jstree", function (e, data) {
-            data.rslt.o.each(function (i) {
-              $.ajax({
-                async: false,
-                type: 'POST',
-                url: "Content/PageTree/JQueryTreeContent.ashx",
-                data: {
-                  "operation": "move_node",
-                  "id": $(this).attr("id").replace("node_", ""),
-                  "ref": data.rslt.cr === -1 ? 1 : data.rslt.np.attr("id").replace("node_", ""),
-                  "position": data.rslt.cp + i,
-                  "title": data.rslt.name,
-                  "copy": data.rslt.cy ? 1 : 0
-                },
-                success: function (r) {
-                  if (!r.success) {
-                    $.jstree.rollback(data.rlbk);
-                    alert("Could not move " + data.rslt.name);
-                  } else {
-                    $(data.rslt.oc).attr("id", "node_" + r.id);
-                    if (data.rslt.cy && $(data.rslt.oc).children("UL").length) {
-                      data.inst.refresh(data.inst._get_parent(data.rslt.oc));
-                    } else {
-                      data.inst.refresh(data.rslt.np);
-                    }
-                  }
-                }
-              });
-            });
+            //data.rslt.o.each(function (i) {
+            //  $.ajax({
+            //    async: false,
+            //    type: 'POST',
+            //    url: "Content/PageTree/JQueryTreeContent.ashx",
+            //    data: {
+            //      "operation": "move_node",
+            //      "id": $(this).attr("id").replace("node_", ""),
+            //      "ref": data.rslt.cr === -1 ? 1 : data.rslt.np.attr("id").replace("node_", ""),
+            //      "position": data.rslt.cp + i,
+            //      "title": data.rslt.name,
+            //      "copy": data.rslt.cy ? 1 : 0
+            //    },
+            //    success: function (r) {
+            //      if (!r.success) {
+            //        $.jstree.rollback(data.rlbk);
+            //        alert("Could not move " + data.rslt.name);
+            //      } else {
+            //        $(data.rslt.oc).attr("id", "node_" + r.id);
+            //        if (data.rslt.cy && $(data.rslt.oc).children("UL").length) {
+            //          data.inst.refresh(data.inst._get_parent(data.rslt.oc));
+            //        } else {
+            //          data.inst.refresh(data.rslt.np);
+            //        }
+            //      }
+            //    }
+            //  });
+            //});
           });
       }
 

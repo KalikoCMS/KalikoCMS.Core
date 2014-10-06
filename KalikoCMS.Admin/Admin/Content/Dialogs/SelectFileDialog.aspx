@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Select file" Language="C#" MasterPageFile="Dialog.Master" AutoEventWireup="true" CodeBehind="SelectFileDialog.aspx.cs" Inherits="KalikoCMS.Admin.Content.Dialogs.SelectFileDialog" %>
 <%@ Import Namespace="KalikoCMS.Configuration" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainArea" runat="server">
-  <link rel="stylesheet" href="assets/css/jquery.fileupload-ui.css" />
+  <link rel="stylesheet" href="assets/vendors/jquery/css/jquery.fileupload-ui.css" />
   <div id="filelist">
     <div class="modal-toolbar">
       <button type="button" data-original-title="Create a new folder in current path." class="btn btn-small" id="create-folder-button"><i class="icon-folder-open-alt"></i> Create folder</button>
@@ -62,7 +62,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ButtonArea" runat="server">
   <span id="filelist-buttons">
-  <a id="select-button" class="btn btn-primary disabled"><i class="icon-ok"></i> Select file</a>
+  <a id="select-button" class="btn btn-primary disabled"><i class="icon-thumbs-up icon-white"></i> Select file</a>
   <a id="deselect-button" class="btn btn-danger"><i class="icon-trash icon-white"></i> No file</a>
   </span>
   
@@ -74,14 +74,7 @@
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptArea" runat="server">
-  <script src="assets/js/tmpl.min.js" type="text/javascript"></script>
-  <script src="assets/js/jquery.ui.widget.js" type="text/javascript"></script>
-  <script src="assets/js/jquery.iframe-transport.js" type="text/javascript"></script>
-  <script src="assets/js/jquery.fileupload.js" type="text/javascript"></script>
-  <script src="assets/js/jquery.fileupload-process.js" type="text/javascript"></script>
-  <script src="assets/js/jquery.fileupload-validate.js" type="text/javascript"></script>
-  <script src="assets/js/jquery.fileupload-ui.js" type="text/javascript"></script>
-  <script src="assets/js/bootbox.min.js" type="text/javascript"></script>
+  <script src="assets/js/kalikocms.admin.fileupload.min.js" type="text/javascript"></script>
 
   <script type="text/javascript">
     var path = "<%=SiteSettings.Instance.FilePath %>";

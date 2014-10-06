@@ -43,7 +43,7 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="ButtonArea" runat="server">
-  <cms:BootstrapButton id="SaveButton" Icon="icon-ok" Mode="Primary" Text="Select" runat="server"/>
+  <cms:BootstrapButton id="SaveButton" Icon="icon-thumbs-up icon-white" Mode="Primary" Text="Select" runat="server"/>
   <button type="button" id="deselect-button" class="btn btn-danger"><i class="icon-trash icon-white"></i> No link</button>
   <button type="button" id="close-button" data-dismiss="modal" class="btn btn-default">Close</button>
 </asp:Content>

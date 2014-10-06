@@ -10,6 +10,15 @@
       function close() {
         top.closeModal();
       }
+
+      function fillHeight(selector, bottom) {
+        var element = $(selector);
+        element.css({ position: 'fixed', top: element.offset().top, bottom: $(bottom).outerHeight() });
+      }
+
+      $(document).ready(function() {
+          setTimeout(function() { fillHeight(".modal-body", ".modal-footer"); }, 100);
+      });
     </script>
     <asp:ContentPlaceHolder ID="ScriptArea" runat="server"/>
 </asp:Content>
