@@ -23,7 +23,7 @@ namespace KalikoCMS.PropertyType {
     using KalikoCMS.Core;
     using KalikoCMS.Serialization;
 
-    [PropertyType("8b631801-10b7-4e99-a05c-e16e9e96bc44", "DateTime", "DateTime", "~/Admin/Content/PropertyType/DateTimePropertyEditor.ascx")]
+    [PropertyType("8b631801-10b7-4e99-a05c-e16e9e96bc44", "DateTime", "DateTime", "%AdminPath%ontent/PropertyType/DateTimePropertyEditor.ascx")]
     public class DateTimeProperty : PropertyData {
         public DateTime? Value { get; set; }
 

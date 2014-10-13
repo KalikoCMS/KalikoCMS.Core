@@ -22,7 +22,7 @@ namespace KalikoCMS.PropertyType {
     using KalikoCMS.Core;
     using KalikoCMS.Serialization;
 
-    [PropertyType("760C469A-20AB-4BF1-8F83-438ADC37BAFF", "File", "File", "~/Admin/Content/PropertyType/FilePropertyEditor.ascx")]
+    [PropertyType("760C469A-20AB-4BF1-8F83-438ADC37BAFF", "File", "File", "%AdminPath%Content/PropertyType/FilePropertyEditor.ascx")]
     public class FileProperty : PropertyData {
         private int? _cachedHashCode;
 

@@ -33,6 +33,7 @@ namespace KalikoCMS.Configuration {
         private string _imageCachePath;
         private string _blockedFileExtensions;
         private string _cacheProvider;
+        private string _theme;
 
         public static SiteSettings Instance {
             get {
@@ -100,6 +101,10 @@ namespace KalikoCMS.Configuration {
             get { return (Guid) (_startPageId ?? (_startPageId = (Guid) base["startPageId"])); }
         }
 
+        [ConfigurationProperty("theme", IsRequired = false, DefaultValue = "denim")]
+        public string Theme {
+            get { return _theme ?? (_theme = (string)base["theme"]); }
+        }
 
         [ConfigurationProperty("blockedFileExtensions", IsRequired = false, DefaultValue = @"(bat|exe|cmd|sh|php|pl|cgi|386|dll|com|torrent|js|app|jar|pif|vb|vbscript|wsf|asp|aspx|cs|cer|csr|jsp|drv|sys|ade|adp|bas|chm|cpl|crt|csh|fxp|hlp|hta|inf|ins|isp|jse|htaccess|htpasswd|ksh|lnk|mdb|mde|mdt|mdw|msc|msi|msp|mst|ops|pcd|prg|reg|scr|sct|shb|shs|url|vbe|vbs|wsc|wsf|wsh)$")]
         public string BlockedFileExtensions {

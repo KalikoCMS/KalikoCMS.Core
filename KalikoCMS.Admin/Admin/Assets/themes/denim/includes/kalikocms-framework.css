@@ -225,7 +225,7 @@ iframe {
 }
 #logo {
   height: 50px;
-  background: no-repeat url(/Admin/assets/images/logo.png) #111111;
+  background: no-repeat url(../../../images/logo.png) #111111;
   border-bottom: 1px solid #333333;
 }
 #version {
