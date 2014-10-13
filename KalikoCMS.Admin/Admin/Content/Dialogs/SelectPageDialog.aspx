@@ -29,7 +29,6 @@
             close();
         }
 
-
         $(document).ready(function () {
           initTreeView();
 
@@ -39,65 +38,29 @@
         });
 
         function refreshTreeNode(node) {
-            $("#pagetree").jstree("refresh", "#node_" + node);
+            $("#pagetree").jstree("load_node", node);
         }
 
         function initTreeView() {
-            var plugins = ["themes", "json_data", "ui", "crrm", "search", "types", "hotkeys"];
-
-            $("#pagetree").jstree({
-              "plugins": plugins,
-              "themes": { "theme": "classic", "url": "assets/vendors/jstree/css/jstree.classic.css" },
-              "json_data": {
-                "ajax": {
-                  "url": "Content/PageTree/JQueryTreeContent.ashx",
-                  "type": 'POST',
-                  "data": function (n) {
-                    return {
-                      "operation": "get_children",
-                      "id": n.attr ? n.attr("id").replace("node_", "") : "<%=Guid.Empty %>"
-                    };
-                  }
-                },
-                "data": [
-                        {
-                          "data": "Root",
-                          "attr": { "id": "<%=Guid.Empty %>", "rel": "root" },
-                          "state": "closed"
+            $('#pagetree').jstree({
+                'plugins': ['state'],
+                'core': {
+                    'data': {
+                        'url': 'Content/PageTree/JQueryTreeContent.ashx',
+                        'type': 'POST',
+                        'dataType': 'JSON',
+                        'data': function(n) {
+                            return {
+                                'operation': 'get_children',
+                                'id': n.id
+                            };
                         }
-                    ]
-              },
-              "types": {
-                "max_depth": -2,
-                "max_children": -2,
-                "types": {
-                  "default": {
-                    "icon": { "image": "file.png" }
-                  },
-                  "folder": {
-                    "valid_children": ["default", "folder"],
-                    "icon": { "image": "folder.png" }
-                  },
-                  "root": {
-                    "valid_children": ["default", "folder"],
-                    "icon": { "image": "root.png" },
-                    "start_drag": false,
-                    "move_node": false,
-                    "delete_node": false,
-                    "remove": false
-                  }
-                }
-              },
-              "ui": { "disable_selecting_children": true },
-              "core": {
-                "initially_open": ["<%=CurrentPage %>"]
-              }
+                    }
+                },
+                'state': { 'key': 'dialog' }
             }).bind("select_node.jstree", function (event, data) {
-              var pageId = data.rslt.obj.attr("id").replace("node_", "");
-
-              pageName = data.rslt.obj.text();
-
-
+              var pageId = data.node.id;
+              pageName = data.node.text;
               currentPageId = pageId;
               $('#select-button').removeClass('disabled');
               buttonEnabled = true;

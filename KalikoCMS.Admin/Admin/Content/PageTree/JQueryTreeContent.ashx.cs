@@ -29,7 +29,7 @@ namespace KalikoCMS.Admin.Content.PageTree {
 
             var id = context.Request.Form["id"];
             if (id == "#") {
-                context.Response.Write("[{\"text\":\"Root\",\"children\":true,\"id\":\"" + Guid.Empty + "\"}]");
+                context.Response.Write("[{\"text\":\"Root\",\"children\":true,\"id\":\"" + Guid.Empty + "\",\"parent\":\"#\"}]");
                 context.Response.End();
             }
 

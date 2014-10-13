@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <connectionStrings xdt:Transform="InsertIfMissing" />
+  <connectionStrings>
+    <add name="KalikoCMS" connectionString="Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=KalikoCMS;Data Source=(localdb)\v11.0" providerName="System.Data.SqlClient" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)" />
+  </connectionStrings>
+</configuration>

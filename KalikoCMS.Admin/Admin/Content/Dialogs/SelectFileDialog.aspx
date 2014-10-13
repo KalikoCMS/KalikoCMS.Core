@@ -4,8 +4,8 @@
   <link rel="stylesheet" href="assets/vendors/jquery/css/jquery.fileupload-ui.css" />
   <div id="filelist">
     <div class="modal-toolbar">
-      <button type="button" data-original-title="Create a new folder in current path." class="btn btn-small" id="create-folder-button"><i class="icon-folder-open-alt"></i> Create folder</button>
-      <button type="button" data-original-title="Upload files into current path." class="btn btn-small" id="upload-file-button"><i class="icon-upload-alt"></i> Upload file(s)</button>
+      <button type="button" data-original-title="Create a new folder in current path." class="btn btn-small" id="create-folder-button"><i class="icon-folder-open"></i> Create folder</button>
+      <button type="button" data-original-title="Upload files into current path." class="btn btn-small" id="upload-file-button"><i class="icon-upload"></i> Upload file(s)</button>
     </div>
     
     <ul class="breadcrumb"><li>&nbsp;</li></ul>
@@ -23,10 +23,10 @@
           <input type="file" name="files[]" multiple="multiple" />
         </span>
         <button type="submit" class="btn btn-small start">
-          <i class="icon-upload-alt"></i> Start upload
+          <i class="icon-upload"></i> Start upload
         </button>
         <button type="reset" class="btn btn-small cancel">
-          <i class="icon-ban-circle"></i> Cancel upload
+          <i class="icon-ban"></i> Cancel upload
         </button>
         
         <!-- The global progress information -->
@@ -66,7 +66,7 @@
   <a id="deselect-button" class="btn btn-danger"><i class="icon-trash icon-white"></i> No file</a>
   </span>
   
-  <span id="upload-buttons" class="hide">
+  <span id="upload-buttons">
   <a class="btn btn-primary" href="javascript:switchToFileListMode();"><i class="icon-arrow-left"></i> Return to file list</a>
   </span>
 
@@ -74,7 +74,7 @@
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptArea" runat="server">
-  <script src="assets/js/kalikocms.admin.fileupload.min.js" type="text/javascript"></script>
+  <script src="assets/js/kalikocms.admin.fileupload.js" type="text/javascript"></script>
 
   <script type="text/javascript">
     var path = "<%=SiteSettings.Instance.FilePath %>";
@@ -83,13 +83,15 @@
     var buttonEnabled = false;
 
     $(document).ready(function () {
-      fillHeight("#file-list-container", ".modal-footer");
-      fillHeight("#file-queue-container", ".modal-footer");
+      setTimeout(function() {
+        fillHeight("#file-list-container", ".modal-footer");
+      }, 100);
+
       $("#upload").hide();
+      $("#upload-buttons").hide();
 
       $("#select-button").click(selectFile);
       $("#deselect-button").click(noFile);
-
 
       $("#create-folder-button")
         .click(function () {
@@ -133,6 +135,7 @@
       $("#upload").show();
       $("#filelist-buttons").hide();
       $("#upload-buttons").show();
+      fillHeight("#file-queue-container", ".modal-footer");
     }
 
     $(function() {
@@ -202,7 +205,7 @@
       var files = data.files;
       for (i in files) {
         var file = files[i];
-        fileList.append('<tr data-path="' + file.name + '" class="file"><td colspan="2"><i class="icon-file-alt"></i> ' + file.name + '</td></tr>');
+        fileList.append('<tr data-path="' + file.name + '" class="file"><td colspan="2"><i class="icon-file-o"></i> ' + file.name + '</td></tr>');
       }
 
       $('.file-list tr.file').click(function () {
@@ -271,13 +274,13 @@
         <td>
             {% if (!o.files.error && !i && !o.options.autoUpload) { %}
                 <button class="btn btn-icon-normal btn-primary start">
-                    <i class="icon-upload-alt icon-white"></i>
+                    <i class="icon-upload icon-white"></i>
                     <span>Start</span>
                 </button>
             {% } %}
             {% if (!i) { %}
                 <button class="btn btn-icon-normal btn-warning cancel">
-                    <i class="icon-ban-circle icon-white"></i>
+                    <i class="icon-ban icon-white"></i>
                 </button>
             {% } %}
         </td>

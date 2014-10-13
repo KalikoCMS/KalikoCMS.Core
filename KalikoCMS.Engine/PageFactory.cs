@@ -338,7 +338,7 @@ namespace KalikoCMS {
             }
         }
 
-        internal static void UpdatePageIndex(PageInstanceEntity pageInstance, Guid parentId, Guid rootId, int treeLevel, int pageTypeId) {
+        internal static void UpdatePageIndex(PageInstanceEntity pageInstance, Guid parentId, Guid rootId, int treeLevel, int pageTypeId, int sortOrder) {
             if (_pageLanguageIndex == null)
                 IndexSite();
 
@@ -361,11 +361,13 @@ namespace KalikoCMS {
                                              FirstChild = -1,
                                              NextPage = -1,
                                              PageId = pageInstance.PageId,
+                                             PageInstanceId = pageInstance.PageInstanceId,
                                              PageName = pageInstance.PageName,
                                              PageTypeId = pageTypeId,
                                              PageUrl = BuildPageUrl(pageInstance, parentId),
                                              ParentId = parentId,
                                              RootId = rootId,
+                                             SortOrder = sortOrder,
                                              StartPublish = pageInstance.StartPublish,
                                              StopPublish = pageInstance.StopPublish,
                                              VisibleInMenu = pageInstance.VisibleInMenu,

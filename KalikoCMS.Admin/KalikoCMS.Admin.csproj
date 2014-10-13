@@ -45,7 +45,8 @@
     <OutputPath>..\..\Bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <ExcludeFoldersFromDeployment>Admin\Assets\less</ExcludeFoldersFromDeployment>
+    <ExcludeFilesFromDeployment>Admin\Assets\themes\denim\theme.less;Admin\Assets\themes\denim\theme.css;Admin\Assets\themes\denim\theme.css.map;Admin\Assets\js\*.bundle;Admin\Assets\js\kalikocms.admin.core.js;Admin\Assets\js\kalikocms.admin.editor.js;Admin\Assets\js\kalikocms.admin.fileupload.js;Admin\Assets\js\kalikocms.admin.imageeditor.js;Admin\Assets\js\kalikocms.admin.taginput.js;Admin\Assets\js\*.map;Admin\Assets\vendors\tinymce\tinymce.min.js;Admin\Assets\vendors\tmpl.min.js;Admin\Assets\vendors\typeahead.min.js;Admin\Assets\vendors\jquery\js\jquery.*;Admin\Assets\vendors\jquery\js\jquery-ui.min.js;Admin\Assets\vendors\jquery\css\jquery-ui.custom.css;</ExcludeFilesFromDeployment>
+    <ExcludeFoldersFromDeployment>Admin\Assets\less;Admin\Assets\vendors\bootstrap;Admin\Assets\themes\denim\includes;Admin\Assets\vendors\font-awesome\less;Admin\Assets\vendors\jstree;</ExcludeFoldersFromDeployment>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
@@ -60,7 +61,6 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Web" />
@@ -82,11 +82,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Admin\Assets\fonts\hind\hind-bold-webfont.svg" />
-    <Content Include="Admin\Assets\fonts\hind\hind-light-webfont.svg" />
-    <Content Include="Admin\Assets\fonts\hind\hind-medium-webfont.svg" />
-    <Content Include="Admin\Assets\fonts\hind\hind-regular-webfont.svg" />
-    <Content Include="Admin\Assets\fonts\hind\hind-semibold-webfont.svg" />
     <Content Include="Admin\Assets\fonts\hind\OFL.txt" />
     <Content Include="Admin\Assets\fonts\hind\webfont-hind.css" />
     <Content Include="Admin\Assets\images\logo.png" />
@@ -139,10 +134,10 @@
       <DependentUpon>theme.less</DependentUpon>
     </Content>
     <Content Include="Admin\Assets\themes\denim\theme.js" />
+    <Content Include="Admin\Assets\themes\denim\includes\throbber.gif" />
     <Content Include="Admin\Assets\themes\denim\theme.min.css">
       <DependentUpon>theme.css</DependentUpon>
     </Content>
-    <Content Include="Admin\Assets\themes\denim\includes\throbber.gif" />
     <Content Include="Admin\Assets\vendors\bootstrap\css\bootstrap-modal-bs3patch.css" />
     <Content Include="Admin\Assets\vendors\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Admin\Assets\vendors\jquery\css\jquery.jcrop.min.css" />
@@ -279,6 +274,8 @@
     <Content Include="Admin\Default.aspx" />
     <Content Include="Admin\Assets\vendors\jquery\js\jquery.cookie.js" />
     <Content Include="Admin\Assets\vendors\jstree\js\jquery.jstree.js" />
+    <Content Include="Files\Readme.txt" />
+    <Content Include="ImageCache\readme.txt" />
     <Content Include="Login.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -308,9 +305,6 @@
     <Content Include="Admin\Assets\vendors\font-awesome\less\spinning.less" />
     <Content Include="Admin\Assets\vendors\font-awesome\less\stacked.less" />
     <Content Include="Admin\Assets\vendors\font-awesome\less\variables.less" />
-    <Content Include="Admin\Assets\themes\denim\theme.css.map">
-      <DependentUpon>theme.css</DependentUpon>
-    </Content>
     <Content Include="Admin\Assets\themes\denim\includes\kalikocms-framework.less" />
     <Content Include="Admin\Assets\themes\denim\includes\kalikocms-editor.less" />
     <Content Include="Admin\Assets\themes\denim\includes\kalikocms-framework.css.map">
@@ -319,9 +313,18 @@
     <Content Include="Admin\Assets\themes\denim\includes\kalikocms-editor.css.map">
       <DependentUpon>kalikocms-editor.css</DependentUpon>
     </Content>
-    <None Include="Properties\PublishProfiles\Deploy.pubxml" />
+    <Content Include="Admin\Assets\themes\denim\theme.css.map">
+      <DependentUpon>theme.css</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\Deploy.pubxml">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="web.config.install.xdt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Admin\Content\Dialogs\EditImageDialog.aspx.cs">
       <DependentUpon>EditImageDialog.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -640,7 +643,6 @@
     <Content Include="Admin\Assets\vendors\bootstrap\less\wells.less" />
     <Content Include="Admin\Assets\vendors\bootstrap\less\bootstrap-custom.less" />
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\Build.pubxml" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

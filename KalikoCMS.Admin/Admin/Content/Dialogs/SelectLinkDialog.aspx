@@ -24,7 +24,7 @@
       <asp:HiddenField runat="server" ID="PageId" />
       <div class="top-margin">
         <div class="input-group">
-          <asp:TextBox runat="server" CssClass="form-control" ID="PageDisplayField" ReadOnly="True" /><span class="input-group-btn"><asp:HyperLink ID="SelectPageButton" CssClass="btn btn-default" runat="server"><i class="icon-file-alt"></i></asp:HyperLink></span>
+          <asp:TextBox runat="server" CssClass="form-control" ID="PageDisplayField" ReadOnly="True" /><span class="input-group-btn"><asp:HyperLink ID="SelectPageButton" CssClass="btn btn-default" runat="server"><i class="icon-file-o"></i></asp:HyperLink></span>
         </div>
       </div>
     </div>
@@ -33,7 +33,7 @@
         <asp:HiddenField ID="FileUrl" runat="server" />
         <div class="top-margin">
           <div class="input-group">
-            <asp:TextBox runat="server" CssClass="form-control" ID="FileDisplayField" ReadOnly="True" /><span class="input-group-btn"><asp:HyperLink ID="SelectFileButton" CssClass="btn btn-default" runat="server"><i class="icon-file-alt"></i></asp:HyperLink></span>
+            <asp:TextBox runat="server" CssClass="form-control" ID="FileDisplayField" ReadOnly="True" /><span class="input-group-btn"><asp:HyperLink ID="SelectFileButton" CssClass="btn btn-default" runat="server"><i class="icon-file-o"></i></asp:HyperLink></span>
           </div>
         </div>
       </div>

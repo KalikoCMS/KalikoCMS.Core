@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <!-- insert an empty section-->
+  <configSections xdt:Transform="InsertBefore(/configuration/*[1])" />
+  <!-- append elements to the last section -->
+  <configSections xdt:Locator="XPath(/configuration/configSections[last()])">
+    <section name="siteSettings" type="KalikoCMS.Configuration.SiteSettings" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)" />
+    <section name="siteHosts" type="KalikoCMS.Configuration.SiteHostConfiguration" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)" />
+    <section name="loggers" type="Kaliko.Configuration.LoggersSection, Kaliko.Logger" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)" />
+  </configSections>
+  <!-- remove all empty sections -->
+  <configSections xdt:Transform="RemoveAll" xdt:Locator="Condition(count(*)=0)" />
+
+  <siteSettings adminPath="/Admin/" datastoreProvider="KalikoCMS.Data.StandardDataStore, KalikoCMS.Engine" startPageId="00000000-0000-0000-0000-000000000000" xdt:Transform="InsertIfMissing" />
+
+  <siteHosts xdt:Transform="InsertIfMissing">
+    <sites>
+      <add name="*" language="en"/>
+    </sites>
+  </siteHosts>
+
+  <loggers xdt:Transform="InsertIfMissing">
+    <fileLogger filename="c:\temp\cms-log.txt" treshold="Major" />
+  </loggers>
+
+  <location path="Admin" xdt:Transform="InsertIfMissing" xdt:Locator="Match(path)">
+    <!-- Denies access for users except admins by default, change roles to match your authentication scheme -->
+    <system.web>
+      <authorization>
+        <allow roles="WebAdmin" />
+        <deny users="*" />
+      </authorization>
+      <pages validateRequest="false"/>
+      <httpRuntime requestValidationMode="2.0"/>
+    </system.web>
+  </location>
+</configuration>

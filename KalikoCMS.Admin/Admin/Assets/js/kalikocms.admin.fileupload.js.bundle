@@ -10,12 +10,12 @@
   </settings>
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
+    <file>/Admin/Assets/vendors/jquery/js/jquery.ui.widget.js</file>
+    <file>/Admin/Assets/vendors/jquery/js/jquery.iframe-transport.js</file>
+    <file>/Admin/Assets/vendors/tmpl.min.js</file>
+    <file>/Admin/Assets/vendors/jquery/js/jquery.fileupload.js</file>
     <file>/Admin/Assets/vendors/jquery/js/jquery.fileupload-process.js</file>
     <file>/Admin/Assets/vendors/jquery/js/jquery.fileupload-validate.js</file>
     <file>/Admin/Assets/vendors/jquery/js/jquery.fileupload-ui.js</file>
-    <file>/Admin/Assets/vendors/jquery/js/jquery.iframe-transport.js</file>
-    <file>/Admin/Assets/vendors/jquery/js/jquery.ui.widget.js</file>
-    <file>/Admin/Assets/vendors/tmpl.min.js</file>
-    <file>/Admin/Assets/vendors/jquery/js/jquery.fileupload.js</file>
   </files>
 </bundle>

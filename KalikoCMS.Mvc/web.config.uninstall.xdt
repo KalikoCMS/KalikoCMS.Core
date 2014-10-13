@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <system.webServer>
+    <modules>
+      <add name="RequestModule" type="KalikoCMS.Mvc.RequestModule, KalikoCMS.Mvc" xdt:Transform="Remove" xdt:Locator="Match(name, type)" />
+    </modules>
+  </system.webServer>
+</configuration>

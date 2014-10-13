@@ -5,7 +5,7 @@
   <asp:Literal runat="server" ID="PostbackResult" />   
 
   <div class="modal-toolbar">
-    <button id="select-image-button" class="btn btn-small" type="button"><i class="icon-folder-open-alt"></i> Select image..</button>
+    <button id="select-image-button" class="btn btn-small" type="button"><i class="icon-folder-open"></i> Select image..</button>
   </div>
       
   <div class="image-container">

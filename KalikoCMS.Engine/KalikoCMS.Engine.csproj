@@ -73,6 +73,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Attributes\AttributeReader.cs" />
     <Compile Include="Attributes\PageTypeAttribute.cs" />
     <Compile Include="Attributes\PropertyAttribute.cs" />

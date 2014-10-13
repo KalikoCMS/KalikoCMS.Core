@@ -93,19 +93,26 @@ namespace KalikoCMS.Data {
         }
 
         internal static void UpdateStructure(List<PageIndexItem> changedItems) {
-            var pages = changedItems.ToDictionary(i => i.PageId);
-            var pageIds = pages.Keys;
+            var pageItems = changedItems.ToDictionary(i => i.PageId);
+            var pageInstanceItems = changedItems.ToDictionary(i => i.PageInstanceId);
+            var pageIds = pageItems.Keys;
+            var pageInstanceIds = pageInstanceItems.Keys;
 
             var context = new DataContext();
 
             try {
-                var items = context.Pages.Where(p => pageIds.Contains(p.PageId));
+                var pages = context.Pages.Where(p => pageIds.Contains(p.PageId));
+                foreach (var page in pages) {
+                    var indexItem = pageItems[page.PageId];
+                    page.TreeLevel = indexItem.TreeLevel;
+                    page.ParentId = indexItem.ParentId;
+                    page.RootId = indexItem.RootId;
+                }
 
-                foreach (var item in items) {
-                    var indexItem = pages[item.PageId];
-                    item.TreeLevel = indexItem.TreeLevel;
-                    item.ParentId = indexItem.ParentId;
-                    item.RootId = indexItem.RootId;
+                var pageInstances = context.PageInstances.Where(p => pageInstanceIds.Contains(p.PageInstanceId));
+                foreach (var pageInstance in pageInstances) {
+                    var indexItem = pageInstanceItems[pageInstance.PageInstanceId];
+                    pageInstance.PageUrl = indexItem.UrlSegment;
                 }
                 context.SaveChanges();
             }

@@ -388,45 +388,94 @@ namespace KalikoCMS.Core {
         }
 
         internal void MovePage(Guid pageId, Guid targetId) {
-            var targetPage = GetPageIndexItem(targetId);
             var changedItems = new List<PageIndexItem>();
 
-            for (int i = 0; i < _pageIndex.Count; i++) {
+            for (var i = 0; i < _pageIndex.Count; i++) {
                 var pageIndexItem = _pageIndex[i];
 
                 if (pageIndexItem.PageId != pageId) {
                     continue;
                 }
 
-                var parentPage = GetPageIndexItem(pageIndexItem.ParentId);
-                if (parentPage.FirstChild == i) {
-                    parentPage.FirstChild = pageIndexItem.NextPage;
+                if (pageIndexItem.ParentId == targetId) {
+                    // TODO: There's no need to move the page, fix the sort order instead
+                    return;
+                }
+
+                if (pageIndexItem.ParentId == Guid.Empty) {
+                    i = DetachPageFromRoot(i, pageIndexItem);
                 }
                 else {
-                    var childId = parentPage.FirstChild;
-                    while (childId != -1) {
-                        var childPage = _pageIndex[childId];
-                        if (childPage.NextPage == i) {
-                            childPage.NextPage = pageIndexItem.NextPage;
-                            break;
-                        }
-                        childId = childPage.NextPage;
-                    }
+                    DetachPage(pageIndexItem, i);
                 }
 
-                pageIndexItem.ParentId = targetId;
-                pageIndexItem.NextPage = targetPage.FirstChild;
-                pageIndexItem.UrlSegment = PageNameBuilder.GetUniqueUrl(targetPage.PageId, pageIndexItem.UrlSegment);
-                pageIndexItem.UrlSegmentHash = pageIndexItem.UrlSegment.GetHashCode();
-                targetPage.FirstChild = i;
+                if (targetId == Guid.Empty) {
+                    pageIndexItem.UrlSegment = PageNameBuilder.GetUniqueUrl(targetId, pageIndexItem.UrlSegment);
+                    pageIndexItem.UrlSegmentHash = pageIndexItem.UrlSegment.GetHashCode();
+                    pageIndexItem.ParentId = targetId;
+                    var firstSibling = _pageIndex[0];
+                    pageIndexItem.NextPage = firstSibling.NextPage;
+                    firstSibling.NextPage = i;
 
-                UpdateNodeAfterMove(changedItems, targetPage.PageUrl, targetPage.RootId, targetPage.TreeLevel, pageIndexItem);
+                    UpdateNodeAfterMove(changedItems, "", pageId, 0, pageIndexItem);
+                }
+                else {
+                    var targetPage = GetPageIndexItem(targetId);
+                    pageIndexItem.UrlSegment = PageNameBuilder.GetUniqueUrl(targetPage.PageId, pageIndexItem.UrlSegment);
+                    pageIndexItem.UrlSegmentHash = pageIndexItem.UrlSegment.GetHashCode();
+                    pageIndexItem.ParentId = targetId;
+                    pageIndexItem.NextPage = targetPage.FirstChild;
+                    targetPage.FirstChild = i;
+
+                    UpdateNodeAfterMove(changedItems, targetPage.PageUrl, targetPage.RootId, targetPage.TreeLevel, pageIndexItem);
+                }
 
                 break;
             }
 
             PageData.UpdateStructure(changedItems);
-//            WriteIndexToLog();
+        }
+
+        private void DetachPage(PageIndexItem pageIndexItem, int i) {
+            var parentPage = GetPageIndexItem(pageIndexItem.ParentId);
+            if (parentPage.FirstChild == i) {
+                parentPage.FirstChild = pageIndexItem.NextPage;
+            }
+            else {
+                var childId = parentPage.FirstChild;
+                while (childId != -1) {
+                    var childPage = _pageIndex[childId];
+                    if (childPage.NextPage == i) {
+                        childPage.NextPage = pageIndexItem.NextPage;
+                        break;
+                    }
+                    childId = childPage.NextPage;
+                }
+            }
+        }
+
+        private int DetachPageFromRoot(int i, PageIndexItem pageIndexItem) {
+            if (i == 0) {
+                var firstSiblingPosition = pageIndexItem.NextPage;
+                var firstSibling = _pageIndex[firstSiblingPosition];
+                var temporaryItem = new PageIndexItem {PageId = new Guid("ffffffff-ffff-ffff-ffff-ffffffffffff")};
+                _pageIndex[0] = temporaryItem;
+                _pageIndex[firstSiblingPosition] = pageIndexItem;
+                _pageIndex[0] = firstSibling;
+                i = firstSiblingPosition;
+            }
+            else {
+                var childId = 0;
+                while (childId != -1) {
+                    var childPage = _pageIndex[childId];
+                    if (childPage.NextPage == i) {
+                        childPage.NextPage = pageIndexItem.NextPage;
+                        break;
+                    }
+                    childId = childPage.NextPage;
+                }
+            }
+            return i;
         }
 
         private void UpdateChildrenAfterMove(List<PageIndexItem> changedItems, string parentUrl, int childOffset, Guid rootId, int treeLevel) {

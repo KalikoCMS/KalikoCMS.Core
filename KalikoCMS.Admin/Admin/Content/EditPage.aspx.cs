@@ -137,7 +137,7 @@ namespace KalikoCMS.Admin.Content {
         private void SaveButtonEventHandler(object sender, EventArgs e) {
             if(IsDataValid) {
                 SaveData();
-                MessageBox.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> saved!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();parent.refreshTreeNode('{1}');</script>", _pageName, _parentId);
+                MessageBox.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> saved!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();parent.refreshTreeNode('{1}','{2}');</script>", _pageName, _parentId, _pageId);
                 MessageBox.Visible = true;
 
                 if (_pageTypeId > 0) {

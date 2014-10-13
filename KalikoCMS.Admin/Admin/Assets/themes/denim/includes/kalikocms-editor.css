@@ -34,6 +34,9 @@
 .btn-icon-normal i {
   display: block;
 }
+.btn-sm i {
+  margin-right: 5px;
+}
 /* Collection editor */
 .collection-item {
   display: block;
@@ -94,8 +97,16 @@
   padding: 15px;
 }
 .sidebar-nav #pagetree {
-  top: 40px;
+  top: 5px;
+  bottom: 40px;
   padding: 0;
+}
+.pagetree-controls {
+  position: absolute;
+  bottom: 0;
+}
+.pagetree-controls .btn {
+  width: 50%;
 }
 .sortable-collection {
   padding-left: 0;
