@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <connectionStrings xdt:Transform="InsertIfMissing" />
+  <connectionStrings>
+    <add name="KalikoCMS" connectionString="Data Source=|DataDirectory|kalikocms.db3;Version=3;" providerName="System.Data.SQLite" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)" />
+  </connectionStrings>
+</configuration>

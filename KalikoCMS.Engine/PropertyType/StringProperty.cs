@@ -22,7 +22,7 @@ namespace KalikoCMS.PropertyType {
     using KalikoCMS.Core;
     using KalikoCMS.Serialization;
 
-    [PropertyType("296f2f4a-99a5-4b54-96bc-8148830a8fc5", "String", "String", "~/Admin/Content/PropertyType/StringPropertyEditor.ascx")]
+    [PropertyType("296f2f4a-99a5-4b54-96bc-8148830a8fc5", "String", "String", "%AdminPath%Content/PropertyType/StringPropertyEditor.ascx")]
     public class StringProperty : PropertyData {
         private static readonly int EmptyHashCode = string.Empty.GetHashCode();
         private int? _cachedHashCode;

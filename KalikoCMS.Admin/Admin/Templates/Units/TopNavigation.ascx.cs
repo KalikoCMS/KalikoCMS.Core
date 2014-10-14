@@ -18,7 +18,11 @@
 #endregion
 
 namespace KalikoCMS.Admin.Templates.Units {
+    using MasterPages;
+
     public partial class TopNavigation : System.Web.UI.UserControl {
+        private string _activeArea;
+
         protected string CurrentUser {
             get {
                 if(Page.User.Identity.IsAuthenticated) {
@@ -28,6 +32,10 @@ namespace KalikoCMS.Admin.Templates.Units {
                     return "Anonymous";
                 }
             }
+        }
+
+        public string ActiveArea {
+            get { return _activeArea ?? (_activeArea = ((Admin)Page.Master).ActiveArea); }
         }
     }
 }

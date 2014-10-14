@@ -2,13 +2,13 @@
 <%@ Register TagPrefix="custom" tagName="PageTreeControl" src="PageTree/PageTreeControl.ascx" %>
 
 <asp:Content ContentPlaceHolderID="LeftRegion" runat="server">
-    <div class="well sidebar-nav full-height no-scroll">
+    <div class="sidebar-nav">
         <custom:PageTreeControl runat="server"/>
     </div>
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="RightRegion" runat="server">
-    <div id="maincontent-wrapper">
+    <div class="main-area">
         <iframe id="maincontent" src="about:blank"></iframe>
     </div>
     

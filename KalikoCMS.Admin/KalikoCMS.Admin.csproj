@@ -45,7 +45,8 @@
     <OutputPath>..\..\Bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <ExcludeFoldersFromDeployment>Admin\Assets\less</ExcludeFoldersFromDeployment>
+    <ExcludeFilesFromDeployment>Admin\Assets\themes\denim\theme.less;Admin\Assets\themes\denim\theme.css;Admin\Assets\themes\denim\theme.css.map;Admin\Assets\js\*.bundle;Admin\Assets\js\kalikocms.admin.core.js;Admin\Assets\js\kalikocms.admin.editor.js;Admin\Assets\js\kalikocms.admin.fileupload.js;Admin\Assets\js\kalikocms.admin.imageeditor.js;Admin\Assets\js\kalikocms.admin.taginput.js;Admin\Assets\js\*.map;Admin\Assets\vendors\tinymce\tinymce.min.js;Admin\Assets\vendors\tmpl.min.js;Admin\Assets\vendors\typeahead.min.js;Admin\Assets\vendors\jquery\js\jquery.*;Admin\Assets\vendors\jquery\js\jquery-ui.min.js;Admin\Assets\vendors\jquery\css\jquery-ui.custom.css;</ExcludeFilesFromDeployment>
+    <ExcludeFoldersFromDeployment>Admin\Assets\less;Admin\Assets\vendors\bootstrap;Admin\Assets\themes\denim\includes;Admin\Assets\vendors\font-awesome\less;Admin\Assets\vendors\jstree;</ExcludeFoldersFromDeployment>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
@@ -58,12 +59,13 @@
       <HintPath>..\packages\Kaliko.Logger.1.1.0\lib\Kaliko.Logger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml" />
     <Reference Include="Telerik.OpenAccess, Version=2014.2.711.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.711.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
@@ -80,86 +82,162 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Admin\Assets\css\bootstrap-modal-bs3patch.css" />
-    <Content Include="Admin\Assets\css\jquery.jcrop.min.css" />
-    <Content Include="Admin\Assets\js\bootstrap-tagsinput.min.js" />
-    <Content Include="Admin\Assets\js\typeahead.min.js" />
-    <Content Include="Admin\Assets\less\kalikocms.admin.css.map">
-      <DependentUpon>kalikocms.admin.css</DependentUpon>
+    <Content Include="Admin\Assets\fonts\hind\OFL.txt" />
+    <Content Include="Admin\Assets\fonts\hind\webfont-hind.css" />
+    <Content Include="Admin\Assets\images\logo.png" />
+    <Content Include="Admin\Assets\js\kalikocms.admin.core.js">
+      <DependentUpon>kalikocms.admin.core.js.bundle</DependentUpon>
     </Content>
-    <Content Include="Admin\Assets\less\bootstrap-tagsinput.less" />
-    <None Include="Admin\Assets\less\kalikocms.admin.less" />
-    <Content Include="Admin\Assets\fonts\css\font-awesome-ie7.css" />
-    <Content Include="Admin\Assets\fonts\css\font-awesome-ie7.min.css" />
-    <Content Include="Admin\Assets\fonts\css\font-awesome.css" />
-    <Content Include="Admin\Assets\fonts\css\font-awesome.min.css" />
-    <Content Include="Admin\Assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="Admin\Assets\js\kalikocms.admin.core.min.js">
+      <DependentUpon>kalikocms.admin.core.js</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\js\kalikocms.admin.editor.js">
+      <DependentUpon>kalikocms.admin.editor.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\js\kalikocms.admin.editor.min.js">
+      <DependentUpon>kalikocms.admin.editor.js</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\js\kalikocms.admin.fileupload.js">
+      <DependentUpon>kalikocms.admin.fileupload.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\js\kalikocms.admin.fileupload.min.js">
+      <DependentUpon>kalikocms.admin.fileupload.js</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\js\kalikocms.admin.imageeditor.js">
+      <DependentUpon>kalikocms.admin.imageeditor.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\js\kalikocms.admin.imageeditor.min.js">
+      <DependentUpon>kalikocms.admin.imageeditor.js</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\js\kalikocms.admin.taginput.js">
+      <DependentUpon>kalikocms.admin.taginput.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\js\kalikocms.admin.taginput.min.js">
+      <DependentUpon>kalikocms.admin.taginput.js</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\themes\denim\includes\32px.png" />
+    <Content Include="Admin\Assets\themes\denim\includes\bootstrap-theme.less" />
+    <None Include="Admin\Assets\themes\denim\includes\jstree.less" />
+    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-editor.css">
+      <DependentUpon>kalikocms-editor.less</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-editor.min.css">
+      <DependentUpon>kalikocms-editor.css</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-framework.css">
+      <DependentUpon>kalikocms-framework.less</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-framework.min.css">
+      <DependentUpon>kalikocms-framework.css</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\themes\denim\theme.css">
+      <DependentUpon>theme.less</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\themes\denim\theme.js" />
+    <Content Include="Admin\Assets\themes\denim\includes\throbber.gif" />
+    <Content Include="Admin\Assets\themes\denim\theme.min.css">
+      <DependentUpon>theme.css</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\vendors\bootstrap\css\bootstrap-modal-bs3patch.css" />
+    <Content Include="Admin\Assets\vendors\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Admin\Assets\vendors\jquery\css\jquery.jcrop.min.css" />
+    <Content Include="Admin\Assets\vendors\bootstrap\js\bootstrap-tagsinput.min.js" />
+    <Content Include="Admin\Assets\vendors\jstree\themes\default\32px.png" />
+    <Content Include="Admin\Assets\vendors\jstree\themes\default\40px.png" />
+    <Content Include="Admin\Assets\vendors\jstree\themes\default\style.css" />
+    <Content Include="Admin\Assets\vendors\jstree\themes\default\style.min.css" />
+    <Content Include="Admin\Assets\vendors\jstree\themes\default\throbber.gif" />
+    <Content Include="Admin\Assets\vendors\typeahead.min.js" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\bootstrap-tagsinput.less" />
+    <Content Include="Admin\Assets\js\kalikocms.admin.core.js.bundle" />
+    <Content Include="Admin\Assets\js\kalikocms.admin.core.min.js.map">
+      <DependentUpon>kalikocms.admin.core.min.js</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\js\kalikocms.admin.editor.js.bundle" />
+    <Content Include="Admin\Assets\js\kalikocms.admin.editor.min.js.map">
+      <DependentUpon>kalikocms.admin.editor.min.js</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\js\kalikocms.admin.fileupload.js.bundle" />
+    <Content Include="Admin\Assets\js\kalikocms.admin.fileupload.min.js.map">
+      <DependentUpon>kalikocms.admin.fileupload.min.js</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\js\kalikocms.admin.taginput.js.bundle" />
+    <Content Include="Admin\Assets\js\kalikocms.admin.taginput.min.js.map">
+      <DependentUpon>kalikocms.admin.taginput.min.js</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\js\kalikocms.admin.imageeditor.js.bundle" />
+    <Content Include="Admin\Assets\js\kalikocms.admin.imageeditor.min.js.map">
+      <DependentUpon>kalikocms.admin.imageeditor.min.js</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\fonts\hind\hind-bold-webfont.eot" />
+    <Content Include="Admin\Assets\fonts\hind\hind-bold-webfont.ttf" />
+    <Content Include="Admin\Assets\fonts\hind\hind-bold-webfont.woff" />
+    <Content Include="Admin\Assets\fonts\hind\hind-light-webfont.eot" />
+    <Content Include="Admin\Assets\fonts\hind\hind-light-webfont.ttf" />
+    <Content Include="Admin\Assets\fonts\hind\hind-light-webfont.woff" />
+    <Content Include="Admin\Assets\fonts\hind\hind-medium-webfont.eot" />
+    <Content Include="Admin\Assets\fonts\hind\hind-medium-webfont.ttf" />
+    <Content Include="Admin\Assets\fonts\hind\hind-medium-webfont.woff" />
+    <Content Include="Admin\Assets\fonts\hind\hind-regular-webfont.eot" />
+    <Content Include="Admin\Assets\fonts\hind\hind-regular-webfont.ttf" />
+    <Content Include="Admin\Assets\fonts\hind\hind-regular-webfont.woff" />
+    <Content Include="Admin\Assets\fonts\hind\hind-semibold-webfont.eot" />
+    <Content Include="Admin\Assets\fonts\hind\hind-semibold-webfont.ttf" />
+    <Content Include="Admin\Assets\fonts\hind\hind-semibold-webfont.woff" />
     <Content Include="Admin\Assets\images\error-image.jpg" />
     <Content Include="Admin\Assets\images\loading.gif" />
     <Content Include="Admin\Assets\images\no-image.jpg" />
     <Content Include="Admin\Assets\images\progressbar.gif" />
-    <Content Include="Admin\Assets\js\bootbox.min.js" />
-    <Content Include="Admin\Assets\js\bootstrap-datetimepicker.min.js" />
-    <Content Include="Admin\Assets\js\bootstrap-modal.js" />
-    <Content Include="Admin\Assets\js\bootstrap-modalmanager.js" />
-    <Content Include="Admin\Assets\js\bootstrap-notify.js" />
-    <Content Include="Admin\Assets\js\jquery-ui.min.js" />
-    <Content Include="Admin\Assets\js\jquery.color.js" />
-    <Content Include="Admin\Assets\js\jquery.fileupload-process.js" />
-    <Content Include="Admin\Assets\js\jquery.fileupload-ui.js" />
-    <Content Include="Admin\Assets\js\jquery.fileupload-validate.js" />
-    <Content Include="Admin\Assets\js\jquery.fileupload.js" />
-    <Content Include="Admin\Assets\js\jquery.hotkeys.js" />
-    <Content Include="Admin\Assets\js\jquery.iframe-transport.js" />
-    <Content Include="Admin\Assets\js\jquery.jcrop.min.js" />
-    <Content Include="Admin\Assets\js\jquery.ui.widget.js" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-cool.gif" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-cry.gif" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-embarassed.gif" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-frown.gif" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-innocent.gif" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-kiss.gif" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-laughing.gif" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-money-mouth.gif" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-sealed.gif" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-smile.gif" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-surprised.gif" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-tongue-out.gif" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-undecided.gif" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-wink.gif" />
-    <Content Include="Admin\Assets\js\plugins\emoticons\img\smiley-yell.gif" />
-    <Content Include="Admin\Assets\js\plugins\visualblocks\css\visualblocks.css" />
-    <Content Include="Admin\Assets\js\skins\lightgray\content.inline.min.css" />
-    <Content Include="Admin\Assets\js\skins\lightgray\content.min.css" />
-    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce-small.svg" />
-    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce.svg" />
-    <Content Include="Admin\Assets\js\skins\lightgray\img\anchor.gif" />
-    <Content Include="Admin\Assets\js\skins\lightgray\img\loader.gif" />
-    <Content Include="Admin\Assets\js\skins\lightgray\img\object.gif" />
-    <Content Include="Admin\Assets\js\skins\lightgray\img\trans.gif" />
-    <Content Include="Admin\Assets\js\skins\lightgray\skin.ie7.min.css" />
-    <Content Include="Admin\Assets\js\skins\lightgray\skin.min.css" />
-    <Content Include="Admin\Assets\js\tinymce.license.txt" />
-    <Content Include="Admin\Assets\js\tinymce.min.js" />
-    <Content Include="Admin\Assets\js\tmpl.min.js" />
-    <Content Include="Admin\Assets\css\bootstrap-datetimepicker.min.css" />
-    <Content Include="Admin\Assets\css\bootstrap-modal.css" />
-    <Content Include="Admin\Assets\css\bootstrap-notify.css" />
-    <Content Include="Admin\Assets\css\jquery.fileupload-ui.css" />
-    <Content Include="Admin\Assets\less\kalikocms.admin.css">
-      <DependentUpon>kalikocms.admin.less</DependentUpon>
-    </Content>
-    <Content Include="Admin\Assets\less\kalikocms.admin.min.css">
-      <DependentUpon>kalikocms.admin.css</DependentUpon>
-    </Content>
-    <Content Include="Admin\Assets\less\LICENSE-bootstrap.txt" />
-    <Content Include="Admin\Assets\themes\default\default.css">
-      <DependentUpon>default.less</DependentUpon>
-    </Content>
-    <Content Include="Admin\Assets\themes\default\default.min.css">
-      <DependentUpon>default.css</DependentUpon>
-    </Content>
+    <Content Include="Admin\Assets\vendors\bootstrap\js\bootbox.min.js" />
+    <Content Include="Admin\Assets\vendors\bootstrap\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="Admin\Assets\vendors\bootstrap\js\bootstrap-modal.js" />
+    <Content Include="Admin\Assets\vendors\bootstrap\js\bootstrap-modalmanager.js" />
+    <Content Include="Admin\Assets\vendors\bootstrap\js\bootstrap-notify.js" />
+    <Content Include="Admin\Assets\vendors\jquery\js\jquery-ui.min.js" />
+    <Content Include="Admin\Assets\vendors\jquery\js\jquery.color.js" />
+    <Content Include="Admin\Assets\vendors\jquery\js\jquery.fileupload-process.js" />
+    <Content Include="Admin\Assets\vendors\jquery\js\jquery.fileupload-ui.js" />
+    <Content Include="Admin\Assets\vendors\jquery\js\jquery.fileupload-validate.js" />
+    <Content Include="Admin\Assets\vendors\jquery\js\jquery.fileupload.js" />
+    <Content Include="Admin\Assets\vendors\jquery\js\jquery.hotkeys.js" />
+    <Content Include="Admin\Assets\vendors\jquery\js\jquery.iframe-transport.js" />
+    <Content Include="Admin\Assets\vendors\jquery\js\jquery.jcrop.min.js" />
+    <Content Include="Admin\Assets\vendors\jquery\js\jquery.ui.widget.js" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-cool.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-cry.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-embarassed.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-frown.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-innocent.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-kiss.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-laughing.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-money-mouth.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-sealed.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-smile.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-surprised.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-tongue-out.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-undecided.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-wink.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-yell.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\content.inline.min.css" />
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\content.min.css" />
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\fonts\tinymce-small.svg" />
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\fonts\tinymce.svg" />
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\img\anchor.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\img\loader.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\img\object.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\img\trans.gif" />
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\skin.ie7.min.css" />
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\skin.min.css" />
+    <Content Include="Admin\Assets\vendors\tinymce\tinymce.license.txt" />
+    <Content Include="Admin\Assets\vendors\tinymce\tinymce.min.js" />
+    <Content Include="Admin\Assets\vendors\tmpl.min.js" />
+    <Content Include="Admin\Assets\vendors\bootstrap\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Admin\Assets\vendors\bootstrap\css\bootstrap-modal.css" />
+    <Content Include="Admin\Assets\vendors\bootstrap\css\bootstrap-notify.css" />
+    <Content Include="Admin\Assets\vendors\jquery\css\jquery.fileupload-ui.css" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\LICENSE-bootstrap.txt" />
     <Content Include="Admin\Content\Dialogs\EditImageDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectFileDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectLinkDialog.aspx" />
@@ -177,11 +255,12 @@
     <Content Include="Admin\Content\PropertyType\PageLinkPropertyEditor.js" />
     <Content Include="Admin\Content\PropertyType\TagPropertyEditor.ascx" />
     <Content Include="Admin\Search\Default.aspx" />
+    <Content Include="Admin\Templates\Units\SideNavigation.ascx" />
     <Content Include="Admin\Templates\Units\TopNavigation.ascx" />
-    <Content Include="Admin\Assets\js\bootstrap.min.js" />
-    <Content Include="Admin\Assets\js\html5shiv.min.js" />
-    <Content Include="Admin\Assets\js\jquery-1.10.2.min.js" />
-    <Content Include="Admin\Assets\css\jquery-ui.custom.css" />
+    <Content Include="Admin\Assets\vendors\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Admin\Assets\vendors\html5shiv.min.js" />
+    <Content Include="Admin\Assets\vendors\jquery\js\jquery-1.10.2.min.js" />
+    <Content Include="Admin\Assets\vendors\jquery\css\jquery-ui.custom.css" />
     <Content Include="Admin\Content\Default.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectPagetypeDialog.aspx" />
     <Content Include="Admin\Content\EditPage.aspx" />
@@ -193,9 +272,10 @@
     <Content Include="Admin\Content\PropertyType\StringPropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\TextPropertyEditor.ascx" />
     <Content Include="Admin\Default.aspx" />
-    <Content Include="Admin\Assets\js\jquery.cookie.js" />
-    <Content Include="Admin\Assets\js\jquery.jstree.js" />
-    <Content Include="Admin\Assets\css\jstree.classic.css" />
+    <Content Include="Admin\Assets\vendors\jquery\js\jquery.cookie.js" />
+    <Content Include="Admin\Assets\vendors\jstree\js\jquery.jstree.js" />
+    <Content Include="Files\Readme.txt" />
+    <Content Include="ImageCache\readme.txt" />
     <Content Include="Login.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -206,9 +286,45 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <None Include="Properties\PublishProfiles\Deploy.pubxml" />
+    <Content Include="Admin\Assets\themes\denim\theme.less" />
+    <Content Include="Admin\Assets\themes\denim\includes\variables.less" />
+    <Content Include="Admin\Assets\vendors\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Admin\Assets\vendors\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Admin\Assets\vendors\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Admin\Assets\vendors\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Admin\Assets\vendors\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Admin\Assets\vendors\font-awesome\less\core.less" />
+    <Content Include="Admin\Assets\vendors\font-awesome\less\fixed-width.less" />
+    <Content Include="Admin\Assets\vendors\font-awesome\less\font-awesome.less" />
+    <Content Include="Admin\Assets\vendors\font-awesome\less\icons.less" />
+    <Content Include="Admin\Assets\vendors\font-awesome\less\larger.less" />
+    <Content Include="Admin\Assets\vendors\font-awesome\less\list.less" />
+    <Content Include="Admin\Assets\vendors\font-awesome\less\mixins.less" />
+    <Content Include="Admin\Assets\vendors\font-awesome\less\path.less" />
+    <Content Include="Admin\Assets\vendors\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Admin\Assets\vendors\font-awesome\less\spinning.less" />
+    <Content Include="Admin\Assets\vendors\font-awesome\less\stacked.less" />
+    <Content Include="Admin\Assets\vendors\font-awesome\less\variables.less" />
+    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-framework.less" />
+    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-editor.less" />
+    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-framework.css.map">
+      <DependentUpon>kalikocms-framework.css</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-editor.css.map">
+      <DependentUpon>kalikocms-editor.css</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\themes\denim\theme.css.map">
+      <DependentUpon>theme.css</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\Deploy.pubxml">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="web.config.install.xdt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Admin\Content\Dialogs\EditImageDialog.aspx.cs">
       <DependentUpon>EditImageDialog.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -319,6 +435,13 @@
     </Compile>
     <Compile Include="Admin\Templates\MasterPages\Base.Master.designer.cs">
       <DependentUpon>Base.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Templates\Units\SideNavigation.ascx.cs">
+      <DependentUpon>SideNavigation.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Templates\Units\SideNavigation.ascx.designer.cs">
+      <DependentUpon>SideNavigation.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Templates\Units\TopNavigation.ascx.cs">
       <DependentUpon>TopNavigation.ascx</DependentUpon>
@@ -436,106 +559,92 @@
     <Content Include="Admin\Assets\images\Thumbnail.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Admin\Assets\fonts\fontawesome-webfont.eot" />
-    <Content Include="Admin\Assets\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Admin\Assets\fonts\fontawesome-webfont.woff" />
-    <Content Include="Admin\Assets\fonts\FontAwesome.otf" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Admin\Templates\MasterPages\Base.Master" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\Handlers\FileHandler.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce-small.eot" />
-    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce-small.ttf" />
-    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce-small.woff" />
-    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce.eot" />
-    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce.ttf" />
-    <Content Include="Admin\Assets\js\skins\lightgray\fonts\tinymce.woff" />
-    <Content Include="Admin\Assets\less\alerts.less" />
-    <Content Include="Admin\Assets\less\badges.less" />
-    <Content Include="Admin\Assets\less\bootstrap.less" />
-    <Content Include="Admin\Assets\less\breadcrumbs.less" />
-    <Content Include="Admin\Assets\less\button-groups.less" />
-    <Content Include="Admin\Assets\less\buttons.less" />
-    <Content Include="Admin\Assets\less\carousel.less" />
-    <Content Include="Admin\Assets\less\close.less" />
-    <Content Include="Admin\Assets\less\code.less" />
-    <Content Include="Admin\Assets\less\component-animations.less" />
-    <Content Include="Admin\Assets\less\dropdowns.less" />
-    <Content Include="Admin\Assets\less\forms.less" />
-    <Content Include="Admin\Assets\less\glyphicons.less" />
-    <Content Include="Admin\Assets\less\grid.less" />
-    <Content Include="Admin\Assets\less\input-groups.less" />
-    <Content Include="Admin\Assets\less\jumbotron.less" />
-    <Content Include="Admin\Assets\less\labels.less" />
-    <Content Include="Admin\Assets\less\list-group.less" />
-    <Content Include="Admin\Assets\less\media.less" />
-    <Content Include="Admin\Assets\less\mixins.less" />
-    <Content Include="Admin\Assets\less\mixins\alerts.less" />
-    <Content Include="Admin\Assets\less\mixins\background-variant.less" />
-    <Content Include="Admin\Assets\less\mixins\border-radius.less" />
-    <Content Include="Admin\Assets\less\mixins\buttons.less" />
-    <Content Include="Admin\Assets\less\mixins\center-block.less" />
-    <Content Include="Admin\Assets\less\mixins\clearfix.less" />
-    <Content Include="Admin\Assets\less\mixins\forms.less" />
-    <Content Include="Admin\Assets\less\mixins\gradients.less" />
-    <Content Include="Admin\Assets\less\mixins\grid-framework.less" />
-    <Content Include="Admin\Assets\less\mixins\grid.less" />
-    <Content Include="Admin\Assets\less\mixins\hide-text.less" />
-    <Content Include="Admin\Assets\less\mixins\image.less" />
-    <Content Include="Admin\Assets\less\mixins\labels.less" />
-    <Content Include="Admin\Assets\less\mixins\list-group.less" />
-    <Content Include="Admin\Assets\less\mixins\nav-divider.less" />
-    <Content Include="Admin\Assets\less\mixins\nav-vertical-align.less" />
-    <Content Include="Admin\Assets\less\mixins\opacity.less" />
-    <Content Include="Admin\Assets\less\mixins\pagination.less" />
-    <Content Include="Admin\Assets\less\mixins\panels.less" />
-    <Content Include="Admin\Assets\less\mixins\progress-bar.less" />
-    <Content Include="Admin\Assets\less\mixins\reset-filter.less" />
-    <Content Include="Admin\Assets\less\mixins\resize.less" />
-    <Content Include="Admin\Assets\less\mixins\responsive-visibility.less" />
-    <Content Include="Admin\Assets\less\mixins\size.less" />
-    <Content Include="Admin\Assets\less\mixins\tab-focus.less" />
-    <Content Include="Admin\Assets\less\mixins\table-row.less" />
-    <Content Include="Admin\Assets\less\mixins\text-emphasis.less" />
-    <Content Include="Admin\Assets\less\mixins\text-overflow.less" />
-    <Content Include="Admin\Assets\less\mixins\vendor-prefixes.less" />
-    <Content Include="Admin\Assets\less\modals.less" />
-    <Content Include="Admin\Assets\less\navbar.less" />
-    <Content Include="Admin\Assets\less\navs.less" />
-    <Content Include="Admin\Assets\less\normalize.less" />
-    <Content Include="Admin\Assets\less\pager.less" />
-    <Content Include="Admin\Assets\less\pagination.less" />
-    <Content Include="Admin\Assets\less\panels.less" />
-    <Content Include="Admin\Assets\less\popovers.less" />
-    <Content Include="Admin\Assets\less\print.less" />
-    <Content Include="Admin\Assets\less\progress-bars.less" />
-    <Content Include="Admin\Assets\less\responsive-embed.less" />
-    <Content Include="Admin\Assets\less\responsive-utilities.less" />
-    <Content Include="Admin\Assets\less\scaffolding.less" />
-    <Content Include="Admin\Assets\less\tables.less" />
-    <Content Include="Admin\Assets\less\theme.less" />
-    <Content Include="Admin\Assets\less\thumbnails.less" />
-    <Content Include="Admin\Assets\less\tooltip.less" />
-    <Content Include="Admin\Assets\less\type.less" />
-    <Content Include="Admin\Assets\less\utilities.less" />
-    <Content Include="Admin\Assets\less\variables.less" />
-    <Content Include="Admin\Assets\less\wells.less" />
-    <Content Include="Admin\Assets\themes\default\default.less" />
-    <Content Include="Admin\Assets\themes\default\variables.less" />
-    <Content Include="Admin\Assets\less\bootstrap-custom.less" />
-    <Content Include="Admin\Assets\themes\default\default.css.map">
-      <DependentUpon>default.css</DependentUpon>
-    </Content>
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\fonts\tinymce-small.eot" />
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\fonts\tinymce-small.ttf" />
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\fonts\tinymce-small.woff" />
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\fonts\tinymce.eot" />
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\fonts\tinymce.ttf" />
+    <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\alerts.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\badges.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\bootstrap.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\breadcrumbs.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\button-groups.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\buttons.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\carousel.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\close.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\code.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\component-animations.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\dropdowns.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\forms.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\glyphicons.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\grid.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\input-groups.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\jumbotron.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\labels.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\list-group.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\media.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\alerts.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\background-variant.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\border-radius.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\buttons.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\center-block.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\clearfix.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\forms.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\gradients.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\grid-framework.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\grid.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\hide-text.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\image.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\labels.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\list-group.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\nav-divider.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\nav-vertical-align.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\opacity.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\pagination.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\panels.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\progress-bar.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\reset-filter.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\resize.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\responsive-visibility.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\size.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\tab-focus.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\table-row.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\text-emphasis.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\text-overflow.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\mixins\vendor-prefixes.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\modals.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\navbar.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\navs.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\normalize.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\pager.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\pagination.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\panels.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\popovers.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\print.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\progress-bars.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\responsive-embed.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\responsive-utilities.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\scaffolding.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\tables.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\theme.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\thumbnails.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\tooltip.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\type.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\utilities.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\variables.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\wells.less" />
+    <Content Include="Admin\Assets\vendors\bootstrap\less\bootstrap-custom.less" />
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\Build.pubxml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Admin\Assets\fonts\font\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

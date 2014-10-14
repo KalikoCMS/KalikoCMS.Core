@@ -24,7 +24,7 @@ namespace KalikoCMS.PropertyType {
     using Core;
     using Serialization;
 
-    [PropertyType("5A382737-2FFD-4AFE-A711-822863AF786C", "Tag", "Tag", "~/Admin/Content/PropertyType/TagPropertyEditor.ascx")]
+    [PropertyType("5A382737-2FFD-4AFE-A711-822863AF786C", "Tag", "Tag", "%AdminPath%Content/PropertyType/TagPropertyEditor.ascx")]
     public class TagProperty : PropertyData, IPageSavedHandler {
         public TagProperty() {
             Tags = new List<string>();

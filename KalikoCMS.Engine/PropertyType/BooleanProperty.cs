@@ -23,7 +23,7 @@ namespace KalikoCMS.PropertyType {
     using Core;
     using Serialization;
 
-    [PropertyType("FC9D9E40-F749-4A5A-BB8F-EF065EA7935C", "Boolean", "Boolean", "~/Admin/Content/PropertyType/BooleanPropertyEditor.ascx")]
+    [PropertyType("FC9D9E40-F749-4A5A-BB8F-EF065EA7935C", "Boolean", "Boolean", "%AdminPath%Content/PropertyType/BooleanPropertyEditor.ascx")]
     public class BooleanProperty : PropertyData {
         private bool _value;
         private int? _cachedHashCode;

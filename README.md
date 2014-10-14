@@ -33,10 +33,35 @@ The master branch will always include the latest release while new development w
 Kaliko CMS is licensed under *GNU Lesser General Public License version 3 (LGPL)*. However, this project also contains other libraries with their individual licenses.
 
 **KalikoCMS.Core makes use of:**
-- fastJSON ([Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))
-- Font Awesome ([SIL OFL/MIT](http://fortawesome.github.io/Font-Awesome/license/))
-- Telerik Data Access ([License](http://www.telerik.com/purchase/license-agreement/data-access))
-- jQuery ([MIT](http://jquery.org/license) / [GPLv2](http://jquery.org/license))
-- Logger ([Ms-PL](http://dotnetlogger.codeplex.com/license))
-- .NET Image Library ([Ms-PL](http://dotnetlogger.codeplex.com/license))
-- Twitter Bootstrap ([Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))
+
+* AutoMapper ([MIT](https://github.com/AutoMapper/AutoMapper/blob/develop/LICENSE.txt))
+* Bootbox.js ([MIT](http://opensource.org/licenses/mit-license.php))
+* Bootstrap Modal ([Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))
+* Bootstrap-notify ([Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))
+* Bootstrap Tags Input ([MIT](http://opensource.org/licenses/mit-license.php))
+* Datepicker for Bootstrap ([Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))
+* fastJSON ([Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))
+* Font Awesome ([SIL OFL/MIT](http://fortawesome.github.io/Font-Awesome/license/))
+* JavaScript Templates ([MIT](http://opensource.org/licenses/mit-license.php))
+* Jcrop ([MIT](http://opensource.org/licenses/mit-license.php))
+* jQuery ([MIT](http://jquery.org/license) / [GPLv2](http://jquery.org/license))
+* jQuery Color Animations ([MIT](http://opensource.org/licenses/mit-license.php))
+* jQuery Cookie plugin ([MIT](http://opensource.org/licenses/mit-license.php))
+* jQuery File Upload Plugin ([MIT](http://opensource.org/licenses/mit-license.php))
+* jsTree ([MIT](http://opensource.org/licenses/mit-license.php))
+* Logger ([Ms-PL](http://dotnetlogger.codeplex.com/license))
+* .NET Image Library ([Ms-PL](http://dotnetlogger.codeplex.com/license))
+* Telerik Data Access ([License](http://www.telerik.com/purchase/license-agreement/data-access))
+* TinyMCE ([LGPL 2.1](http://www.tinymce.com/js/tinymce4/js/tinymce/license.txt))
+* Twitter Bootstrap ([Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))
+* Typeahead.js ([MIT](http://opensource.org/licenses/mit-license.php))
+
+**KalikoCMS.Data-providers makes use of:**
+
+* MySQL Connector ([GPLv2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html))
+* System.Data.SQLite ([Public Domain](http://www.sqlite.org/copyright.html))
+
+**KalikoCMS.Search makes use of:**
+
+* Lucene.net ([Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))
+* Html Agility Pack ([Ms-PL](https://htmlagilitypack.codeplex.com/license))

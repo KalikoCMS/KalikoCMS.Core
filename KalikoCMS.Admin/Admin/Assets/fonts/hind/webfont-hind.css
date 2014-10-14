@@ -1,0 +1,68 @@
+@font-face {
+    font-family: 'Hind';
+    src: url('../../fonts/hind/hind-semibold-webfont.eot');
+    src: local('Hind Semibold'), local('Hind-Semibold'),
+         url('../../fonts/hind/hind-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/hind/hind-semibold-webfont.woff') format('woff'),
+         url('../../fonts/hind/hind-semibold-webfont.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+
+
+
+@font-face {
+    font-family: 'Hind';
+    src: url('../../fonts/hind/hind-regular-webfont.eot');
+    src: local('Hind Regular'), local('Hind-Regular'),
+         url('../../fonts/hind/hind-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/hind/hind-regular-webfont.woff') format('woff'),
+         url('../../fonts/hind/hind-regular-webfont.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+
+
+@font-face {
+    font-family: 'Hind';
+    src: url('../../fonts/hind/hind-medium-webfont.eot');
+    src: local('Hind Medium'), local('Hind-Medium'), 
+         url('../../fonts/hind/hind-medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/hind/hind-medium-webfont.woff') format('woff'),
+         url('../../fonts/hind/hind-medium-webfont.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Hind';
+    src: url('../../fonts/hind/hind-light-webfont.eot');
+    src: local('Hind Light'), local('Hind-Light'),  
+         url('../../fonts/hind/hind-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/hind/hind-light-webfont.woff') format('woff'),
+         url('../../fonts/hind/hind-light-webfont.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Hind';
+    src: url('../../fonts/hind/hind-bold-webfont.eot');
+    src: local('Hind Bold'), local('Hind-Bold'),
+         url('../../fonts/hind/hind-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/hind/hind-bold-webfont.woff') format('woff'),
+         url('../../fonts/hind/hind-bold-webfont.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}

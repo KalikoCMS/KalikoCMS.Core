@@ -23,7 +23,7 @@ namespace KalikoCMS.PropertyType {
     using Core;
     using Serialization;
 
-    [PropertyType("56A791FC-D480-40A9-B161-651B9C7D8AEA", "PageLink", "Page link property", "~/Admin/Content/PropertyType/PageLinkPropertyEditor.ascx")]
+    [PropertyType("56A791FC-D480-40A9-B161-651B9C7D8AEA", "PageLink", "Page link property", "%AdminPath%Content/PropertyType/PageLinkPropertyEditor.ascx")]
     public class PageLinkProperty : PropertyData {
         private int? _cachedHashCode;
         private CmsPage _page;

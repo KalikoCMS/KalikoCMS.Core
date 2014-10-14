@@ -29,6 +29,8 @@ namespace KalikoCMS.Admin.Templates.MasterPages {
             base.OnLoad(e);
         }
 
+        public string ActiveArea { get; set; }
+
         public string AdminPath {
             get {
                 return SiteSettings.Instance.AdminPath;

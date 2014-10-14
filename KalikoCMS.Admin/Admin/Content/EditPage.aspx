@@ -4,8 +4,10 @@
 <%@ Register tagPrefix="cms" tagName="BooleanPropertyEditor" src="PropertyType/BooleanPropertyEditor.ascx" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-  <form id="MainForm" class="page-editor" role="form" runat="server">
-    <h1><i class="icon-file-text"></i> <asp:Literal ID="PageHeader" runat="server" /></h1>
+  <form id="MainForm" class="page-editor admin-page" role="form" runat="server">
+    <div class="page-head">
+      <h1><asp:Literal ID="PageHeader" runat="server" /></h1>
+    </div>
     <div id="editor-panel">
       <div class="form-horizontal">
         <fieldset>
@@ -24,7 +26,7 @@
           <asp:Literal ID="ErrorMessage" runat="server" />
           <asp:Literal ID="MessageBox" Visible="False" runat="server" />
           <div class="form-actions">
-            <asp:LinkButton runat="server" ID="SaveButton" CssClass="btn btn-lg btn-primary"><i class="icon-ok icon-white"></i> Save page</asp:LinkButton>
+            <asp:LinkButton runat="server" ID="SaveButton" CssClass="btn btn-lg btn-primary"><i class="icon-thumbs-up icon-white"></i> Save page</asp:LinkButton>
           </div>
         </fieldset>
       </div>
@@ -34,14 +36,13 @@
 
 
 <asp:Content ContentPlaceHolderID="AdditionalScripts" runat="server">
-    <script src="assets/js/jquery-ui.min.js" type="text/javascript"></script>
-    <script src="assets/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-    <script src="assets/js/tinymce.min.js" type="text/javascript"></script>
+    <script src="assets/js/kalikocms.admin.editor.min.js" type="text/javascript"></script>
     
     <script type="text/javascript">
       $(document).ready(function () {
         // TODO: Get editor options/toolbar from property attribute and web.config
         tinymce.init({
+          skin_url: '../assets/vendors/tinymce/skins/lightgray',
           selector: "textarea.html-editor",
           plugins: [
               "advlist autolink lists link image charmap anchor",

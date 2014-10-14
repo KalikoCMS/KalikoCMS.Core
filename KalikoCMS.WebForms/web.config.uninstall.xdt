@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <system.webServer>
+    <modules>
+      <add name="RequestModule" type="KalikoCMS.WebForms.RequestModule, KalikoCMS.WebForms" xdt:Transform="Remove" xdt:Locator="Match(name, type)" />
+    </modules>
+  </system.webServer>
+  <system.web>
+    <pages>
+      <controls>
+        <add tagPrefix="cms" namespace="KalikoCMS.WebForms.WebControls" assembly="KalikoCMS.WebForms" xdt:Transform="Remove" xdt:Locator="Match(tagPrefix)" />
+      </controls>
+    </pages>
+  </system.web>
+</configuration>

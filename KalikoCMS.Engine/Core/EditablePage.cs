@@ -101,7 +101,6 @@ namespace KalikoCMS.Core {
             return editablePage;
         }
 
-        //TODO: Se till att allt sätts och sparas!!
         public void Save() {
             PageInstanceEntity pageInstance;
 
@@ -185,7 +184,7 @@ namespace KalikoCMS.Core {
                 }
             }
 
-            PageFactory.UpdatePageIndex(pageInstance, ParentId, RootId, TreeLevel, PageTypeId);
+            PageFactory.UpdatePageIndex(pageInstance, ParentId, RootId, TreeLevel, PageTypeId, SortOrder);
             Data.PropertyData.RemovePropertiesFromCache(PageId, LanguageId);
             CacheManager.RemoveRelated(ParentId);
 

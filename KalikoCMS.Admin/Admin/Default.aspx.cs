@@ -19,10 +19,11 @@
 
 namespace KalikoCMS.Admin {
     using System;
+    using Configuration;
 
     public partial class Default : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
-            Response.Redirect("/Admin/Content/");
+            Response.Redirect(string.Format("{0}Content/", SiteSettings.Instance.AdminPath));
         }
 
     }

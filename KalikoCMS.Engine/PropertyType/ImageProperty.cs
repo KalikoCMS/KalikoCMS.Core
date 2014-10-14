@@ -23,7 +23,7 @@ namespace KalikoCMS.PropertyType {
     using KalikoCMS.Core;
     using KalikoCMS.Serialization;
 
-    [PropertyType("7ad491a1-48c7-40de-9151-9255aa61967d", "Image", "Image property", "~/Admin/Content/PropertyType/ImagePropertyEditor.ascx")]
+    [PropertyType("7ad491a1-48c7-40de-9151-9255aa61967d", "Image", "Image property", "%AdminPath%Content/PropertyType/ImagePropertyEditor.ascx")]
     public class ImageProperty : PropertyData {
         private int? _cachedHashCode;
 

@@ -24,7 +24,7 @@ namespace KalikoCMS.PropertyType {
     using KalikoCMS.Extensions;
     using KalikoCMS.Serialization;
 
-    [PropertyType("18873bf3-d3a4-4389-bef1-0949664ee09c", "HTML", "HTML String", "~/Admin/Content/PropertyType/HtmlPropertyEditor.ascx")]
+    [PropertyType("18873bf3-d3a4-4389-bef1-0949664ee09c", "HTML", "HTML String", "%AdminPath%Content/PropertyType/HtmlPropertyEditor.ascx")]
     public class HtmlProperty : PropertyData {
         private static readonly int EmptyHashCode = string.Empty.GetHashCode();
         private int? _cachedHashCode;

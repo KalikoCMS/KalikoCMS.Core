@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <system.webServer xdt:Transform="InsertIfMissing">
+    <modules xdt:Transform="InsertIfMissing">
+    </modules>
+  </system.webServer>
+
+  <system.webServer>
+    <modules>
+      <add name="InitModule" type="KalikoCMS.Modules.InitModule, KalikoCMS.Engine" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)" />
+      <add name="ShortUrlModule" type="KalikoCMS.Modules.ShortUrlModule, KalikoCMS.Engine" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)" />
+      <add name="RequestModule" type="KalikoCMS.Mvc.RequestModule, KalikoCMS.Mvc" xdt:Transform="Replace" xdt:Locator="Match(name)" />
+      <add name="RequestModule" type="KalikoCMS.Mvc.RequestModule, KalikoCMS.Mvc" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)" />
+    </modules>
+  </system.webServer>
+</configuration>

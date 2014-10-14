@@ -23,7 +23,7 @@ namespace KalikoCMS.PropertyType {
     using KalikoCMS.Serialization;
     using System.Globalization;
 
-    [PropertyType("C40B0CB0-DB98-4A59-A000-037EC5189DF0", "Numeric", "Numeric", "~/Admin/Content/PropertyType/NumericPropertyEditor.ascx")]
+    [PropertyType("C40B0CB0-DB98-4A59-A000-037EC5189DF0", "Numeric", "Numeric", "%AdminPath%Content/PropertyType/NumericPropertyEditor.ascx")]
     public class NumericProperty : PropertyData {
         private int? _cachedHashCode;
         private int _value;

@@ -22,7 +22,7 @@ namespace KalikoCMS.PropertyType {
     using Core;
     using Serialization;
 
-    [PropertyType("F778486E-B992-4657-B78B-FE6B1DACF669", "Link", "Link to either page, URL or file.", "~/Admin/Content/PropertyType/LinkPropertyEditor.ascx")]
+    [PropertyType("F778486E-B992-4657-B78B-FE6B1DACF669", "Link", "Link to either page, URL or file.", "%AdminPath%Content/PropertyType/LinkPropertyEditor.ascx")]
     public class LinkProperty : PropertyData {
         private int? _cachedHashCode;
 

@@ -23,6 +23,7 @@ namespace KalikoCMS.Data {
     using System.Linq;
     using Attributes;
     using AutoMapper;
+    using Configuration;
     using Core;
     using Entities;
 
@@ -48,10 +49,14 @@ namespace KalikoCMS.Data {
                 var propertyType = GetExistingPropertyTypeOrCreateNew(proptertyTypeId);
 
                 propertyType.Name = customAttribute.Name;
-                propertyType.EditControl = customAttribute.EditorControl;
+                propertyType.EditControl = FixPath(customAttribute.EditorControl);
                 propertyType.Class = type.FullName;
                 propertyType.Type = type;
             }
+        }
+
+        private static string FixPath(string path) {
+            return path.Replace("%AdminPath%", SiteSettings.Instance.AdminPath);
         }
 
 
