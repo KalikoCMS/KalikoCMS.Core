@@ -67,7 +67,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
 
-            ScriptManager.RegisterClientScriptInclude(this, typeof(TagPropertyEditor), "assets/js/kalikocms.admin.taginput.js", SiteSettings.Instance.AdminPath + "assets/js/kalikocms.admin.taginput.js");
+            ScriptManager.RegisterClientScriptInclude(this, typeof(TagPropertyEditor), "assets/js/kalikocms.admin.taginput.min.js", SiteSettings.Instance.AdminPath + "assets/js/kalikocms.admin.taginput.min.js");
         }
 
         protected override void OnPreRender(EventArgs e) {
