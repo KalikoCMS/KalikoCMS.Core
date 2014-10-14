@@ -4,6 +4,8 @@
 * Fixed bug moving pages under the root
 * Added confirm box when moving pages
 * Updated JsTree to version 3
+* Fixed admin path references
+* Added configurable theme setting
 
 ### New in 0.9.4-beta
 * Fixes problem with instability at AppDomain restart
