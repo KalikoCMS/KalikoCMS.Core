@@ -147,6 +147,7 @@
     <Content Include="Admin\Assets\vendors\jstree\themes\default\style.css" />
     <Content Include="Admin\Assets\vendors\jstree\themes\default\style.min.css" />
     <Content Include="Admin\Assets\vendors\jstree\themes\default\throbber.gif" />
+    <Content Include="Admin\Assets\vendors\moment\moment.js" />
     <Content Include="Admin\Assets\vendors\typeahead.min.js" />
     <Content Include="Admin\Assets\vendors\bootstrap\less\bootstrap-tagsinput.less" />
     <Content Include="Admin\Assets\js\kalikocms.admin.core.js.bundle" />
@@ -246,6 +247,7 @@
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.ascx" />
     <Content Include="Admin\Content\Dialogs\EditCollectionPropertyDialog.aspx" />
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.js" />
+    <Content Include="Admin\Content\PropertyType\UniversalDateTimePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.js" />
     <Content Include="Admin\Content\PropertyType\ImagePropertyEditor.js" />
@@ -345,6 +347,13 @@
     </Compile>
     <Compile Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx.designer.cs">
       <DependentUpon>BooleanPropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\UniversalDateTimePropertyEditor.ascx.cs">
+      <DependentUpon>UniversalDateTimePropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\UniversalDateTimePropertyEditor.ascx.designer.cs">
+      <DependentUpon>UniversalDateTimePropertyEditor.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Content\PropertyType\LinkPropertyEditor.ascx.cs">
       <DependentUpon>LinkPropertyEditor.ascx</DependentUpon>

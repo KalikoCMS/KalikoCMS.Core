@@ -46,7 +46,7 @@ namespace KalikoCMS.Admin.Content {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::KalikoCMS.Admin.Content.PropertyType.DateTimePropertyEditor StartPublishDate;
+        protected global::KalikoCMS.Admin.Content.PropertyType.UniversalDateTimePropertyEditor StartPublishDate;
         
         /// <summary>
         /// StopPublishDate control.
@@ -55,7 +55,7 @@ namespace KalikoCMS.Admin.Content {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::KalikoCMS.Admin.Content.PropertyType.DateTimePropertyEditor StopPublishDate;
+        protected global::KalikoCMS.Admin.Content.PropertyType.UniversalDateTimePropertyEditor StopPublishDate;
         
         /// <summary>
         /// VisibleInMenu control.

@@ -80,7 +80,7 @@ namespace KalikoCMS.Data {
             var context = new DataContext();
 
             try {
-                var deleteTimeStamp = DateTime.Now;
+                var deleteTimeStamp = DateTime.Now.ToUniversalTime();
 
                 // TODO: Säkerställ att detta funkar mot stora mängder!!
                 context.PageInstances.Where(p => pageIds.Contains(p.PageId)).UpdateAll(p => p.Set(v => v.DeletedDate, v => deleteTimeStamp));

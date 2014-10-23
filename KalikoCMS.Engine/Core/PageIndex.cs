@@ -31,8 +31,8 @@ namespace KalikoCMS.Core {
     using Kaliko;
 
     internal class PageIndex {
-        private static readonly Predicate<PageIndexItem> IsPublished = t => t.StartPublish <= DateTime.Now && (t.StopPublish == null || !(DateTime.Now > t.StopPublish));
-        private static readonly Predicate<PageIndexItem> IsUnpublished = t => !(t.StartPublish <= DateTime.Now && !(DateTime.Now > t.StopPublish));
+        private static readonly Predicate<PageIndexItem> IsPublished = t => t.StartPublish <= DateTime.Now.ToUniversalTime() && (t.StopPublish == null || !(DateTime.Now.ToUniversalTime() > t.StopPublish));
+        private static readonly Predicate<PageIndexItem> IsUnpublished = t => !(t.StartPublish <= DateTime.Now.ToUniversalTime() && !(DateTime.Now.ToUniversalTime() > t.StopPublish));
 
         private readonly PageIndexDictionary _pageIndex;
 

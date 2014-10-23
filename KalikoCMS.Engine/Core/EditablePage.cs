@@ -129,14 +129,14 @@ namespace KalikoCMS.Core {
                     pageInstance = new PageInstanceEntity {
                         PageId = PageId,
                         LanguageId = LanguageId,
-                        CreatedDate = DateTime.Now
+                        CreatedDate = DateTime.Now.ToUniversalTime()
                     };
 
                     context.Add(pageInstance);
                 }
 
                 pageInstance.PageName = PageName;
-                pageInstance.UpdateDate = DateTime.Now;
+                pageInstance.UpdateDate = DateTime.Now.ToUniversalTime();
                 pageInstance.StartPublish = StartPublish;
                 pageInstance.StopPublish = StopPublish;
                 pageInstance.VisibleInMenu = VisibleInMenu;

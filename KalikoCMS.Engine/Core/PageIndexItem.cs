@@ -44,9 +44,10 @@ namespace KalikoCMS.Core {
 
         public bool IsAvailable {
             get {
+                var now = DateTime.Now.ToUniversalTime();
                 return
-                    ((StartPublish != null) && (StartPublish <= DateTime.Now)) &&
-                    ((StopPublish == null) || (StopPublish > DateTime.Now));
+                    ((StartPublish != null) && (StartPublish <= now)) &&
+                    ((StopPublish == null) || (StopPublish > now));
             }
         }
 
