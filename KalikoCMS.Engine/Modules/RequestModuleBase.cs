@@ -25,14 +25,16 @@ namespace KalikoCMS.Modules {
     using KalikoCMS.Core;
 
     public abstract class RequestModuleBase : IHttpModule {
-        protected internal const string PageExpiredUrl = "/PageExpired.htm";
-
         protected static IRequestManager RequestManager { get; set; }
-
 
         public void Init(HttpApplication context) {
             context.PostAuthenticateRequest += PostAuthenticateRequest;
             context.PreRequestHandlerExecute += PreRequestHandlerExecute;
+        }
+
+        public static string PageHasExpired() {
+            Utils.RenderSimplePage(HttpContext.Current.Response, "Page is not available", "The requested page has expired or is not yet published.", 404);
+            return string.Empty;
         }
 
         private void PreRequestHandlerExecute(object sender, EventArgs e) {
