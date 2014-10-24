@@ -20,6 +20,7 @@
 namespace KalikoCMS.Core {
     using System;
     using System.Linq;
+    using System.Web;
     using AutoMapper;
     using Configuration;
     using Data;
@@ -137,6 +138,7 @@ namespace KalikoCMS.Core {
 
                 pageInstance.PageName = PageName;
                 pageInstance.UpdateDate = DateTime.Now.ToUniversalTime();
+                pageInstance.Author = HttpContext.Current.User.Identity.Name;
                 pageInstance.StartPublish = StartPublish;
                 pageInstance.StopPublish = StopPublish;
                 pageInstance.VisibleInMenu = VisibleInMenu;

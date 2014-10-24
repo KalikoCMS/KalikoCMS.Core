@@ -356,6 +356,7 @@ namespace KalikoCMS {
             }
             else {
                 page = new PageIndexItem {
+                                             Author = pageInstance.Author,
                                              CreatedDate = pageInstance.CreatedDate,
                                              DeletedDate = pageInstance.DeletedDate,
                                              FirstChild = -1,
