@@ -21,6 +21,7 @@ namespace KalikoCMS.Modules {
     using System;
     using System.Data.Common;
     using System.Linq;
+    using System.Reflection;
     using System.Web;
     using Core;
     using Data;
@@ -49,6 +50,13 @@ namespace KalikoCMS.Modules {
 
             try {
                 RunInitializingSteps();
+            }
+            catch (ReflectionTypeLoadException exception) {
+                _firstRun = true;
+                _isRunning = false;
+                Logger.Write(exception, Logger.Severity.Critical);
+                Logger.Write(string.Join(" | ", exception.LoaderExceptions.Select(e => e.Message)), Logger.Severity.Critical);
+                throw;
             }
             catch (Exception exception) {
                 _firstRun = true;
