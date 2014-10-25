@@ -89,15 +89,15 @@ namespace KalikoCMS.WebForms {
         }
 
         internal static string GetTemplateUrl(bool isAvailable, Guid pageId, int pageTypeId) {
-            if (isAvailable) {
-                PageType pageType = PageType.GetPageType(pageTypeId);
-                string pageTemplate = pageType.PageTemplate;
-                string url = string.Format(CultureInfo.InvariantCulture, "{0}?id={1}", pageTemplate, pageId);
-
-                return url;
+            if (!isAvailable) {
+                return PageHasExpired();
             }
 
-            return PageExpiredUrl;
+            var pageType = PageType.GetPageType(pageTypeId);
+            var pageTemplate = pageType.PageTemplate;
+            var url = string.Format(CultureInfo.InvariantCulture, "{0}?id={1}", pageTemplate, pageId);
+
+            return url;
         }
 
     }

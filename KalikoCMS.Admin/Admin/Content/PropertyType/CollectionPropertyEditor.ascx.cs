@@ -50,9 +50,9 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
 
-            ScriptManager.RegisterClientScriptInclude(this, typeof (CollectionPropertyEditor), "Admin.Content.PropertyType.CollectionPropertyEditor", "Content/PropertyType/CollectionPropertyEditor.js?d=" + DateTime.Now);
+            ScriptManager.RegisterClientScriptInclude(this, typeof (CollectionPropertyEditor), "Admin.Content.PropertyType.CollectionPropertyEditor", "Content/PropertyType/CollectionPropertyEditor.js");
 
-            string clickScript = string.Format("top.propertyEditor.collection.openDialog('#{0}', null, '{1}');return false;", ListContainer.ClientID, _classParameter);
+            var clickScript = string.Format("top.propertyEditor.collection.openDialog('#{0}', null, '{1}');return false;", ListContainer.ClientID, _classParameter);
             AddNewButton.Attributes["onclick"] = clickScript;
 
             Items.Attributes.Add("data-type", _classParameter);

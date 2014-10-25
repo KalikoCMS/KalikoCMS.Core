@@ -19,6 +19,7 @@
 
 namespace KalikoCMS.WebForms.Framework {
     using System;
+    using System.Web;
     using KalikoCMS.Core;
 
     public abstract class PageTemplate<T> : PageTemplate where T : CmsPage {
@@ -36,6 +37,11 @@ namespace KalikoCMS.WebForms.Framework {
 
             if (page == null) {
                 Utils.Throw<ApplicationException>("Template loaded without proper page reference.");
+            }
+
+
+            if (!page.IsAvailable) {
+                Utils.RenderSimplePage(HttpContext.Current.Response, "Page is not available", "The requested page has expired or is not yet published.", 404);
             }
 
             return page.ConvertToTypedPage<T>();

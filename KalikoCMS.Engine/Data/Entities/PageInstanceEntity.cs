@@ -31,6 +31,7 @@ namespace KalikoCMS.Data.Entities {
         public virtual DateTime? DeletedDate { get; set; }
         public virtual DateTime? StartPublish { get; set; }
         public virtual DateTime? StopPublish { get; set; }
+        public virtual string Author { get; set; }
         public virtual bool VisibleInMenu { get; set; }
         public virtual bool VisibleInSitemap { get; set; }
         public virtual PageEntity Page { get; set; }

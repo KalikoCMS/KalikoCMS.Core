@@ -101,7 +101,7 @@ namespace KalikoCMS.Configuration {
             get { return (Guid) (_startPageId ?? (_startPageId = (Guid) base["startPageId"])); }
         }
 
-        [ConfigurationProperty("theme", IsRequired = false, DefaultValue = "denim")]
+        [ConfigurationProperty("theme", IsRequired = false, DefaultValue = "dakota")]
         public string Theme {
             get { return _theme ?? (_theme = (string)base["theme"]); }
         }

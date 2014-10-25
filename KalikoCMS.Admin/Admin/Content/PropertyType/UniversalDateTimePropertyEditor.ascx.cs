@@ -24,7 +24,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
 
-    public partial class DateTimePropertyEditor : PropertyEditorBase {
+    public partial class UniversalDateTimePropertyEditor : PropertyEditorBase {
 
         public override string PropertyLabel {
             set { LabelText.Text = value + " <i class=\"icon-time\"></i>"; }
@@ -34,17 +34,17 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             set {
                 DateTime? dateTime = ((DateTimeProperty)value).Value;
                 if(dateTime==null) {
-                    ValueField.Text = string.Empty;
+                    UniversalDateField.Value = string.Empty;
                 }
                 else {
-                    ValueField.Text = ((DateTime)dateTime).ToString(SiteSettings.Instance.DateFormat);
+                    UniversalDateField.Value = ((DateTime)dateTime).ToString(SiteSettings.Instance.DateFormat);
                 }
             }
             get {
                 DateTimeProperty dateTimeProperty = new DateTimeProperty();
                 DateTime dateTime;
 
-                if(DateTime.TryParse(ValueField.Text, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime)) {
+                if (DateTime.TryParse(UniversalDateField.Value, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime)) {
                     dateTimeProperty.Value = dateTime;
                 }
 
@@ -64,7 +64,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate() {
-            string value = ValueField.Text;
+            string value = UniversalDateField.Value;
 
             if (!IsNumericOrEmpty(value)) {
                 ErrorText.Text = "* Not a valid date time";
@@ -77,7 +77,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate(bool required) {
-            string value = ValueField.Text;
+            string value = UniversalDateField.Value;
 
             if (required) {
                 if (string.IsNullOrEmpty(value)) {

@@ -5794,13 +5794,12 @@ iframe {
   padding: 15px;
 }
 .sidebar-nav #pagetree {
-  top: 5px;
-  bottom: 40px;
+  top: 40px;
+  bottom: 0px;
   padding: 0;
 }
 .pagetree-controls {
   position: absolute;
-  bottom: 0;
 }
 .pagetree-controls .btn {
   width: 50%;
@@ -5812,6 +5811,9 @@ iframe {
   display: block;
   text-align: left;
   margin-bottom: 2px;
+}
+.picker-switch {
+  cursor: pointer;
 }
 /*#endregion*/
 /*#region Tags */

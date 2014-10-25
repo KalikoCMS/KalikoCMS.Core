@@ -21,6 +21,7 @@ namespace KalikoCMS.Core {
     using System;
 
     public class PageIndexItem {
+        public string Author { get; set; }
         public DateTime CreatedDate { get; set; }
         internal DateTime? DeletedDate { get; set; }
         internal int FirstChild { get; set; }
@@ -44,9 +45,10 @@ namespace KalikoCMS.Core {
 
         public bool IsAvailable {
             get {
+                var now = DateTime.Now.ToUniversalTime();
                 return
-                    ((StartPublish != null) && (StartPublish <= DateTime.Now)) &&
-                    ((StopPublish == null) || (StopPublish > DateTime.Now));
+                    ((StartPublish != null) && (StartPublish <= now)) &&
+                    ((StopPublish == null) || (StopPublish > now));
             }
         }
 

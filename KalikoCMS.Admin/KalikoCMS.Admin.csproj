@@ -115,27 +115,27 @@
     <Content Include="Admin\Assets\js\kalikocms.admin.taginput.min.js">
       <DependentUpon>kalikocms.admin.taginput.js</DependentUpon>
     </Content>
-    <Content Include="Admin\Assets\themes\denim\includes\32px.png" />
-    <Content Include="Admin\Assets\themes\denim\includes\bootstrap-theme.less" />
-    <None Include="Admin\Assets\themes\denim\includes\jstree.less" />
-    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-editor.css">
+    <Content Include="Admin\Assets\themes\dakota\includes\32px.png" />
+    <Content Include="Admin\Assets\themes\dakota\includes\bootstrap-theme.less" />
+    <None Include="Admin\Assets\themes\dakota\includes\jstree.less" />
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.css">
       <DependentUpon>kalikocms-editor.less</DependentUpon>
     </Content>
-    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-editor.min.css">
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.min.css">
       <DependentUpon>kalikocms-editor.css</DependentUpon>
     </Content>
-    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-framework.css">
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-framework.css">
       <DependentUpon>kalikocms-framework.less</DependentUpon>
     </Content>
-    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-framework.min.css">
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-framework.min.css">
       <DependentUpon>kalikocms-framework.css</DependentUpon>
     </Content>
-    <Content Include="Admin\Assets\themes\denim\theme.css">
+    <Content Include="Admin\Assets\themes\dakota\theme.css">
       <DependentUpon>theme.less</DependentUpon>
     </Content>
-    <Content Include="Admin\Assets\themes\denim\theme.js" />
-    <Content Include="Admin\Assets\themes\denim\includes\throbber.gif" />
-    <Content Include="Admin\Assets\themes\denim\theme.min.css">
+    <Content Include="Admin\Assets\themes\dakota\theme.js" />
+    <Content Include="Admin\Assets\themes\dakota\includes\throbber.gif" />
+    <Content Include="Admin\Assets\themes\dakota\theme.min.css">
       <DependentUpon>theme.css</DependentUpon>
     </Content>
     <Content Include="Admin\Assets\vendors\bootstrap\css\bootstrap-modal-bs3patch.css" />
@@ -147,6 +147,7 @@
     <Content Include="Admin\Assets\vendors\jstree\themes\default\style.css" />
     <Content Include="Admin\Assets\vendors\jstree\themes\default\style.min.css" />
     <Content Include="Admin\Assets\vendors\jstree\themes\default\throbber.gif" />
+    <Content Include="Admin\Assets\vendors\moment\moment.js" />
     <Content Include="Admin\Assets\vendors\typeahead.min.js" />
     <Content Include="Admin\Assets\vendors\bootstrap\less\bootstrap-tagsinput.less" />
     <Content Include="Admin\Assets\js\kalikocms.admin.core.js.bundle" />
@@ -246,6 +247,7 @@
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.ascx" />
     <Content Include="Admin\Content\Dialogs\EditCollectionPropertyDialog.aspx" />
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.js" />
+    <Content Include="Admin\Content\PropertyType\UniversalDateTimePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.js" />
     <Content Include="Admin\Content\PropertyType\ImagePropertyEditor.js" />
@@ -286,8 +288,8 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Admin\Assets\themes\denim\theme.less" />
-    <Content Include="Admin\Assets\themes\denim\includes\variables.less" />
+    <Content Include="Admin\Assets\themes\dakota\theme.less" />
+    <Content Include="Admin\Assets\themes\dakota\includes\variables.less" />
     <Content Include="Admin\Assets\vendors\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Admin\Assets\vendors\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="Admin\Assets\vendors\font-awesome\fonts\fontawesome-webfont.woff" />
@@ -305,15 +307,15 @@
     <Content Include="Admin\Assets\vendors\font-awesome\less\spinning.less" />
     <Content Include="Admin\Assets\vendors\font-awesome\less\stacked.less" />
     <Content Include="Admin\Assets\vendors\font-awesome\less\variables.less" />
-    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-framework.less" />
-    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-editor.less" />
-    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-framework.css.map">
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-framework.less" />
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.less" />
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-framework.css.map">
       <DependentUpon>kalikocms-framework.css</DependentUpon>
     </Content>
-    <Content Include="Admin\Assets\themes\denim\includes\kalikocms-editor.css.map">
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.css.map">
       <DependentUpon>kalikocms-editor.css</DependentUpon>
     </Content>
-    <Content Include="Admin\Assets\themes\denim\theme.css.map">
+    <Content Include="Admin\Assets\themes\dakota\theme.css.map">
       <DependentUpon>theme.css</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\Deploy.pubxml">
@@ -345,6 +347,13 @@
     </Compile>
     <Compile Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx.designer.cs">
       <DependentUpon>BooleanPropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\UniversalDateTimePropertyEditor.ascx.cs">
+      <DependentUpon>UniversalDateTimePropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\UniversalDateTimePropertyEditor.ascx.designer.cs">
+      <DependentUpon>UniversalDateTimePropertyEditor.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Content\PropertyType\LinkPropertyEditor.ascx.cs">
       <DependentUpon>LinkPropertyEditor.ascx</DependentUpon>

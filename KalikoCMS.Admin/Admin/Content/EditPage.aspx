@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EditPage.aspx.cs" Inherits="KalikoCMS.Admin.Content.EditPage" ValidateRequest="false" MasterPageFile="../Templates/MasterPages/Base.Master" %>
 <%@ Register tagPrefix="cms" tagName="StringPropertyEditor" src="PropertyType/StringPropertyEditor.ascx" %>
-<%@ Register tagPrefix="cms" tagName="DateTimePropertyEditor" src="PropertyType/DateTimePropertyEditor.ascx" %>
+<%@ Register tagPrefix="cms" tagName="UniversalDateTimePropertyEditor" src="PropertyType/UniversalDateTimePropertyEditor.ascx" %>
 <%@ Register tagPrefix="cms" tagName="BooleanPropertyEditor" src="PropertyType/BooleanPropertyEditor.ascx" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
@@ -12,8 +12,8 @@
       <div class="form-horizontal">
         <fieldset>
           <cms:StringPropertyEditor ID="PageName" runat="server" />
-          <cms:DateTimePropertyEditor ID="StartPublishDate" runat="server" />
-          <cms:DateTimePropertyEditor ID="StopPublishDate" runat="server" />
+          <cms:UniversalDateTimePropertyEditor ID="StartPublishDate" runat="server" />
+          <cms:UniversalDateTimePropertyEditor ID="StopPublishDate" runat="server" />
           <cms:BooleanPropertyEditor ID="VisibleInMenu" runat="server" />
           <asp:Panel ID="EditControls" runat="server" />
           <div class="form-group">

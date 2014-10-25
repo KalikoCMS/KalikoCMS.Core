@@ -27,7 +27,7 @@ namespace KalikoCMS.Data {
 
     public class DataContext : OpenAccessContext {
         private const string ConnectionStringName = "KalikoCMS";
-        private const int DatabaseVersion = 1;
+        private const int DatabaseVersion = 2;
         private static readonly MetadataContainer MetadataContainer = new DataMetadataSource().GetModel();
         private static readonly BackendConfiguration BackendConfiguration = new BackendConfiguration();
 
@@ -110,7 +110,7 @@ namespace KalikoCMS.Data {
                 return;
             }
 
-            schemaHandler.ExecuteDDLScript(script);
+            schemaHandler.ForceExecuteDDLScript(script);
             SetDatabaseVersion();
         }
 

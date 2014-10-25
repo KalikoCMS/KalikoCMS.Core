@@ -18,5 +18,6 @@
     <file>/Admin/Assets/vendors/jquery/js/jquery.cookie.js</file>
     <file>/Admin/Assets/vendors/jquery/js/jquery.hotkeys.js</file>
     <file>/Admin/Assets/vendors/jstree/js/jquery.jstree.js</file>
+    <file>/Admin/Assets/vendors/moment/moment.js</file>
   </files>
 </bundle>

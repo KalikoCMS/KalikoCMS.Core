@@ -66,6 +66,7 @@ namespace KalikoCMS.Data {
                         PageName = pi.PageName,
                         CreatedDate = pi.CreatedDate,
                         UpdateDate = pi.UpdateDate,
+                        Author = pi.Author,
                         VisibleInMenu = pi.VisibleInMenu,
                         VisibleInSiteMap = pi.VisibleInSitemap,
                         TreeLevel = p.TreeLevel
@@ -80,7 +81,7 @@ namespace KalikoCMS.Data {
             var context = new DataContext();
 
             try {
-                var deleteTimeStamp = DateTime.Now;
+                var deleteTimeStamp = DateTime.Now.ToUniversalTime();
 
                 // TODO: Säkerställ att detta funkar mot stora mängder!!
                 context.PageInstances.Where(p => pageIds.Contains(p.PageId)).UpdateAll(p => p.Set(v => v.DeletedDate, v => deleteTimeStamp));

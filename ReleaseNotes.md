@@ -1,3 +1,10 @@
+### New in 0.9.6-beta
+* Added new UniversalDateTimeProperty for timezone independent dates
+* Publishing dates made timezone independent
+* Username stored in page author field
+* Security fix: Prevent loading unpublished page through template
+* Minor update in default theme
+
 ### New in 0.9.5-beta
 * Major update of the administration interface
 * Restructured includes of third party styles and scripts in admin

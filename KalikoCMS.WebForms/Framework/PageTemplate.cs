@@ -46,8 +46,13 @@ namespace KalikoCMS.WebForms.Framework {
 
         private CmsPage GetCurrentPageOrDefault() {
             _pageId = Utils.GetCurrentPageId();
+            var page = PageFactory.GetPage(_pageId);
 
-            return PageFactory.GetPage(_pageId);
+            if (page != null && !page.IsAvailable) {
+                Utils.RenderSimplePage(Response, "Page is not available", "The requested page has expired or is not yet published.", 404);
+            }
+
+            return page;
         }
 
         protected override void OnInit(EventArgs e) {
