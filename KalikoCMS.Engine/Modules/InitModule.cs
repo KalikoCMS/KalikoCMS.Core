@@ -19,6 +19,7 @@
 
 namespace KalikoCMS.Modules {
     using System;
+    using System.Collections.Generic;
     using System.Data.Common;
     using System.Linq;
     using System.Reflection;
@@ -98,7 +99,8 @@ namespace KalikoCMS.Modules {
 
         private static void RunStartupSequence() {
             var types = InterfaceReader.GetTypesWithInterface(typeof(IStartupSequence));
-            
+            var sequences = new List<IStartupSequence>();
+
             foreach (var type in types) {
                 if(type.IsInterface) {
                     continue;
@@ -106,8 +108,12 @@ namespace KalikoCMS.Modules {
 
                 var startupSequence = Activator.CreateInstance(type) as IStartupSequence;
                 if (startupSequence != null) {
-                    startupSequence.Startup();
+                    sequences.Add(startupSequence);
                 }
+            }
+
+            foreach (var startupSequence in sequences.OrderBy(s => s.StartupOrder)) {
+                startupSequence.Startup();
             }
         }
 

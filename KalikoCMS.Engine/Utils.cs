@@ -152,7 +152,7 @@ namespace KalikoCMS {
         public static void RenderSimplePage(HttpResponse httpResponse, string header, string text, int statusCode = 200) {
             httpResponse.Clear();
             httpResponse.StatusCode = statusCode;
-            httpResponse.Write("<html><head><style>body{background:#f4f4f4;font-family:'Open Sans',sans-serif;color:#555555;}h1{font-weight:300;font-size:40px;margin-top:150px;}p{font-weight:400;font-size:16px;margin-top:30px;}div{width:600px;margin:0 auto;}h1:before{background: #777777;border-radius: 0.5em;color: #ffffff;content: \"i\";display: block;font-family: serif;font-style: italic;font-weight: bold;height: 1em;line-height: 1em;margin-left: -1.4em;margin-top: 8px;position: absolute;text-align: center;width: 1em;}</style><link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'></head><body><div><h1>");
+            httpResponse.Write("<html><head><style>body{background:#f4f4f4;font-family:'Open Sans',sans-serif;color:#555555;text-align:center;}h1{font-weight:300;font-size:40px;margin-top:150px;}p{font-weight:400;font-size:16px;margin-top:30px;}div{max-width:600px;display:inline-block;text-align:left;}h1:before{background: #777777;border-radius: 0.5em;color: #ffffff;content: \"i\";display: block;font-family: serif;font-style: italic;font-weight: bold;height: 1em;line-height: 1em;margin-left: -1.4em;margin-top: 8px;position: absolute;text-align: center;width: 1em;}</style><link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'></head><body><div><h1>");
             httpResponse.Write(header);
             httpResponse.Write("</h1><p>");
             httpResponse.Write(text);

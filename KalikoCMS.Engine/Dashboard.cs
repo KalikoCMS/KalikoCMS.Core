@@ -17,9 +17,20 @@
  */
 #endregion
 
-namespace KalikoCMS.Core {
-    public interface IStartupSequence {
-        void Startup();
-        int StartupOrder { get; }
+namespace KalikoCMS {
+    using System.Collections.Generic;
+
+    public class Dashboard {
+        public static readonly Dictionary<string, IDashboardArea> Areas = new Dictionary<string, IDashboardArea>();
+
+        public static void RegisterArea(IDashboardArea dashboardArea) {
+            var title = dashboardArea.Title;
+
+            if (Areas.ContainsKey(title)) {
+                return;
+            }
+
+            Areas.Add(title, dashboardArea);
+        }
     }
 }

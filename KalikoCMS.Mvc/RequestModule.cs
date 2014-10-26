@@ -38,6 +38,8 @@ namespace KalikoCMS.Mvc {
             RequestManager = new RequestManager();
         }
 
+        public int StartupOrder { get { return 10; } }
+
         protected override void RedirectToStartPage() {
             var startPageId = Configuration.SiteSettings.Instance.StartPageId;
 

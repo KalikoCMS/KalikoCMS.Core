@@ -17,9 +17,11 @@
  */
 #endregion
 
-namespace KalikoCMS.Core {
-    public interface IStartupSequence {
-        void Startup();
-        int StartupOrder { get; }
+namespace KalikoCMS {
+    public interface IDashboardArea {
+        string Title { get; }
+        string MenuName { get; }
+        string Icon { get; }
+        string Path { get; }
     }
 }

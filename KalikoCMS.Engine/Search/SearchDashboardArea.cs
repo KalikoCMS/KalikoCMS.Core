@@ -17,9 +17,11 @@
  */
 #endregion
 
-namespace KalikoCMS.Core {
-    public interface IStartupSequence {
-        void Startup();
-        int StartupOrder { get; }
+namespace KalikoCMS.Search {
+    internal class SearchDashboardArea : IDashboardArea {
+        public string Title { get { return "Search"; } }
+        public string MenuName { get { return "Manage search";  } }
+        public string Icon { get { return "icon-search"; } }
+        public string Path { get { return "Search"; } }
     }
 }
