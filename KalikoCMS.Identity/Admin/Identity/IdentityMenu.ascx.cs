@@ -17,11 +17,17 @@
  */
 #endregion
 
-namespace KalikoCMS.Search {
-    internal class SearchDashboardArea : IDashboardArea {
-        public string Title { get { return "Search"; } }
-        public string MenuName { get { return "Search engine";  } }
-        public string Icon { get { return "icon-search"; } }
-        public string Path { get { return "Search"; } }
+namespace KalikoCMS.Identity.Admin.Identity {
+    using System;
+    using KalikoCMS.Admin.Templates.MasterPages;
+
+    public partial class IdentityMenu : System.Web.UI.UserControl {
+        protected override void OnLoad(EventArgs e) {
+            base.OnLoad(e);
+
+            ((Admin)Page.Master).ActiveArea = "User management";
+        }
+
+        public string ActiveMenuItem { get; set; }
     }
 }

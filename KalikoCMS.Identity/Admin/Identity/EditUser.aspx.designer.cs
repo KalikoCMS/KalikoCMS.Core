@@ -7,28 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KalikoCMS.Admin.Content {
+namespace KalikoCMS.Identity.Admin.Identity {
     
     
-    public partial class EditPage {
-        
-        /// <summary>
-        /// MainForm control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm MainForm;
-        
-        /// <summary>
-        /// PageHeader control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal PageHeader;
+    public partial class EditUser {
         
         /// <summary>
         /// Feedback control.
@@ -40,58 +22,94 @@ namespace KalikoCMS.Admin.Content {
         protected global::System.Web.UI.WebControls.Literal Feedback;
         
         /// <summary>
-        /// PageName control.
+        /// FormFields control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::KalikoCMS.Admin.Content.PropertyType.StringPropertyEditor PageName;
+        protected global::System.Web.UI.WebControls.Panel FormFields;
         
         /// <summary>
-        /// StartPublishDate control.
+        /// UserId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::KalikoCMS.Admin.Content.PropertyType.UniversalDateTimePropertyEditor StartPublishDate;
+        protected global::System.Web.UI.WebControls.HiddenField UserId;
         
         /// <summary>
-        /// StopPublishDate control.
+        /// UserName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::KalikoCMS.Admin.Content.PropertyType.UniversalDateTimePropertyEditor StopPublishDate;
+        protected global::System.Web.UI.WebControls.TextBox UserName;
         
         /// <summary>
-        /// VisibleInMenu control.
+        /// Password control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::KalikoCMS.Admin.Content.PropertyType.BooleanPropertyEditor VisibleInMenu;
+        protected global::System.Web.UI.WebControls.TextBox Password;
         
         /// <summary>
-        /// EditControls control.
+        /// ConfirmPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel EditControls;
+        protected global::System.Web.UI.WebControls.TextBox ConfirmPassword;
         
         /// <summary>
-        /// PageId control.
+        /// FirstName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal PageId;
+        protected global::System.Web.UI.WebControls.TextBox FirstName;
+        
+        /// <summary>
+        /// SurName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox SurName;
+        
+        /// <summary>
+        /// Email control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Email;
+        
+        /// <summary>
+        /// PhoneNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox PhoneNumber;
+        
+        /// <summary>
+        /// Roles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Roles;
         
         /// <summary>
         /// SaveButton control.

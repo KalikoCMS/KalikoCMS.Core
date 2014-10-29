@@ -14,6 +14,8 @@ The far easiest way to install Kaliko CMS is through NuGet:
 * Install either [Kaliko CMS WebForms Provider](https://www.nuget.org/packages/KalikoCMS.WebForms/)-package or [Kaliko CMS MVC Provider](https://www.nuget.org/packages/KalikoCMS.Mvc/)-package
 * Install either [Kaliko CMS SQLite Provider](https://www.nuget.org/packages/KalikoCMS.Data.SQLite/)-package or [Kaliko CMS Sql Server Provider](https://www.nuget.org/packages/KalikoCMS.Data.SQLite/)-package *
 
+Optionally install [Kaliko CMS Identity](https://www.nuget.org/packages/KalikoCMS.Identity/)-package to enable ASP.NET Identity based user authentication.
+
 Optionally install [Kaliko CMS Search](https://www.nuget.org/packages/KalikoCMS.Search/)-package to enable search functionality.
 
 *) For other databases see [supported databases](http://kaliko.com/cms/knowledge-base/supported-databases/)
@@ -50,6 +52,7 @@ Kaliko CMS is licensed under *GNU Lesser General Public License version 3 (LGPL)
 * jQuery File Upload Plugin ([MIT](http://opensource.org/licenses/mit-license.php))
 * jsTree ([MIT](http://opensource.org/licenses/mit-license.php))
 * Logger ([Ms-PL](http://dotnetlogger.codeplex.com/license))
+* Moment.js ([MIT](http://opensource.org/licenses/mit-license.php))
 * .NET Image Library ([Ms-PL](http://dotnetlogger.codeplex.com/license))
 * Telerik Data Access ([License](http://www.telerik.com/purchase/license-agreement/data-access))
 * TinyMCE ([LGPL 2.1](http://www.tinymce.com/js/tinymce4/js/tinymce/license.txt))
@@ -65,3 +68,7 @@ Kaliko CMS is licensed under *GNU Lesser General Public License version 3 (LGPL)
 
 * Lucene.net ([Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))
 * Html Agility Pack ([Ms-PL](https://htmlagilitypack.codeplex.com/license))
+
+**KalikoCMS.Identity makes use of:**
+
+* ASP.NET Identity provider for Telerik Data Access  ([Ms-PL](http://opensource.org/licenses/MS-PL))

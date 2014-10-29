@@ -1,3 +1,10 @@
+### New in 0.9.7-beta
+* Added ASP.NET Identity integration
+* Added sort order to startup sequence
+* Added administration of roles and users
+* Fixed bug in page list caching
+* Updated third party references to latest versions
+
 ### New in 0.9.6-beta
 * Added new UniversalDateTimeProperty for timezone independent dates
 * Publishing dates made timezone independent

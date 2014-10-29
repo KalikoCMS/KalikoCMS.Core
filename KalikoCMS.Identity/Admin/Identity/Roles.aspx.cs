@@ -17,11 +17,22 @@
  */
 #endregion
 
-namespace KalikoCMS.Search {
-    internal class SearchDashboardArea : IDashboardArea {
-        public string Title { get { return "Search"; } }
-        public string MenuName { get { return "Search engine";  } }
-        public string Icon { get { return "icon-search"; } }
-        public string Path { get { return "Search"; } }
+namespace KalikoCMS.Identity.Admin.Identity {
+    using System;
+    using System.Linq;
+    using System.Text;
+
+    public partial class Roles : System.Web.UI.Page {
+        protected void Page_Load(object sender, EventArgs e) {
+            var roleManager = IdentityRoleManager.GetManager();
+            var roles = roleManager.Roles.ToList();
+            var stringBuilder = new StringBuilder();
+
+            foreach (var role in roles) {
+                stringBuilder.Append("<tr><td><a href=\"Identity/EditRole.aspx?id=" + role.Id + "\">" + role.Name + "</a></td></tr>");
+            }
+
+            RoleList.Text = stringBuilder.ToString();
+        }
     }
 }

@@ -17,11 +17,12 @@
  */
 #endregion
 
-namespace KalikoCMS.Search {
-    internal class SearchDashboardArea : IDashboardArea {
-        public string Title { get { return "Search"; } }
-        public string MenuName { get { return "Search engine";  } }
-        public string Icon { get { return "icon-search"; } }
-        public string Path { get { return "Search"; } }
+namespace KalikoCMS.Identity.Register {
+
+    public class IdentityDashboardArea : IDashboardArea {
+        public string Title { get { return "User management"; } }
+        public string MenuName { get { return "Manage users"; } }
+        public string Icon { get { return "icon-users"; } }
+        public string Path { get { return "Identity"; } }
     }
 }

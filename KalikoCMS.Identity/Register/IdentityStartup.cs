@@ -17,11 +17,18 @@
  */
 #endregion
 
-namespace KalikoCMS.Search {
-    internal class SearchDashboardArea : IDashboardArea {
-        public string Title { get { return "Search"; } }
-        public string MenuName { get { return "Search engine";  } }
-        public string Icon { get { return "icon-search"; } }
-        public string Path { get { return "Search"; } }
+namespace KalikoCMS.Identity.Register {
+    using AspNet.Identity.DataAccess.Data;
+    using Core;
+
+    public class IdentityStartup : IStartupSequence {
+        public void Startup() {
+            var area = new IdentityDashboardArea();
+            Dashboard.RegisterArea(area);
+
+            DataContext.ConnectionStringName = "KalikoCMS";
+        }
+
+        public int StartupOrder { get { return 30; } }
     }
 }

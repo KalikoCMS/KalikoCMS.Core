@@ -329,6 +329,9 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Admin\AdminPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Admin\Content\Dialogs\EditImageDialog.aspx.cs">
       <DependentUpon>EditImageDialog.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

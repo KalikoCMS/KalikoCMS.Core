@@ -5476,6 +5476,10 @@ iframe {
 .top-margin {
   margin-top: 10px;
 }
+.container {
+  margin-left: 0;
+  margin-right: 0;
+}
 /*#endregion*/
 /*#region Modals */
 .modal-body.lock-position {
@@ -5565,7 +5569,7 @@ iframe {
   min-width: 750px;
 }
 #editor-panel .form-horizontal {
-  max-width: 1200px;
+  max-width: 1000px;
 }
 .form-horizontal .control-label {
   font-weight: 500;
@@ -5583,7 +5587,19 @@ iframe {
   bottom: 0;
   right: 0;
   overflow: auto;
-  padding: 0 30px;
+  padding: 10px 30px 0;
+}
+.main-content {
+  position: absolute;
+  top: 65px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  padding: 10px 20px 10px 30px;
+}
+.inner-container {
+  max-width: 960px;
 }
 /*#endregion*/
 /*#region Sidebar */
@@ -5679,6 +5695,17 @@ iframe {
 .sidebar-nav .btn-group {
   padding: 5px;
   width: 100%;
+}
+.sidebar-nav .nav-pills > li > a {
+  border-radius: 0;
+  padding-left: 50px;
+}
+.sidebar-nav .nav-pills i {
+  line-height: 20px;
+  margin-left: -20px;
+  position: absolute;
+  min-width: 15px;
+  text-align: center;
 }
 /*#endregion*/
 /*#region Responsiveness */
@@ -5814,6 +5841,13 @@ iframe {
 }
 .picker-switch {
   cursor: pointer;
+}
+.admin-page fieldset {
+  margin-bottom: 30px;
+}
+.form-buttons {
+  text-align: right;
+  margin-bottom: 30px;
 }
 /*#endregion*/
 /*#region Tags */

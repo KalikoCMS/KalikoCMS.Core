@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PageTreeControl.ascx.cs" Inherits="KalikoCMS.Admin.Content.PageTree.PageTreeControl" %>
 
 <div class="btn-group pagetree-controls">
-  <a href="#" id="new-page-button" class="btn btn-sm btn-default" rel="tooltip" data-html="true" data-original-title="Add a new page under<br/>the selected page." data-placement="top" data-container="body"><i class="icon icon-plus"></i>Add page</a>
-  <a href="#" id="remove-page-button" class="btn btn-sm btn-default" rel="tooltip" data-html="true" data-original-title="Remove the selected page." data-placement="top" data-container="body"><i class="icon icon-trash"></i>Remove page</a>
+  <a href="#" id="new-page-button" class="btn btn-sm btn-default" rel="tooltip" data-html="true" data-original-title="Add a new page under<br/>the selected page." data-placement="bottom" data-container="body"><i class="icon icon-plus"></i>Add page</a>
+  <a href="#" id="remove-page-button" class="btn btn-sm btn-default" rel="tooltip" data-html="true" data-original-title="Remove the selected page." data-placement="bottom" data-container="body"><i class="icon icon-trash"></i>Remove page</a>
 </div>
 
 <div id="pagetree"></div>

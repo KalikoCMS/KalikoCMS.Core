@@ -10,11 +10,16 @@
     </div>
     <div id="editor-panel">
       <div class="form-horizontal">
+        <asp:Literal ID="Feedback" runat="server" />
         <fieldset>
+          <legend>Standard information</legend>
           <cms:StringPropertyEditor ID="PageName" runat="server" />
           <cms:UniversalDateTimePropertyEditor ID="StartPublishDate" runat="server" />
           <cms:UniversalDateTimePropertyEditor ID="StopPublishDate" runat="server" />
           <cms:BooleanPropertyEditor ID="VisibleInMenu" runat="server" />
+        </fieldset>
+        <fieldset>
+          <legend>Content</legend>
           <asp:Panel ID="EditControls" runat="server" />
           <div class="form-group">
             <label class="control-label col-xs-2" for="PageId">Page Id</label>
@@ -23,8 +28,6 @@
                 <asp:Literal ID="PageId" runat="server" /></span>
             </div>
           </div>
-          <asp:Literal ID="ErrorMessage" runat="server" />
-          <asp:Literal ID="MessageBox" Visible="False" runat="server" />
           <div class="form-actions">
             <asp:LinkButton runat="server" ID="SaveButton" CssClass="btn btn-lg btn-primary"><i class="icon-thumbs-up icon-white"></i> Save page</asp:LinkButton>
           </div>
