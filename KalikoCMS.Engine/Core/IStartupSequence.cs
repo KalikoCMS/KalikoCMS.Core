@@ -20,5 +20,6 @@
 namespace KalikoCMS.Core {
     public interface IStartupSequence {
         void Startup();
+        int StartupOrder { get; }
     }
 }

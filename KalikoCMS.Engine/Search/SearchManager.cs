@@ -30,6 +30,7 @@ namespace KalikoCMS.Search {
             LoadSearchProviderFromConfig();
         }
 
+        public int StartupOrder { get { return 20; } }
 
         public static int IndexAllPages() {
             Instance.RemoveAll();
@@ -61,6 +62,8 @@ namespace KalikoCMS.Search {
 
             Instance = (SearchProviderBase)Activator.CreateInstance(searchProviderType);
             Instance.Init();
+
+            Dashboard.RegisterArea(new SearchDashboardArea());
         }
     }
 }

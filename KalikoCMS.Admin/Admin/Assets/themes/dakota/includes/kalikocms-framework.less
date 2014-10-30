@@ -24,6 +24,7 @@ th { font-weight: 600; }
 iframe { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
 .no-scroll { overflow: hidden; }
 .top-margin { margin-top: 10px; }
+.container { margin-left: 0; margin-right: 0; }
 /*#endregion*/
 
 /*#region Modals */
@@ -43,10 +44,12 @@ iframe { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; verti
 .footer p { margin-bottom: 5px; }
 #main { background: #f8f8f8; position: fixed; top: 0; bottom: 0; left: 50px; right: 0; -moz-transition: left 0.25s, right 0.25s; -o-transition: left 0.25s, right 0.25s; -webkit-transition: left 0.25s, right 0.25s; transition: left 0.25s, right 0.25s; }
 #content { position: absolute; top: 50px; bottom: 0; left: 0; right: 0; overflow: auto; min-width:750px; }
-#editor-panel .form-horizontal { max-width: 1200px; }
+#editor-panel .form-horizontal { max-width: 1000px; }
 .form-horizontal .control-label { font-weight: 500; }
 .form-control:focus { -webkit-box-shadow: none; -ms-box-shadow: none; box-shadow: none; background: #f0f8ff; }
-.main-area { position: absolute; top: 0; left: 240px; bottom: 0; right: 0; overflow: auto; padding: 0 30px; }
+.main-area { position: absolute; top: 0; left: 240px; bottom: 0; right: 0; overflow: auto; padding: 10px 30px 0; }
+.main-content { position:absolute; top:65px; left:0;right:0; bottom:0; overflow:auto; padding: 10px 20px 10px 30px; }
+.inner-container { max-width:960px; }
 /*#endregion*/
 
 /*#region Sidebar */
@@ -75,6 +78,9 @@ iframe { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; verti
 }
 .sidebar-nav .btn-group { padding: 5px; width: 100%; }
 .sidebar-nav .btn-group .btn {  }
+
+.sidebar-nav .nav-pills > li > a { border-radius: 0; padding-left:50px; }
+.sidebar-nav .nav-pills i { line-height: 20px; margin-left: -20px; position: absolute; min-width:15px; text-align: center; }
 /*#endregion*/
 
 /*#region Responsiveness */

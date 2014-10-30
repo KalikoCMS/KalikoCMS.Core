@@ -18,6 +18,7 @@
 #endregion
 
 namespace KalikoCMS.Admin.Templates.Units {
+    using System.Text;
     using MasterPages;
 
     public partial class SideNavigation : System.Web.UI.UserControl {
@@ -25,6 +26,13 @@ namespace KalikoCMS.Admin.Templates.Units {
 
         public string ActiveArea {
             get { return _activeArea ?? (_activeArea = ((Admin)Page.Master).ActiveArea); }
+        }
+
+        protected void RenderDashboardAreas() {
+            foreach (var area in Dashboard.Areas.Values) {
+                var activeClass = ActiveArea == area.Title ? "class=\"active\"" : string.Empty;
+                Response.Write(string.Format("<li {0}><a href=\"{3}\"><i class=\"{2}\"></i>{1}</a></li>", activeClass, area.MenuName, area.Icon, area.Path));
+            }
         }
     }
 }

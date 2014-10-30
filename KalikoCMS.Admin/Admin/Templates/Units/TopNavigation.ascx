@@ -10,7 +10,7 @@
         <i class="icon icon-user"></i>&nbsp; <%=CurrentUser %> <span class="caret"></span>
       </a>
       <ul class="dropdown-menu">
-        <li><a href="Login.aspx?cmd=logout">Sign Out</a></li>
+        <li><a href="/Logout.aspx">Sign Out</a></li>
       </ul>
     </li>
   </ul>

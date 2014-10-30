@@ -80,10 +80,10 @@ namespace KalikoCMS.Caching {
         public void RemoveRelated(Guid pageId) {
             var keys = from DictionaryEntry entry in HttpContext.Current.Cache
                        let key = entry.Key.ToString()
-                       where key.Contains(pageId.ToString())
+                       where (key.Contains(pageId.ToString()) || key.StartsWith("Page"))
                        select key;
 
-            foreach (string key in keys) {
+            foreach (var key in keys) {
                 Remove(key);
             }
         }

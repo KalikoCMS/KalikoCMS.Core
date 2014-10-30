@@ -20,12 +20,11 @@
 namespace KalikoCMS.Admin.Content {
     using System;
     using System.Collections.Generic;
-    using System.Web.UI;
     using Core;
     using Extensions;
     using KalikoCMS.PropertyType;
 
-    public partial class EditPage : Page {
+    public partial class EditPage : AdminPage {
         private List<PropertyEditorBase> _controls;
         private Guid _pageId;
         private string _pageName;
@@ -137,15 +136,17 @@ namespace KalikoCMS.Admin.Content {
         private void SaveButtonEventHandler(object sender, EventArgs e) {
             if(IsDataValid) {
                 SaveData();
-                MessageBox.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> saved!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();parent.refreshTreeNode('{1}','{2}');</script>", _pageName, _parentId, _pageId);
-                MessageBox.Visible = true;
 
                 if (_pageTypeId > 0) {
-                    MessageBox.Text += string.Format("<script> document.location = '{0}?id={1}'</script>", Request.Path, _pageId);
+                    Feedback.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> has been created!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();parent.refreshTreeNode('{1}','{2}');document.location = '{3}?id={2}';</script>", _pageName, _parentId, _pageId, Request.Path);
+                    Feedback.Visible = true;
+                }
+                else {
+                    ShowMessage(Feedback, String.Format("Page <b>{0}</b> has been saved!", _pageName));
                 }
             }
             else {
-                ErrorMessage.Text = "One or more errors occured!";
+                ShowError(Feedback, "One or more errors occured!");
             }
         }
 

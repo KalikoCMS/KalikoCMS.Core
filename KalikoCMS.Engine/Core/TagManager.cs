@@ -167,6 +167,8 @@ namespace KalikoCMS.Core {
             PageFactory.PageDeleted += PageDeletedHandler;
         }
 
+        public int StartupOrder { get { return 40;  } }
+
         void PageDeletedHandler(object sender, Events.PageEventArgs e) {
             RemoveAllTagsForPage(e.PageId);
         }

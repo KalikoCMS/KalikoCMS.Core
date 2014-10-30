@@ -31,6 +31,15 @@ namespace KalikoCMS.Admin.Content {
         protected global::System.Web.UI.WebControls.Literal PageHeader;
         
         /// <summary>
+        /// Feedback control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Feedback;
+        
+        /// <summary>
         /// PageName control.
         /// </summary>
         /// <remarks>
@@ -83,24 +92,6 @@ namespace KalikoCMS.Admin.Content {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal PageId;
-        
-        /// <summary>
-        /// ErrorMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ErrorMessage;
-        
-        /// <summary>
-        /// MessageBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal MessageBox;
         
         /// <summary>
         /// SaveButton control.

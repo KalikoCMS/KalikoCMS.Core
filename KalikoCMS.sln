@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.WebForms", "Kalik
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.Mvc", "KalikoCMS.Mvc\KalikoCMS.Mvc.csproj", "{A7E19576-14CD-4EC1-B8F6-BEF651A3F09B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.Identity", "KalikoCMS.Identity\KalikoCMS.Identity.csproj", "{BF7E38D1-CA77-4171-AC10-777EE7FF40B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{A7E19576-14CD-4EC1-B8F6-BEF651A3F09B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7E19576-14CD-4EC1-B8F6-BEF651A3F09B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7E19576-14CD-4EC1-B8F6-BEF651A3F09B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF7E38D1-CA77-4171-AC10-777EE7FF40B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF7E38D1-CA77-4171-AC10-777EE7FF40B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF7E38D1-CA77-4171-AC10-777EE7FF40B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF7E38D1-CA77-4171-AC10-777EE7FF40B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
