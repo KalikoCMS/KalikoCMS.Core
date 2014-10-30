@@ -23,7 +23,7 @@ namespace KalikoCMS.PropertyType {
     using Core;
     using Serialization;
 
-    [PropertyType("E4A242F3-80E8-4D2A-9799-7728303B12C9", "Collection", "Collection of a specific type", "%AdminPath%ontent/PropertyType/CollectionPropertyEditor.ascx")]
+    [PropertyType("E4A242F3-80E8-4D2A-9799-7728303B12C9", "Collection", "Collection of a specific type", "%AdminPath%Content/PropertyType/CollectionPropertyEditor.ascx")]
     public class CollectionProperty<T> : PropertyData where T : PropertyData {
         private const int EmptyHashCode = 0;
         private int? _cachedHashCode;

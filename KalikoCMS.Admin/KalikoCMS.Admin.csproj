@@ -111,6 +111,7 @@
     <Content Include="Admin\Assets\js\kalikocms.admin.imageeditor.min.js">
       <DependentUpon>kalikocms.admin.imageeditor.js</DependentUpon>
     </Content>
+    <Content Include="Admin\Assets\js\kalikocms.admin.js" />
     <Content Include="Admin\Assets\js\kalikocms.admin.taginput.js">
       <DependentUpon>kalikocms.admin.taginput.js.bundle</DependentUpon>
     </Content>

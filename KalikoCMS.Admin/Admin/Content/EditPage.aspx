@@ -69,6 +69,8 @@
             }
           }
         });
+
+        warnBeforeLeavingIfChangesBeenMade();
       });
     </script>
 </asp:Content>
