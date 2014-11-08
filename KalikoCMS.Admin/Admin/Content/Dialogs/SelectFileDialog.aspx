@@ -9,7 +9,6 @@
     </div>
     
     <ul class="breadcrumb"><li>&nbsp;</li></ul>
-    <table><tr><th>File</th><th>Size</th></tr></table>
     <div id="file-list-container">
       <table id="file-list" class="table-striped table-hover file-list"></table>
     </div>
@@ -33,7 +32,7 @@
         <div class="pull-right span3 fileupload-progress fade">
           <!-- The global progress bar -->
           <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-            <div class="bar" style="width: 0%;">
+            <div class="bar" style="width: 0;">
             </div>
           </div>
         </div>
@@ -196,16 +195,23 @@
       var fileList = $('.file-list');
       fileList.html('');
 
+      var count = 0;
       var folders = data.folders;
       for (var i in folders) {
         var folder = folders[i];
-        fileList.append('<tr data-path="' + folder.name + '" class="folder"><td colspan="2"><i class="icon-folder-close"></i> ' + folder.name + '</td></tr>');
+        fileList.append('<tr data-path="' + folder.name + '" class="folder"><td><i class="icon-folder"></i> <strong>' + folder.name + '</strong></td></tr>');
+        count++;
       }
 
       var files = data.files;
       for (i in files) {
         var file = files[i];
-        fileList.append('<tr data-path="' + file.name + '" class="file"><td colspan="2"><i class="icon-file-o"></i> ' + file.name + '</td></tr>');
+        fileList.append('<tr data-path="' + file.name + '" class="file"><td><i class="icon-file-o"></i> ' + file.name + '</td></tr>');
+        count++;
+      }
+
+      if (count == 0) {
+        fileList.append('<tr><td><i>This folder is empty</i></td></tr>');
       }
 
       $('.file-list tr.file').click(function () {

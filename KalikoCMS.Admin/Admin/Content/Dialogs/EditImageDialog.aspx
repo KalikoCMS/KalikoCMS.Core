@@ -1,23 +1,24 @@
 ﻿<%@ Page Title="Edit image" Language="C#" MasterPageFile="Dialog.Master" AutoEventWireup="true" CodeBehind="EditImageDialog.aspx.cs" Inherits="KalikoCMS.Admin.Content.Dialogs.EditImageDialog" %>
+
 <%@ Register TagPrefix="cms" Namespace="KalikoCMS.Admin.WebControls" Assembly="KalikoCMS.Admin" %>
 
 <asp:Content ContentPlaceHolderID="MainArea" runat="server">
-  <asp:Literal runat="server" ID="PostbackResult" />   
+  <asp:Literal runat="server" ID="PostbackResult" />
 
   <div class="modal-toolbar">
-    <button id="select-image-button" class="btn btn-small" type="button"><i class="icon-folder-open"></i> Select image..</button>
+    <button id="select-image-button" class="btn btn-small" type="button"><i class="icon-folder-open"></i>Select image..</button>
   </div>
-      
+
   <div class="image-container">
     <div class="background-checkered">
-        <asp:Image id="CropImage" runat="server" />
+      <asp:Image ID="CropImage" runat="server" />
     </div>
     <div id="image-description-field" class="form-inline">
       <asp:Label AssociatedControlID="DescriptionField" runat="server" Text="Description" CssClass="span2" />
       <asp:TextBox runat="server" CssClass="span7" ID="DescriptionField" />
     </div>
   </div>
-  
+
   <asp:HiddenField ID="CropX" runat="server" />
   <asp:HiddenField ID="CropY" runat="server" />
   <asp:HiddenField ID="CropW" runat="server" />
@@ -29,8 +30,8 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="ButtonArea" runat="server">
-  <cms:BootstrapButton id="SaveButton" Enabled="false" Icon="icon-thumbs-up icon-white" Mode="Primary" Text="Save image" runat="server"/>
-  <cms:BootstrapButton id="RemoveButton" Icon="icon-remove" Mode="Danger" Text="No image" runat="server"/>
+  <cms:bootstrapbutton id="SaveButton" enabled="false" icon="icon-thumbs-up icon-white" mode="Primary" text="Save image" runat="server" />
+  <cms:bootstrapbutton id="RemoveButton" icon="icon-remove" mode="Danger" text="No image" runat="server" />
   <button type="button" id="close-button" data-dismiss="modal" class="btn btn-default">Cancel</button>
 </asp:Content>
 
@@ -38,24 +39,24 @@
   <link rel="stylesheet" href="assets/vendors/jquery/css/jquery.jcrop.min.css" />
   <script src="assets/js/kalikocms.admin.imageeditor.min.js"></script>
   <script>
-    (function(iife) {
+    (function (iife) {
       iife(jQuery, window);
-    }(function($, window) {
+    }(function ($, window) {
       var jcropApi;
       var cropImage = $("#<%=CropImage.ClientID %>");
       var image = new Image();
-      var localImagePath = "<%=OriginalPath %>";
+      var localImagePath = "<%=string.IsNullOrEmpty(OriginalPath) ? "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D" : OriginalPath %>";
       var trueSize = [0, 0];
 
-      image.onload = function() {
+      image.onload = function () {
         trueSize = [this.width, this.height];
 
-        if (typeof(jcropApi) != "undefined") {
+        if (typeof (jcropApi) != "undefined") {
           jcropApi.setOptions({ trueSize: trueSize });
         }
       };
-      
-      $(window).load(function() {
+
+      $(window).load(function () {
         cropImage.Jcrop({
           <%=PostedParameters %>
           boxWidth: 678,
@@ -63,13 +64,14 @@
           onChange: storeCoords,
           onSelect: storeCoords,
           trueSize: trueSize
-        }, function() { jcropApi = this; });
+        }, function () { jcropApi = this; });
       });
 
-      cropImage.load(function() {
+      cropImage.load(function () {
         enableSaveButton();
         image.src = $(this).attr('src');
-        jcropApi.setSelect([0, 0, 999, 999]);
+        jcropApi.setSelect([0, 0, 9999, 9999]);
+        setTimeout(function () { jcropApi.setSelect([0, 0, 9999, 9999]); }, 200); // Call with slight delay
       }).attr("src", localImagePath);
 
       function enableSaveButton() {
@@ -93,13 +95,14 @@
         enableSaveButton();
       }
 
-        function onImageLoaded() {
-            jcropApi.setSelect([0, 0, 999, 999]);
-        }
+      function onImageLoaded() {
+        jcropApi.setSelect([0, 0, 9999, 9999]);
+        setTimeout(function () { jcropApi.setSelect([0, 0, 9999, 9999]); }, 200); // Call with slight delay
+      }
 
-      $(function() {
+      $(function () {
         $("#close-button").click(abort);
-        $("#select-image-button").click(function() {
+        $("#select-image-button").click(function () {
           top.registerCallback(changeImage);
           parent.openModal("Content/Dialogs/SelectFileDialog.aspx?filePath=" + "", 700, 500);
         });
