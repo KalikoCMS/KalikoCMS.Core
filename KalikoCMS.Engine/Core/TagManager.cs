@@ -22,12 +22,10 @@ namespace KalikoCMS.Core {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
-    using System.Web.Management;
     using AutoMapper;
     using Collections;
     using Data;
     using Data.Entities;
-    using Telerik.OpenAccess;
 
     public class TagManager : IStartupSequence {
         private static Dictionary<string, TagContext> _tagContexts;

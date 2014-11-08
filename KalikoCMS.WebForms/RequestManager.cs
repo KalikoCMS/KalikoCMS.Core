@@ -27,6 +27,11 @@ namespace KalikoCMS.WebForms {
             RequestModule.RedirectToTemplate(templateUrl);
         }
 
+        public void HandlePage(CmsPage page) {
+            var templateUrl = RequestModule.GetTemplateUrl(page.IsAvailable, page.PageId, page.PageTypeId);
+            RequestModule.RedirectToTemplate(templateUrl);
+        }
+
         public bool TryMvcSupport(int segmentPosition, string[] segments, PageIndexItem page) {
             return false;
         }

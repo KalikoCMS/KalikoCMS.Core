@@ -21,13 +21,12 @@ namespace KalikoCMS.Data {
     using System.Linq;
     using Entities;
     using Telerik.OpenAccess;
-    using Telerik.OpenAccess.Diagnostics;
     using Telerik.OpenAccess.FetchOptimization;
     using Telerik.OpenAccess.Metadata;
 
     public class DataContext : OpenAccessContext {
         private const string ConnectionStringName = "KalikoCMS";
-        private const int DatabaseVersion = 2;
+        private const int DatabaseVersion = 3;
         private static readonly MetadataContainer MetadataContainer = new DataMetadataSource().GetModel();
         private static readonly BackendConfiguration BackendConfiguration = new BackendConfiguration();
 
@@ -67,6 +66,10 @@ namespace KalikoCMS.Data {
 
         public IQueryable<PropertyTypeEntity> PropertyTypes {
             get { return GetAll<PropertyTypeEntity>(); }
+        }
+
+        public IQueryable<RedirectEntity> Redirects {
+            get { return GetAll<RedirectEntity>(); }
         }
 
         public IQueryable<SiteLanguageEntity> SiteLanguages {

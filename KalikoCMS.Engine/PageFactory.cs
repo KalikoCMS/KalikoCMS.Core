@@ -81,6 +81,9 @@ namespace KalikoCMS {
                             if (requestManager.TryMvcSupport(i, segments, lastPage)) {
                                 return true;
                             }
+                            if (TryAsRedirect(pageUrl)) {
+                                return true;
+                            }
 
                             return false;
                         }
@@ -98,11 +101,16 @@ namespace KalikoCMS {
                         if (requestManager.TryMvcSupport(i, segments, lastPage)) {
                             return true;
                         }
+                        if (TryAsRedirect(pageUrl)) {
+                            return true;
+                        }
 
                         return false;
                     }
                 }
             }
+
+
 
             return false;
         }
@@ -178,6 +186,19 @@ namespace KalikoCMS {
             return valueSupport.HandleRequest(page.PageId, remainingSegments);
         }
 
+        private static bool TryAsRedirect(string pageUrl) {
+            var page = RedirectManager.GetPageForPreviousUrl(pageUrl);
+            if (page == null) {
+                return false;
+            }
+
+            var response = HttpContext.Current.Response;
+            response.Status = "301 Moved Permanently";
+            response.AddHeader("Location", page.PageUrl.ToString());
+            response.End();
+
+            return true;
+        }
 
         public static PageCollection GetChildrenForPage(Guid pageId, PublishState pageState = PublishState.Published) {
             var pageIndex = CurrentIndex;

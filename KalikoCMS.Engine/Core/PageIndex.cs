@@ -402,6 +402,8 @@ namespace KalikoCMS.Core {
                     return;
                 }
 
+                RedirectManager.StorePageLinks(new CmsPage(pageIndexItem, LanguageId));
+
                 if (pageIndexItem.ParentId == Guid.Empty) {
                     i = DetachPageFromRoot(i, pageIndexItem);
                 }

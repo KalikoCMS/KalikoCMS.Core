@@ -1,3 +1,6 @@
+### New in 0.9.8-beta
+* Added redirect support for old page links when moving pages or changing URLs
+
 ### New in 0.9.7-beta
 * Added ASP.NET Identity integration
 * Added sort order to startup sequence
