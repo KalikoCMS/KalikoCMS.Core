@@ -6,7 +6,7 @@
         <asp:HiddenField runat="server" ID="Url" />
         <asp:HiddenField runat="server" ID="Type" />
         <div class="input-group">
-            <asp:TextBox runat="server" CssClass="form-control" ID="DisplayField" ReadOnly="True" /><asp:HyperLink ID="SelectButton" CssClass="input-group-btn" runat="server"><i class="btn btn-default icon-file-o"></i></asp:HyperLink>
+            <asp:TextBox runat="server" CssClass="form-control" ID="DisplayField" ReadOnly="True" /><span class="input-group-btn add-on"><asp:HyperLink ID="SelectButton" CssClass="btn btn-default" runat="server"><i class="icon icon-file-o"></i></asp:HyperLink></span>
         </div>
         <asp:Literal ID="ErrorText" runat="server" />
     </div>

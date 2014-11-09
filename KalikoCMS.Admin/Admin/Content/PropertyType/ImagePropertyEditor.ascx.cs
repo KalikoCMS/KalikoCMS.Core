@@ -37,10 +37,10 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                 var imageProperty = (ImageProperty) value;
 
                 if (string.IsNullOrEmpty(imageProperty.ImageUrl)) {
-                    ImagePreview.ImageUrl = string.Format("{0}assets/images/no-image.jpg", Configuration.SiteSettings.Instance.AdminPath);
+                    ImagePreview.ImageUrl = string.Format("{0}assets/images/no-image.jpg", SiteSettings.Instance.AdminPath);
                 }
                 else {
-                    ImagePreview.ImageUrl = Configuration.SiteSettings.Instance.AdminPath + "Assets/Images/Thumbnail.ashx?path=" + Server.UrlEncode(imageProperty.ImageUrl);
+                    ImagePreview.ImageUrl = SiteSettings.Instance.AdminPath + "Assets/Images/Thumbnail.ashx?path=" + Server.UrlEncode(imageProperty.ImageUrl);
                 }
 
                 ImagePath.Value = imageProperty.ImageUrl;
@@ -117,6 +117,8 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                 width = _attributeValues.Width;
                 height = _attributeValues.Height;
             }
+
+            ImagePreview.ImageUrl = string.Format("{0}assets/images/no-image.jpg", SiteSettings.Instance.AdminPath);
 
             string clickScript =
                 string.Format(
