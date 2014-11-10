@@ -1,3 +1,8 @@
+### New in 0.9.8-beta
+* Added redirect support for old page links when moving pages or changing URLs
+* Improved image picker
+* Fixed broken button icons for link property editors
+
 ### New in 0.9.7-beta
 * Added ASP.NET Identity integration
 * Added sort order to startup sequence

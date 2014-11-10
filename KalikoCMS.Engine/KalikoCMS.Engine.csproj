@@ -117,6 +117,7 @@
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Data\DataMetadataSource.cs" />
     <Compile Include="Data\Entities\PropertyTypeEntity.cs" />
+    <Compile Include="Data\Entities\RedirectEntity.cs" />
     <Compile Include="Data\Entities\SiteLanguageEntity.cs" />
     <Compile Include="Data\Entities\PageTagEntity.cs" />
     <Compile Include="Data\Entities\PageTypeEntity.cs" />
@@ -131,10 +132,12 @@
     <Compile Include="Data\Maps\PageTypeMap.cs" />
     <Compile Include="Data\Maps\PropertyMap.cs" />
     <Compile Include="Data\Maps\PropertyTypeMap.cs" />
+    <Compile Include="Data\Maps\RedirectMap.cs" />
     <Compile Include="Data\Maps\SiteLanguageMap.cs" />
     <Compile Include="Data\Maps\SystemInfoMap.cs" />
     <Compile Include="Data\Maps\TagContextMap.cs" />
     <Compile Include="Data\Maps\TagMap.cs" />
+    <Compile Include="Core\RedirectManager.cs" />
     <Compile Include="Data\Synchronizer.cs" />
     <Compile Include="IDashboardArea.cs" />
     <Compile Include="Modules\RequestModuleBase.cs" />

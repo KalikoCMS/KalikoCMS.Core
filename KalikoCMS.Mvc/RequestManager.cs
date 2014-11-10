@@ -29,6 +29,10 @@ namespace KalikoCMS.Mvc {
             RequestModule.RedirectToController(cmsPage);
         }
 
+        public void HandlePage(CmsPage page) {
+            RequestModule.RedirectToController(page);
+        }
+
         public bool TryMvcSupport(int segmentPosition, string[] segments, PageIndexItem page) {
             try {
                 var parametersCount = segments.Length - segmentPosition - 1;

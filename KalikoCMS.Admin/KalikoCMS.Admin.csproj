@@ -121,18 +121,6 @@
     <Content Include="Admin\Assets\themes\dakota\includes\32px.png" />
     <Content Include="Admin\Assets\themes\dakota\includes\bootstrap-theme.less" />
     <None Include="Admin\Assets\themes\dakota\includes\jstree.less" />
-    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.css">
-      <DependentUpon>kalikocms-editor.less</DependentUpon>
-    </Content>
-    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.min.css">
-      <DependentUpon>kalikocms-editor.css</DependentUpon>
-    </Content>
-    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-framework.css">
-      <DependentUpon>kalikocms-framework.less</DependentUpon>
-    </Content>
-    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-framework.min.css">
-      <DependentUpon>kalikocms-framework.css</DependentUpon>
-    </Content>
     <Content Include="Admin\Assets\themes\dakota\theme.css">
       <DependentUpon>theme.less</DependentUpon>
     </Content>
@@ -157,7 +145,9 @@
     <Content Include="Admin\Assets\js\kalikocms.admin.core.min.js.map">
       <DependentUpon>kalikocms.admin.core.min.js</DependentUpon>
     </Content>
-    <Content Include="Admin\Assets\js\kalikocms.admin.editor.js.bundle" />
+    <Content Include="Admin\Assets\js\kalikocms.admin.editor.js.bundle">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Admin\Assets\js\kalikocms.admin.editor.min.js.map">
       <DependentUpon>kalikocms.admin.editor.min.js</DependentUpon>
     </Content>
@@ -312,12 +302,6 @@
     <Content Include="Admin\Assets\vendors\font-awesome\less\variables.less" />
     <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-framework.less" />
     <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.less" />
-    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-framework.css.map">
-      <DependentUpon>kalikocms-framework.css</DependentUpon>
-    </Content>
-    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.css.map">
-      <DependentUpon>kalikocms-editor.css</DependentUpon>
-    </Content>
     <Content Include="Admin\Assets\themes\dakota\theme.css.map">
       <DependentUpon>theme.css</DependentUpon>
     </Content>

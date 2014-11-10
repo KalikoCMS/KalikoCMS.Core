@@ -33,6 +33,7 @@ namespace KalikoCMS.Data {
                 new PageTypeMap(),
                 new PropertyMap(),
                 new PropertyTypeMap(),
+                new RedirectMap(),
                 new SiteLanguageMap(),
                 new SystemInfoMap(),
                 new TagContextMap(),

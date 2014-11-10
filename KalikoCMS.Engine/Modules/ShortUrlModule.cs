@@ -28,25 +28,29 @@ namespace KalikoCMS.Modules {
         }
 
         private void PostAuthenticateRequest(object sender, EventArgs e) {
-            string url = HttpContext.Current.Request.Path;
-            int rootPathLength = Utils.ApplicationPath.Length;
+            var url = HttpContext.Current.Request.Path;
+            var rootPathLength = Utils.ApplicationPath.Length;
 
             url = url.Length > rootPathLength ? url.Substring(rootPathLength) : string.Empty;
 
-            if(url.StartsWith("!")) {
-                try {
-                    int pageInstanceId = Base62.Decode(url.Substring(1));
-                    string pageUrl = PageFactory.GetUrlForPageInstanceId(pageInstanceId);
-                    if(!string.IsNullOrEmpty(pageUrl)) {
-                        HttpResponse response = HttpContext.Current.Response;
-                        response.Status = "301 Moved Permanently";
-                        response.AddHeader("Location", pageUrl);
-                        response.End();
-                    }
+            if (!url.StartsWith("!")) {
+                return;
+            }
+
+            try {
+                var pageInstanceId = Base62.Decode(url.Substring(1));
+                var pageUrl = PageFactory.GetUrlForPageInstanceId(pageInstanceId);
+                if (string.IsNullOrEmpty(pageUrl)) {
+                    return;
                 }
-                catch {
-                    // Let the rest of the URL handlers take care of this URL
-                }
+
+                var response = HttpContext.Current.Response;
+                response.Status = "301 Moved Permanently";
+                response.AddHeader("Location", pageUrl);
+                response.End();
+            }
+            catch {
+                // Let the rest of the URL handlers take care of this URL
             }
         }
 

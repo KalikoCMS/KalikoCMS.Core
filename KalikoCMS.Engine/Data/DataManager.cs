@@ -63,11 +63,11 @@ namespace KalikoCMS.Data {
         }
 
 
-        public static void InsertOrUpdate<T>(T item) {
+        public static T InsertOrUpdate<T>(T item) {
             var context = new DataContext();
 
             try {
-                context.AttachCopy(item);
+                item = context.AttachCopy(item);
                 context.SaveChanges();
             }
             catch (Exception e) {
@@ -77,6 +77,7 @@ namespace KalikoCMS.Data {
             finally {
                 context.Dispose();
             }
+            return item;
         }
 
 
@@ -189,6 +190,22 @@ namespace KalikoCMS.Data {
 
             try {
                 return context.GetAll<T>().SingleOrDefault(predicate);
+            }
+            catch (Exception e) {
+                Logger.Write(e, Logger.Severity.Major);
+                throw;
+            }
+            finally {
+                context.Dispose();
+            }
+        }
+
+
+        public static T FirstOrDefault<T>(Func<T, bool> predicate) {
+            var context = new DataContext();
+
+            try {
+                return context.GetAll<T>().FirstOrDefault(predicate);
             }
             catch (Exception e) {
                 Logger.Write(e, Logger.Severity.Major);
