@@ -1,3 +1,7 @@
+### New in 0.9.8
+* Fixed bug in NuGet packages that replaced custom connectionstrings during update
+* Improved simular page search
+
 ### New in 0.9.8-beta
 * Added redirect support for old page links when moving pages or changing URLs
 * Improved image picker

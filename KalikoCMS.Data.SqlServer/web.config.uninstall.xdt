@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
   <connectionStrings>
-    <add name="KalikoCMS" providerName="System.Data.SqlClient" xdt:Transform="Remove" xdt:Locator="Match(name, providerName)" />
+    <add name="KalikoCMS" connectionString="Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=KalikoCMS;Data Source=(localdb)\v11.0" providerName="System.Data.SqlClient" xdt:Transform="Remove" xdt:Locator="Match(name, connectionString, providerName)" />
   </connectionStrings>
 </configuration>

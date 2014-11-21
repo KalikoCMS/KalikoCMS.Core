@@ -40,7 +40,8 @@
   <ItemGroup>
     <Reference Include="AspNet.Identity.DataAccess, Version=2.1.0.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AspNet.Identity.DataAccess.2.1.0-beta3\lib\AspNet.Identity.DataAccess.dll</HintPath>
+      <HintPath>..\packages\AspNet.Identity.DataAccess.2.1.0.6\lib\AspNet.Identity.DataAccess.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -197,6 +198,17 @@
       <Project>{fc032b3c-8643-4c35-929c-88959fc980d4}</Project>
       <Name>KalikoCMS.Engine</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
