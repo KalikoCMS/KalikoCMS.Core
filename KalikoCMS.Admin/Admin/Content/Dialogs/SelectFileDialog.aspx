@@ -73,7 +73,7 @@
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptArea" runat="server">
-  <script src="assets/js/kalikocms.admin.fileupload.js" type="text/javascript"></script>
+  <script src="assets/js/kalikocms.admin.fileupload.min.js" type="text/javascript"></script>
 
   <script type="text/javascript">
     var path = "<%=SiteSettings.Instance.FilePath %>";

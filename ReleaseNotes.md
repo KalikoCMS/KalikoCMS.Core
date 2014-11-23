@@ -1,3 +1,6 @@
+### New in 0.9.9
+* Fixed broken upload component
+
 ### New in 0.9.8
 * Fixed bug in NuGet packages that replaced custom connectionstrings during update
 * Improved simular page search
