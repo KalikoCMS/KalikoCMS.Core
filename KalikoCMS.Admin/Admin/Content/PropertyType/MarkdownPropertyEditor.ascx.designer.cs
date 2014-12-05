@@ -10,7 +10,7 @@
 namespace KalikoCMS.Admin.Content.PropertyType {
     
     
-    public partial class HtmlPropertyEditor {
+    public partial class MarkdownPropertyEditor {
         
         /// <summary>
         /// LabelText control.

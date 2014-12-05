@@ -23,8 +23,9 @@ namespace KalikoCMS.Admin.Content.PropertyType {
     using Configuration;
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
+    using MarkdownSharp;
 
-    public partial class HtmlPropertyEditor : PropertyEditorBase {
+    public partial class MarkdownPropertyEditor : PropertyEditorBase {
 
         public override string PropertyLabel {
             set { LabelText.Text = value; }
@@ -32,9 +33,11 @@ namespace KalikoCMS.Admin.Content.PropertyType {
 
         public override PropertyData PropertyValue {
             set {
-                ValueField.Text = ((HtmlProperty)value).Value;
+                ValueField.Text = ((MarkdownProperty)value).Markdown;
             }
-            get { return new HtmlProperty(ValueField.Text); }
+            get {
+                return new MarkdownProperty(ValueField.Text);
+            }
         }
 
         public override string Parameters {
@@ -47,15 +50,6 @@ namespace KalikoCMS.Admin.Content.PropertyType {
 
         public override bool Validate(bool required) {
             return Validate();
-        }
-
-        protected override void OnLoad(EventArgs e) {
-            base.OnLoad(e);
-
-            ScriptManager.RegisterClientScriptInclude(this, typeof(LinkPropertyEditor), "Admin.Content.PropertyType.LinkPropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/LinkPropertyEditor.js");
-            ScriptManager.RegisterClientScriptInclude(this, typeof(FilePropertyEditor), "Admin.Content.PropertyType.FilePropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/FilePropertyEditor.js");
-            ScriptManager.RegisterClientScriptInclude(this, typeof(PageLinkPropertyEditor), "Admin.Content.PropertyType.PageLinkPropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/PageLinkPropertyEditor.js");
-            ScriptManager.RegisterClientScriptInclude(this, typeof(ImagePropertyEditor), "Admin.Content.PropertyType.ImagePropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/ImagePropertyEditor.js");
         }
     }
 }

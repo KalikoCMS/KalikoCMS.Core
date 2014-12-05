@@ -121,6 +121,12 @@
     <Content Include="Admin\Assets\themes\dakota\includes\32px.png" />
     <Content Include="Admin\Assets\themes\dakota\includes\bootstrap-theme.less" />
     <None Include="Admin\Assets\themes\dakota\includes\jstree.less" />
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.css">
+      <DependentUpon>kalikocms-editor.less</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.min.css">
+      <DependentUpon>kalikocms-editor.css</DependentUpon>
+    </Content>
     <Content Include="Admin\Assets\themes\dakota\theme.css">
       <DependentUpon>theme.less</DependentUpon>
     </Content>
@@ -129,6 +135,7 @@
     <Content Include="Admin\Assets\themes\dakota\theme.min.css">
       <DependentUpon>theme.css</DependentUpon>
     </Content>
+    <Content Include="Admin\Assets\vendors\bootstrap-markdown\js\bootstrap-markdown.js" />
     <Content Include="Admin\Assets\vendors\bootstrap\css\bootstrap-modal-bs3patch.css" />
     <Content Include="Admin\Assets\vendors\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Admin\Assets\vendors\jquery\css\jquery.jcrop.min.css" />
@@ -240,6 +247,7 @@
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.ascx" />
     <Content Include="Admin\Content\Dialogs\EditCollectionPropertyDialog.aspx" />
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.js" />
+    <Content Include="Admin\Content\PropertyType\MarkdownPropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\UniversalDateTimePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.js" />
@@ -305,6 +313,11 @@
     <Content Include="Admin\Assets\themes\dakota\theme.css.map">
       <DependentUpon>theme.css</DependentUpon>
     </Content>
+    <Content Include="Admin\Assets\vendors\bootstrap-markdown\less\bootstrap-markdown.less" />
+    <Content Include="Admin\Handlers\MarkdownHandler.ashx" />
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.css.map">
+      <DependentUpon>kalikocms-editor.css</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\Deploy.pubxml">
       <SubType>Designer</SubType>
     </None>
@@ -338,6 +351,13 @@
     <Compile Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx.designer.cs">
       <DependentUpon>BooleanPropertyEditor.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\Content\PropertyType\MarkdownPropertyEditor.ascx.cs">
+      <DependentUpon>MarkdownPropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\MarkdownPropertyEditor.ascx.designer.cs">
+      <DependentUpon>MarkdownPropertyEditor.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Content\PropertyType\UniversalDateTimePropertyEditor.ascx.cs">
       <DependentUpon>UniversalDateTimePropertyEditor.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -361,6 +381,9 @@
     </Compile>
     <Compile Include="Admin\Handlers\FileHandler.ashx.cs">
       <DependentUpon>FileHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Handlers\MarkdownHandler.ashx.cs">
+      <DependentUpon>MarkdownHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Search\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

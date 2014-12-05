@@ -139,6 +139,7 @@
     <Compile Include="Data\Maps\TagMap.cs" />
     <Compile Include="Core\RedirectManager.cs" />
     <Compile Include="Data\Synchronizer.cs" />
+    <Compile Include="Helpers\Markdown.cs" />
     <Compile Include="IDashboardArea.cs" />
     <Compile Include="Modules\RequestModuleBase.cs" />
     <Compile Include="PropertyType\BooleanProperty.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="PropertyType\FileProperty.cs" />
     <Compile Include="PropertyType\IPageSavedHandler.cs" />
     <Compile Include="PropertyType\LinkProperty.cs" />
+    <Compile Include="PropertyType\MarkdownProperty.cs" />
     <Compile Include="PropertyType\PageLinkProperty.cs" />
     <Compile Include="PropertyType\TagProperty.cs" />
     <Compile Include="PropertyType\TagPropertyAttribute.cs" />

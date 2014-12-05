@@ -70,6 +70,23 @@
           }
         });
 
+        $(".markdown-editor").markdown({
+          savable: false,
+          iconlibrary: 'fa-3',
+          onPreview: function (e) {
+            var retval = "";
+            jQuery.ajax({
+              url: 'Handlers/MarkdownHandler.ashx?markdown=' + escape(e.getContent()),
+              success: function (result) {
+                retval = result;
+              },
+              async: false
+            });
+
+            return retval;
+          }
+        });
+
         warnBeforeLeavingIfChangesBeenMade();
       });
     </script>

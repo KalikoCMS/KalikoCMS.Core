@@ -11,6 +11,7 @@
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
     <file>/Admin/Assets/vendors/tinymce/tinymce.min.js</file>
+    <file>/Admin/Assets/vendors/bootstrap-markdown/js/bootstrap-markdown.js</file>
     <file>/Admin/Assets/vendors/bootstrap/js/bootstrap-datetimepicker.min.js</file>
     <file>/Admin/Assets/vendors/jquery/js/jquery-ui.min.js</file>
   </files>
