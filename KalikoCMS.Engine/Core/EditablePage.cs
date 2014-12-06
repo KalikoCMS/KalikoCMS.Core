@@ -73,6 +73,14 @@ namespace KalikoCMS.Core {
         public void SetVisibleInMenu(bool visibleInMenu) {
             VisibleInMenu = visibleInMenu;
         }
+
+        public void SetVisibleInSiteMap(bool visibleInSiteMap) {
+            VisibleInSiteMap = visibleInSiteMap;
+        }
+
+        public void SetSortOrder(int sortOrder) {
+            SortOrder = sortOrder;
+        }
         
         private static void ShallowCopyProperties(CmsPage page, EditablePage editablePage) {
             var propertyItems = page.Property.Select(Mapper.Map<PropertyItem, PropertyItem>).ToList();
@@ -80,7 +88,6 @@ namespace KalikoCMS.Core {
             
             editablePage.Property = propertyCollection;
         }
-
 
         internal static EditablePage CreateEditableChildPage(CmsPage page, int pageTypeId) {
             var editablePage = new EditablePage {
@@ -143,7 +150,7 @@ namespace KalikoCMS.Core {
                 pageInstance.StopPublish = StopPublish;
                 pageInstance.VisibleInMenu = VisibleInMenu;
                 pageInstance.VisibleInSitemap = VisibleInSiteMap;
-
+                
                 EnsurePageUrl();
 
                 //TODO: Allow changing Url
@@ -194,7 +201,7 @@ namespace KalikoCMS.Core {
         }
 
         private void EnsurePageUrl() {
-            if (UrlSegment == null) {
+            if (string.IsNullOrEmpty(UrlSegment)) {
                 UrlSegment = PageNameBuilder.PageNameToUrl(PageName, ParentId);
             }
         }

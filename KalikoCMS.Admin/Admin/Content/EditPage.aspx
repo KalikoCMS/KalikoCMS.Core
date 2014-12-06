@@ -2,6 +2,7 @@
 <%@ Register tagPrefix="cms" tagName="StringPropertyEditor" src="PropertyType/StringPropertyEditor.ascx" %>
 <%@ Register tagPrefix="cms" tagName="UniversalDateTimePropertyEditor" src="PropertyType/UniversalDateTimePropertyEditor.ascx" %>
 <%@ Register tagPrefix="cms" tagName="BooleanPropertyEditor" src="PropertyType/BooleanPropertyEditor.ascx" %>
+<%@ Register tagPrefix="cms" tagName="NumericPropertyEditor" src="PropertyType/NumericPropertyEditor.ascx" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
   <form id="MainForm" class="page-editor admin-page" role="form" runat="server">
@@ -17,6 +18,24 @@
           <cms:UniversalDateTimePropertyEditor ID="StartPublishDate" runat="server" />
           <cms:UniversalDateTimePropertyEditor ID="StopPublishDate" runat="server" />
           <cms:BooleanPropertyEditor ID="VisibleInMenu" runat="server" />
+          <asp:Panel ID="AdvancedOptionButton" CssClass="row" runat="server">
+            <span id="advanced-options" class="col-xs-10 col-xs-offset-2"><i class="icon-plus text-primary"></i> Show advanced options</span>
+          </asp:Panel>
+          <div id="advanced-panel" style="display:none;">
+            <cms:BooleanPropertyEditor ID="VisibleInSitemap" runat="server" />
+            <asp:HiddenField ID="OldPageUrlSegment" runat="server" />
+            <div class="form-group">
+              <asp:Label AssociatedControlID="PageUrlSegment" runat="server" Text="URL segment" CssClass="control-label col-xs-2" />
+              <div class="controls col-xs-4">
+                <asp:TextBox runat="server" ID="PageUrlSegment" CssClass="form-control" />
+              </div>
+              <div class="col-xs-6">
+                <i class="form-comment">Leave blank to let the CMS handle the segment creation.</i>
+              </div>
+            </div>
+            <cms:NumericPropertyEditor ID="SortOrder" runat="server" />
+          </div>
+
         </fieldset>
         <fieldset>
           <legend>Content</legend>
@@ -86,8 +105,15 @@
             return retval;
           }
         });
+        
+        <%=PageUrlSegmentWasChanged ? "top.refreshNode('" + CurrentPageId + "')" : "" %>
 
         warnBeforeLeavingIfChangesBeenMade();
+
+        $('#advanced-options').click(function() {
+            $('#<%=AdvancedOptionButton.ClientID%>').hide();
+            $('#advanced-panel').slideDown();
+        });
       });
     </script>
 </asp:Content>

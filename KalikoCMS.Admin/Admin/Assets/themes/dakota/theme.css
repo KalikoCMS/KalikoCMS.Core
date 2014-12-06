@@ -5852,6 +5852,14 @@ iframe {
 .markdown-editor {
   height: 300px;
 }
+#advanced-options {
+  cursor: pointer;
+  margin-top: 10px;
+}
+.form-comment {
+  padding-top: 5px;
+  display: inline-block;
+}
 /*#endregion*/
 /*#region Tags */
 .tag.label {

@@ -1,3 +1,9 @@
+### New in 1.0.0
+* Added Markdown property type
+* Added option to set URL segment when editing a page
+* Added option to set sort order when editing a page
+* Added option to set visibility in sitemaps when editing a page
+
 ### New in 0.9.9
 * Fixed broken upload component
 

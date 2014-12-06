@@ -76,6 +76,51 @@ namespace KalikoCMS.Admin.Content {
         protected global::KalikoCMS.Admin.Content.PropertyType.BooleanPropertyEditor VisibleInMenu;
         
         /// <summary>
+        /// AdvancedOptionButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel AdvancedOptionButton;
+        
+        /// <summary>
+        /// VisibleInSitemap control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::KalikoCMS.Admin.Content.PropertyType.BooleanPropertyEditor VisibleInSitemap;
+        
+        /// <summary>
+        /// OldPageUrlSegment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField OldPageUrlSegment;
+        
+        /// <summary>
+        /// PageUrlSegment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox PageUrlSegment;
+        
+        /// <summary>
+        /// SortOrder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::KalikoCMS.Admin.Content.PropertyType.NumericPropertyEditor SortOrder;
+        
+        /// <summary>
         /// EditControls control.
         /// </summary>
         /// <remarks>

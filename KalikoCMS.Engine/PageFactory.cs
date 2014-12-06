@@ -373,6 +373,19 @@ namespace KalikoCMS {
                 page.StopPublish = pageInstance.StopPublish;
                 page.VisibleInMenu = pageInstance.VisibleInMenu;
                 page.VisibleInSiteMap = pageInstance.VisibleInSitemap;
+                page.SortOrder = sortOrder;
+
+                // Update if page URL segment was changed
+                if (page.UrlSegment != pageInstance.PageUrl) {
+                    page.UrlSegment = pageInstance.PageUrl;
+                    page.UrlSegmentHash = page.UrlSegment.GetHashCode();
+                    page.PageUrl = BuildPageUrl(pageInstance, parentId);
+                    if (page.HasChildren) {
+
+                        UpdateChildUrl(pageIndex, page, page.FirstChild);
+                    }
+                }
+
                 pageIndex.SavePageIndexItem(page);
             }
             else {
@@ -404,6 +417,23 @@ namespace KalikoCMS {
             }
         }
 
+        private static void UpdateChildUrl(PageIndex pageIndex, PageIndexItem parent, int childOffset) {
+            while (true) {
+                var item = pageIndex.Items[childOffset];
+
+                item.PageUrl = parent.PageUrl + item.UrlSegment + "/";
+
+                if (item.HasChildren) {
+                    UpdateChildUrl(pageIndex, item, item.FirstChild);
+                }
+
+                if (item.NextPage > 0) {
+                    childOffset = item.NextPage;
+                    continue;
+                }
+                break;
+            }
+        }
 
         private static string BuildPageUrl(PageInstanceEntity pageInstance, Guid parentId) {
             var parent = GetPage(parentId);

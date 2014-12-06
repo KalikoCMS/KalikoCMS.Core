@@ -88,6 +88,7 @@ namespace KalikoCMS.Admin.Content {
             StopPublishDate.Visible = false;
             VisibleInMenu.Visible = false;
             SaveButton.Visible = false;
+            AdvancedOptionButton.Visible = false;
         }
 
         private void LoadFormForNewPage() {
@@ -106,6 +107,8 @@ namespace KalikoCMS.Admin.Content {
             StartPublishDate.PropertyLabel = "Start publish";
             StopPublishDate.PropertyLabel = "Stop publish";
             VisibleInMenu.PropertyLabel = "Visible in menus";
+            VisibleInSitemap.PropertyLabel = "Visible in sitemaps";
+            SortOrder.PropertyLabel = "Sort order";
         }
 
         private void LoadFormForExistingPage() {
@@ -116,10 +119,17 @@ namespace KalikoCMS.Admin.Content {
 
             SetStandardFieldLabels(); 
 
+            // Standard fields
             PageName.PropertyValue = new StringProperty(cmsPage.PageName);
             StartPublishDate.PropertyValue = new DateTimeProperty(cmsPage.StartPublish);
             StopPublishDate.PropertyValue = new DateTimeProperty(cmsPage.StopPublish);
             VisibleInMenu.PropertyValue = new BooleanProperty(cmsPage.VisibleInMenu);
+
+            // Advanced fields
+            VisibleInSitemap.PropertyValue = new BooleanProperty(cmsPage.VisibleInSiteMap);
+            PageUrlSegment.Text = cmsPage.UrlSegment;
+            SortOrder.PropertyValue = new NumericProperty(cmsPage.SortOrder);
+            OldPageUrlSegment.Value = cmsPage.UrlSegment;
 
             PageId.Text = cmsPage.PageId.ToString();
 
@@ -163,6 +173,9 @@ namespace KalikoCMS.Admin.Content {
                 else if (!StopPublishDate.Validate()) {
                     valid = false;
                 }
+                else if (!SortOrder.Validate()) {
+                    valid = false;
+                }
 
                 return valid;
             }
@@ -178,19 +191,19 @@ namespace KalikoCMS.Admin.Content {
         }
 
         private void SaveDataForNewPage() {
-            CmsPage parent = PageFactory.GetPage(_parentId);
-            EditablePage editablePage = parent.CreateChildPage(_pageTypeId);
+            var parent = PageFactory.GetPage(_parentId);
+            var editablePage = parent.CreateChildPage(_pageTypeId);
             SavePropertiesForPage(editablePage);
             _pageId = editablePage.PageId;
+            OldPageUrlSegment.Value = editablePage.UrlSegment;
         }
 
         private void SaveDataForExistingPage() {
-            CmsPage cmsPage = PageFactory.GetPage(_pageId);
+            var cmsPage = PageFactory.GetPage(_pageId);
             _parentId = cmsPage.ParentId;
-
-            EditablePage editablePage = cmsPage.MakeEditable();
-
+            var editablePage = cmsPage.MakeEditable();
             SavePropertiesForPage(editablePage);
+            OldPageUrlSegment.Value = editablePage.UrlSegment;
         }
 
         private void SavePropertiesForPage(EditablePage editablePage) {
@@ -198,6 +211,10 @@ namespace KalikoCMS.Admin.Content {
             editablePage.SetStartPublish(((DateTimeProperty)StartPublishDate.PropertyValue).Value);
             editablePage.SetStopPublish(((DateTimeProperty)StopPublishDate.PropertyValue).Value);
             editablePage.SetVisibleInMenu(((BooleanProperty) VisibleInMenu.PropertyValue).Value);
+            editablePage.SetVisibleInSiteMap(((BooleanProperty)VisibleInSitemap.PropertyValue).Value);
+            editablePage.SetSortOrder(((NumericProperty)SortOrder.PropertyValue).Value);
+
+            PageUrlSegmentWasChanged = HandlePageUrlSegment(editablePage);
 
             foreach (PropertyEditorBase propertyControl in _controls) {
                 string propertyName = propertyControl.PropertyName;
@@ -206,7 +223,28 @@ namespace KalikoCMS.Admin.Content {
                 editablePage.SetProperty(propertyName, propertyValue);
             }
 
+            if (PageUrlSegmentWasChanged) {
+                var currentPage = PageFactory.GetPage(editablePage.PageId, editablePage.LanguageId);
+                RedirectManager.StorePageLinks(currentPage);
+            }
+
             editablePage.Save();
+        }
+
+        public bool PageUrlSegmentWasChanged { get; set; }
+        
+        public string CurrentPageId { get { return _pageId.ToString(); } }
+
+        private bool HandlePageUrlSegment(EditablePage editablePage) {
+            var oldSegment = OldPageUrlSegment.Value;
+            var newSegment = PageUrlSegment.Text;
+
+            if (newSegment == oldSegment) {
+                return false;
+            }
+
+            editablePage.SetPageUrl(newSegment);
+            return true;
         }
     }
 }

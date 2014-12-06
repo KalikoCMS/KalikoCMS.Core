@@ -46,7 +46,7 @@ namespace KalikoCMS.Core {
 
         internal int FirstChild { get; set; }
         internal int NextPage { get; set; }
-        internal string UrlSegment { get; set; }
+        public string UrlSegment { get; set; }
 
         protected CmsPage() {
         }
