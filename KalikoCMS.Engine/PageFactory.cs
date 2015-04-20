@@ -22,6 +22,7 @@ namespace KalikoCMS {
     using System.Collections.Generic;
     using System.Web;
     using Data.Entities;
+    using Extensions;
     using Kaliko;
     using ContentProvider;
     using Core;
@@ -310,6 +311,20 @@ namespace KalikoCMS {
             return CurrentIndex.GetPageTreeFromPage(rootPageId, leafPageId, pageState);
         }
 
+        public static PageCollection GetPages(Predicate<PageIndexItem> match) {
+            return CurrentIndex.GetPagesByCriteria(match);
+        }
+
+        public static PageCollection GetPages(int pageTypeId, PublishState pageState = PublishState.Published) {
+            Predicate<PageIndexItem> match = page => page.PageTypeId == pageTypeId;
+            match = match.And(PageIndex.GetPublishStatePredicate(pageState));
+            return CurrentIndex.GetPagesByCriteria(match);
+        }
+
+        public static PageCollection GetPages(Type pageType, PublishState pageState = PublishState.Published) {
+            var pageTypeItem = PageType.GetPageType(pageType);
+            return GetPages(pageTypeItem.PageTypeId, pageState);
+        }
 
         internal static void IndexSite() {
             if (!_indexing) {
