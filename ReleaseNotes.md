@@ -3,6 +3,8 @@
 * Added option to set URL segment when editing a page
 * Added option to set sort order when editing a page
 * Added option to set visibility in sitemaps when editing a page
+* Fixed support for application paths in page URLs
+* Fixed support for abstract (inehrited) MVC controllers
 
 ### New in 0.9.9
 * Fixed broken upload component
