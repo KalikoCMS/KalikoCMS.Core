@@ -140,7 +140,15 @@ namespace KalikoCMS.Mvc {
                         continue;
                     }
 
+                    if (definedType.IsAbstract) {
+                        continue;
+                    }
+
                     var pageType = PageType.GetPageType(definedType.BaseType.GenericTypeArguments.FirstOrDefault());
+
+                    if (pageType == null) {
+                        continue;
+                    }
 
                     controllerList.Add(pageType.PageTypeId, definedType.AsType());
                 }
