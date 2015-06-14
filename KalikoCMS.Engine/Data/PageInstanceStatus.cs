@@ -18,18 +18,9 @@
 #endregion
 
 namespace KalikoCMS.Data {
-    using System;
-    using System.Collections.Generic;
-    using Entities;
-
-    // TODO: Fixa access
-    public class PageInstanceData {
-        public static PageInstanceEntity GetByStatus(Guid pageId, int languageId, PageInstanceStatus status) {
-            return DataManager.FirstOrDefault<PageInstanceEntity>(p => p.Status == status && p.PageId == pageId && p.LanguageId == languageId);
-        }
-
-        public static List<PageInstanceEntity> GetById(Guid pageId, int languageId) {
-            return DataManager.Select<PageInstanceEntity>(p => p.PageId == pageId && p.LanguageId == languageId);
-        }
+    public enum PageInstanceStatus {
+        Published = 0,
+        WorkingCopy,
+        Archived
     }
 }

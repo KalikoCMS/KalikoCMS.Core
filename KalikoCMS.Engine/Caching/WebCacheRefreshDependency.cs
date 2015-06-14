@@ -25,7 +25,7 @@ namespace KalikoCMS.Caching {
     public class WebCacheRefreshDependency : CacheDependency {
 
         public WebCacheRefreshDependency() {
-            PageFactory.PageSaved += OnPageSaved;
+            PageFactory.PagePublished += OnPagePublished;
             PageFactory.PageDeleted += OnPageDeleted;
             FinishInit();
         }
@@ -34,12 +34,12 @@ namespace KalikoCMS.Caching {
             NotifyDependencyChanged(this, EventArgs.Empty);
         }
 
-        private void OnPageSaved(object sender, Events.PageEventArgs e) {
+        private void OnPagePublished(object sender, PageEventArgs e) {
             NotifyDependencyChanged(this, EventArgs.Empty);
         }
 
         protected override void DependencyDispose() {
-            PageFactory.PageSaved -= OnPageSaved;
+            PageFactory.PagePublished -= OnPagePublished;
             PageFactory.PageDeleted -= OnPageDeleted;
             base.DependencyDispose();
         }

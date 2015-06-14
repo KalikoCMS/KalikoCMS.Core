@@ -139,6 +139,15 @@ namespace KalikoCMS.Admin.Content {
         protected global::System.Web.UI.WebControls.Literal PageId;
         
         /// <summary>
+        /// PublishButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton PublishButton;
+        
+        /// <summary>
         /// SaveButton control.
         /// </summary>
         /// <remarks>

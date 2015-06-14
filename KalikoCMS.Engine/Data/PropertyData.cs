@@ -26,11 +26,15 @@ namespace KalikoCMS.Data {
     using Core.Collections;
 
     internal static class PropertyData {
-        internal static PropertyCollection GetPropertiesForPage(Guid pageId, int languageId, int pageTypeId) {
-            var cacheName = GetCacheName(pageId, languageId);
+        internal static PropertyCollection GetPropertiesForPage(Guid pageId, int languageId, int pageTypeId, int version, bool useCache) {
+            var cacheName = GetCacheName(pageId, languageId, version);
 
             var propertyCollection = new PropertyCollection();
-            var propertyItems = CacheManager.Get<List<PropertyItem>>(cacheName);
+            List<PropertyItem> propertyItems = null;
+
+            if (useCache) {
+                propertyItems = CacheManager.Get<List<PropertyItem>>(cacheName);
+            }
 
             if (propertyItems != null) {
                 propertyCollection.Properties = propertyItems;
@@ -40,7 +44,7 @@ namespace KalikoCMS.Data {
 
                 try {
                     var properties = from p in context.Properties
-                        join pp in context.PageProperties on new { PropertyId = p.PropertyId, PageId = pageId, LanguageId = languageId } equals new { pp.PropertyId, pp.PageId, pp.LanguageId } into merge
+                        join pp in context.PageProperties on new { PropertyId = p.PropertyId, PageId = pageId, LanguageId = languageId, Version = version } equals new { pp.PropertyId, pp.PageId, pp.LanguageId, pp.Version } into merge
                         from m in merge.DefaultIfEmpty()
                         where p.PageTypeId == pageTypeId
                         orderby p.SortOrder
@@ -57,15 +61,17 @@ namespace KalikoCMS.Data {
                     context.Dispose();
                 }
 
-                CacheManager.Add(cacheName, propertyCollection.Properties);
+                if (useCache) {
+                    CacheManager.Add(cacheName, propertyCollection.Properties);
+                }
             }
 
             return propertyCollection;
         }
 
 
-        internal static void RemovePropertiesFromCache(Guid pageId, int languageId) {
-            var cacheName = GetCacheName(pageId, languageId);
+        internal static void RemovePropertiesFromCache(Guid pageId, int languageId, int version) {
+            var cacheName = GetCacheName(pageId, languageId, version);
             CacheManager.Remove(cacheName);
         }
 
@@ -74,8 +80,8 @@ namespace KalikoCMS.Data {
             return propertyType.ClassInstance.Deserialize(pageData);
         }
 
-        private static string GetCacheName(Guid pageId, int languageId) {
-            return "Property:" + pageId + ":" + languageId;
+        private static string GetCacheName(Guid pageId, int languageId, int version) {
+            return string.Format("Property:{0}:{1}:{2}", pageId, languageId, version);
         }
     }
 }

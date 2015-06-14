@@ -138,6 +138,7 @@
     <Compile Include="Data\Maps\TagContextMap.cs" />
     <Compile Include="Data\Maps\TagMap.cs" />
     <Compile Include="Core\RedirectManager.cs" />
+    <Compile Include="Data\PageInstanceStatus.cs" />
     <Compile Include="Data\Synchronizer.cs" />
     <Compile Include="Helpers\Markdown.cs" />
     <Compile Include="IDashboardArea.cs" />
