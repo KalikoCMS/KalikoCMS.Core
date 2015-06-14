@@ -347,7 +347,7 @@ namespace KalikoCMS.Core {
             }
         }
 
-        private static Predicate<PageIndexItem> GetPublishStatePredicate(PublishState pageState) {
+        internal static Predicate<PageIndexItem> GetPublishStatePredicate(PublishState pageState) {
             Predicate<PageIndexItem> publishState = t => true;
             switch (pageState) {
                 case PublishState.Published:
