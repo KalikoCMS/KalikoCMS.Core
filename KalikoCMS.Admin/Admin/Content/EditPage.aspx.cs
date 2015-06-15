@@ -30,11 +30,14 @@ namespace KalikoCMS.Admin.Content {
         private string _pageName;
         private Guid _parentId;
         private int _pageTypeId;
+        private bool _hasVersionSpecified;
+        private int _version;
 
         protected void Page_Init(object sender, EventArgs e) {
             GetQueryStringValues();
 
             SaveButton.Click += SaveButtonEventHandler;
+            PublishButton.Click += PublishButtonEventHandler;
 
             _controls = new List<PropertyEditorBase>();
 
@@ -47,6 +50,8 @@ namespace KalikoCMS.Admin.Content {
             Request.QueryString["id"].TryParseGuid(out _pageId);
             Request.QueryString["parentId"].TryParseGuid(out _parentId);
             int.TryParse(Request.QueryString["pageTypeId"], out _pageTypeId);
+            _hasVersionSpecified = int.TryParse(Request.QueryString["version"], out _version);
+
         }
 
         private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId, string headerText, string parameters) {
@@ -112,7 +117,14 @@ namespace KalikoCMS.Admin.Content {
         }
 
         private void LoadFormForExistingPage() {
-            var cmsPage = PageFactory.GetPage(_pageId);
+            CmsPage cmsPage;
+
+            if (_hasVersionSpecified) {
+                cmsPage = PageFactory.GetSpecificVersion(_pageId, _version);
+            }
+            else {
+                cmsPage = PageFactory.GetWorkingCopy(_pageId);
+            }
 
             _pageName = cmsPage.PageName;
             PageHeader.Text = _pageName;
@@ -143,6 +155,7 @@ namespace KalikoCMS.Admin.Content {
             }
         }
 
+
         private void SaveButtonEventHandler(object sender, EventArgs e) {
             if(IsDataValid) {
                 SaveData();
@@ -152,7 +165,27 @@ namespace KalikoCMS.Admin.Content {
                     Feedback.Visible = true;
                 }
                 else {
-                    ShowMessage(Feedback, String.Format("Page <b>{0}</b> has been saved!", _pageName));
+                    ShowMessage(Feedback, String.Format("A working copy of <b>{0}</b> has been saved! Remember to publish this version once it's complete.", _pageName));
+                }
+            }
+            else {
+                ShowError(Feedback, "One or more errors occured!");
+            }
+        }
+
+        private void PublishButtonEventHandler(object sender, EventArgs e) {
+            if(IsDataValid) {
+                var page = SaveData();
+                page.Publish();
+
+                ScriptArea.Text = "top.refreshNode('" + CurrentPageId + "');";
+
+                if (_pageTypeId > 0) {
+                    Feedback.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> has been created and published!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();parent.refreshTreeNode('{1}','{2}');document.location = '{3}?id={2}';</script>", _pageName, _parentId, _pageId, Request.Path);
+                    Feedback.Visible = true;
+                }
+                else {
+                    ShowMessage(Feedback, String.Format("Page <b>{0}</b> has been published!", _pageName));
                 }
             }
             else {
@@ -162,7 +195,7 @@ namespace KalikoCMS.Admin.Content {
 
         protected bool IsDataValid {
             get {
-                bool valid = true;
+                var valid = true;
 
                 if (!PageName.Validate(true)) {
                     valid = false;
@@ -181,29 +214,33 @@ namespace KalikoCMS.Admin.Content {
             }
         }
 
-        private void SaveData() {
+        private EditablePage SaveData() {
             if(_pageId == Guid.Empty) {
-                SaveDataForNewPage();
+                return SaveDataForNewPage();
             }
             else {
-                SaveDataForExistingPage();
+                return SaveDataForExistingPage();
             }
         }
 
-        private void SaveDataForNewPage() {
+        private EditablePage SaveDataForNewPage() {
             var parent = PageFactory.GetPage(_parentId);
             var editablePage = parent.CreateChildPage(_pageTypeId);
             SavePropertiesForPage(editablePage);
             _pageId = editablePage.PageId;
             OldPageUrlSegment.Value = editablePage.UrlSegment;
+
+            return editablePage;
         }
 
-        private void SaveDataForExistingPage() {
-            var cmsPage = PageFactory.GetPage(_pageId);
+        private EditablePage SaveDataForExistingPage() {
+            var cmsPage = PageFactory.GetWorkingCopy(_pageId);
             _parentId = cmsPage.ParentId;
             var editablePage = cmsPage.MakeEditable();
             SavePropertiesForPage(editablePage);
             OldPageUrlSegment.Value = editablePage.UrlSegment;
+
+            return editablePage;
         }
 
         private void SavePropertiesForPage(EditablePage editablePage) {
@@ -214,37 +251,29 @@ namespace KalikoCMS.Admin.Content {
             editablePage.SetVisibleInSiteMap(((BooleanProperty)VisibleInSitemap.PropertyValue).Value);
             editablePage.SetSortOrder(((NumericProperty)SortOrder.PropertyValue).Value);
 
-            PageUrlSegmentWasChanged = HandlePageUrlSegment(editablePage);
+            HandlePageUrlSegment(editablePage);
 
-            foreach (PropertyEditorBase propertyControl in _controls) {
-                string propertyName = propertyControl.PropertyName;
-                PropertyData propertyValue = propertyControl.PropertyValue;
+            foreach (var propertyControl in _controls) {
+                var propertyName = propertyControl.PropertyName;
+                var propertyValue = propertyControl.PropertyValue;
 
                 editablePage.SetProperty(propertyName, propertyValue);
-            }
-
-            if (PageUrlSegmentWasChanged) {
-                var currentPage = PageFactory.GetPage(editablePage.PageId, editablePage.LanguageId);
-                RedirectManager.StorePageLinks(currentPage);
             }
 
             editablePage.Save();
         }
 
-        public bool PageUrlSegmentWasChanged { get; set; }
-        
         public string CurrentPageId { get { return _pageId.ToString(); } }
 
-        private bool HandlePageUrlSegment(EditablePage editablePage) {
+        private void HandlePageUrlSegment(EditablePage editablePage) {
             var oldSegment = OldPageUrlSegment.Value;
             var newSegment = PageUrlSegment.Text;
 
             if (newSegment == oldSegment) {
-                return false;
+                return;
             }
 
             editablePage.SetPageUrl(newSegment);
-            return true;
         }
     }
 }

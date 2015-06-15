@@ -240,6 +240,7 @@
     <Content Include="Admin\Assets\vendors\jquery\css\jquery.fileupload-ui.css" />
     <Content Include="Admin\Assets\vendors\bootstrap\less\LICENSE-bootstrap.txt" />
     <Content Include="Admin\Content\Dialogs\EditImageDialog.aspx" />
+    <Content Include="Admin\Content\Dialogs\PageVersionDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectFileDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectLinkDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectPageDialog.aspx" />
@@ -336,6 +337,13 @@
     </Compile>
     <Compile Include="Admin\Content\Dialogs\EditImageDialog.aspx.designer.cs">
       <DependentUpon>EditImageDialog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\Dialogs\PageVersionDialog.aspx.cs">
+      <DependentUpon>PageVersionDialog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\Dialogs\PageVersionDialog.aspx.designer.cs">
+      <DependentUpon>PageVersionDialog.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Content\Dialogs\SelectLinkDialog.aspx.cs">
       <DependentUpon>SelectLinkDialog.aspx</DependentUpon>

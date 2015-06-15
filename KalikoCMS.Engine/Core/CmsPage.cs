@@ -20,6 +20,7 @@
 namespace KalikoCMS.Core {
     using System;
     using Collections;
+    using Data;
     using Serialization;
 
     public class CmsPage : MarshalByRefObject {
@@ -43,6 +44,9 @@ namespace KalikoCMS.Core {
         public DateTime UpdateDate { get; internal set; }
         public bool VisibleInMenu { get; internal set; }
         public bool VisibleInSiteMap { get; internal set; }
+        public int CurrentVersion { get; internal set; }
+        public string Author { get; internal set; }
+        public PageInstanceStatus Status { get; internal set; }
 
         internal int FirstChild { get; set; }
         internal int NextPage { get; set; }
@@ -52,15 +56,13 @@ namespace KalikoCMS.Core {
         }
 
         public CmsPage(PageIndexItem pageIndexItem, int languageId) {
-            // TODO: Mapper
             CreatedDate = pageIndexItem.CreatedDate;
             LanguageId = languageId;
             PageId = pageIndexItem.PageId;
             PageInstanceId = pageIndexItem.PageInstanceId;
             PageName = pageIndexItem.PageName;
             PageTypeId = pageIndexItem.PageTypeId;
-            //TODO: Fixa in basadress nedan..
-            PageUrl = new Uri("/" + pageIndexItem.PageUrl, UriKind.Relative);
+            PageUrl = new Uri(Utils.ApplicationPath + pageIndexItem.PageUrl, UriKind.Relative);
             ParentId = pageIndexItem.ParentId;
             RootId = pageIndexItem.RootId;
             SortOrder = pageIndexItem.SortOrder;
@@ -71,11 +73,12 @@ namespace KalikoCMS.Core {
             UrlSegment = pageIndexItem.UrlSegment;
             VisibleInMenu = pageIndexItem.VisibleInMenu;
             VisibleInSiteMap = pageIndexItem.VisibleInSiteMap;
+            CurrentVersion = pageIndexItem.CurrentVersion;
             FirstChild = pageIndexItem.FirstChild;
             NextPage = pageIndexItem.NextPage;
+            Author = pageIndexItem.Author;
+            Status = pageIndexItem.Status;
         }
-
-
 
         public PageCollection Children {
             get { return PageFactory.GetChildrenForPage(PageId); }
@@ -85,7 +88,7 @@ namespace KalikoCMS.Core {
             var type = typeof(T);
             var proxyPage = PageProxy.CreatePageProxy(type);
 
-            ShallowCopyPageToProxy(this, proxyPage);
+            Clone(this, proxyPage);
 
             return (T)proxyPage;
         }
@@ -110,7 +113,7 @@ namespace KalikoCMS.Core {
 
         public PropertyCollection Property {
             get {
-                return _propertyCollection ?? (_propertyCollection = Data.PropertyData.GetPropertiesForPage(PageId, LanguageId, PageTypeId));
+                return _propertyCollection ?? (_propertyCollection = Data.PropertyData.GetPropertiesForPage(PageId, LanguageId, PageTypeId, CurrentVersion, true));
             }
             internal set {
                 _propertyCollection = value;
@@ -119,7 +122,7 @@ namespace KalikoCMS.Core {
 
         public string ShortUrl {
             get {
-                string shortUrl = string.Format("!{0}", Base62.Encode(PageInstanceId));
+                var shortUrl = string.Format("!{0}", Base62.Encode(PageInstanceId));
 
                 return shortUrl;
             }
@@ -163,27 +166,40 @@ namespace KalikoCMS.Core {
             return indexItem;
         }
 
-        private static void ShallowCopyPageToProxy(CmsPage src, CmsPage pageProxy) {
-            // TODO: MApper!!!
-            pageProxy.PageName = src.PageName;
-            pageProxy.CreatedDate = src.CreatedDate;
-            pageProxy.DeletedDate = src.DeletedDate;
-            pageProxy.PageId = src.PageId;
-            pageProxy.LanguageId = src.LanguageId;
-            pageProxy.PageUrl = src.PageUrl;
-            pageProxy.PageTypeId = src.PageTypeId;
-            pageProxy.FirstChild = src.FirstChild;
-            pageProxy.NextPage = src.NextPage;
-            pageProxy.ParentId = src.ParentId;
-            pageProxy.RootId = src.RootId;
-            pageProxy.SortOrder = src.SortOrder;
-            pageProxy.StartPublish = src.StartPublish;
-            pageProxy.StopPublish = src.StopPublish;
-            pageProxy.DeletedDate = src.DeletedDate;
-            pageProxy.UpdateDate = src.UpdateDate;
-            pageProxy.UrlSegment = src.UrlSegment;
-            pageProxy.VisibleInMenu = src.VisibleInMenu;
-            pageProxy.VisibleInSiteMap = src.VisibleInSiteMap;
+        private static void Clone(CmsPage source, CmsPage destination) {
+            destination.Author = source.Author;
+            destination.CreatedDate = source.CreatedDate;
+            destination.CurrentVersion = source.CurrentVersion;
+            destination.DeletedDate = source.DeletedDate;
+            destination.FirstChild = source.FirstChild;
+            destination.LanguageId = source.LanguageId;
+            destination.NextPage = source.NextPage;
+            destination.PageId = source.PageId;
+            destination.PageInstanceId = source.PageInstanceId;
+            destination.PageName = source.PageName;
+            destination.PageTypeId = source.PageTypeId;
+            destination.PageUrl = source.PageUrl;
+            destination.ParentId = source.ParentId;
+            destination.RootId = source.RootId;
+            destination.SortOrder = source.SortOrder;
+            destination.StartPublish = source.StartPublish;
+            destination.Status = source.Status;
+            destination.StopPublish = source.StopPublish;
+            destination.TreeLevel = source.TreeLevel;
+            destination.UpdateDate = source.UpdateDate;
+            destination.UrlSegment = source.UrlSegment;
+            destination.VisibleInMenu = source.VisibleInMenu;
+            destination.VisibleInSiteMap = source.VisibleInSiteMap;
+        }
+
+        internal CmsPage CreateWorkingCopy() {
+            var workingCopy = new CmsPage();
+            Clone(this, workingCopy);
+            
+            workingCopy.PageInstanceId = 0;
+            workingCopy.Status = PageInstanceStatus.WorkingCopy;
+
+            return workingCopy;
         }
     }
 }
