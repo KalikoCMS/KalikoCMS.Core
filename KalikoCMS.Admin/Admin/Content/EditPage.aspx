@@ -108,7 +108,7 @@
           }
         });
         
-        <%=PageUrlSegmentWasChanged ? "top.refreshNode('" + CurrentPageId + "')" : "" %>
+        <asp:Literal Id="ScriptArea" runat="server" />
 
         warnBeforeLeavingIfChangesBeenMade();
 

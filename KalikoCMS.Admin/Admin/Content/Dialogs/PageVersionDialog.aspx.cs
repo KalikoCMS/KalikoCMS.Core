@@ -42,7 +42,14 @@ namespace KalikoCMS.Admin.Content.Dialogs {
             var versions = PageInstanceData.GetById(_pageId, _languageId);
 
             foreach (var version in versions) {
-                stringBuilder.Append("<tr" + (version.Status == PageInstanceStatus.Published ? " class=\"success\"" : "") + "><td>" + version.CurrentVersion  + "</td><td>" + version.UpdateDate + "</td><td>" + version.Author + "</td><td>" + GetFriendlyStatusName(version.Status) + "</td></tr>");
+                var classAttribute = string.Empty;
+                if (version.Status == PageInstanceStatus.Published) {
+                    classAttribute = " class=\"success\"";
+                }
+                else if (version.Status == PageInstanceStatus.WorkingCopy) {
+                    classAttribute = " class=\"warning\"";
+                }
+                stringBuilder.AppendFormat("<tr{0}><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td><button type=\"button\" data-pageid=\"{5}\" data-version=\"{1}\" class=\"btn btn-primary edit-button\">Edit</a></td></tr>", classAttribute, version.CurrentVersion, version.UpdateDate, version.Author, GetFriendlyStatusName(version.Status), _pageId);
             }
 
             VersionRows.Text = stringBuilder.ToString();

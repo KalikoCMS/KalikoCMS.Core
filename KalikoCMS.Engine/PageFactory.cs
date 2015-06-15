@@ -560,6 +560,28 @@ namespace KalikoCMS {
                 return page.CreateWorkingCopy();
             }
 
+            PopulatePageFromPageInstance(page, pageInstance);
+
+            return page;
+        }
+
+        public static CmsPage GetSpecificVersion(Guid pageId, int version) {
+            var page = GetPage(pageId);
+
+            var pageInstance = PageInstanceData.GetByVersion(pageId, Language.CurrentLanguageId, version);
+            if (pageInstance == null) {
+                var message = string.Format("Can't find version {0} of page '{1}'", version, pageId);
+                Logger.Write(message, Logger.Severity.Major);
+                throw new Exception(message);
+            }
+
+            PopulatePageFromPageInstance(page, pageInstance);
+
+            return page;
+           
+        }
+
+        private static void PopulatePageFromPageInstance(CmsPage page, PageInstanceEntity pageInstance) {
             page.Author = pageInstance.Author;
             page.CurrentVersion = pageInstance.CurrentVersion;
             page.PageInstanceId = pageInstance.PageInstanceId;
@@ -572,9 +594,7 @@ namespace KalikoCMS {
             page.VisibleInMenu = pageInstance.VisibleInMenu;
             page.VisibleInSiteMap = pageInstance.VisibleInSitemap;
 
-            page.Property = Data.PropertyData.GetPropertiesForPage(pageId, page.LanguageId, page.PageTypeId, page.CurrentVersion, false);
-
-            return page;
+            page.Property = Data.PropertyData.GetPropertiesForPage(page.PageId, page.LanguageId, page.PageTypeId, page.CurrentVersion, false);
         }
     }
 }

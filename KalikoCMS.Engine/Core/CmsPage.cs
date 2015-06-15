@@ -56,7 +56,6 @@ namespace KalikoCMS.Core {
         }
 
         public CmsPage(PageIndexItem pageIndexItem, int languageId) {
-            // TODO: Mapper
             CreatedDate = pageIndexItem.CreatedDate;
             LanguageId = languageId;
             PageId = pageIndexItem.PageId;
@@ -199,7 +198,6 @@ namespace KalikoCMS.Core {
             
             workingCopy.PageInstanceId = 0;
             workingCopy.Status = PageInstanceStatus.WorkingCopy;
-            workingCopy.CurrentVersion = 0;
 
             return workingCopy;
         }

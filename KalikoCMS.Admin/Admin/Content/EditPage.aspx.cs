@@ -30,6 +30,8 @@ namespace KalikoCMS.Admin.Content {
         private string _pageName;
         private Guid _parentId;
         private int _pageTypeId;
+        private bool _hasVersionSpecified;
+        private int _version;
 
         protected void Page_Init(object sender, EventArgs e) {
             GetQueryStringValues();
@@ -48,6 +50,8 @@ namespace KalikoCMS.Admin.Content {
             Request.QueryString["id"].TryParseGuid(out _pageId);
             Request.QueryString["parentId"].TryParseGuid(out _parentId);
             int.TryParse(Request.QueryString["pageTypeId"], out _pageTypeId);
+            _hasVersionSpecified = int.TryParse(Request.QueryString["version"], out _version);
+
         }
 
         private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId, string headerText, string parameters) {
@@ -113,7 +117,14 @@ namespace KalikoCMS.Admin.Content {
         }
 
         private void LoadFormForExistingPage() {
-            var cmsPage = PageFactory.GetWorkingCopy(_pageId);
+            CmsPage cmsPage;
+
+            if (_hasVersionSpecified) {
+                cmsPage = PageFactory.GetSpecificVersion(_pageId, _version);
+            }
+            else {
+                cmsPage = PageFactory.GetWorkingCopy(_pageId);
+            }
 
             _pageName = cmsPage.PageName;
             PageHeader.Text = _pageName;
@@ -167,6 +178,8 @@ namespace KalikoCMS.Admin.Content {
                 var page = SaveData();
                 page.Publish();
 
+                ScriptArea.Text = "top.refreshNode('" + CurrentPageId + "');";
+
                 if (_pageTypeId > 0) {
                     Feedback.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> has been created and published!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();parent.refreshTreeNode('{1}','{2}');document.location = '{3}?id={2}';</script>", _pageName, _parentId, _pageId, Request.Path);
                     Feedback.Visible = true;
@@ -182,7 +195,7 @@ namespace KalikoCMS.Admin.Content {
 
         protected bool IsDataValid {
             get {
-                bool valid = true;
+                var valid = true;
 
                 if (!PageName.Validate(true)) {
                     valid = false;
@@ -238,7 +251,7 @@ namespace KalikoCMS.Admin.Content {
             editablePage.SetVisibleInSiteMap(((BooleanProperty)VisibleInSitemap.PropertyValue).Value);
             editablePage.SetSortOrder(((NumericProperty)SortOrder.PropertyValue).Value);
 
-            PageUrlSegmentWasChanged = HandlePageUrlSegment(editablePage);
+            HandlePageUrlSegment(editablePage);
 
             foreach (var propertyControl in _controls) {
                 var propertyName = propertyControl.PropertyName;
@@ -247,28 +260,20 @@ namespace KalikoCMS.Admin.Content {
                 editablePage.SetProperty(propertyName, propertyValue);
             }
 
-            if (PageUrlSegmentWasChanged) {
-                var currentPage = PageFactory.GetPage(editablePage.PageId, editablePage.LanguageId);
-                RedirectManager.StorePageLinks(currentPage);
-            }
-
             editablePage.Save();
         }
 
-        public bool PageUrlSegmentWasChanged { get; set; }
-
         public string CurrentPageId { get { return _pageId.ToString(); } }
 
-        private bool HandlePageUrlSegment(EditablePage editablePage) {
+        private void HandlePageUrlSegment(EditablePage editablePage) {
             var oldSegment = OldPageUrlSegment.Value;
             var newSegment = PageUrlSegment.Text;
 
             if (newSegment == oldSegment) {
-                return false;
+                return;
             }
 
             editablePage.SetPageUrl(newSegment);
-            return true;
         }
     }
 }

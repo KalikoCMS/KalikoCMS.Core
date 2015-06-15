@@ -228,6 +228,12 @@ namespace KalikoCMS.Core {
             context.SaveChanges();
 
             Data.PropertyData.RemovePropertiesFromCache(PageId, LanguageId, pageInstance.CurrentVersion);
+
+            if (pageInstance.PageUrl != UrlSegment) {
+                var currentPage = PageFactory.GetPage(PageId, LanguageId);
+                RedirectManager.StorePageLinks(currentPage);
+            }
+
         }
 
         private void EnsurePageUrl() {
@@ -235,7 +241,6 @@ namespace KalikoCMS.Core {
                 UrlSegment = PageNameBuilder.PageNameToUrl(PageName, ParentId);
             }
         }
-
 
         private static string GetSerializedPropertyValue(PropertyItem propertyItem) {
             return propertyItem.PropertyData == null ? null : propertyItem.PropertyData.Serialize();
