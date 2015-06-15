@@ -50,13 +50,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Kaliko.ImageLibrary, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Kaliko.ImageLibrary, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ImageLibrary.2.0.0\lib\Kaliko.ImageLibrary.dll</HintPath>
+      <HintPath>..\packages\ImageLibrary.2.0.5\lib\net40\Kaliko.ImageLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="Kaliko.Logger, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Kaliko.Logger, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Kaliko.Logger.1.1.0\lib\Kaliko.Logger.dll</HintPath>
+      <HintPath>..\packages\Kaliko.Logger.1.1.1\lib\Kaliko.Logger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -66,21 +66,21 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Xml" />
-    <Reference Include="Telerik.OpenAccess, Version=2014.2.918.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2014.2.918.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.40.Extensions, Version=2014.2.918.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess.40.Extensions, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.Runtime, Version=2014.2.918.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess.Runtime, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -672,7 +672,9 @@
     <Content Include="Admin\Assets\vendors\bootstrap\less\variables.less" />
     <Content Include="Admin\Assets\vendors\bootstrap\less\wells.less" />
     <Content Include="Admin\Assets\vendors\bootstrap\less\bootstrap-custom.less" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

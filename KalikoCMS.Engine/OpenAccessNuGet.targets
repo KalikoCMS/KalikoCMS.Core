@@ -12,7 +12,7 @@ chosen, when they need to be customized and where is the proper place for this c
 please visit the following documentation section:
 http://documentation.telerik.com/openaccess-orm/targets-files
 
-Copyright (C) 2007-2014 Telerik AD. All rights reserved.
+Copyright (C) 2007-2015 Telerik AD. All rights reserved.
 *************************************************************************************************
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
@@ -92,7 +92,7 @@ Copyright (C) 2007-2014 Telerik AD. All rights reserved.
 
   <!-- The command line arguments of the enhancer.exe used for enhancing 64 bit assemblies -->
   <PropertyGroup Condition="'$(Use64BitEnhancer)'=='true'">
-    <XmlMappingResourcesArg Condition="'$(UseXmlMapping)'=='true'"> -xmlMapping:"@(OpenAccessEmbeddedResource)"</XmlMappingResourcesArg>
+    <XmlMappingResourcesArg Condition="'$(UseXmlMapping)'=='true'"> -xmlMapping:"@(OpenAccessEmbeddedResource,'" -xmlMapping:"')"</XmlMappingResourcesArg>
     <AttributesMappingArg Condition="'$(UseAttributeMapping)'=='true'"> -attributeMapping</AttributesMappingArg>
     <FluentMappingArg Condition="'$(UseFluentMapping)'=='true'"> -fluentMapping</FluentMappingArg>
     <EnhancerMappingArgs Condition="'$(EnhancerMappingArgs)'==''">$(XmlMappingResourcesArg)$(AttributesMappingArg)$(FluentMappingArg)</EnhancerMappingArgs>

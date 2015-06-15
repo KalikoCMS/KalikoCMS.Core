@@ -17,7 +17,7 @@
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <TargetFrameworkProfile />
-    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2014.2.918.1\tools\enhancer\enhancer.exe</EnhancerAssembly>
+    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2015.1.225.1\tools\enhancer\enhancer.exe</EnhancerAssembly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,19 +37,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper">
-      <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper.Net4">
-      <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
     <Reference Include="fastjson, Version=2.1.0.0, Culture=neutral, PublicKeyToken=6b75a806b86095cd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\fastJSON.2.1.5.0\lib\net40\fastjson.dll</HintPath>
+      <HintPath>..\packages\fastJSON.2.1.14.0\lib\net40\fastjson.dll</HintPath>
     </Reference>
-    <Reference Include="Kaliko.Logger, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Kaliko.Logger, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Kaliko.Logger.1.1.0\lib\Kaliko.Logger.dll</HintPath>
+      <HintPath>..\packages\Kaliko.Logger.1.1.1\lib\Kaliko.Logger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -57,21 +59,21 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Telerik.OpenAccess, Version=2014.2.918.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2014.2.918.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.40.Extensions, Version=2014.2.918.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess.40.Extensions, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.Runtime, Version=2014.2.918.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess.Runtime, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

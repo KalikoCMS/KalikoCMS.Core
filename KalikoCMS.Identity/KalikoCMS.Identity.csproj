@@ -67,8 +67,9 @@
     <Reference Include="Microsoft.Owin.Security.OAuth">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -79,21 +80,21 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
-    <Reference Include="Telerik.OpenAccess, Version=2014.2.918.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2014.2.918.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.40.Extensions, Version=2014.2.918.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess.40.Extensions, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.Runtime, Version=2014.2.918.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess.Runtime, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
