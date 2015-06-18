@@ -202,18 +202,27 @@ namespace KalikoCMS.Core {
             PageFactory.RaisePageSaved(PageId, LanguageId);
         }
 
-        public void Publish() {
+        public void Publish(bool keepAsWorkingCopy = false) {
             using (var context = new DataContext()) {
-                UnpublishCurrentVersion(context);
-
                 var pageInstance = context.PageInstances.Single(x => x.PageInstanceId == PageInstanceId);
-                pageInstance.Status = PageInstanceStatus.Published;
-                context.SaveChanges();
+
+                if (keepAsWorkingCopy && pageInstance.CurrentVersion != 1) {
+                    throw new Exception("Only the very first working copy need to be stored without being published using the keepAsWorkingCopy flag");
+                }
+
+                if (!keepAsWorkingCopy) {
+                    UnpublishCurrentVersion(context);
+                    
+                    pageInstance.Status = PageInstanceStatus.Published;
+                    context.SaveChanges();
+                }
 
                 PageFactory.UpdatePageIndex(pageInstance, ParentId, RootId, TreeLevel, PageTypeId, SortOrder);
                 CacheManager.RemoveRelated(ParentId);
 
-                PageFactory.RaisePagePublished(PageId, LanguageId);
+                if (!keepAsWorkingCopy) {
+                    PageFactory.RaisePagePublished(PageId, LanguageId);
+                }
             }
         }
 

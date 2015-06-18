@@ -435,6 +435,7 @@ namespace KalikoCMS {
                 page.VisibleInMenu = pageInstance.VisibleInMenu;
                 page.VisibleInSiteMap = pageInstance.VisibleInSitemap;
                 page.SortOrder = sortOrder;
+                page.Status = pageInstance.Status;
 
                 // Update if page URL segment was changed
                 if (page.UrlSegment != pageInstance.PageUrl) {
@@ -466,6 +467,7 @@ namespace KalikoCMS {
                                              RootId = rootId,
                                              SortOrder = sortOrder,
                                              StartPublish = pageInstance.StartPublish,
+                                             Status = pageInstance.Status,
                                              StopPublish = pageInstance.StopPublish,
                                              VisibleInMenu = pageInstance.VisibleInMenu,
                                              VisibleInSiteMap = pageInstance.VisibleInSitemap,

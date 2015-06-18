@@ -99,6 +99,10 @@ namespace KalikoCMS.Core {
 
         public bool IsAvailable {
             get {
+                if (Status != PageInstanceStatus.Published) {
+                    return false;
+                }
+
                 var dateTime = DateTime.Now.ToUniversalTime();
                 return ((StartPublish != null) && (StartPublish <= dateTime)) &&
                        ((StopPublish == null) || (StopPublish > dateTime));
