@@ -28,18 +28,24 @@ namespace KalikoCMS.PropertyType {
     public class HtmlProperty : PropertyData {
         private static readonly int EmptyHashCode = string.Empty.GetHashCode();
         private int? _cachedHashCode;
+        private string _value;
 
         public HtmlProperty() {
         }
 
         public HtmlProperty(string value) {
-            Value = value;
+            _value = value;
         }
 
-        public string Value { get; set; }
+        public string Value {
+            get {
+                return _value;
+            }
+            set { _value = value; }
+        }
 
         protected override string StringValue {
-            get { return Value; }
+            get { return _value; }
         }
 
         public override string Preview {
@@ -58,11 +64,11 @@ namespace KalikoCMS.PropertyType {
         }
 
         private int CalculateHashCode() {
-            if (Value == null) {
+            if (_value == null) {
                 return EmptyHashCode;
             }
 
-            return Value.GetHashCode();
+            return _value.GetHashCode();
         }
     }
 }

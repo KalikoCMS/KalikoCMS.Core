@@ -18,6 +18,7 @@
 #endregion
 
 namespace KalikoCMS.PropertyType {
+    using System.Web;
     using System.Web.UI.WebControls;
     using KalikoCMS.Attributes;
     using KalikoCMS.Core;
@@ -85,20 +86,20 @@ namespace KalikoCMS.PropertyType {
             }
         }
 
-        public string ToHtml() {
+        public HtmlString ToHtml() {
             if(string.IsNullOrEmpty(ImageUrl)) {
-                return string.Empty;
+                return new HtmlString(string.Empty);
             }
 
-            string styles = Styles;
-            string html = string.Format("<img src=\"{0}\" alt=\"{1}\"{2} />", ImageUrl, Description, styles);
+            var styles = Styles;
+            var html = string.Format("<img src=\"{0}\" alt=\"{1}\"{2} />", ImageUrl, Description, styles);
 
-            return html;
+            return new HtmlString(html);
         }
 
         private string Styles {
             get {
-                string styles = string.Empty;
+                var styles = string.Empty;
                 
                 if (Width != null && Width > 0) {
                     styles += string.Format("width:{0}px;", Width);

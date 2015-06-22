@@ -55,40 +55,5 @@ namespace KalikoCMS.PropertyType {
 
             return Value.GetHashCode();
         }
-
-        /*
-        public string Render(PropertyItem propertyItem, string styleTags) {
-            return propertyItem.PageData;
-        }
-
-        public string RenderEditable(PropertyItem propertyItem, string styleTags, int pageId) {
-            return
-                string.Format(
-                    CultureInfo.InvariantCulture,
-                    "<div class=\"cms-editable\" pageid=\"{0}\" propertyid=\"{1}\" pagepropertyid=\"{2}\" propertytypeid=\"{3}\" propertytype=\"{4}\">{5}</div>",
-                    pageId,
-                    propertyItem.PropertyId,
-                    propertyItem.PagePropertyId,
-                    propertyItem.PropertyTypeId,
-                    "webolution_propertytype_stringproperty",
-                    propertyItem.PageData);
-        }
-
-        public string PrepareData(string data) {            
-            return string.IsNullOrEmpty(data) ? string.Empty : data.Replace("<", "&lt;").Replace(">", "&gt;");
-        }
-
-        public bool ValidateData(string data) {
-            return true;
-        }
-
-        public object GetObject(PropertyItem propertyItem) {
-            return propertyItem.PageData;
-        }
-
-        public string ScriptResource {
-            get { return Utils.GetResourceText("KalikoCMS.Resources.Scripts.PropertyEditor_String.js"); }
-        }
-*/
     }
 }
