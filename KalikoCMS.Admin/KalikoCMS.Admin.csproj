@@ -121,6 +121,9 @@
     <Content Include="Admin\Assets\themes\dakota\includes\32px.png" />
     <Content Include="Admin\Assets\themes\dakota\includes\bootstrap-theme.less" />
     <None Include="Admin\Assets\themes\dakota\includes\jstree.less" />
+    <Content Include="Admin\Assets\themes\dakota\includes\jstree.css">
+      <DependentUpon>jstree.less</DependentUpon>
+    </Content>
     <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.css">
       <DependentUpon>kalikocms-editor.less</DependentUpon>
     </Content>

@@ -59,6 +59,11 @@ namespace KalikoCMS.Mvc {
         }
 
         public static void RedirectToController(CmsPage page, string actionName = "index") {
+            if (!page.IsAvailable) {
+                PageHasExpired();
+                return;
+            }
+
             var type = GetControllerType(page);
             var controller = (Controller)Activator.CreateInstance(type);
             var controllerName = StripEnd(type.Name.ToLowerInvariant(), "controller");
@@ -94,6 +99,11 @@ namespace KalikoCMS.Mvc {
         }
 
         public static void RedirectToControllerAction(CmsPage page, string[] parameters) {
+            if (!page.IsAvailable) {
+                PageHasExpired();
+                return;
+            }
+
             var type = GetControllerType(page);
             var controller = (Controller)Activator.CreateInstance(type);
             var controllerName = StripEnd(type.Name.ToLowerInvariant(), "controller");
@@ -101,7 +111,7 @@ namespace KalikoCMS.Mvc {
 
             HttpContext.Current.RewritePath(filePath);
             var httpContext = new HttpContextWrapper(HttpContext.Current);
-            RouteData routeData = RouteTable.Routes.GetRouteData(httpContext);
+            var routeData = RouteTable.Routes.GetRouteData(httpContext);
 
             if (routeData == null) {
                 throw new Exception(string.Format("Not an action {0}", filePath));
