@@ -76,8 +76,11 @@ namespace KalikoCMS.Identity.Admin.Identity {
 
             result = userManager.Update(user);
             if (result.Succeeded) {
-                var roles = Request.Form["Roles"].Split(',');
-                userManager.AddToRoles(user.Id, roles);
+                var roleList = Request.Form["Roles"];
+                if (!string.IsNullOrEmpty(roleList)) {
+                    var roles = roleList.Split(',');
+                    userManager.AddToRoles(user.Id, roles);
+                }
 
                 Response.Redirect("EditUser.aspx?id=" + user.Id + "&message=created");
             }
