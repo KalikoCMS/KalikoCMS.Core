@@ -38,7 +38,7 @@ namespace KalikoCMS.Identity.Admin.Identity {
             }
 
             userManager.Delete(user);
-            Response.Redirect("User.aspx");
+            Response.Redirect("Users.aspx");
         }
     }
 }
