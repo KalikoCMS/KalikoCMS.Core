@@ -9,8 +9,10 @@
 </asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainArea" runat="server">
-  <p>Select page type:</p>
-  <dl class="dl-horizontal">
-    <asp:Literal ID="PageTypeList" runat="server" />
-  </dl>
+  <div class="fill-area">
+    <p>Select page type:</p>
+    <dl class="dl-horizontal">
+      <asp:Literal ID="PageTypeList" runat="server" />
+    </dl>
+  </div>
 </asp:Content>

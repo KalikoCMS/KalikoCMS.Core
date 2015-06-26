@@ -66,21 +66,21 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Xml" />
-    <Reference Include="Telerik.OpenAccess, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess, Version=2015.2.624.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.2.624.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2015.2.624.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.2.624.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.40.Extensions, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess.40.Extensions, Version=2015.2.624.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.2.624.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.Runtime, Version=2015.1.225.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+    <Reference Include="Telerik.OpenAccess.Runtime, Version=2015.2.624.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.2.624.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -121,15 +121,6 @@
     <Content Include="Admin\Assets\themes\dakota\includes\32px.png" />
     <Content Include="Admin\Assets\themes\dakota\includes\bootstrap-theme.less" />
     <None Include="Admin\Assets\themes\dakota\includes\jstree.less" />
-    <Content Include="Admin\Assets\themes\dakota\includes\jstree.css">
-      <DependentUpon>jstree.less</DependentUpon>
-    </Content>
-    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.css">
-      <DependentUpon>kalikocms-editor.less</DependentUpon>
-    </Content>
-    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.min.css">
-      <DependentUpon>kalikocms-editor.css</DependentUpon>
-    </Content>
     <Content Include="Admin\Assets\themes\dakota\theme.css">
       <DependentUpon>theme.less</DependentUpon>
     </Content>
@@ -319,9 +310,6 @@
     </Content>
     <Content Include="Admin\Assets\vendors\bootstrap-markdown\less\bootstrap-markdown.less" />
     <Content Include="Admin\Handlers\MarkdownHandler.ashx" />
-    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.css.map">
-      <DependentUpon>kalikocms-editor.css</DependentUpon>
-    </Content>
     <None Include="Properties\PublishProfiles\Deploy.pubxml">
       <SubType>Designer</SubType>
     </None>
