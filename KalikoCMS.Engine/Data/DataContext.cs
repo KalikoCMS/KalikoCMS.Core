@@ -26,9 +26,33 @@ namespace KalikoCMS.Data {
 
     public class DataContext : OpenAccessContext {
         private const string ConnectionStringName = "KalikoCMS";
-        private const int DatabaseVersion = 3;
-        private static readonly MetadataContainer MetadataContainer = new DataMetadataSource().GetModel();
-        private static readonly BackendConfiguration BackendConfiguration = new BackendConfiguration();
+        private const int DatabaseVersion = 4;
+        private static readonly MetadataContainer MetadataContainer;
+        private static readonly BackendConfiguration BackendConfiguration;
+
+        static DataContext() {
+            MetadataContainer = new DataMetadataSource().GetModel();
+            BackendConfiguration = new BackendConfiguration();
+
+            #if DEBUG
+            // Debug data access by logging queries
+            BackendConfiguration.Logging.LogEvents = LoggingLevel.Normal;
+            BackendConfiguration.Logging.StackTrace = true;
+            BackendConfiguration.Logging.EventStoreCapacity = 10000;
+            BackendConfiguration.Logging.MetricStoreCapacity = 3600;
+            BackendConfiguration.Logging.MetricStoreSnapshotInterval = 1000;
+            BackendConfiguration.Logging.Downloader.EventBinary = true;
+            BackendConfiguration.Logging.Downloader.MetricBinary = true;
+            BackendConfiguration.Logging.Downloader.Filename = "C:\\Temp\\DataAccess";
+            BackendConfiguration.Logging.Downloader.MaxFileSizeKB = 1000;
+            BackendConfiguration.Logging.Downloader.NumberOfBackups = 3;
+            BackendConfiguration.Logging.Downloader.EventPollSeconds = 1;
+            BackendConfiguration.Logging.Downloader.MetricPollSeconds = 1;
+            #else
+            BackendConfiguration.Logging.LogEvents = LoggingLevel.Errors;
+            #endif
+        }
+        
 
         public DataContext(bool defaultFetchStrategy = false) : base(ConnectionStringName, BackendConfiguration, MetadataContainer) {
             if (defaultFetchStrategy) {
@@ -97,8 +121,7 @@ namespace KalikoCMS.Data {
             string script;
 
             if (schemaHandler.DatabaseExists()) {
-                var currentVersion = GetCurrentVersion();
-                if (currentVersion >= DatabaseVersion) {
+                if (CurrentVersion >= DatabaseVersion) {
                     return;
                 }
                 script = schemaHandler.CreateUpdateDDLScript(null);
@@ -124,19 +147,19 @@ namespace KalikoCMS.Data {
             SaveChanges();
         }
 
-        private int GetCurrentVersion() {
-            try {
-                var systemInfo = SystemInfo.FirstOrDefault();
-                if (systemInfo == null) {
+        private int CurrentVersion {
+            get {
+                try {
+                    var systemInfo = SystemInfo.FirstOrDefault();
+                    if (systemInfo == null) {
+                        return 0;
+                    }
+                    return systemInfo.DatabaseVersion;
+                }
+                catch {
                     return 0;
                 }
-                return systemInfo.DatabaseVersion;
-            }
-            catch {
-                return 0;
             }
         }
-
-        
     }
 }

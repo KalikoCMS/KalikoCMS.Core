@@ -110,21 +110,23 @@ namespace KalikoCMS.Admin.Content.PropertyType {
 
             ScriptManager.RegisterClientScriptInclude(this, typeof(ImagePropertyEditor), "Admin.Content.PropertyType.ImagePropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/ImagePropertyEditor.js");
 
-            int width = 0;
-            int height = 0;
+            var width = 0;
+            var height = 0;
 
             if (_attributeValues != null) {
                 width = _attributeValues.Width;
                 height = _attributeValues.Height;
             }
 
-            ImagePreview.ImageUrl = string.Format("{0}assets/images/no-image.jpg", SiteSettings.Instance.AdminPath);
+            if (string.IsNullOrEmpty(ImagePreview.ImageUrl)) {
+                ImagePreview.ImageUrl = string.Format("{0}assets/images/no-image.jpg", SiteSettings.Instance.AdminPath);
+            }
 
-            string clickScript =
-                string.Format(
+            var clickScript = string.Format(
                     "top.propertyEditor.image.openDialog('#{0}', '#{1}', '#{2}', '#{3}', '#{4}', '#{5}', '#{6}', '{7}', '{8}', '#{9}');return false;",
                     ImagePath.ClientID, ImagePreview.ClientID, OriginalImagePath.ClientID, CropX.ClientID,
                     CropY.ClientID, CropW.ClientID, CropH.ClientID, width, height, AltText.ClientID);
+
             SelectButton.Attributes["onclick"] = clickScript;
         }
     }

@@ -2,6 +2,7 @@
 <%@ Register tagPrefix="cms" tagName="StringPropertyEditor" src="PropertyType/StringPropertyEditor.ascx" %>
 <%@ Register tagPrefix="cms" tagName="UniversalDateTimePropertyEditor" src="PropertyType/UniversalDateTimePropertyEditor.ascx" %>
 <%@ Register tagPrefix="cms" tagName="BooleanPropertyEditor" src="PropertyType/BooleanPropertyEditor.ascx" %>
+<%@ Register tagPrefix="cms" tagName="NumericPropertyEditor" src="PropertyType/NumericPropertyEditor.ascx" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
   <form id="MainForm" class="page-editor admin-page" role="form" runat="server">
@@ -17,6 +18,24 @@
           <cms:UniversalDateTimePropertyEditor ID="StartPublishDate" runat="server" />
           <cms:UniversalDateTimePropertyEditor ID="StopPublishDate" runat="server" />
           <cms:BooleanPropertyEditor ID="VisibleInMenu" runat="server" />
+          <asp:Panel ID="AdvancedOptionButton" CssClass="row" runat="server">
+            <span id="advanced-options" class="col-xs-10 col-xs-offset-2"><i class="icon-plus-square text-primary"></i> Show advanced options</span>
+          </asp:Panel>
+          <div id="advanced-panel" style="display:none;">
+            <cms:BooleanPropertyEditor ID="VisibleInSitemap" runat="server" />
+            <asp:HiddenField ID="OldPageUrlSegment" runat="server" />
+            <div class="form-group">
+              <asp:Label AssociatedControlID="PageUrlSegment" runat="server" Text="URL segment" CssClass="control-label col-xs-2" />
+              <div class="controls col-xs-4">
+                <asp:TextBox runat="server" ID="PageUrlSegment" CssClass="form-control" />
+              </div>
+              <div class="col-xs-6">
+                <i class="form-comment">Leave blank to let the CMS handle the segment creation.</i>
+              </div>
+            </div>
+            <cms:NumericPropertyEditor ID="SortOrder" runat="server" />
+          </div>
+
         </fieldset>
         <fieldset>
           <legend>Content</legend>
@@ -29,7 +48,9 @@
             </div>
           </div>
           <div class="form-actions">
-            <asp:LinkButton runat="server" ID="SaveButton" CssClass="btn btn-lg btn-primary"><i class="icon-thumbs-up icon-white"></i> Save page</asp:LinkButton>
+            <button id="versionbutton" type="button" class="btn btn-default pull-right"><i class="icon-code-fork"></i> Show versions</button>
+            <asp:LinkButton runat="server" ID="PublishButton" CssClass="btn btn-lg btn-primary"><i class="icon-thumbs-up"></i> Publish page</asp:LinkButton>
+            <asp:LinkButton runat="server" ID="SaveButton" CssClass="btn btn-lg btn-default"><i class="icon-pencil"></i> Save working copy</asp:LinkButton>
           </div>
         </fieldset>
       </div>
@@ -55,7 +76,7 @@
           resize: true,
           height: 300,
           menubar: false,
-          extended_valid_elements: "i[class],span",
+          extended_valid_elements: "i[class],span,span[class]",
           relative_urls: false,
           toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code",
           file_picker_callback: function (callback, value, meta) {
@@ -70,7 +91,35 @@
           }
         });
 
+        $(".markdown-editor").markdown({
+          savable: false,
+          iconlibrary: 'fa-3',
+          onPreview: function (e) {
+            var retval = "";
+            jQuery.ajax({
+              url: 'Handlers/MarkdownHandler.ashx?markdown=' + escape(e.getContent()),
+              success: function (result) {
+                retval = result;
+              },
+              async: false
+            });
+
+            return retval;
+          }
+        });
+        
+        <asp:Literal Id="ScriptArea" runat="server" />
+
         warnBeforeLeavingIfChangesBeenMade();
+
+          $('#versionbutton').click(function() {
+              parent.openModal("Content/Dialogs/PageVersionDialog.aspx?id=<%=CurrentPageId%>", 700, 500);
+          });
+
+        $('#advanced-options').click(function() {
+            $('#<%=AdvancedOptionButton.ClientID%>').hide();
+            $('#advanced-panel').slideDown();
+        });
       });
     </script>
 </asp:Content>

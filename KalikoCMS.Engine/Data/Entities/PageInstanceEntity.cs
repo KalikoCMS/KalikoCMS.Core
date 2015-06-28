@@ -37,5 +37,6 @@ namespace KalikoCMS.Data.Entities {
         public virtual PageEntity Page { get; set; }
         public virtual int CurrentVersion { get; set; }
         public virtual SiteLanguageEntity SiteLanguage { get; set; }
+        public virtual PageInstanceStatus Status { get; set; }
     }
 }

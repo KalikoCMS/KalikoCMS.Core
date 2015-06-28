@@ -20,7 +20,7 @@
   </siteHosts>
 
   <loggers xdt:Transform="InsertIfMissing">
-    <fileLogger filename="c:\temp\cms-log.txt" treshold="Major" />
+    <fileLogger filename="|DataDirectory|cms-log-%yyyy%mm.txt" treshold="Major" />
   </loggers>
 
   <location path="Admin" xdt:Transform="InsertIfMissing" xdt:Locator="Match(path)">

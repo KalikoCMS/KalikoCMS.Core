@@ -50,6 +50,8 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                 return true;
             }
             else {
+                ErrorText.Text = "* Not a number";
+                ErrorText.Visible = true;
                 return false;
             }
         }
@@ -62,6 +64,8 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                 return true;
             }
             else {
+                ErrorText.Text = "* Not a number";
+                ErrorText.Visible = true;
                 return false;
             }
         }

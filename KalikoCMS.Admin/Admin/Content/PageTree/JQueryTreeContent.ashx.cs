@@ -22,6 +22,7 @@ namespace KalikoCMS.Admin.Content.PageTree {
     using System.Text;
     using System.Web;
     using Core;
+    using Data;
 
     public class JQueryTreeContent : IHttpHandler {
         private void GetChildren(HttpContext context) {
@@ -29,7 +30,7 @@ namespace KalikoCMS.Admin.Content.PageTree {
 
             var id = context.Request.Form["id"];
             if (id == "#") {
-                context.Response.Write("[{\"text\":\"Root\",\"children\":true,\"id\":\"" + Guid.Empty + "\",\"parent\":\"#\"}]");
+                context.Response.Write("[{\"text\":\"Root\",\"children\":true,\"id\":\"" + Guid.Empty + "\",\"parent\":\"#\",\"icon\":\"jstree-rooticon\"}]");
                 context.Response.End();
             }
 
@@ -44,7 +45,9 @@ namespace KalikoCMS.Admin.Content.PageTree {
 
             foreach (Guid childId in children.PageIds) {
                 var page = PageFactory.GetPage(childId);
-                stringBuilder.Append(separator + "{\"text\": \"" + page.PageName + "\", \"id\": \"" + childId + "\", \"children\": " + (page.HasChildren ? "true" : "false") + ", \"a_attr\": { \"href\": \"" + page.PageUrl + "\" }}");
+                var icon = page.Status == PageInstanceStatus.Published ? "" : "jstree-newpage";
+                var text = page.Status == PageInstanceStatus.Published ? page.PageName : "<i>" + page.PageName + "</i>";
+                stringBuilder.AppendFormat("{0}{{\"text\": \"{1}\", \"id\": \"{2}\", \"children\": {3}, \"a_attr\": {{ \"href\": \"{4}\" }},\"icon\":\"{5}\"}}", separator, text, childId, (page.HasChildren ? "true" : "false"), page.PageUrl, icon);
                 separator = ",";
             }
 

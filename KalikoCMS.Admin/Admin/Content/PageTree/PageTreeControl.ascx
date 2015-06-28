@@ -66,6 +66,15 @@
     $("#maincontent").attr("src", "Content/EditPage.aspx?id=&parentId=" + currentPageId + "&pageTypeId=" + pageTypeId);
   }
 
+  function refreshNode(node) {
+    var instance = $.jstree.reference('#pagetree');
+    var parent = instance.get_parent(node);
+    instance.load_node(parent, function (n, s) {
+      instance.deselect_all();
+      instance.select_node(node);
+    });
+  }
+
   function refreshParentNode(node) {
     var instance = $.jstree.reference('#pagetree');
     var parent = instance.get_parent(node);

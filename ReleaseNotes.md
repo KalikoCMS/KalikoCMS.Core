@@ -1,3 +1,18 @@
+### New in 1.0.0
+* Added Markdown property type
+* Added option to set URL segment when editing a page
+* Added option to set sort order when editing a page
+* Added option to set visibility in sitemaps when editing a page
+* Added page versioning
+* Added page published event
+* Added function to fetch all pages based on a predicate filter
+* Fixed support for application paths in page URLs
+* Fixed support for abstract (inehrited) MVC controllers
+* Fixed property HTML output for Razor views
+* Fixed default log path to use the |DataDirectory| alias
+* Fixed bug overwriting image preview in editor
+* Fixed log level for datacontext
+
 ### New in 0.9.9
 * Fixed broken upload component
 

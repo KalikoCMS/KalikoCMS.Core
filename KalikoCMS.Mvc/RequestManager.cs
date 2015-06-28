@@ -34,6 +34,10 @@ namespace KalikoCMS.Mvc {
         }
 
         public bool TryMvcSupport(int segmentPosition, string[] segments, PageIndexItem page) {
+            if (page.PageId == Guid.Empty) {
+                return false;
+            }
+
             try {
                 var parametersCount = segments.Length - segmentPosition - 1;
                 var parameters = new string[parametersCount];

@@ -13,11 +13,8 @@
     </div>
     
     <script type="text/javascript">
-        $(document).ready(function () { $(".left-navigation a").click(loadIframe); });
-
-        function loadIframe(e) {
-            $("#maincontent").attr("src", $(this).attr("href"));
-            return false;
+        function loadInMainContent(url) {
+            $("#maincontent").attr("src", url);
         }
     </script>
 </asp:Content>

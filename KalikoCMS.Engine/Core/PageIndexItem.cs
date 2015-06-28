@@ -19,6 +19,7 @@
 
 namespace KalikoCMS.Core {
     using System;
+    using Data;
 
     public class PageIndexItem {
         public string Author { get; set; }
@@ -42,9 +43,15 @@ namespace KalikoCMS.Core {
         internal int UrlSegmentHash { get; set; }
         public bool VisibleInMenu { get; set; }
         public bool VisibleInSiteMap { get; set; }
+        public int CurrentVersion { get; set; }
+        public PageInstanceStatus Status { get; set; }
 
         public bool IsAvailable {
             get {
+                if (Status != PageInstanceStatus.Published) {
+                    return false;
+                }
+
                 var now = DateTime.Now.ToUniversalTime();
                 return
                     ((StartPublish != null) && (StartPublish <= now)) &&

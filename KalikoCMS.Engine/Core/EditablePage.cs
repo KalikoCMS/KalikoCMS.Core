@@ -22,10 +22,10 @@ namespace KalikoCMS.Core {
     using System.Linq;
     using System.Web;
     using AutoMapper;
+    using Caching;
     using Configuration;
     using Data;
     using Data.Entities;
-    using Caching;
     using Collections;
     using KalikoCMS.PropertyType;
 
@@ -73,6 +73,14 @@ namespace KalikoCMS.Core {
         public void SetVisibleInMenu(bool visibleInMenu) {
             VisibleInMenu = visibleInMenu;
         }
+
+        public void SetVisibleInSiteMap(bool visibleInSiteMap) {
+            VisibleInSiteMap = visibleInSiteMap;
+        }
+
+        public void SetSortOrder(int sortOrder) {
+            SortOrder = sortOrder;
+        }
         
         private static void ShallowCopyProperties(CmsPage page, EditablePage editablePage) {
             var propertyItems = page.Property.Select(Mapper.Map<PropertyItem, PropertyItem>).ToList();
@@ -81,13 +89,13 @@ namespace KalikoCMS.Core {
             editablePage.Property = propertyCollection;
         }
 
-
         internal static EditablePage CreateEditableChildPage(CmsPage page, int pageTypeId) {
             var editablePage = new EditablePage {
                 PageId = Guid.NewGuid(),
                 PageTypeId = pageTypeId,
                 ParentId = page.PageId,
-                LanguageId = page.LanguageId
+                LanguageId = page.LanguageId,
+                CurrentVersion = 1
             };
 
             if (page.PageId == SiteSettings.RootPage) {
@@ -103,10 +111,8 @@ namespace KalikoCMS.Core {
         }
 
         public void Save() {
-            PageInstanceEntity pageInstance;
-
             using (var context = new DataContext()) {
-                var pageEntity = context.Pages.SingleOrDefault(p => p.PageId == PageId);
+                var pageEntity = context.Pages.SingleOrDefault(x => x.PageId == PageId);
 
                 if (pageEntity == null) {
                     pageEntity = new PageEntity {
@@ -115,7 +121,7 @@ namespace KalikoCMS.Core {
                         ParentId = ParentId,
                         RootId = RootId,
                         SortOrder = SortOrder,
-                        TreeLevel = TreeLevel,
+                        TreeLevel = TreeLevel
                     };
 
                     context.Add(pageEntity);
@@ -124,26 +130,30 @@ namespace KalikoCMS.Core {
 
                 // ---------------
 
-                pageInstance = context.PageInstances.SingleOrDefault(pi => pi.PageId == PageId && pi.LanguageId == LanguageId);
+                var pageInstance = context.PageInstances.SingleOrDefault(x => x.PageInstanceId == PageInstanceId);
 
                 if (pageInstance == null) {
+                    CurrentVersion = context.PageInstances.Where(x => x.PageId == PageId && x.LanguageId == LanguageId).Max(x => x.CurrentVersion) + 1;
+
                     pageInstance = new PageInstanceEntity {
                         PageId = PageId,
                         LanguageId = LanguageId,
-                        CreatedDate = DateTime.Now.ToUniversalTime()
+                        CreatedDate = DateTime.Now.ToUniversalTime(),
+                        CurrentVersion = CurrentVersion,
+                        Status = PageInstanceStatus.WorkingCopy
                     };
 
                     context.Add(pageInstance);
                 }
 
-                pageInstance.PageName = PageName;
-                pageInstance.UpdateDate = DateTime.Now.ToUniversalTime();
                 pageInstance.Author = HttpContext.Current.User.Identity.Name;
+                pageInstance.PageName = PageName;
                 pageInstance.StartPublish = StartPublish;
                 pageInstance.StopPublish = StopPublish;
+                pageInstance.UpdateDate = DateTime.Now.ToUniversalTime();
                 pageInstance.VisibleInMenu = VisibleInMenu;
                 pageInstance.VisibleInSitemap = VisibleInSiteMap;
-
+                
                 EnsurePageUrl();
 
                 //TODO: Allow changing Url
@@ -151,9 +161,11 @@ namespace KalikoCMS.Core {
 
                 context.SaveChanges();
 
+                PageInstanceId = pageInstance.PageInstanceId;
+
                 // ---------------
 
-                var pagePropertiesForPage = context.PageProperties.Where(pp => pp.PageId == PageId && pp.LanguageId == LanguageId).ToList();
+                var pagePropertiesForPage = context.PageProperties.Where(x => x.PageId == PageId && x.LanguageId == LanguageId && x.Version == CurrentVersion).ToList();
 
                 foreach (var propertyItem in Property) {
                     var propertyEntity = pagePropertiesForPage.Find(c => c.PropertyId == propertyItem.PropertyId);
@@ -162,7 +174,8 @@ namespace KalikoCMS.Core {
                         propertyEntity = new PagePropertyEntity {
                             LanguageId = LanguageId,
                             PageId = PageId,
-                            PropertyId = propertyItem.PropertyId
+                            PropertyId = propertyItem.PropertyId,
+                            Version = CurrentVersion
                         };
                         context.Add(propertyEntity);
                         pagePropertiesForPage.Add(propertyEntity);
@@ -186,19 +199,57 @@ namespace KalikoCMS.Core {
                 }
             }
 
-            PageFactory.UpdatePageIndex(pageInstance, ParentId, RootId, TreeLevel, PageTypeId, SortOrder);
-            Data.PropertyData.RemovePropertiesFromCache(PageId, LanguageId);
-            CacheManager.RemoveRelated(ParentId);
-
             PageFactory.RaisePageSaved(PageId, LanguageId);
         }
 
-        private void EnsurePageUrl() {
-            if (UrlSegment == null) {
-                UrlSegment = PageNameBuilder.PageNameToUrl(PageName, ParentId);
+        public void Publish(bool keepAsWorkingCopy = false) {
+            using (var context = new DataContext()) {
+                var pageInstance = context.PageInstances.Single(x => x.PageInstanceId == PageInstanceId);
+
+                if (keepAsWorkingCopy && pageInstance.CurrentVersion != 1) {
+                    throw new Exception("Only the very first working copy need to be stored without being published using the keepAsWorkingCopy flag");
+                }
+
+                if (!keepAsWorkingCopy) {
+                    UnpublishCurrentVersion(context);
+                    
+                    pageInstance.Status = PageInstanceStatus.Published;
+                    context.SaveChanges();
+                }
+
+                PageFactory.UpdatePageIndex(pageInstance, ParentId, RootId, TreeLevel, PageTypeId, SortOrder);
+                CacheManager.RemoveRelated(ParentId);
+
+                if (!keepAsWorkingCopy) {
+                    PageFactory.RaisePagePublished(PageId, LanguageId);
+                }
             }
         }
 
+        private void UnpublishCurrentVersion(DataContext context) {
+            var pageInstance = context.PageInstances.SingleOrDefault(x => x.PageId == PageId && x.LanguageId == LanguageId && x.Status == PageInstanceStatus.Published);
+
+            if (pageInstance == null) {
+                return;
+            }
+
+            pageInstance.Status = PageInstanceStatus.Archived;
+            context.SaveChanges();
+
+            Data.PropertyData.RemovePropertiesFromCache(PageId, LanguageId, pageInstance.CurrentVersion);
+
+            if (pageInstance.PageUrl != UrlSegment) {
+                var currentPage = PageFactory.GetPage(PageId, LanguageId);
+                RedirectManager.StorePageLinks(currentPage);
+            }
+
+        }
+
+        private void EnsurePageUrl() {
+            if (string.IsNullOrEmpty(UrlSegment)) {
+                UrlSegment = PageNameBuilder.PageNameToUrl(PageName, ParentId);
+            }
+        }
 
         private static string GetSerializedPropertyValue(PropertyItem propertyItem) {
             return propertyItem.PropertyData == null ? null : propertyItem.PropertyData.Serialize();

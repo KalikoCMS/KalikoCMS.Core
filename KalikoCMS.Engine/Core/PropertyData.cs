@@ -23,7 +23,7 @@ namespace KalikoCMS.Core {
     using Extensions;
     using Serialization;
 
-    public abstract class PropertyData {
+    public abstract class PropertyData : IHtmlString {
 
         protected abstract string StringValue { get; }
 
@@ -51,6 +51,10 @@ namespace KalikoCMS.Core {
         }
 
         public override string ToString() {
+            return StringValue;
+        }
+
+        public string ToHtmlString() {
             return StringValue;
         }
 

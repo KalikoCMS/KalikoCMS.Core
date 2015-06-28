@@ -47,8 +47,8 @@ namespace KalikoCMS.Data {
 
         private static IEnumerable<PageIndexItem> GetPages(DataContext context, int languageId) {
             return from p in context.Pages
-                join pi in context.PageInstances on p.PageId equals pi.PageId
-                where pi.LanguageId == languageId && pi.DeletedDate == null
+                   join pi in context.PageInstances on p.PageId equals pi.PageId
+                   where pi.LanguageId == languageId && pi.DeletedDate == null && (pi.Status == PageInstanceStatus.Published || (pi.Status == PageInstanceStatus.WorkingCopy && pi.CurrentVersion == 1))
                 orderby p.TreeLevel, p.ParentId, pi.PageName
                 select
                     new PageIndexItem {
@@ -69,7 +69,9 @@ namespace KalikoCMS.Data {
                         Author = pi.Author,
                         VisibleInMenu = pi.VisibleInMenu,
                         VisibleInSiteMap = pi.VisibleInSitemap,
-                        TreeLevel = p.TreeLevel
+                        TreeLevel = p.TreeLevel,
+                        CurrentVersion = pi.CurrentVersion,
+                        Status = pi.Status
                     };
         }
 

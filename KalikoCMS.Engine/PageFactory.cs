@@ -20,8 +20,10 @@
 namespace KalikoCMS {
     using System;
     using System.Collections.Generic;
+    using System.Text.RegularExpressions;
     using System.Web;
     using Data.Entities;
+    using Extensions;
     using Kaliko;
     using ContentProvider;
     using Core;
@@ -35,6 +37,7 @@ namespace KalikoCMS {
         private static bool _indexing;
         private static PageEventHandler _pageSaved;
         private static PageEventHandler _pageDeleted;
+        private static PageEventHandler _pagePublished;
 
 
         private static PageIndex CurrentIndex {
@@ -310,6 +313,20 @@ namespace KalikoCMS {
             return CurrentIndex.GetPageTreeFromPage(rootPageId, leafPageId, pageState);
         }
 
+        public static PageCollection GetPages(Predicate<PageIndexItem> match) {
+            return CurrentIndex.GetPagesByCriteria(match);
+        }
+
+        public static PageCollection GetPages(int pageTypeId, PublishState pageState = PublishState.Published) {
+            Predicate<PageIndexItem> match = page => page.PageTypeId == pageTypeId;
+            match = match.And(PageIndex.GetPublishStatePredicate(pageState));
+            return CurrentIndex.GetPagesByCriteria(match);
+        }
+
+        public static PageCollection GetPages(Type pageType, PublishState pageState = PublishState.Published) {
+            var pageTypeItem = PageType.GetPageType(pageType);
+            return GetPages(pageTypeItem.PageTypeId, pageState);
+        }
 
         internal static void IndexSite() {
             if (!_indexing) {
@@ -345,10 +362,18 @@ namespace KalikoCMS {
             }
         }
 
+        #region Events
 
         internal static void RaisePageSaved(Guid pageId, int languageId) {
             if (_pageSaved != null) {
                 _pageSaved(null, new PageEventArgs(pageId, languageId));
+            }
+        }
+
+
+        public static void RaisePagePublished(Guid pageId, int languageId) {
+            if (_pagePublished != null) {
+                _pagePublished(null, new PageEventArgs(pageId, languageId));
             }
         }
 
@@ -359,6 +384,41 @@ namespace KalikoCMS {
             }
         }
 
+
+        public static event PageEventHandler PageSaved {
+            add {
+                _pageSaved -= value;
+                _pageSaved += value;
+            }
+            remove {
+                _pageSaved -= value;
+            }
+        }
+
+
+        public static event PageEventHandler PagePublished {
+            add {
+                _pagePublished -= value;
+                _pagePublished += value;
+            }
+            remove {
+                _pagePublished -= value;
+            }
+        }
+
+
+        public static event PageEventHandler PageDeleted {
+            add {
+                _pageDeleted -= value;
+                _pageDeleted += value;
+            }
+            remove {
+                _pageDeleted -= value;
+            }
+        }
+
+        #endregion
+
         internal static void UpdatePageIndex(PageInstanceEntity pageInstance, Guid parentId, Guid rootId, int treeLevel, int pageTypeId, int sortOrder) {
             if (_pageLanguageIndex == null)
                 IndexSite();
@@ -367,18 +427,34 @@ namespace KalikoCMS {
             var page = pageIndex.GetPageIndexItem(pageInstance.PageId);
 
             if (page != null) {
+                page.CurrentVersion = pageInstance.CurrentVersion;
                 page.PageName = pageInstance.PageName;
                 page.UpdateDate = pageInstance.UpdateDate;
                 page.StartPublish = pageInstance.StartPublish;
                 page.StopPublish = pageInstance.StopPublish;
                 page.VisibleInMenu = pageInstance.VisibleInMenu;
                 page.VisibleInSiteMap = pageInstance.VisibleInSitemap;
+                page.SortOrder = sortOrder;
+                page.Status = pageInstance.Status;
+
+                // Update if page URL segment was changed
+                if (page.UrlSegment != pageInstance.PageUrl) {
+                    page.UrlSegment = pageInstance.PageUrl;
+                    page.UrlSegmentHash = page.UrlSegment.GetHashCode();
+                    page.PageUrl = BuildPageUrl(pageInstance, parentId);
+                    if (page.HasChildren) {
+
+                        UpdateChildUrl(pageIndex, page, page.FirstChild);
+                    }
+                }
+
                 pageIndex.SavePageIndexItem(page);
             }
             else {
                 page = new PageIndexItem {
                                              Author = pageInstance.Author,
                                              CreatedDate = pageInstance.CreatedDate,
+                                             CurrentVersion = pageInstance.CurrentVersion,
                                              DeletedDate = pageInstance.DeletedDate,
                                              FirstChild = -1,
                                              NextPage = -1,
@@ -391,6 +467,7 @@ namespace KalikoCMS {
                                              RootId = rootId,
                                              SortOrder = sortOrder,
                                              StartPublish = pageInstance.StartPublish,
+                                             Status = pageInstance.Status,
                                              StopPublish = pageInstance.StopPublish,
                                              VisibleInMenu = pageInstance.VisibleInMenu,
                                              VisibleInSiteMap = pageInstance.VisibleInSitemap,
@@ -404,6 +481,23 @@ namespace KalikoCMS {
             }
         }
 
+        private static void UpdateChildUrl(PageIndex pageIndex, PageIndexItem parent, int childOffset) {
+            while (true) {
+                var item = pageIndex.Items[childOffset];
+
+                item.PageUrl = parent.PageUrl + item.UrlSegment + "/";
+
+                if (item.HasChildren) {
+                    UpdateChildUrl(pageIndex, item, item.FirstChild);
+                }
+
+                if (item.NextPage > 0) {
+                    childOffset = item.NextPage;
+                    continue;
+                }
+                break;
+            }
+        }
 
         private static string BuildPageUrl(PageInstanceEntity pageInstance, Guid parentId) {
             var parent = GetPage(parentId);
@@ -443,29 +537,7 @@ namespace KalikoCMS {
             _pageLanguageIndex.Add(pageIndex);
         }
 
-
-        public static event PageEventHandler PageSaved {
-            add {
-                _pageSaved -= value;
-                _pageSaved += value;
-            }
-            remove {
-                _pageSaved -= value;
-            }
-        }
-
-
-        public static event PageEventHandler PageDeleted {
-            add {
-                _pageDeleted -= value;
-                _pageDeleted += value;
-            }
-            remove {
-                _pageDeleted -= value;
-            }
-        }
-
-
+        
         public static void MovePage(Guid pageId, Guid targetId) {
             foreach (PageIndex pageIndex in _pageLanguageIndex) {
                 pageIndex.MovePage(pageId, targetId);
@@ -497,5 +569,49 @@ namespace KalikoCMS {
             RaisePageDeleted(pageId, 0);
         }
 
+        public static CmsPage GetWorkingCopy(Guid pageId) {
+            var page = GetPage(pageId);
+
+            var pageInstance = PageInstanceData.GetByStatus(pageId, Language.CurrentLanguageId, PageInstanceStatus.WorkingCopy);
+            if (pageInstance == null) {
+                return page.CreateWorkingCopy();
+            }
+
+            PopulatePageFromPageInstance(page, pageInstance);
+
+            return page;
+        }
+
+        public static CmsPage GetSpecificVersion(Guid pageId, int version) {
+            var page = GetPage(pageId);
+
+            var pageInstance = PageInstanceData.GetByVersion(pageId, Language.CurrentLanguageId, version);
+            if (pageInstance == null) {
+                var message = string.Format("Can't find version {0} of page '{1}'", version, pageId);
+                Logger.Write(message, Logger.Severity.Major);
+                throw new Exception(message);
+            }
+
+            PopulatePageFromPageInstance(page, pageInstance);
+
+            return page;
+           
+        }
+
+        private static void PopulatePageFromPageInstance(CmsPage page, PageInstanceEntity pageInstance) {
+            page.Author = pageInstance.Author;
+            page.CurrentVersion = pageInstance.CurrentVersion;
+            page.PageInstanceId = pageInstance.PageInstanceId;
+            page.PageName = pageInstance.PageName;
+            page.StartPublish = pageInstance.StartPublish;
+            page.Status = pageInstance.Status;
+            page.StopPublish = pageInstance.StopPublish;
+            page.UpdateDate = pageInstance.UpdateDate;
+            page.UrlSegment = pageInstance.PageUrl;
+            page.VisibleInMenu = pageInstance.VisibleInMenu;
+            page.VisibleInSiteMap = pageInstance.VisibleInSitemap;
+
+            page.Property = Data.PropertyData.GetPropertiesForPage(page.PageId, page.LanguageId, page.PageTypeId, page.CurrentVersion, false);
+        }
     }
 }
