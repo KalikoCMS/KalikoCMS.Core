@@ -44,10 +44,13 @@ namespace KalikoCMS.Admin.Content.Dialogs {
             foreach (var version in versions) {
                 var classAttribute = string.Empty;
                 if (version.Status == PageInstanceStatus.Published) {
-                    classAttribute = " class=\"success\"";
+                    classAttribute = " class=\"success middle\"";
                 }
                 else if (version.Status == PageInstanceStatus.WorkingCopy) {
-                    classAttribute = " class=\"warning\"";
+                    classAttribute = " class=\"warning middle\"";
+                }
+                else {
+                    classAttribute = " class=\"middle\"";
                 }
                 stringBuilder.AppendFormat("<tr{0}><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td><button type=\"button\" data-pageid=\"{5}\" data-version=\"{1}\" class=\"btn btn-primary edit-button\">Edit</a></td></tr>", classAttribute, version.CurrentVersion, version.UpdateDate, version.Author, GetFriendlyStatusName(version.Status), _pageId);
             }

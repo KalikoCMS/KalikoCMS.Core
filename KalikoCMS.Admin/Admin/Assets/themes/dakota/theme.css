@@ -5997,6 +5997,11 @@ iframe {
   outline: 0;
   background-color: #428bca;
 }
+/*#endregion*/
+/*#region Tables */
+.table > tbody > tr.middle > td {
+  vertical-align: middle;
+}
 /* jsTree custom theme */
 .jstree-node,
 .jstree-children,
