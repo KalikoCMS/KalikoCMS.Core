@@ -8,6 +8,7 @@
 * Divided startup code in pre and post CMS initialization
 * Improved custom routing in MVC provider
 * Added function to fetch all pages based on a predicate filter
+* Added original status for use on working copies
 * Fixed support for application paths in page URLs
 * Fixed support for abstract (inehrited) MVC controllers
 * Fixed property HTML output for Razor views
