@@ -47,6 +47,7 @@ namespace KalikoCMS.Core {
         public int CurrentVersion { get; internal set; }
         public string Author { get; internal set; }
         public PageInstanceStatus Status { get; internal set; }
+        public PageInstanceStatus OriginalStatus { get; internal set; }
 
         internal int FirstChild { get; set; }
         internal int NextPage { get; set; }
@@ -78,6 +79,7 @@ namespace KalikoCMS.Core {
             NextPage = pageIndexItem.NextPage;
             Author = pageIndexItem.Author;
             Status = pageIndexItem.Status;
+            OriginalStatus = pageIndexItem.Status;
         }
 
         public PageCollection Children {
@@ -178,6 +180,7 @@ namespace KalikoCMS.Core {
             destination.FirstChild = source.FirstChild;
             destination.LanguageId = source.LanguageId;
             destination.NextPage = source.NextPage;
+            destination.OriginalStatus = source.OriginalStatus;
             destination.PageId = source.PageId;
             destination.PageInstanceId = source.PageInstanceId;
             destination.PageName = source.PageName;
@@ -205,5 +208,6 @@ namespace KalikoCMS.Core {
 
             return workingCopy;
         }
+
     }
 }

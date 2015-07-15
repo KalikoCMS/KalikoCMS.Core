@@ -17,6 +17,8 @@
  */
 #endregion
 
+using KalikoCMS.Data;
+
 namespace KalikoCMS.Admin.Content {
     using System;
     using System.Collections.Generic;
@@ -124,6 +126,17 @@ namespace KalikoCMS.Admin.Content {
             }
             else {
                 cmsPage = PageFactory.GetWorkingCopy(_pageId);
+            }
+
+            if (!IsPostBack) {
+                if (cmsPage.OriginalStatus == PageInstanceStatus.WorkingCopy)
+                {
+                    ShowMessage(Feedback, "This version has not yet been published", "warning");
+                }
+                else if (cmsPage.OriginalStatus == PageInstanceStatus.Archived)
+                {
+                    ShowMessage(Feedback, "This version has previously been published", "warning");
+                }
             }
 
             _pageName = cmsPage.PageName;

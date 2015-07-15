@@ -58,7 +58,7 @@ namespace KalikoCMS.Mvc {
             RedirectToController(page);
         }
 
-        public static void RedirectToController(CmsPage page, string actionName = "index") {
+        public static void RedirectToController(CmsPage page, string actionName = "index", Dictionary<string, object> additionalRouteData = null) {
             if (!page.IsAvailable) {
                 PageHasExpired();
                 return;
@@ -72,6 +72,12 @@ namespace KalikoCMS.Mvc {
             routeData.Values["controller"] = controllerName;
             routeData.Values["action"] = actionName;
             routeData.Values["currentPage"] = ((IPageController)controller).GetTypedPage(page);
+
+            if (additionalRouteData != null) {
+                foreach (var data in additionalRouteData) {
+                    routeData.Values.Add(data.Key, data.Value);
+                }
+            }
 
             HttpContext.Current.Response.Clear();
             var requestContext = new RequestContext(new HttpContextWrapper(HttpContext.Current), routeData);

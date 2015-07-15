@@ -73,11 +73,16 @@ namespace KalikoCMS.Modules {
         }
 
         private static void RunInitializingSteps() {
+            var startupSequence = GetStartupSequence();
+            ExecutePreStartupSequence(startupSequence);
+
             KeepDatabaseUpToDate();
             AutoMapperConfiguration.Configure();
             PageType.LoadPageTypes();
             PageFactory.IndexSite();
-            RunStartupSequence();
+
+            ExecutePostStartupSequence(startupSequence);
+
         }
 
         private static void KeepDatabaseUpToDate() {
@@ -97,7 +102,7 @@ namespace KalikoCMS.Modules {
             }
         }
 
-        private static void RunStartupSequence() {
+        private static List<IStartupSequence> GetStartupSequence() {
             var types = InterfaceReader.GetTypesWithInterface(typeof(IStartupSequence));
             var sequences = new List<IStartupSequence>();
 
@@ -112,7 +117,17 @@ namespace KalikoCMS.Modules {
                 }
             }
 
-            foreach (var startupSequence in sequences.OrderBy(s => s.StartupOrder)) {
+            return sequences;
+        }
+        
+        private static void ExecutePreStartupSequence(List<IStartupSequence> sequences) {
+            foreach (var startupSequence in sequences.Where(s => s.StartupOrder < 0).OrderBy(s => s.StartupOrder)) {
+                startupSequence.Startup();
+            }
+        }
+
+        private static void ExecutePostStartupSequence(List<IStartupSequence> sequences) {
+            foreach (var startupSequence in sequences.Where(s => s.StartupOrder >= 0).OrderBy(s => s.StartupOrder)) {
                 startupSequence.Startup();
             }
         }

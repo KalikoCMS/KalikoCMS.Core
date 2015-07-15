@@ -5722,6 +5722,19 @@ iframe {
   }
 }
 /*#endregion*/
+/*#region Notification */
+.notifications .alert-info {
+  background: #428bca;
+  color: #ffffff;
+  border: none;
+  border-radius: 0;
+}
+.notifications .alert i {
+  margin-right: 5px;
+}
+.notifications .close {
+  margin-left: 10px;
+}
 /*#region Editor controls */
 .background-checkered {
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAHUlEQVQoz2P4jwM8xQEYRjXQRAMuCVwGjWqgiQYA9CnWHwuNlqcAAAAASUVORK5CYII=);
@@ -5985,6 +5998,10 @@ iframe {
   background-color: #428bca;
 }
 /*#endregion*/
+/*#region Tables */
+.table > tbody > tr.middle > td {
+  vertical-align: middle;
+}
 /* jsTree custom theme */
 .jstree-node,
 .jstree-children,
@@ -8965,12 +8982,13 @@ Copyright (c) 2012 Dan Eden*/
 }
 
 .notifications{position:fixed;}
-.notifications.top-right{right:10px;top:45px;}
+.notifications.top-right{right:10px;top:44px;}
 .notifications.top-left{left:10px;top:25px;}
 .notifications.bottom-left{left:10px;bottom:25px;}
 .notifications.bottom-right{right:10px;bottom:25px;}
 .notifications>div{position:relative;z-index:9999;margin:5px 0px;}
-.notifications.center{top:48%;left:0;width:100%;}.notifications.center>div{margin:5px auto;width:20%;text-align:center;}
+.notifications.center{top:48%;left:0;width:100%;}
+.notifications.center>div{margin:5px auto;width:20%;text-align:center;}
 
 @font-face {
     font-family: 'Hind';
@@ -9040,3 +9058,4 @@ Copyright (c) 2012 Dan Eden*/
     font-weight: 700;
     font-style: normal;
 }
+/*# sourceMappingURL=theme.css.map */
