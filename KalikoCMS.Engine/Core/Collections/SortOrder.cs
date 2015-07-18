@@ -19,10 +19,10 @@
 
 namespace KalikoCMS.Core.Collections {
     public enum SortOrder {
-        SortIndex,
-        StartPublishDate,
-        PageName,
-        UpdateDate,
-        CreatedDate
+        SortIndex = 0,
+        StartPublishDate = 1,
+        PageName = 2,
+        UpdateDate = 3,
+        CreatedDate = 4
     }
 }
