@@ -17,11 +17,11 @@
  */
 #endregion
 
-using KalikoCMS.Data;
-
 namespace KalikoCMS.Admin.Content {
     using System;
     using System.Collections.Generic;
+    using System.Web.UI.WebControls;
+    using Data;
     using Core;
     using Extensions;
     using KalikoCMS.PropertyType;
@@ -77,6 +77,8 @@ namespace KalikoCMS.Admin.Content {
         }
 
         private void LoadControls() {
+            LoadChildSortOrderLists();
+
             if (_pageId != Guid.Empty) {
                 LoadFormForExistingPage();
             }
@@ -86,6 +88,17 @@ namespace KalikoCMS.Admin.Content {
             else {
                 LoadFormForRootPage();
             }
+        }
+
+        private void LoadChildSortOrderLists() {
+            ChildSortOrder.Items.Add(new ListItem("Created date", ((int)Core.Collections.SortOrder.CreatedDate).ToString()));
+            ChildSortOrder.Items.Add(new ListItem("Page name", ((int)Core.Collections.SortOrder.PageName).ToString()));
+            ChildSortOrder.Items.Add(new ListItem("Sort index", ((int)Core.Collections.SortOrder.SortIndex).ToString()));
+            ChildSortOrder.Items.Add(new ListItem("Start pubish date", ((int)Core.Collections.SortOrder.StartPublishDate).ToString()));
+            ChildSortOrder.Items.Add(new ListItem("Updated date", ((int)Core.Collections.SortOrder.UpdateDate).ToString()));
+
+            ChildSortDirection.Items.Add(new ListItem("Ascending", ((int)Core.Collections.SortDirection.Ascending).ToString()));
+            ChildSortDirection.Items.Add(new ListItem("Descending", ((int)Core.Collections.SortDirection.Descending).ToString()));
         }
 
         private void LoadFormForRootPage() {
@@ -103,10 +116,13 @@ namespace KalikoCMS.Admin.Content {
             SetStandardFieldLabels();
 
             var propertyDefinitions = PageType.GetPropertyDefinitions(_pageTypeId);
-
             foreach (var propertyDefinition in propertyDefinitions) {
                 AddControl(propertyDefinition.Name, null, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters);
             }
+
+            var pageType = PageType.GetPageType(_pageTypeId);
+            ChildSortDirection.SelectedValue = ((int)pageType.DefaultChildSortDirection).ToString();
+            ChildSortOrder.SelectedValue = ((int)pageType.DefaultChildSortOrder).ToString();
         }
 
         private void SetStandardFieldLabels() {
@@ -153,8 +169,10 @@ namespace KalikoCMS.Admin.Content {
             // Advanced fields
             VisibleInSitemap.PropertyValue = new BooleanProperty(cmsPage.VisibleInSiteMap);
             PageUrlSegment.Text = cmsPage.UrlSegment;
-            SortOrder.PropertyValue = new NumericProperty(cmsPage.SortOrder);
+            SortOrder.PropertyValue = new NumericProperty(cmsPage.SortIndex);
             OldPageUrlSegment.Value = cmsPage.UrlSegment;
+            ChildSortDirection.SelectedValue = ((int)cmsPage.ChildSortDirection).ToString();
+            ChildSortOrder.SelectedValue = ((int)cmsPage.ChildSortOrder).ToString();
 
             PageId.Text = cmsPage.PageId.ToString();
 
@@ -264,6 +282,8 @@ namespace KalikoCMS.Admin.Content {
             editablePage.SetVisibleInMenu(((BooleanProperty) VisibleInMenu.PropertyValue).Value);
             editablePage.SetVisibleInSiteMap(((BooleanProperty)VisibleInSitemap.PropertyValue).Value);
             editablePage.SetSortOrder(((NumericProperty)SortOrder.PropertyValue).Value);
+            editablePage.SetChildSortDirection(int.Parse(ChildSortDirection.SelectedValue));
+            editablePage.SetChildSortOrder(int.Parse(ChildSortOrder.SelectedValue)); 
 
             HandlePageUrlSegment(editablePage);
 

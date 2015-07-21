@@ -52,26 +52,28 @@ namespace KalikoCMS.Data {
                 orderby p.TreeLevel, p.ParentId, pi.PageName
                 select
                     new PageIndexItem {
+                        Author = pi.Author,
+                        ChildSortDirection = pi.ChildSortDirection,
+                        ChildSortOrder = pi.ChildSortOrder,
+                        CreatedDate = pi.CreatedDate,
+                        CurrentVersion = pi.CurrentVersion,
                         PageId = pi.PageId,
                         PageInstanceId = pi.PageInstanceId,
+                        PageName = pi.PageName,
                         PageTypeId = p.PageTypeId,
                         PageUrl = pi.PageUrl,
-                        UrlSegment = pi.PageUrl.ToLowerInvariant(),
-                        UrlSegmentHash = pi.PageUrl.GetHashCode(),
                         ParentId = p.ParentId,
                         RootId = p.RootId,
                         SortOrder = p.SortOrder,
                         StartPublish = pi.StartPublish,
+                        Status = pi.Status,
                         StopPublish = pi.StopPublish,
-                        PageName = pi.PageName,
-                        CreatedDate = pi.CreatedDate,
-                        UpdateDate = pi.UpdateDate,
-                        Author = pi.Author,
-                        VisibleInMenu = pi.VisibleInMenu,
-                        VisibleInSiteMap = pi.VisibleInSitemap,
                         TreeLevel = p.TreeLevel,
-                        CurrentVersion = pi.CurrentVersion,
-                        Status = pi.Status
+                        UpdateDate = pi.UpdateDate,
+                        UrlSegment = pi.PageUrl.ToLowerInvariant(),
+                        UrlSegmentHash = pi.PageUrl.GetHashCode(),
+                        VisibleInMenu = pi.VisibleInMenu,
+                        VisibleInSiteMap = pi.VisibleInSitemap
                     };
         }
 

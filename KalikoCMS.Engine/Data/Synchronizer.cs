@@ -51,8 +51,10 @@ namespace KalikoCMS.Data {
                         pageTypeEntities.Add(pageTypeEntity);
                     }
 
-                    pageTypeEntity.Name = attribute.Name;
+                    pageTypeEntity.DefaultChildSortDirection = attribute.DefaultChildSortDirection;
+                    pageTypeEntity.DefaultChildSortOrder = attribute.DefaultChildSortOrder;
                     pageTypeEntity.DisplayName = attribute.DisplayName;
+                    pageTypeEntity.Name = attribute.Name;
                     pageTypeEntity.PageTemplate = attribute.PageTemplate;
                     pageTypeEntity.PageTypeDescription = attribute.PageTypeDescription;
 

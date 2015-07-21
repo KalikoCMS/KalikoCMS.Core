@@ -37,7 +37,6 @@ namespace KalikoCMS.Admin.Content.PageTree {
             var pageId = new Guid(id);
             var separator = string.Empty;
 
-
             var children = PageFactory.GetChildrenForPage(pageId, PublishState.All);
             var stringBuilder = new StringBuilder();
             stringBuilder.Append("[");
@@ -59,8 +58,9 @@ namespace KalikoCMS.Admin.Content.PageTree {
         private void MoveNode(HttpContext context) {
             var pageId = new Guid(context.Request.Form["id"]);
             var targetId = new Guid(context.Request.Form["ref"]);
+            var position = int.Parse(context.Request.Form["position"] ?? "0");
 
-            PageFactory.MovePage(pageId, targetId);
+            PageFactory.MovePage(pageId, targetId, position);
 
             context.Response.ContentType = "application/json";
             context.Response.Write("{ \"success\": true }");

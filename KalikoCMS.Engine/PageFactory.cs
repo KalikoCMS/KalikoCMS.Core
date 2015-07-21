@@ -419,7 +419,7 @@ namespace KalikoCMS {
 
         #endregion
 
-        internal static void UpdatePageIndex(PageInstanceEntity pageInstance, Guid parentId, Guid rootId, int treeLevel, int pageTypeId, int sortOrder) {
+        internal static void UpdatePageIndex(PageInstanceEntity pageInstance, Guid parentId, Guid rootId, int treeLevel, int pageTypeId, int sortOrder, SortDirection childSortDirection, SortOrder childSortOrder) {
             if (_pageLanguageIndex == null)
                 IndexSite();
 
@@ -436,6 +436,8 @@ namespace KalikoCMS {
                 page.VisibleInSiteMap = pageInstance.VisibleInSitemap;
                 page.SortOrder = sortOrder;
                 page.Status = pageInstance.Status;
+                page.ChildSortDirection = pageInstance.ChildSortDirection;
+                page.ChildSortOrder = pageInstance.ChildSortOrder;
 
                 // Update if page URL segment was changed
                 if (page.UrlSegment != pageInstance.PageUrl) {
@@ -453,6 +455,8 @@ namespace KalikoCMS {
             else {
                 page = new PageIndexItem {
                                              Author = pageInstance.Author,
+                                             ChildSortDirection = pageInstance.ChildSortDirection,
+                                             ChildSortOrder = pageInstance.ChildSortOrder,
                                              CreatedDate = pageInstance.CreatedDate,
                                              CurrentVersion = pageInstance.CurrentVersion,
                                              DeletedDate = pageInstance.DeletedDate,
@@ -538,9 +542,9 @@ namespace KalikoCMS {
         }
 
         
-        public static void MovePage(Guid pageId, Guid targetId) {
+        public static void MovePage(Guid pageId, Guid targetId, int position) {
             foreach (PageIndex pageIndex in _pageLanguageIndex) {
-                pageIndex.MovePage(pageId, targetId);
+                pageIndex.MovePage(pageId, targetId, position);
             }
         }
 
@@ -600,6 +604,8 @@ namespace KalikoCMS {
 
         private static void PopulatePageFromPageInstance(CmsPage page, PageInstanceEntity pageInstance) {
             page.Author = pageInstance.Author;
+            page.ChildSortDirection = pageInstance.ChildSortDirection;
+            page.ChildSortOrder = pageInstance.ChildSortOrder;
             page.CurrentVersion = pageInstance.CurrentVersion;
             page.OriginalStatus = pageInstance.Status;
             page.PageInstanceId = pageInstance.PageInstanceId;

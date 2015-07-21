@@ -27,6 +27,7 @@ namespace KalikoCMS.Core {
     using Data;
     using Data.Entities;
     using Collections;
+    using Kaliko;
     using KalikoCMS.PropertyType;
 
     public class EditablePage : CmsPage {
@@ -79,9 +80,17 @@ namespace KalikoCMS.Core {
         }
 
         public void SetSortOrder(int sortOrder) {
-            SortOrder = sortOrder;
+            SortIndex = sortOrder;
         }
-        
+
+        public void SetChildSortDirection(int sortDirection) {
+            ChildSortDirection = (SortDirection)sortDirection;
+        }
+
+        public void SetChildSortOrder(int sortOrder) {
+            ChildSortOrder = (SortOrder) sortOrder;
+        }
+
         private static void ShallowCopyProperties(CmsPage page, EditablePage editablePage) {
             var propertyItems = page.Property.Select(Mapper.Map<PropertyItem, PropertyItem>).ToList();
             var propertyCollection = new PropertyCollection { Properties = propertyItems };
@@ -90,12 +99,22 @@ namespace KalikoCMS.Core {
         }
 
         internal static EditablePage CreateEditableChildPage(CmsPage page, int pageTypeId) {
+            var pageType = PageType.GetPageType(pageTypeId);
+
+            if (pageType == null) {
+                var exception = new Exception(string.Format("Pagetype with id '{0}' not found!", pageTypeId));
+                Logger.Write(exception, Logger.Severity.Critical);
+                throw exception;
+            }
+
             var editablePage = new EditablePage {
                 PageId = Guid.NewGuid(),
                 PageTypeId = pageTypeId,
                 ParentId = page.PageId,
                 LanguageId = page.LanguageId,
-                CurrentVersion = 1
+                CurrentVersion = 1,
+                ChildSortDirection = pageType.DefaultChildSortDirection,
+                ChildSortOrder = pageType.DefaultChildSortOrder
             };
 
             if (page.PageId == SiteSettings.RootPage) {
@@ -120,13 +139,15 @@ namespace KalikoCMS.Core {
                         PageTypeId = PageTypeId,
                         ParentId = ParentId,
                         RootId = RootId,
-                        SortOrder = SortOrder,
+                        SortOrder = SortIndex,
                         TreeLevel = TreeLevel
                     };
 
                     context.Add(pageEntity);
                     context.SaveChanges();
                 }
+
+                pageEntity.SortOrder = SortIndex;
 
                 // ---------------
 
@@ -147,6 +168,8 @@ namespace KalikoCMS.Core {
                 }
 
                 pageInstance.Author = HttpContext.Current.User.Identity.Name;
+                pageInstance.ChildSortDirection = ChildSortDirection;
+                pageInstance.ChildSortOrder = ChildSortOrder;
                 pageInstance.PageName = PageName;
                 pageInstance.StartPublish = StartPublish;
                 pageInstance.StopPublish = StopPublish;
@@ -156,7 +179,6 @@ namespace KalikoCMS.Core {
                 
                 EnsurePageUrl();
 
-                //TODO: Allow changing Url
                 pageInstance.PageUrl = UrlSegment;
 
                 context.SaveChanges();
@@ -190,7 +212,7 @@ namespace KalikoCMS.Core {
             // Allow property types to execute code when a property of that type is saved
             foreach (var propertyItem in Property) {
                 if (propertyItem == null) {
-                    return;
+                    continue;
                 }
 
                 var propertyData = propertyItem.PropertyData as IPageSavedHandler;
@@ -217,7 +239,7 @@ namespace KalikoCMS.Core {
                     context.SaveChanges();
                 }
 
-                PageFactory.UpdatePageIndex(pageInstance, ParentId, RootId, TreeLevel, PageTypeId, SortOrder);
+                PageFactory.UpdatePageIndex(pageInstance, ParentId, RootId, TreeLevel, PageTypeId, SortIndex, ChildSortDirection, ChildSortOrder);
                 CacheManager.RemoveRelated(ParentId);
 
                 if (!keepAsWorkingCopy) {

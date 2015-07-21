@@ -34,6 +34,15 @@
               </div>
             </div>
             <cms:NumericPropertyEditor ID="SortOrder" runat="server" />
+            <div class="form-group">
+              <asp:Label AssociatedControlID="ChildSortOrder" runat="server" Text="Sort children by" CssClass="control-label col-xs-2" />
+              <div class="controls col-xs-2">
+                <asp:DropDownList ID="ChildSortOrder" CssClass="form-control" runat="server" />
+              </div>
+              <div class="controls col-xs-2">
+                <asp:DropDownList ID="ChildSortDirection" CssClass="form-control" runat="server" />
+              </div>
+            </div>
           </div>
 
         </fieldset>
