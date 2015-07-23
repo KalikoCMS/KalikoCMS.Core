@@ -115,36 +115,39 @@ namespace KalikoCMS.Core {
                 throw new ArgumentException("Page with id " + parentId + " not found!");
             }
 
-            var sortedPages = new SortedList();
+            var pages = new List<PageIndexItem>();
             var currentId = pageIndexItem.FirstChild;
 
             while (currentId > -1) {
                 var item = _pageIndex[currentId];
 
                 if (match(item)) {
-                    switch (pageIndexItem.ChildSortOrder) {
-                        case SortOrder.CreatedDate:
-                            sortedPages.Add(item.CreatedDate, item.PageId);
-                            break;
-                        case SortOrder.PageName:
-                            sortedPages.Add(item.PageName, item.PageId);
-                            break;
-                        case SortOrder.SortIndex:
-                            sortedPages.Add(item.SortOrder, item.PageId);
-                            break;
-                        case SortOrder.StartPublishDate:
-                            sortedPages.Add(item.StartPublish ?? DateTime.MinValue, item.PageId);
-                            break;
-                        case SortOrder.UpdateDate:
-                            sortedPages.Add(item.UpdateDate, item.PageId);
-                            break;
-                    }
+                    pages.Add(item);
                 }
 
                 currentId = _pageIndex[currentId].NextPage;
             }
 
-            var pageIds = sortedPages.Values.Cast<Guid>().ToList();
+            switch (pageIndexItem.ChildSortOrder)
+            {
+                case SortOrder.CreatedDate:
+                    pages = pages.OrderBy(p => p.CreatedDate).ToList();
+                    break;
+                case SortOrder.PageName:
+                    pages = pages.OrderBy(p => p.PageName).ToList();
+                    break;
+                case SortOrder.SortIndex:
+                    pages = pages.OrderBy(p => p.SortOrder).ToList();
+                    break;
+                case SortOrder.StartPublishDate:
+                    pages = pages.OrderBy(p => p.StartPublish ?? DateTime.MinValue).ToList();
+                    break;
+                case SortOrder.UpdateDate:
+                    pages = pages.OrderBy(p => p.UpdateDate).ToList();
+                    break;
+            }
+
+            var pageIds = pages.Select(p => p.PageId).ToList();
             if (pageIndexItem.ChildSortDirection == SortDirection.Descending) {
                 pageIds.Reverse();
             } 
