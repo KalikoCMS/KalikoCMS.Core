@@ -131,7 +131,7 @@
           $("#maincontent").attr("src", "Content/EditPage.aspx?id=" + pageId);
         })
         .bind("move_node.jstree", function (e, data) {
-          bootbox.confirm("Move page?", function(result) {
+        var moveNode = function(result) {
             if (result == true) {
                 $.ajax({
                     async: false,
@@ -149,7 +149,8 @@
                             data.instance.load_node(data.old_parent);
                             bootbox.alert("Could not move page!");
                             console.log(data.node);
-                        } else {
+                        }
+                        else {
                             data.instance.load_node(data.parent);
                             data.instance.load_node(data.old_parent);
                         }
@@ -157,10 +158,17 @@
                 });
             }
             else {
-              data.instance.load_node(data.parent);
-              data.instance.load_node(data.old_parent);
+                data.instance.load_node(data.parent);
+                data.instance.load_node(data.old_parent);
             }
-        });
+        };
+
+        if (data.parent == data.old_parent) {
+            moveNode(true);
+        }
+        else {
+            bootbox.confirm("Move page?", moveNode);
+        }
     });
   }
 
