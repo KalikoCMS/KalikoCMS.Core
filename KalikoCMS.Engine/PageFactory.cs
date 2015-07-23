@@ -419,7 +419,7 @@ namespace KalikoCMS {
 
         #endregion
 
-        internal static void UpdatePageIndex(PageInstanceEntity pageInstance, Guid parentId, Guid rootId, int treeLevel, int pageTypeId, int sortOrder, SortDirection childSortDirection, SortOrder childSortOrder) {
+        internal static void UpdatePageIndex(PageInstanceEntity pageInstance, Guid parentId, Guid rootId, int treeLevel, int pageTypeId, int sortOrder) {
             if (_pageLanguageIndex == null)
                 IndexSite();
 

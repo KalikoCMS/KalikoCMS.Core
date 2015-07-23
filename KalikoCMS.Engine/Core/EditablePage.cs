@@ -233,13 +233,17 @@ namespace KalikoCMS.Core {
                 }
 
                 if (!keepAsWorkingCopy) {
+                    if (pageInstance.StartPublish == null) {
+                        pageInstance.StartPublish = DateTime.Now.ToUniversalTime();
+                    }
+
                     UnpublishCurrentVersion(context);
                     
                     pageInstance.Status = PageInstanceStatus.Published;
                     context.SaveChanges();
                 }
 
-                PageFactory.UpdatePageIndex(pageInstance, ParentId, RootId, TreeLevel, PageTypeId, SortIndex, ChildSortDirection, ChildSortOrder);
+                PageFactory.UpdatePageIndex(pageInstance, ParentId, RootId, TreeLevel, PageTypeId, SortIndex);
                 CacheManager.RemoveRelated(ParentId);
 
                 if (!keepAsWorkingCopy) {

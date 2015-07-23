@@ -186,7 +186,6 @@ namespace KalikoCMS.Admin.Content {
             }
         }
 
-
         private void SaveButtonEventHandler(object sender, EventArgs e) {
             if(IsDataValid) {
                 var page = SaveData();
@@ -208,12 +207,6 @@ namespace KalikoCMS.Admin.Content {
         private void PublishButtonEventHandler(object sender, EventArgs e) {
             if(IsDataValid) {
                 var page = SaveData();
-
-                if (page.StartPublish == null) {
-                    ShowError(Feedback, "Start publish date is missing! Page was saved but not published");
-                    ScriptArea.Text = "top.refreshNode('" + CurrentPageId + "');";
-                    return;
-                }
 
                 page.Publish();
 
