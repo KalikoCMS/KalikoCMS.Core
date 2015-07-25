@@ -541,13 +541,39 @@ namespace KalikoCMS {
             _pageLanguageIndex.Add(pageIndex);
         }
 
-        
+
         public static void MovePage(Guid pageId, Guid targetId, int position) {
-            foreach (PageIndex pageIndex in _pageLanguageIndex) {
+            // TODO: Refactor page entity to be updated directly in the database when introducing multi-language
+            foreach (var pageIndex in _pageLanguageIndex) {
                 pageIndex.MovePage(pageId, targetId, position);
             }
+
+            ReorderChildren(pageId, targetId, position);
         }
 
+        public static bool ReorderChildren(Guid pageId, Guid parentId, int position) {
+            var childrenForPage = GetChildrenForPage(parentId, PublishState.All);
+            var previousOnPosition = childrenForPage.PageIds[position];
+
+            Dictionary<Guid, int> newSortOrder;
+            if (parentId == Guid.Empty) {
+                newSortOrder = PageData.SortSiblings(pageId, parentId, SortDirection.Ascending, previousOnPosition);
+            }
+            else {
+                var parent = GetPage(parentId);
+                if (parent.ChildSortOrder != SortOrder.SortIndex) {
+                    return false;
+                }
+
+                newSortOrder = PageData.SortSiblings(pageId, parentId, parent.ChildSortDirection, previousOnPosition);
+            }
+
+            foreach (var pageIndex in _pageLanguageIndex) {
+                pageIndex.UpdateSortOrder(parentId, newSortOrder);
+            }
+
+            return true;
+        }
 
         internal static string GetUrlForPageInstanceId(int pageInstanceId) {
             foreach (var pageIndex in _pageLanguageIndex) {

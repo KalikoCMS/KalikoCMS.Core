@@ -59,11 +59,27 @@ namespace KalikoCMS.Admin.Content.PageTree {
             var pageId = new Guid(context.Request.Form["id"]);
             var targetId = new Guid(context.Request.Form["ref"]);
             var position = int.Parse(context.Request.Form["position"] ?? "0");
+            var oldParentId = new Guid(context.Request.Form["old"]);
 
-            PageFactory.MovePage(pageId, targetId, position);
+            if (targetId == oldParentId) {
+                var success = PageFactory.ReorderChildren(pageId, targetId, position);
+                if (success) {
+                    WriteResponse(context, true, string.Empty);
+                }
+                else {
+                    WriteResponse(context, false, "Parent is not set to allow manual resorting!");
+                }
+            }
+            else {
+                PageFactory.MovePage(pageId, targetId, position);
+                WriteResponse(context, true, string.Empty);
+            }
+        }
 
+        private static void WriteResponse(HttpContext context, bool status, string message) {
+            var statusString = status ? "true" : "false";
             context.Response.ContentType = "application/json";
-            context.Response.Write("{ \"success\": true }");
+            context.Response.Write(string.Format("{{ \"success\": {0}, \"message\": \"{1}\" }}", statusString, message));
         }
 
         private void RemoveNode(HttpContext context) {

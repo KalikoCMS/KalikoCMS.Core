@@ -141,18 +141,23 @@
                         "operation": "move_node",
                         "id": data.node.id,
                         "ref": data.parent,
+                        "old": data.old_parent,
                         "position": data.position
                     },
                     success: function(r) {
-                        if (!r.success) {
-                            data.instance.load_node(data.parent);
+                        data.instance.load_node(data.parent);
+                        if (data.parent != data.old_parent) {
                             data.instance.load_node(data.old_parent);
-                            bootbox.alert("Could not move page!");
-                            console.log(data.node);
                         }
-                        else {
-                            data.instance.load_node(data.parent);
-                            data.instance.load_node(data.old_parent);
+
+                        if (!r.success) {
+                            if (r.message.length > 0) {
+                                bootbox.alert(r.message);
+                            }
+                            else {
+                                bootbox.alert("Could not move page!");
+                            }
+                            console.log(data.node);
                         }
                     }
                 });

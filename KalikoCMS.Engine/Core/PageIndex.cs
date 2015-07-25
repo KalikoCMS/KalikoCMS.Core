@@ -66,7 +66,7 @@ namespace KalikoCMS.Core {
         }
 
         internal static PageIndex CreatePageIndex(int languageId) {
-            PageIndexDictionary pageIndexItems = PageData.GetPageStructure(languageId);
+            var pageIndexItems = PageData.GetPageStructure(languageId);
 
             var pageIndex = new PageIndex(pageIndexItems) {LanguageId = languageId};
 
@@ -82,21 +82,21 @@ namespace KalikoCMS.Core {
         }
 
         internal PageCollection GetChildren(Guid pageId, PublishState pageState) {
-            Predicate<PageIndexItem> match = GetPublishStatePredicate(pageState);
+            var match = GetPublishStatePredicate(pageState);
 
             return GetChildrenByCriteria(pageId, match);
         }
 
 
         internal PageCollection GetChildren(Guid pageId, int pageTypeId) {
-            Predicate<PageIndexItem> match = IsPublished.And(t => t.PageTypeId == pageTypeId);
+            var match = IsPublished.And(t => t.PageTypeId == pageTypeId);
 
             return GetChildrenByCriteria(pageId, match);
         }
 
 
         internal PageCollection GetChildren(Guid pageId, int pageTypeId, PublishState pageState) {
-            Predicate<PageIndexItem> match = AddPredicateForPageState(pageState, (t => t.PageTypeId == pageTypeId));
+            var match = AddPredicateForPageState(pageState, (t => t.PageTypeId == pageTypeId));
 
             return GetChildrenByCriteria(pageId, match);
         }
@@ -395,9 +395,9 @@ namespace KalikoCMS.Core {
 
         private void WriteIndexToLog() {
             #if DEBUG
-                StringBuilder stringBuilder = new StringBuilder();
+                var stringBuilder = new StringBuilder();
                 stringBuilder.Append("Page index created:\r\n[");
-                int count = 0;
+                var count = 0;
 
                 foreach (PageIndexItem t in _pageIndex) {
                     stringBuilder.Append(string.Format("{{ \"Offset\": " + count + ", \"PageUrl\": \"{0}\", \"ParentId\": \"{1}\", \"NextPage\": {2}, \"FirstChild\": {3} }},\r\n", t.PageUrl, t.ParentId, t.NextPage, t.FirstChild));
@@ -420,7 +420,6 @@ namespace KalikoCMS.Core {
                 }
 
                 if (pageIndexItem.ParentId == targetId) {
-                    // TODO: There's no need to move the page, fix the sort order instead
                     return;
                 }
 
@@ -458,6 +457,27 @@ namespace KalikoCMS.Core {
             }
 
             PageData.UpdateStructure(changedItems);
+        }
+
+        internal void UpdateSortOrder(Guid parentId, Dictionary<Guid, int> newSortOrder) {
+            PageIndexItem pageIndexItem;
+
+            if (parentId == SiteSettings.RootPage) {
+                pageIndexItem = GetRootPageIndexItem();
+            }
+            else {
+                pageIndexItem = GetPageIndexItem(parentId);
+            }
+
+            var currentId = pageIndexItem.FirstChild;
+
+            while (currentId > -1) {
+                var item = _pageIndex[currentId];
+                var sortIndex = newSortOrder[item.PageId];
+                item.SortOrder = sortIndex;
+
+                currentId = _pageIndex[currentId].NextPage;
+            }
         }
 
         private void DetachPage(PageIndexItem pageIndexItem, int i) {

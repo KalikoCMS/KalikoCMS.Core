@@ -17,6 +17,8 @@
  */
 #endregion
 
+using System.Web.UI;
+
 namespace KalikoCMS.Data {
     using System;
     using System.Collections.Generic;
@@ -123,6 +125,35 @@ namespace KalikoCMS.Data {
             }
             finally {
                 context.Dispose();
+            }
+        }
+
+        internal static Dictionary<Guid, int> SortSiblings(Guid pageId, Guid parentId, SortDirection sortDirection, Guid previousOnPosition) {
+            using (var context = new DataContext()) {
+                var pages = context.Pages.Where(p => p.ParentId == parentId).OrderBy(p => p.SortOrder).ToList();
+                var page = pages.First(p => p.PageId == pageId);
+
+                if (sortDirection == SortDirection.Descending) {
+                    pages.Reverse();
+                }
+
+                if (pageId != previousOnPosition) {
+                    var position = pages.FindIndex(p => p.PageId == previousOnPosition);
+                    pages.Remove(page);
+                    pages.Insert(position, page);
+                }
+
+                var index = 0;
+                var newOrder = new Dictionary<Guid, int>();
+                foreach (var pageEntity in pages) {
+                    pageEntity.SortOrder = index;
+                    newOrder.Add(pageEntity.PageId, index);
+                    index++;
+                }
+
+                context.SaveChanges();
+
+                return newOrder;
             }
         }
     }
