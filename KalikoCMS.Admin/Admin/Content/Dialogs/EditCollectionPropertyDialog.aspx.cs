@@ -48,9 +48,15 @@ namespace KalikoCMS.Admin.Content.Dialogs {
 
         private void SubmitHandler(object sender, EventArgs e) {
             var editorBase = ((PropertyEditorBase)_editor);
-            var serializedProperty = editorBase.SerializedProperty.Replace("\\", "\\\\");
+            var serializedProperty = SafeEncode(editorBase.SerializedProperty);
             var exerpt = editorBase.PropertyValue.Preview;
             PostbackResult.Text = string.Format("<script> top.executeCallback('{0}', '{1}'); top.closeModal(); </script>", serializedProperty, exerpt);
+        }
+
+        private static string SafeEncode(string text) {
+            return text
+                .Replace("\\", "\\\\")
+                .Replace("'", "\\'");
         }
 
         private void LoadCorrectEditorControl(string propertyTypeClass, string value) {
