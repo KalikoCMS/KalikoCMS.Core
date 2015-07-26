@@ -36,8 +36,9 @@ namespace KalikoCMS.Core {
         public bool ShowPublishDates { get; set; }
         public bool ShowSortOrder { get; set; }
         public bool ShowVisibleInMenu { get; set; }
-
-        internal Type Type { get; set; }
+        public Type[] AllowedTypes { get; set; }
+        public Type Type { get; set; }
+        
         internal CmsPage Instance { get; set; }
         internal List<PropertyDefinition> Properties { get; set; }
 

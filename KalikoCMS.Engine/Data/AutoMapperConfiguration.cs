@@ -41,6 +41,8 @@ namespace KalikoCMS.Data {
                 .ReverseMap();
             
             Mapper.CreateMap<PageTypeEntity, PageType>()
+                .ForMember(m => m.AllowedTypes, o => o.Ignore())
+                .ForMember(m => m.Type, o => o.Ignore())
                 .ReverseMap();
 
             Mapper.CreateMap<PropertyItem, PropertyItem>();

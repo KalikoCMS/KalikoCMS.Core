@@ -19,6 +19,7 @@
 
 namespace KalikoCMS.Admin.Content.Dialogs {
     using System;
+    using System.Linq;
     using System.Text;
     using KalikoCMS.Core;
 
@@ -30,10 +31,22 @@ namespace KalikoCMS.Admin.Content.Dialogs {
                 return;
             }
 
+            var pageId = new Guid(Request.QueryString["pageId"]);
+            var parent = PageFactory.GetPage(pageId);
+            var parentPageType = pageTypes.Find(p => p.PageTypeId == parent.PageTypeId);
+            var allowAll = parentPageType.AllowedTypes == null;
+
+            if (parentPageType.AllowedTypes != null && parentPageType.AllowedTypes.Length == 0) {
+                PageTypeList.Text = "No pages can be created under the selected page.";
+                return;
+            }
+            
             var stringBuilder = new StringBuilder();
 
-            foreach (PageType pageType in pageTypes) {
-                stringBuilder.Append("<dt><a href=\"javascript:selectPageType('" + pageType.PageTypeId + "')\">" + pageType.DisplayName + "</a></dt><dd>" + pageType.PageTypeDescription + "</dd>");
+            foreach (var pageType in pageTypes) {
+                if (allowAll || parentPageType.AllowedTypes.Contains(pageType.Type)) {
+                    stringBuilder.Append("<dt><a href=\"javascript:selectPageType('" + pageType.PageTypeId + "')\">" + pageType.DisplayName + "</a></dt><dd>" + pageType.PageTypeDescription + "</dd>");
+                }
             }
 
             PageTypeList.Text = stringBuilder.ToString();
