@@ -78,11 +78,7 @@ namespace KalikoCMS.Core {
         public void SetVisibleInSiteMap(bool visibleInSiteMap) {
             VisibleInSiteMap = visibleInSiteMap;
         }
-
-        public void SetSortOrder(int sortOrder) {
-            SortIndex = sortOrder;
-        }
-
+        
         public void SetChildSortDirection(int sortDirection) {
             ChildSortDirection = (SortDirection)sortDirection;
         }
@@ -146,8 +142,6 @@ namespace KalikoCMS.Core {
                     context.Add(pageEntity);
                     context.SaveChanges();
                 }
-
-                pageEntity.SortOrder = SortIndex;
 
                 // ---------------
 

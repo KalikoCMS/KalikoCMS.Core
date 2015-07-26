@@ -131,7 +131,6 @@ namespace KalikoCMS.Admin.Content {
             StopPublishDate.PropertyLabel = "Stop publish";
             VisibleInMenu.PropertyLabel = "Visible in menus";
             VisibleInSitemap.PropertyLabel = "Visible in sitemaps";
-            SortOrder.PropertyLabel = "Sort order";
         }
 
         private void LoadFormForExistingPage() {
@@ -169,7 +168,6 @@ namespace KalikoCMS.Admin.Content {
             // Advanced fields
             VisibleInSitemap.PropertyValue = new BooleanProperty(cmsPage.VisibleInSiteMap);
             PageUrlSegment.Text = cmsPage.UrlSegment;
-            SortOrder.PropertyValue = new NumericProperty(cmsPage.SortIndex);
             OldPageUrlSegment.Value = cmsPage.UrlSegment;
             ChildSortDirection.SelectedValue = ((int)cmsPage.ChildSortDirection).ToString();
             ChildSortOrder.SelectedValue = ((int)cmsPage.ChildSortOrder).ToString();
@@ -238,9 +236,6 @@ namespace KalikoCMS.Admin.Content {
                 else if (!StopPublishDate.Validate()) {
                     valid = false;
                 }
-                else if (!SortOrder.Validate()) {
-                    valid = false;
-                }
 
                 return valid;
             }
@@ -281,7 +276,6 @@ namespace KalikoCMS.Admin.Content {
             editablePage.SetStopPublish(((DateTimeProperty)StopPublishDate.PropertyValue).Value);
             editablePage.SetVisibleInMenu(((BooleanProperty) VisibleInMenu.PropertyValue).Value);
             editablePage.SetVisibleInSiteMap(((BooleanProperty)VisibleInSitemap.PropertyValue).Value);
-            editablePage.SetSortOrder(((NumericProperty)SortOrder.PropertyValue).Value);
             editablePage.SetChildSortDirection(int.Parse(ChildSortDirection.SelectedValue));
             editablePage.SetChildSortOrder(int.Parse(ChildSortOrder.SelectedValue)); 
 
