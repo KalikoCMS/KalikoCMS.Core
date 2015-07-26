@@ -601,6 +601,7 @@ namespace KalikoCMS {
         private static void PopulatePageFromPageInstance(CmsPage page, PageInstanceEntity pageInstance) {
             page.Author = pageInstance.Author;
             page.CurrentVersion = pageInstance.CurrentVersion;
+            page.OriginalStatus = pageInstance.Status;
             page.PageInstanceId = pageInstance.PageInstanceId;
             page.PageName = pageInstance.PageName;
             page.StartPublish = pageInstance.StartPublish;
