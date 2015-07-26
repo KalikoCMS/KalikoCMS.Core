@@ -7,6 +7,7 @@
 * Added page published event
 * Added child sort order to pages
 * Added default child sort order to pagetypes
+* Added function to drag-and-drop sort order in page tree
 * Get children now returns sorted list based on parent page settings
 * Divided startup code in pre and post CMS initialization
 * Improved custom routing in MVC provider

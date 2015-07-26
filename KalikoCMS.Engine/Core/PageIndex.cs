@@ -128,8 +128,14 @@ namespace KalikoCMS.Core {
                 currentId = _pageIndex[currentId].NextPage;
             }
 
-            switch (pageIndexItem.ChildSortOrder)
-            {
+            pages = SortPages(pages, pageIndexItem.ChildSortOrder, pageIndexItem.ChildSortDirection);
+
+            var pageIds = pages.Select(p => p.PageId).ToList();
+            return new PageCollection(pageIds);
+        }
+
+        private static List<PageIndexItem> SortPages(List<PageIndexItem> pages, SortOrder sortOrder, SortDirection sortDirection) {
+            switch (sortOrder) {
                 case SortOrder.CreatedDate:
                     pages = pages.OrderBy(p => p.CreatedDate).ToList();
                     break;
@@ -146,12 +152,10 @@ namespace KalikoCMS.Core {
                     pages = pages.OrderBy(p => p.UpdateDate).ToList();
                     break;
             }
-
-            var pageIds = pages.Select(p => p.PageId).ToList();
-            if (pageIndexItem.ChildSortDirection == SortDirection.Descending) {
-                pageIds.Reverse();
-            } 
-            return new PageCollection(pageIds);
+            if (sortDirection == SortDirection.Descending) {
+                pages.Reverse();
+            }
+            return pages;
         }
 
         internal PageIndexItem GetPageIndexItem(Guid pageId) {
@@ -230,10 +234,23 @@ namespace KalikoCMS.Core {
             return pageCollection;
         }
 
+        internal PageCollection GetPagesByCriteriaSorted(Predicate<PageIndexItem> match, SortOrder sortOrder, SortDirection sortDirection) {
+            var pages = _pageIndex.FindAll(match);
+            
+            pages = SortPages(pages, sortOrder, sortDirection);
+
+            var pageCollection = new PageCollection();
+            foreach (var page in pages) {
+                pageCollection.Add(page.PageId);
+            }
+
+            return pageCollection;
+        }
+
         internal PageCollection GetRootChildren() {
             Predicate<PageIndexItem> match = IsPublished.And(t => t.ParentId == Guid.Empty);
 
-            return GetPagesByCriteria(match);
+            return GetPagesByCriteriaSorted(match, SortOrder.SortIndex, SortDirection.Ascending);
         }
 
         internal PageCollection GetRootChildren(PublishState pageState) {
@@ -241,7 +258,7 @@ namespace KalikoCMS.Core {
 
             match = AddPredicateForPageState(pageState, match);
 
-            return GetPagesByCriteria(match);
+            return GetPagesByCriteriaSorted(match, SortOrder.SortIndex, SortDirection.Ascending);
         }
 
         internal PageCollection GetRootChildren(int pageTypeId, PublishState pageState) {
@@ -249,22 +266,22 @@ namespace KalikoCMS.Core {
 
             match = AddPredicateForPageState(pageState, match);
 
-            return GetPagesByCriteria(match);
+            return GetPagesByCriteriaSorted(match, SortOrder.SortIndex, SortDirection.Ascending);
         }
 
         internal void InsertPageIndexItem(PageIndexItem page) {
-            PageIndexItem item = GetPageIndexItem(page.ParentId);
-            int insertPosition = _pageIndex.Count;
+            var item = GetPageIndexItem(page.ParentId);
+            var insertPosition = _pageIndex.Count;
 
             if (item != null) {
-                int firstChild = item.FirstChild;
+                var firstChild = item.FirstChild;
 
                 item.FirstChild = insertPosition;
                 page.NextPage = firstChild;
             }
             else if (_pageIndex.Count > 0) {
                 item = _pageIndex[0];
-                int nextPage = item.NextPage;
+                var nextPage = item.NextPage;
 
                 item.NextPage = insertPosition;
                 page.NextPage = nextPage;
@@ -274,10 +291,10 @@ namespace KalikoCMS.Core {
         }
 
         internal void SavePageIndexItem(PageIndexItem page) {
-            Guid pageId = page.PageId;
+            var pageId = page.PageId;
 
-            for (int i = 0; i < _pageIndex.Count; i++) {
-                PageIndexItem pageIndexItem = _pageIndex[i];
+            for (var i = 0; i < _pageIndex.Count; i++) {
+                var pageIndexItem = _pageIndex[i];
                 if (pageIndexItem.PageId == pageId) {
                     _pageIndex[i] = page;
                     break;
@@ -286,20 +303,20 @@ namespace KalikoCMS.Core {
         }
 
         private static Predicate<PageIndexItem> AddPredicateForPageState(PublishState pageState, Predicate<PageIndexItem> match) {
-            Predicate<PageIndexItem> publishStatePredicate = GetPublishStatePredicate(pageState);
+            var publishStatePredicate = GetPublishStatePredicate(pageState);
             match = match.And(publishStatePredicate);
 
             return match;
         }
 
         private void BuildLinkedList() {
-            int count = 0;
-            ILookup<Guid, int> lookup = _pageIndex.ToLookup(i => i.ParentId, i => count++);
+            var count = 0;
+            var lookup = _pageIndex.ToLookup(i => i.ParentId, i => count++);
 
-            foreach (PageIndexItem page in _pageIndex) {
-                Guid pageId = page.PageId;
-                int childId = 0;
-                foreach (int index in lookup[pageId]) {
+            foreach (var page in _pageIndex) {
+                var pageId = page.PageId;
+                var childId = 0;
+                foreach (var index in lookup[pageId]) {
                     if (childId == 0) {
                         page.FirstChild = index;
                     }
@@ -313,19 +330,19 @@ namespace KalikoCMS.Core {
 
         // TODO: Fininsh implementation of date restriction for children (currently commented code below)
         private static void FixDatesForIndex(PageIndex pageIndex) {
-            foreach (PageIndexItem page in pageIndex.Items) {
+            foreach (var page in pageIndex.Items) {
 /*                bool isDeleted = false;
                 DateTime? parentDeleteDate = DateTime.MinValue;
                 DateTime? parentStartDate = DateTime.MinValue;
                 DateTime? parentStopDate = DateTime.MaxValue;*/
 
-                string fullpath = page.PageUrl;
+                var fullPath = page.PageUrl;
 
-                Guid currentPageId = page.ParentId;
+                var currentPageId = page.ParentId;
                 if (currentPageId != Guid.Empty) {
-                    PageIndexItem parentPage = pageIndex.GetPageIndexItem(currentPageId);
+                    var parentPage = pageIndex.GetPageIndexItem(currentPageId);
 
-                    fullpath = parentPage.PageUrl + "/" + fullpath;
+                    fullPath = parentPage.PageUrl + "/" + fullPath;
 
 /*                    if (parentPage.DeletedDate != null) {
                         throw new NotImplementedException("Should not be reached!");
@@ -339,8 +356,8 @@ namespace KalikoCMS.Core {
                         parentStopDate = parentPage.StopPublish;
                     }*/
                 }
-                fullpath = fullpath.ToLower();
-                page.PageUrl = fullpath.Replace("//", "/") + "/";
+                fullPath = fullPath.ToLower();
+                page.PageUrl = fullPath.Replace("//", "/") + "/";
 
 /*
                 //The page startpublish is older then any parents.. obey the parent!
@@ -355,17 +372,20 @@ namespace KalikoCMS.Core {
         }
 
         private void InitLinkedList() {
-            int pageId = 0;
+            var pageId = 0;
 
-            for (int i = 0; i < _pageIndex.Count; i++) {
+            for (var i = 0; i < _pageIndex.Count; i++) {
                 _pageIndex[i].NextPage = _pageIndex[i].FirstChild = -1;
 
-                if (_pageIndex[i].ParentId == Guid.Empty) {
-                    if (i != 0) {
-                        _pageIndex[pageId].NextPage = i;
-                    }
-                    pageId = i;
+                if (_pageIndex[i].ParentId != Guid.Empty) {
+                    continue;
                 }
+
+                if (i != 0) {
+                    _pageIndex[pageId].NextPage = i;
+                }
+                
+                pageId = i;
             }
         }
 

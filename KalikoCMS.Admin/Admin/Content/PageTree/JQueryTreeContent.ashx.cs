@@ -21,8 +21,9 @@ namespace KalikoCMS.Admin.Content.PageTree {
     using System;
     using System.Text;
     using System.Web;
-    using Core;
-    using Data;
+    using KalikoCMS.Core;
+    using KalikoCMS.Data;
+    using KalikoCMS.Caching;
 
     public class JQueryTreeContent : IHttpHandler {
         private void GetChildren(HttpContext context) {
@@ -60,6 +61,9 @@ namespace KalikoCMS.Admin.Content.PageTree {
             var targetId = new Guid(context.Request.Form["ref"]);
             var position = int.Parse(context.Request.Form["position"] ?? "0");
             var oldParentId = new Guid(context.Request.Form["old"]);
+
+            CacheManager.RemoveRelated(targetId);
+            CacheManager.RemoveRelated(oldParentId);
 
             if (targetId == oldParentId) {
                 var success = PageFactory.ReorderChildren(pageId, targetId, position);
