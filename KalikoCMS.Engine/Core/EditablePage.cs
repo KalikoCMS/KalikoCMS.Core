@@ -126,6 +126,8 @@ namespace KalikoCMS.Core {
         }
 
         public void Save() {
+            var isFirstVersionOfPage = false;
+
             using (var context = new DataContext()) {
                 var pageEntity = context.Pages.SingleOrDefault(x => x.PageId == PageId);
 
@@ -159,6 +161,8 @@ namespace KalikoCMS.Core {
                     };
 
                     context.Add(pageInstance);
+
+                    isFirstVersionOfPage = true;
                 }
 
                 pageInstance.Author = HttpContext.Current.User.Identity.Name;
@@ -215,7 +219,11 @@ namespace KalikoCMS.Core {
                 }
             }
 
-            PageFactory.RaisePageSaved(PageId, LanguageId);
+            if (isFirstVersionOfPage) {
+                Publish(true);
+            }
+
+            PageFactory.RaisePageSaved(PageId, LanguageId, CurrentVersion);
         }
 
         public void Publish(bool keepAsWorkingCopy = false) {
@@ -241,7 +249,7 @@ namespace KalikoCMS.Core {
                 CacheManager.RemoveRelated(ParentId);
 
                 if (!keepAsWorkingCopy) {
-                    PageFactory.RaisePagePublished(PageId, LanguageId);
+                    PageFactory.RaisePagePublished(PageId, LanguageId, CurrentVersion);
                 }
             }
         }

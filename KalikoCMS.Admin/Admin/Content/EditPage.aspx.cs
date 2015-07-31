@@ -189,7 +189,6 @@ namespace KalikoCMS.Admin.Content {
                 var page = SaveData();
 
                 if (_pageTypeId > 0) {
-                    page.Publish(true);
                     Feedback.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> has been created!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();parent.refreshTreeNode('{1}','{2}');document.location = '{3}?id={2}';</script>", _pageName, _parentId, _pageId, Request.Path);
                     Feedback.Visible = true;
                 }
