@@ -11,8 +11,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainArea" runat="server">
   <div class="fill-area">
     <p>Select page type:</p>
-    <dl class="dl-horizontal">
+    <div class="row">
       <asp:Literal ID="PageTypeList" runat="server" />
-    </dl>
+    </div>
   </div>
 </asp:Content>

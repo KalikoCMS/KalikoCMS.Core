@@ -24,7 +24,7 @@
   });
 
   function clickCreateNewPage(e) {
-    top.openModal("Content/Dialogs/SelectPagetypeDialog.aspx?pageId=" + currentPageId, 500, 400);
+    top.openModal("Content/Dialogs/SelectPagetypeDialog.aspx?pageId=" + currentPageId, 700, 500);
     e.preventDefault();
   }
 

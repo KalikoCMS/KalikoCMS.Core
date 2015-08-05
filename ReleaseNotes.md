@@ -21,6 +21,7 @@
 * Fixed log level for datacontext
 * Fixed assembly resolver for SQLite
 * Fixed bug in collection properties when sub-property included an apostrophe
+* Cleaned up NuGet package removing bundle source files
 
 ### New in 0.9.9
 * Fixed broken upload component
