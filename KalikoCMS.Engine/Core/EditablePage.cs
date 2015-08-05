@@ -126,8 +126,6 @@ namespace KalikoCMS.Core {
         }
 
         public void Save() {
-            var isFirstVersionOfPage = false;
-
             using (var context = new DataContext()) {
                 var pageEntity = context.Pages.SingleOrDefault(x => x.PageId == PageId);
 
@@ -161,8 +159,6 @@ namespace KalikoCMS.Core {
                     };
 
                     context.Add(pageInstance);
-
-                    isFirstVersionOfPage = true;
                 }
 
                 pageInstance.Author = HttpContext.Current.User.Identity.Name;
@@ -219,7 +215,7 @@ namespace KalikoCMS.Core {
                 }
             }
 
-            if (isFirstVersionOfPage) {
+            if (CurrentVersion == 1) {
                 Publish(true);
             }
 

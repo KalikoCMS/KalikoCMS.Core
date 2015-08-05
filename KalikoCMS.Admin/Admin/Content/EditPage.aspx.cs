@@ -214,7 +214,8 @@ namespace KalikoCMS.Admin.Content {
                     Feedback.Visible = true;
                 }
                 else {
-                    ShowMessage(Feedback, String.Format("Page <b>{0}</b> has been published!", _pageName));
+                    Feedback.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> has been published!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();</script>", _pageName);
+                    Feedback.Visible = true;
                 }
             }
             else {
