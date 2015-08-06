@@ -11,6 +11,7 @@
 * Get children now returns sorted list based on parent page settings
 * Divided startup code in pre and post CMS initialization
 * Improved custom routing in MVC provider
+* Improved pagetype selector
 * Added function to fetch all pages based on a predicate filter
 * Added original status for use on working copies
 * Fixed support for application paths in page URLs

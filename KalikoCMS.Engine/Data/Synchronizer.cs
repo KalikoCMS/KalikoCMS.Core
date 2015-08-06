@@ -66,6 +66,7 @@ namespace KalikoCMS.Data {
                     var pageType = Mapper.Map<PageTypeEntity, PageType>(pageTypeEntity);
                     pageType.Type = type;
                     pageType.AllowedTypes = attribute.AllowedTypes;
+                    pageType.PreviewImage = attribute.PreviewImage;
                     pageType.Instance = (CmsPage)Activator.CreateInstance(type);
 
                     pageTypes.Add(pageType);

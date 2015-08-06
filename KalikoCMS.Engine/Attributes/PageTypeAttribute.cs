@@ -43,5 +43,6 @@ namespace KalikoCMS.Attributes {
         public string Name { get; private set; }
         public string PageTemplate { get; private set; }
         public string PageTypeDescription { get; set; }
+        public string PreviewImage { get; set; }
     }
 }

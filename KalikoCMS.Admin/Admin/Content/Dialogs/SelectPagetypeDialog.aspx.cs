@@ -49,7 +49,7 @@ namespace KalikoCMS.Admin.Content.Dialogs {
                     if (count > 0 && count % 2 == 0) {
                         stringBuilder.Append("</div><div class=\"row\">");
                     }
-                    var previewImage = "assets/images/defaultpagetype.png";
+                    var previewImage = string.IsNullOrEmpty(pageType.PreviewImage) ? "assets/images/defaultpagetype.png" : pageType.PreviewImage;
                     stringBuilder.Append("<div class=\"col-xs-6\"><a href=\"javascript:selectPageType('" + pageType.PageTypeId + "')\" class=\"no-decoration\"><div class=\"media pick-box\"><div class=\"pull-left\"><img class=\"media-object\" src=\"" + previewImage + "\"></div><div class=\"media-body\"><h2 class=\"media-heading\">" + pageType.DisplayName + "</h2>" + pageType.PageTypeDescription + "</div></div></a></div>");
                     count++;
                 }
