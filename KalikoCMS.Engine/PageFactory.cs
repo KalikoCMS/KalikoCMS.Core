@@ -20,7 +20,6 @@
 namespace KalikoCMS {
     using System;
     using System.Collections.Generic;
-    using System.Text.RegularExpressions;
     using System.Web;
     using Data.Entities;
     using Extensions;

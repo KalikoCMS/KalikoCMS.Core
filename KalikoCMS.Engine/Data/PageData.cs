@@ -47,11 +47,12 @@ namespace KalikoCMS.Data {
             }
         }
 
+        // Warning: Due to backward compability installations updated from 0.9.9 might return two instances for the same page. This is handled internally in PageIndexDictionary where the first instance (lowest status) is used.
         private static IEnumerable<PageIndexItem> GetPages(DataContext context, int languageId) {
             return from p in context.Pages
                    join pi in context.PageInstances on p.PageId equals pi.PageId
                    where pi.LanguageId == languageId && pi.DeletedDate == null && (pi.Status == PageInstanceStatus.Published || (pi.Status == PageInstanceStatus.WorkingCopy && pi.CurrentVersion == 1))
-                orderby p.TreeLevel, p.ParentId, pi.PageName
+                orderby p.TreeLevel, p.ParentId, p.PageId, pi.Status
                 select
                     new PageIndexItem {
                         Author = pi.Author,

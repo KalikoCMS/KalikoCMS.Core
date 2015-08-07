@@ -32,6 +32,10 @@ namespace KalikoCMS.Core.Collections {
             }
 
             foreach (var pageIndexItem in collection) {
+                if (Contains(pageIndexItem.PageId)) {
+                    // This prevents a second copy of a page to be added to index causing a crash. First instance should always be the prefered. (For legacy 0.9.9-updates)
+                    continue;
+                }
                 Add(pageIndexItem);
             }
         }
