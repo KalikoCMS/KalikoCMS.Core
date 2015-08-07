@@ -243,6 +243,7 @@ namespace KalikoCMS.Core {
 
                 PageFactory.UpdatePageIndex(pageInstance, ParentId, RootId, TreeLevel, PageTypeId, SortIndex);
                 CacheManager.RemoveRelated(ParentId);
+                CacheManager.RemoveRelated(PageId);
 
                 if (!keepAsWorkingCopy) {
                     PageFactory.RaisePagePublished(PageId, LanguageId, CurrentVersion);
