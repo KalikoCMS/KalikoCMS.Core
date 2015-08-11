@@ -112,13 +112,22 @@ namespace KalikoCMS.Admin.Content {
         protected global::System.Web.UI.WebControls.TextBox PageUrlSegment;
         
         /// <summary>
-        /// SortOrder control.
+        /// ChildSortOrder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::KalikoCMS.Admin.Content.PropertyType.NumericPropertyEditor SortOrder;
+        protected global::System.Web.UI.WebControls.DropDownList ChildSortOrder;
+        
+        /// <summary>
+        /// ChildSortDirection control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ChildSortDirection;
         
         /// <summary>
         /// EditControls control.

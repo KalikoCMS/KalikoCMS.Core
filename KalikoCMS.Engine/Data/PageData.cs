@@ -17,6 +17,8 @@
  */
 #endregion
 
+using System.Web.UI;
+
 namespace KalikoCMS.Data {
     using System;
     using System.Collections.Generic;
@@ -45,33 +47,36 @@ namespace KalikoCMS.Data {
             }
         }
 
+        // Warning: Due to backward compability installations updated from 0.9.9 might return two instances for the same page. This is handled internally in PageIndexDictionary where the first instance (lowest status) is used.
         private static IEnumerable<PageIndexItem> GetPages(DataContext context, int languageId) {
             return from p in context.Pages
                    join pi in context.PageInstances on p.PageId equals pi.PageId
                    where pi.LanguageId == languageId && pi.DeletedDate == null && (pi.Status == PageInstanceStatus.Published || (pi.Status == PageInstanceStatus.WorkingCopy && pi.CurrentVersion == 1))
-                orderby p.TreeLevel, p.ParentId, pi.PageName
+                orderby p.TreeLevel, p.ParentId, p.PageId, pi.Status
                 select
                     new PageIndexItem {
+                        Author = pi.Author,
+                        ChildSortDirection = pi.ChildSortDirection,
+                        ChildSortOrder = pi.ChildSortOrder,
+                        CreatedDate = pi.CreatedDate,
+                        CurrentVersion = pi.CurrentVersion,
                         PageId = pi.PageId,
                         PageInstanceId = pi.PageInstanceId,
+                        PageName = pi.PageName,
                         PageTypeId = p.PageTypeId,
                         PageUrl = pi.PageUrl,
-                        UrlSegment = pi.PageUrl.ToLowerInvariant(),
-                        UrlSegmentHash = pi.PageUrl.GetHashCode(),
                         ParentId = p.ParentId,
                         RootId = p.RootId,
                         SortOrder = p.SortOrder,
                         StartPublish = pi.StartPublish,
+                        Status = pi.Status,
                         StopPublish = pi.StopPublish,
-                        PageName = pi.PageName,
-                        CreatedDate = pi.CreatedDate,
-                        UpdateDate = pi.UpdateDate,
-                        Author = pi.Author,
-                        VisibleInMenu = pi.VisibleInMenu,
-                        VisibleInSiteMap = pi.VisibleInSitemap,
                         TreeLevel = p.TreeLevel,
-                        CurrentVersion = pi.CurrentVersion,
-                        Status = pi.Status
+                        UpdateDate = pi.UpdateDate,
+                        UrlSegment = pi.PageUrl.ToLowerInvariant(),
+                        UrlSegmentHash = pi.PageUrl.GetHashCode(),
+                        VisibleInMenu = pi.VisibleInMenu,
+                        VisibleInSiteMap = pi.VisibleInSitemap
                     };
         }
 
@@ -121,6 +126,35 @@ namespace KalikoCMS.Data {
             }
             finally {
                 context.Dispose();
+            }
+        }
+
+        internal static Dictionary<Guid, int> SortSiblings(Guid pageId, Guid parentId, SortDirection sortDirection, Guid previousOnPosition) {
+            using (var context = new DataContext()) {
+                var pages = context.Pages.Where(p => p.ParentId == parentId).OrderBy(p => p.SortOrder).ToList();
+                var page = pages.First(p => p.PageId == pageId);
+
+                if (sortDirection == SortDirection.Descending) {
+                    pages.Reverse();
+                }
+
+                if (pageId != previousOnPosition) {
+                    var position = pages.FindIndex(p => p.PageId == previousOnPosition);
+                    pages.Remove(page);
+                    pages.Insert(position, page);
+                }
+
+                var index = 0;
+                var newOrder = new Dictionary<Guid, int>();
+                foreach (var pageEntity in pages) {
+                    pageEntity.SortOrder = index;
+                    newOrder.Add(pageEntity.PageId, index);
+                    index++;
+                }
+
+                context.SaveChanges();
+
+                return newOrder;
             }
         }
     }

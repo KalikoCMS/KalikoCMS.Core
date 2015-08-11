@@ -26,11 +26,13 @@ namespace KalikoCMS.Events {
     public class PageEventArgs : EventArgs {
         private readonly Guid _pageId;
         private readonly int _languageId;
+        private readonly int _version;
         private CmsPage _page;
 
-        public PageEventArgs(Guid pageId, int languageId) {
+        public PageEventArgs(Guid pageId, int languageId, int version) {
             _pageId = pageId;
             _languageId = languageId;
+            _version = version;
         }
 
         public int LanguageId {
@@ -43,9 +45,13 @@ namespace KalikoCMS.Events {
             get { return _pageId; }
         }
 
+        public int Version {
+            get { return _version; }
+        }
+
         public CmsPage Page {
             get {
-                return _page ?? (_page = PageFactory.GetPage(_pageId, _languageId));
+                return _page ?? (_page = PageFactory.GetSpecificVersion(_pageId, _languageId, _version));
             }
         }
     }

@@ -18,6 +18,7 @@
 #endregion
 
 namespace KalikoCMS.Data.Entities {
+    using Core.Collections;
     using System;
 
     public class PageInstanceEntity {
@@ -38,5 +39,7 @@ namespace KalikoCMS.Data.Entities {
         public virtual int CurrentVersion { get; set; }
         public virtual SiteLanguageEntity SiteLanguage { get; set; }
         public virtual PageInstanceStatus Status { get; set; }
+        public virtual SortDirection ChildSortDirection { get; set; }
+        public virtual SortOrder ChildSortOrder { get; set; }
     }
 }

@@ -20,9 +20,12 @@
 namespace KalikoCMS.Core {
     using System;
     using Data;
+    using Collections;
 
     public class PageIndexItem {
         public string Author { get; set; }
+        public SortDirection ChildSortDirection { get; set; }
+        public SortOrder ChildSortOrder { get; set; }
         public DateTime CreatedDate { get; set; }
         internal DateTime? DeletedDate { get; set; }
         internal int FirstChild { get; set; }

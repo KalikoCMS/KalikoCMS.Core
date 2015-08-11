@@ -51,8 +51,10 @@ namespace KalikoCMS.Data {
                         pageTypeEntities.Add(pageTypeEntity);
                     }
 
-                    pageTypeEntity.Name = attribute.Name;
+                    pageTypeEntity.DefaultChildSortDirection = attribute.DefaultChildSortDirection;
+                    pageTypeEntity.DefaultChildSortOrder = attribute.DefaultChildSortOrder;
                     pageTypeEntity.DisplayName = attribute.DisplayName;
+                    pageTypeEntity.Name = attribute.Name;
                     pageTypeEntity.PageTemplate = attribute.PageTemplate;
                     pageTypeEntity.PageTypeDescription = attribute.PageTypeDescription;
 
@@ -63,6 +65,8 @@ namespace KalikoCMS.Data {
                     
                     var pageType = Mapper.Map<PageTypeEntity, PageType>(pageTypeEntity);
                     pageType.Type = type;
+                    pageType.AllowedTypes = attribute.AllowedTypes;
+                    pageType.PreviewImage = attribute.PreviewImage;
                     pageType.Instance = (CmsPage)Activator.CreateInstance(type);
 
                     pageTypes.Add(pageType);

@@ -27,9 +27,13 @@ namespace KalikoCMS.Core {
         private PropertyCollection _propertyCollection;
         private PageCollection _parentPath;
 
+        public string Author { get; internal set; }
+        public SortDirection ChildSortDirection { get; internal set; }
+        public SortOrder ChildSortOrder { get; internal set; }
         public DateTime CreatedDate { get; internal set; }
         public DateTime DeletedDate { get; internal set; }
         public int LanguageId { get; internal set; }
+        public PageInstanceStatus OriginalStatus { get; internal set; }
         public Guid PageId { get; internal set; }
         internal int PageInstanceId { get; set; }
         public string PageName { get; internal set; }
@@ -37,17 +41,15 @@ namespace KalikoCMS.Core {
         public Uri PageUrl { get; internal set; }
         public Guid ParentId { get; internal set; }
         public Guid RootId { get; internal set; }
-        public int SortOrder { get; internal set; }
+        public int SortIndex { get; internal set; }
         public DateTime? StartPublish { get; internal set; }
+        public PageInstanceStatus Status { get; internal set; }
         public DateTime? StopPublish { get; internal set; }
         public int TreeLevel { get; internal set; }
         public DateTime UpdateDate { get; internal set; }
         public bool VisibleInMenu { get; internal set; }
         public bool VisibleInSiteMap { get; internal set; }
         public int CurrentVersion { get; internal set; }
-        public string Author { get; internal set; }
-        public PageInstanceStatus Status { get; internal set; }
-        public PageInstanceStatus OriginalStatus { get; internal set; }
 
         internal int FirstChild { get; set; }
         internal int NextPage { get; set; }
@@ -57,8 +59,12 @@ namespace KalikoCMS.Core {
         }
 
         public CmsPage(PageIndexItem pageIndexItem, int languageId) {
+            Author = pageIndexItem.Author;
+            ChildSortDirection = pageIndexItem.ChildSortDirection;
+            ChildSortOrder = pageIndexItem.ChildSortOrder;
             CreatedDate = pageIndexItem.CreatedDate;
             LanguageId = languageId;
+            OriginalStatus = pageIndexItem.Status;
             PageId = pageIndexItem.PageId;
             PageInstanceId = pageIndexItem.PageInstanceId;
             PageName = pageIndexItem.PageName;
@@ -66,8 +72,9 @@ namespace KalikoCMS.Core {
             PageUrl = new Uri(Utils.ApplicationPath + pageIndexItem.PageUrl, UriKind.Relative);
             ParentId = pageIndexItem.ParentId;
             RootId = pageIndexItem.RootId;
-            SortOrder = pageIndexItem.SortOrder;
+            SortIndex = pageIndexItem.SortOrder;
             StartPublish = pageIndexItem.StartPublish;
+            Status = pageIndexItem.Status;
             StopPublish = pageIndexItem.StopPublish;
             TreeLevel = pageIndexItem.TreeLevel;
             UpdateDate = pageIndexItem.UpdateDate;
@@ -77,9 +84,6 @@ namespace KalikoCMS.Core {
             CurrentVersion = pageIndexItem.CurrentVersion;
             FirstChild = pageIndexItem.FirstChild;
             NextPage = pageIndexItem.NextPage;
-            Author = pageIndexItem.Author;
-            Status = pageIndexItem.Status;
-            OriginalStatus = pageIndexItem.Status;
         }
 
         public PageCollection Children {
@@ -174,6 +178,8 @@ namespace KalikoCMS.Core {
 
         private static void Clone(CmsPage source, CmsPage destination) {
             destination.Author = source.Author;
+            destination.ChildSortDirection = source.ChildSortDirection;
+            destination.ChildSortOrder = source.ChildSortOrder;
             destination.CreatedDate = source.CreatedDate;
             destination.CurrentVersion = source.CurrentVersion;
             destination.DeletedDate = source.DeletedDate;
@@ -188,7 +194,7 @@ namespace KalikoCMS.Core {
             destination.PageUrl = source.PageUrl;
             destination.ParentId = source.ParentId;
             destination.RootId = source.RootId;
-            destination.SortOrder = source.SortOrder;
+            destination.SortIndex = source.SortIndex;
             destination.StartPublish = source.StartPublish;
             destination.Status = source.Status;
             destination.StopPublish = source.StopPublish;

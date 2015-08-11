@@ -19,6 +19,7 @@
 
 namespace KalikoCMS.Admin.Content.Dialogs {
     using System;
+    using System.Linq;
     using System.Text;
     using KalikoCMS.Core;
 
@@ -30,10 +31,28 @@ namespace KalikoCMS.Admin.Content.Dialogs {
                 return;
             }
 
-            var stringBuilder = new StringBuilder();
+            var pageId = new Guid(Request.QueryString["pageId"]);
+            var parent = PageFactory.GetPage(pageId);
+            var parentPageType = pageTypes.Find(p => p.PageTypeId == parent.PageTypeId);
+            var allowAll = parentPageType.AllowedTypes == null;
 
-            foreach (PageType pageType in pageTypes) {
-                stringBuilder.Append("<dt><a href=\"javascript:selectPageType('" + pageType.PageTypeId + "')\">" + pageType.DisplayName + "</a></dt><dd>" + pageType.PageTypeDescription + "</dd>");
+            if (parentPageType.AllowedTypes != null && parentPageType.AllowedTypes.Length == 0) {
+                PageTypeList.Text = "No pages can be created under the selected page.";
+                return;
+            }
+            
+            var stringBuilder = new StringBuilder();
+            var count = 0;
+
+            foreach (var pageType in pageTypes) {
+                if (allowAll || parentPageType.AllowedTypes.Contains(pageType.Type)) {
+                    if (count > 0 && count % 2 == 0) {
+                        stringBuilder.Append("</div><div class=\"row\">");
+                    }
+                    var previewImage = string.IsNullOrEmpty(pageType.PreviewImage) ? "assets/images/defaultpagetype.png" : pageType.PreviewImage;
+                    stringBuilder.Append("<div class=\"col-xs-6\"><a href=\"javascript:selectPageType('" + pageType.PageTypeId + "')\" class=\"no-decoration\"><div class=\"media pick-box\"><div class=\"pull-left\"><img class=\"media-object\" src=\"" + previewImage + "\"></div><div class=\"media-body\"><h2 class=\"media-heading\">" + pageType.DisplayName + "</h2>" + pageType.PageTypeDescription + "</div></div></a></div>");
+                    count++;
+                }
             }
 
             PageTypeList.Text = stringBuilder.ToString();

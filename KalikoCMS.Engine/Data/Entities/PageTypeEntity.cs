@@ -19,10 +19,13 @@
 
 namespace KalikoCMS.Data.Entities {
     using System.Collections.Generic;
+    using KalikoCMS.Core.Collections;
 
     public class PageTypeEntity {
         public virtual int PageTypeId { get; set; }
         public virtual string Name { get; set; }
+        public virtual SortDirection DefaultChildSortDirection { get; set; }
+        public virtual SortOrder DefaultChildSortOrder { get; set; }
         public virtual string DisplayName { get; set; }
         public virtual string PageTypeDescription { get; set; }
         public virtual string PageTemplate { get; set; }

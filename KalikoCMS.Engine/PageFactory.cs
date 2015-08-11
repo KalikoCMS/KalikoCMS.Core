@@ -20,7 +20,6 @@
 namespace KalikoCMS {
     using System;
     using System.Collections.Generic;
-    using System.Text.RegularExpressions;
     using System.Web;
     using Data.Entities;
     using Extensions;
@@ -356,7 +355,6 @@ namespace KalikoCMS {
                 }
             }
             else {
-                // TODO: Fin sida med felmeddelande här kanske..? :)
                 HttpContext.Current.Response.Clear();
                 Utils.RenderSimplePage(HttpContext.Current.Response, "Reindexing the site..", "Please check back in 10 seconds..");
             }
@@ -364,23 +362,40 @@ namespace KalikoCMS {
 
         #region Events
 
-        internal static void RaisePageSaved(Guid pageId, int languageId) {
+        internal static void RaisePageSaved(Guid pageId, int languageId, int version) {
             if (_pageSaved != null) {
-                _pageSaved(null, new PageEventArgs(pageId, languageId));
+                try {
+                    _pageSaved(null, new PageEventArgs(pageId, languageId, version));
+                }
+                catch (Exception exception)
+                {
+                    Logger.Write(exception, Logger.Severity.Major);
+                }
             }
         }
 
 
-        public static void RaisePagePublished(Guid pageId, int languageId) {
+        internal static void RaisePagePublished(Guid pageId, int languageId, int version) {
             if (_pagePublished != null) {
-                _pagePublished(null, new PageEventArgs(pageId, languageId));
+                try {
+                    _pagePublished(null, new PageEventArgs(pageId, languageId, version));
+                }
+                catch (Exception exception)
+                {
+                    Logger.Write(exception, Logger.Severity.Major);
+                }
             }
         }
 
 
-        internal static void RaisePageDeleted(Guid pageId, int languageId) {
+        internal static void RaisePageDeleted(Guid pageId, int languageId, int version) {
             if (_pageDeleted != null) {
-                _pageDeleted(null, new PageEventArgs(pageId, languageId));
+                try {
+                    _pageDeleted(null, new PageEventArgs(pageId, languageId, version));
+                }
+                catch (Exception exception) {
+                    Logger.Write(exception, Logger.Severity.Major);
+                }
             }
         }
 
@@ -436,6 +451,8 @@ namespace KalikoCMS {
                 page.VisibleInSiteMap = pageInstance.VisibleInSitemap;
                 page.SortOrder = sortOrder;
                 page.Status = pageInstance.Status;
+                page.ChildSortDirection = pageInstance.ChildSortDirection;
+                page.ChildSortOrder = pageInstance.ChildSortOrder;
 
                 // Update if page URL segment was changed
                 if (page.UrlSegment != pageInstance.PageUrl) {
@@ -453,6 +470,8 @@ namespace KalikoCMS {
             else {
                 page = new PageIndexItem {
                                              Author = pageInstance.Author,
+                                             ChildSortDirection = pageInstance.ChildSortDirection,
+                                             ChildSortOrder = pageInstance.ChildSortOrder,
                                              CreatedDate = pageInstance.CreatedDate,
                                              CurrentVersion = pageInstance.CurrentVersion,
                                              DeletedDate = pageInstance.DeletedDate,
@@ -537,13 +556,39 @@ namespace KalikoCMS {
             _pageLanguageIndex.Add(pageIndex);
         }
 
-        
-        public static void MovePage(Guid pageId, Guid targetId) {
-            foreach (PageIndex pageIndex in _pageLanguageIndex) {
-                pageIndex.MovePage(pageId, targetId);
+
+        public static void MovePage(Guid pageId, Guid targetId, int position) {
+            // TODO: Refactor page entity to be updated directly in the database when introducing multi-language
+            foreach (var pageIndex in _pageLanguageIndex) {
+                pageIndex.MovePage(pageId, targetId, position);
             }
+
+            ReorderChildren(pageId, targetId, position);
         }
 
+        public static bool ReorderChildren(Guid pageId, Guid parentId, int position) {
+            var childrenForPage = GetChildrenForPage(parentId, PublishState.All);
+            var previousOnPosition = childrenForPage.PageIds[position];
+
+            Dictionary<Guid, int> newSortOrder;
+            if (parentId == Guid.Empty) {
+                newSortOrder = PageData.SortSiblings(pageId, parentId, SortDirection.Ascending, previousOnPosition);
+            }
+            else {
+                var parent = GetPage(parentId);
+                if (parent.ChildSortOrder != SortOrder.SortIndex) {
+                    return false;
+                }
+
+                newSortOrder = PageData.SortSiblings(pageId, parentId, parent.ChildSortDirection, previousOnPosition);
+            }
+
+            foreach (var pageIndex in _pageLanguageIndex) {
+                pageIndex.UpdateSortOrder(parentId, newSortOrder);
+            }
+
+            return true;
+        }
 
         internal static string GetUrlForPageInstanceId(int pageInstanceId) {
             foreach (var pageIndex in _pageLanguageIndex) {
@@ -566,7 +611,7 @@ namespace KalikoCMS {
                 SearchManager.Instance.RemoveFromIndex(pageIds, pageIndex.LanguageId);
             }
 
-            RaisePageDeleted(pageId, 0);
+            RaisePageDeleted(pageId, 0, 0);
         }
 
         public static CmsPage GetWorkingCopy(Guid pageId) {
@@ -583,10 +628,16 @@ namespace KalikoCMS {
         }
 
         public static CmsPage GetSpecificVersion(Guid pageId, int version) {
-            var page = GetPage(pageId);
+            var currentLanguageId = Language.CurrentLanguageId;
+            return GetSpecificVersion(pageId, currentLanguageId, version);
+        }
 
-            var pageInstance = PageInstanceData.GetByVersion(pageId, Language.CurrentLanguageId, version);
-            if (pageInstance == null) {
+        public static CmsPage GetSpecificVersion(Guid pageId, int languageId, int version) {
+            var page = GetPage(pageId, languageId);
+
+            var pageInstance = PageInstanceData.GetByVersion(pageId, languageId, version);
+            if (pageInstance == null)
+            {
                 var message = string.Format("Can't find version {0} of page '{1}'", version, pageId);
                 Logger.Write(message, Logger.Severity.Major);
                 throw new Exception(message);
@@ -595,11 +646,12 @@ namespace KalikoCMS {
             PopulatePageFromPageInstance(page, pageInstance);
 
             return page;
-           
         }
 
         private static void PopulatePageFromPageInstance(CmsPage page, PageInstanceEntity pageInstance) {
             page.Author = pageInstance.Author;
+            page.ChildSortDirection = pageInstance.ChildSortDirection;
+            page.ChildSortOrder = pageInstance.ChildSortOrder;
             page.CurrentVersion = pageInstance.CurrentVersion;
             page.OriginalStatus = pageInstance.Status;
             page.PageInstanceId = pageInstance.PageInstanceId;

@@ -29,6 +29,8 @@ namespace KalikoCMS.Data.Maps {
 
             HasProperty(x => x.PageTypeId).IsIdentity(KeyGenerator.Autoinc).ToColumn("PageTypeId").IsNotNullable();
             HasProperty(x => x.Name).ToColumn("Name").IsNullable().WithVariableLength(50);
+            HasProperty(x => x.DefaultChildSortDirection).ToColumn("DefaultChildSortDirection").IsNotNullable();
+            HasProperty(x => x.DefaultChildSortOrder).ToColumn("DefaultChildSortOrder").IsNotNullable();
             HasProperty(x => x.DisplayName).ToColumn("DisplayName").IsNullable().HasColumnType("nvarchar").HasLength(50);
             HasProperty(x => x.PageTypeDescription).ToColumn("PageTypeDescription").IsNullable().IsUnicode().WithVariableLength(255);
             HasProperty(x => x.PageTemplate).ToColumn("PageTemplate").IsNullable().WithVariableLength(100);

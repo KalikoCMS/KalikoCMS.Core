@@ -24,7 +24,7 @@
   });
 
   function clickCreateNewPage(e) {
-    top.openModal("Content/Dialogs/SelectPagetypeDialog.aspx?pageId=" + currentPageId, 500, 400);
+    top.openModal("Content/Dialogs/SelectPagetypeDialog.aspx?pageId=" + currentPageId, 700, 500);
     e.preventDefault();
   }
 
@@ -131,7 +131,7 @@
           $("#maincontent").attr("src", "Content/EditPage.aspx?id=" + pageId);
         })
         .bind("move_node.jstree", function (e, data) {
-          bootbox.confirm("Move page?", function(result) {
+        var moveNode = function(result) {
             if (result == true) {
                 $.ajax({
                     async: false,
@@ -141,26 +141,39 @@
                         "operation": "move_node",
                         "id": data.node.id,
                         "ref": data.parent,
+                        "old": data.old_parent,
                         "position": data.position
                     },
                     success: function(r) {
+                        data.instance.load_node(data.parent);
+                        if (data.parent != data.old_parent) {
+                            data.instance.load_node(data.old_parent);
+                        }
+
                         if (!r.success) {
-                            data.instance.load_node(data.parent);
-                            data.instance.load_node(data.old_parent);
-                            bootbox.alert("Could not move page!");
+                            if (r.message.length > 0) {
+                                bootbox.alert(r.message);
+                            }
+                            else {
+                                bootbox.alert("Could not move page!");
+                            }
                             console.log(data.node);
-                        } else {
-                            data.instance.load_node(data.parent);
-                            data.instance.load_node(data.old_parent);
                         }
                     }
                 });
             }
             else {
-              data.instance.load_node(data.parent);
-              data.instance.load_node(data.old_parent);
+                data.instance.load_node(data.parent);
+                data.instance.load_node(data.old_parent);
             }
-        });
+        };
+
+        if (data.parent == data.old_parent) {
+            moveNode(true);
+        }
+        else {
+            bootbox.confirm("Move page?", moveNode);
+        }
     });
   }
 

@@ -5,7 +5,9 @@
                 var list = $(container).find("ul.sortable-collection");
                 var content = '<a href="#" onclick="top.propertyEditor.collection.editField(this);return false;" class="pull-right"><i class="icon icon-edit"></i>edit</a><i class="icon icon-sort"></i> ' + exerpt;
                 if (valueField == null && val != null) {
-                    list.append('<li class="btn btn-default collection-item" data-value=\'' + val + '\'>' + content + '</li>');
+                    var newField = $('<li class="btn btn-default collection-item"></li>');
+                    newField.attr('data-value', val).html(content);
+                    list.append(newField);
                 }
                 else if (val == null) {
                     $(valueField).remove();

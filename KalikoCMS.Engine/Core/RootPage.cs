@@ -25,8 +25,7 @@ namespace KalikoCMS.Core {
             PageId = Guid.Empty;
             LanguageId = languageId;
             PageName = "Root";
-            //TODO: FIXA TILL NEDAN!! (så att virtual path kommer med)
-            PageUrl = new Uri("/", UriKind.Relative);
+            PageUrl = new Uri(Utils.ApplicationPath, UriKind.Relative);
             PageTypeId = 0;
 
             FirstChild = 0;

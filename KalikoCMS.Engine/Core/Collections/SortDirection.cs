@@ -19,7 +19,7 @@
 
 namespace KalikoCMS.Core.Collections {
     public enum SortDirection {
-        Descending,
-        Ascending
+        Ascending = 0,
+        Descending = 1
     }
 }
