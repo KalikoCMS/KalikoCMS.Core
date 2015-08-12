@@ -21,20 +21,25 @@ namespace KalikoCMS.Core {
     using System;
     using System.Collections.Generic;
     using Data;
+    using Collections;
 
     public class PageType {
         public static List<PageType> PageTypes { get; internal set; }
 
         public int PageTypeId { get; set; }
         public string Name { get; set; }
+        public SortDirection DefaultChildSortDirection { get; set; }
+        public SortOrder DefaultChildSortOrder { get; set; }
         public string DisplayName { get; set; }
         public string PageTypeDescription { get; set; }
         public string PageTemplate { get; set; }
+        public string PreviewImage { get; set; }
         public bool ShowPublishDates { get; set; }
         public bool ShowSortOrder { get; set; }
         public bool ShowVisibleInMenu { get; set; }
-
-        internal Type Type { get; set; }
+        public Type[] AllowedTypes { get; set; }
+        public Type Type { get; set; }
+        
         internal CmsPage Instance { get; set; }
         internal List<PropertyDefinition> Properties { get; set; }
 

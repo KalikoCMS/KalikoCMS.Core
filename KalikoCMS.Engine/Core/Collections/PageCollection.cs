@@ -31,13 +31,16 @@ namespace KalikoCMS.Core.Collections {
         // private readonly int _languageId;
         private readonly Collection<Guid> _pageIds;
 
-
         public PageCollection() {
             _pageIds = new Collection<Guid>();
         }
 
         public PageCollection(Collection<Guid> pageIds) {
             _pageIds = pageIds;
+        }
+
+        public PageCollection(IList<Guid> pageIds) {
+            _pageIds = new Collection<Guid>(pageIds);
         }
 
         public int Count {
@@ -70,8 +73,8 @@ namespace KalikoCMS.Core.Collections {
                     return;
                 }
 
-                Array values = new ArrayList(_pageIds).ToArray(typeof(Guid));
-                Array keys = GetKeysFromParameters(sortOrder, values);
+                var values = new ArrayList(_pageIds).ToArray(typeof(Guid));
+                var keys = GetKeysFromParameters(sortOrder, values);
 
                 Array.Sort(keys, values);
                 _pageIds.Clear();
@@ -89,21 +92,18 @@ namespace KalikoCMS.Core.Collections {
             }
         }
 
-
         private void AddRange(ICollection items) {
             foreach (var item in items) {
                 _pageIds.Add((Guid)item);
             }
         }
 
-
         private void AddRangeReversed(Array items) {
-            for (int i = items.Length - 1; i >= 0; i--) {
+            for (var i = items.Length - 1; i >= 0; i--) {
                 var item = items.GetValue(i);
                 _pageIds.Add((Guid)item);
             }
         }
-
 
         private Array GetKeysFromParameters(SortOrder sortOrder, Array values) {
             Array keys = new ArrayList(values.Length).ToArray();
@@ -136,21 +136,17 @@ namespace KalikoCMS.Core.Collections {
             return _pageIds.Select(pageId => PageFactory.GetPage(pageId).CreatedDate).ToArray();
         }
 
-
         private Array GetSortIndexForSort() {
-            return _pageIds.Select(pageId => PageFactory.GetPage(pageId).SortOrder).ToArray();
+            return _pageIds.Select(pageId => PageFactory.GetPage(pageId).SortIndex).ToArray();
         }
-
 
         private Array GetPageNameKeysForSort() {
             return _pageIds.Select(pageId => PageFactory.GetPage(pageId).PageName).ToArray();
         }
 
-
         private Array GetStartPublishDateKeysForSort() {
             return _pageIds.Select(pageId => PageFactory.GetPage(pageId).StartPublish ?? DateTime.MinValue).ToArray();
         }
-
 
         private bool IsAlreadySorted(SortOrder sortOrder, SortDirection sortDirection) {
             return Sorted && SortOrder == sortOrder && SortDirection == sortDirection;

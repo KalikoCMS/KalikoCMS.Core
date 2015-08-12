@@ -19,10 +19,16 @@
 
 namespace KalikoCMS.Attributes {
     using System;
+    using Core.Collections;
     
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public sealed class PageTypeAttribute : Attribute {
         internal const int DefaultSortOrder = 100;
+
+        public PageTypeAttribute(string name, string displayName) {
+            Name = name;
+            DisplayName = displayName;
+        }
 
         public PageTypeAttribute(string name, string displayName, string pageTemplate) {
             Name = name;
@@ -30,9 +36,13 @@ namespace KalikoCMS.Attributes {
             PageTemplate = pageTemplate;
         }
 
+        public Type[] AllowedTypes { get; set; }
+        public SortDirection DefaultChildSortDirection { get; set; }
+        public SortOrder DefaultChildSortOrder { get; set; }
         public string DisplayName { get; private set; }
         public string Name { get; private set; }
         public string PageTemplate { get; private set; }
         public string PageTypeDescription { get; set; }
+        public string PreviewImage { get; set; }
     }
 }

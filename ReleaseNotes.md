@@ -1,12 +1,17 @@
 ### New in 1.0.0
 * Added Markdown property type
 * Added option to set URL segment when editing a page
-* Added option to set sort order when editing a page
 * Added option to set visibility in sitemaps when editing a page
 * Added page versioning
 * Added page published event
+* Added child sort order to pages
+* Added default child sort order to pagetypes
+* Added function to drag-and-drop sort order in page tree
+* Added function to limit available pagetypes for each pagetype
+* Get children now returns sorted list based on parent page settings
 * Divided startup code in pre and post CMS initialization
 * Improved custom routing in MVC provider
+* Improved pagetype selector
 * Added function to fetch all pages based on a predicate filter
 * Added original status for use on working copies
 * Fixed support for application paths in page URLs
@@ -16,6 +21,8 @@
 * Fixed bug overwriting image preview in editor
 * Fixed log level for datacontext
 * Fixed assembly resolver for SQLite
+* Fixed bug in collection properties when sub-property included an apostrophe
+* Cleaned up NuGet package removing bundle source files
 
 ### New in 0.9.9
 * Fixed broken upload component

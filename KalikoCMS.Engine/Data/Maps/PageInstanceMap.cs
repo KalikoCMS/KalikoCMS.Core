@@ -43,6 +43,8 @@ namespace KalikoCMS.Data.Maps {
             HasProperty(x => x.CurrentVersion).ToColumn("CurrentVersion").IsNotNullable().HasDefaultValue();
             HasProperty(x => x.Author).ToColumn("Author").IsNullable().WithVariableLength(256);
             HasProperty(x => x.Status).ToColumn("Status").IsNotNullable();
+            HasProperty(x => x.ChildSortDirection).ToColumn("ChildSortDirection").IsNotNullable();
+            HasProperty(x => x.ChildSortOrder).ToColumn("ChildSortOrder").IsNotNullable();
 
             HasAssociation(x => x.Page).WithOpposite(x => x.PageInstances).ToColumn("PageId").HasConstraint((x, y) => x.PageId == y.PageId).IsRequired();
             HasAssociation(x => x.SiteLanguage).WithOpposite(x => x.PageInstances).ToColumn("LanguageId").HasConstraint((x, y) => x.LanguageId == y.LanguageId).IsRequired();

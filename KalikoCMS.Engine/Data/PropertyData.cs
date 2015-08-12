@@ -62,7 +62,7 @@ namespace KalikoCMS.Data {
                 }
 
                 if (useCache) {
-                    CacheManager.Add(cacheName, propertyCollection.Properties);
+                    CacheManager.Add(cacheName, propertyCollection.Properties, CachePriority.Medium, 30, true, true);
                 }
             }
 

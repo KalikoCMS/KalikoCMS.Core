@@ -66,7 +66,7 @@ namespace KalikoCMS.Core {
         }
 
         internal static PageIndex CreatePageIndex(int languageId) {
-            PageIndexDictionary pageIndexItems = PageData.GetPageStructure(languageId);
+            var pageIndexItems = PageData.GetPageStructure(languageId);
 
             var pageIndex = new PageIndex(pageIndexItems) {LanguageId = languageId};
 
@@ -82,27 +82,26 @@ namespace KalikoCMS.Core {
         }
 
         internal PageCollection GetChildren(Guid pageId, PublishState pageState) {
-            Predicate<PageIndexItem> match = GetPublishStatePredicate(pageState);
+            var match = GetPublishStatePredicate(pageState);
 
             return GetChildrenByCriteria(pageId, match);
         }
 
 
         internal PageCollection GetChildren(Guid pageId, int pageTypeId) {
-            Predicate<PageIndexItem> match = IsPublished.And(t => t.PageTypeId == pageTypeId);
+            var match = IsPublished.And(t => t.PageTypeId == pageTypeId);
 
             return GetChildrenByCriteria(pageId, match);
         }
 
 
         internal PageCollection GetChildren(Guid pageId, int pageTypeId, PublishState pageState) {
-            Predicate<PageIndexItem> match = AddPredicateForPageState(pageState, (t => t.PageTypeId == pageTypeId));
+            var match = AddPredicateForPageState(pageState, (t => t.PageTypeId == pageTypeId));
 
             return GetChildrenByCriteria(pageId, match);
         }
 
         internal PageCollection GetChildrenByCriteria(Guid parentId, Predicate<PageIndexItem> match) {
-            var pageCollection = new PageCollection();
             PageIndexItem pageIndexItem;
 
             if (parentId == SiteSettings.RootPage) {
@@ -112,24 +111,51 @@ namespace KalikoCMS.Core {
                 pageIndexItem = GetPageIndexItem(parentId);
             }
 
-            if (pageIndexItem != null) {
-                int currentId = pageIndexItem.FirstChild;
-
-                while (currentId > -1) {
-                    PageIndexItem item = _pageIndex[currentId];
-
-                    if (match(item)) {
-                        pageCollection.Add(_pageIndex[currentId].PageId);
-                    }
-
-                    currentId = _pageIndex[currentId].NextPage;
-                }
-            }
-            else {
+            if (pageIndexItem == null) {
                 throw new ArgumentException("Page with id " + parentId + " not found!");
             }
 
-            return pageCollection;
+            var pages = new List<PageIndexItem>();
+            var currentId = pageIndexItem.FirstChild;
+
+            while (currentId > -1) {
+                var item = _pageIndex[currentId];
+
+                if (match(item)) {
+                    pages.Add(item);
+                }
+
+                currentId = _pageIndex[currentId].NextPage;
+            }
+
+            pages = SortPages(pages, pageIndexItem.ChildSortOrder, pageIndexItem.ChildSortDirection);
+
+            var pageIds = pages.Select(p => p.PageId).ToList();
+            return new PageCollection(pageIds);
+        }
+
+        private static List<PageIndexItem> SortPages(List<PageIndexItem> pages, SortOrder sortOrder, SortDirection sortDirection) {
+            switch (sortOrder) {
+                case SortOrder.CreatedDate:
+                    pages = pages.OrderBy(p => p.CreatedDate).ToList();
+                    break;
+                case SortOrder.PageName:
+                    pages = pages.OrderBy(p => p.PageName).ToList();
+                    break;
+                case SortOrder.SortIndex:
+                    pages = pages.OrderBy(p => p.SortOrder).ToList();
+                    break;
+                case SortOrder.StartPublishDate:
+                    pages = pages.OrderBy(p => p.StartPublish ?? DateTime.MinValue).ToList();
+                    break;
+                case SortOrder.UpdateDate:
+                    pages = pages.OrderBy(p => p.UpdateDate).ToList();
+                    break;
+            }
+            if (sortDirection == SortDirection.Descending) {
+                pages.Reverse();
+            }
+            return pages;
         }
 
         internal PageIndexItem GetPageIndexItem(Guid pageId) {
@@ -208,10 +234,23 @@ namespace KalikoCMS.Core {
             return pageCollection;
         }
 
+        internal PageCollection GetPagesByCriteriaSorted(Predicate<PageIndexItem> match, SortOrder sortOrder, SortDirection sortDirection) {
+            var pages = _pageIndex.FindAll(match);
+            
+            pages = SortPages(pages, sortOrder, sortDirection);
+
+            var pageCollection = new PageCollection();
+            foreach (var page in pages) {
+                pageCollection.Add(page.PageId);
+            }
+
+            return pageCollection;
+        }
+
         internal PageCollection GetRootChildren() {
             Predicate<PageIndexItem> match = IsPublished.And(t => t.ParentId == Guid.Empty);
 
-            return GetPagesByCriteria(match);
+            return GetPagesByCriteriaSorted(match, SortOrder.SortIndex, SortDirection.Ascending);
         }
 
         internal PageCollection GetRootChildren(PublishState pageState) {
@@ -219,7 +258,7 @@ namespace KalikoCMS.Core {
 
             match = AddPredicateForPageState(pageState, match);
 
-            return GetPagesByCriteria(match);
+            return GetPagesByCriteriaSorted(match, SortOrder.SortIndex, SortDirection.Ascending);
         }
 
         internal PageCollection GetRootChildren(int pageTypeId, PublishState pageState) {
@@ -227,22 +266,22 @@ namespace KalikoCMS.Core {
 
             match = AddPredicateForPageState(pageState, match);
 
-            return GetPagesByCriteria(match);
+            return GetPagesByCriteriaSorted(match, SortOrder.SortIndex, SortDirection.Ascending);
         }
 
         internal void InsertPageIndexItem(PageIndexItem page) {
-            PageIndexItem item = GetPageIndexItem(page.ParentId);
-            int insertPosition = _pageIndex.Count;
+            var item = GetPageIndexItem(page.ParentId);
+            var insertPosition = _pageIndex.Count;
 
             if (item != null) {
-                int firstChild = item.FirstChild;
+                var firstChild = item.FirstChild;
 
                 item.FirstChild = insertPosition;
                 page.NextPage = firstChild;
             }
             else if (_pageIndex.Count > 0) {
                 item = _pageIndex[0];
-                int nextPage = item.NextPage;
+                var nextPage = item.NextPage;
 
                 item.NextPage = insertPosition;
                 page.NextPage = nextPage;
@@ -252,10 +291,10 @@ namespace KalikoCMS.Core {
         }
 
         internal void SavePageIndexItem(PageIndexItem page) {
-            Guid pageId = page.PageId;
+            var pageId = page.PageId;
 
-            for (int i = 0; i < _pageIndex.Count; i++) {
-                PageIndexItem pageIndexItem = _pageIndex[i];
+            for (var i = 0; i < _pageIndex.Count; i++) {
+                var pageIndexItem = _pageIndex[i];
                 if (pageIndexItem.PageId == pageId) {
                     _pageIndex[i] = page;
                     break;
@@ -264,20 +303,20 @@ namespace KalikoCMS.Core {
         }
 
         private static Predicate<PageIndexItem> AddPredicateForPageState(PublishState pageState, Predicate<PageIndexItem> match) {
-            Predicate<PageIndexItem> publishStatePredicate = GetPublishStatePredicate(pageState);
+            var publishStatePredicate = GetPublishStatePredicate(pageState);
             match = match.And(publishStatePredicate);
 
             return match;
         }
 
         private void BuildLinkedList() {
-            int count = 0;
-            ILookup<Guid, int> lookup = _pageIndex.ToLookup(i => i.ParentId, i => count++);
+            var count = 0;
+            var lookup = _pageIndex.ToLookup(i => i.ParentId, i => count++);
 
-            foreach (PageIndexItem page in _pageIndex) {
-                Guid pageId = page.PageId;
-                int childId = 0;
-                foreach (int index in lookup[pageId]) {
+            foreach (var page in _pageIndex) {
+                var pageId = page.PageId;
+                var childId = 0;
+                foreach (var index in lookup[pageId]) {
                     if (childId == 0) {
                         page.FirstChild = index;
                     }
@@ -291,19 +330,19 @@ namespace KalikoCMS.Core {
 
         // TODO: Fininsh implementation of date restriction for children (currently commented code below)
         private static void FixDatesForIndex(PageIndex pageIndex) {
-            foreach (PageIndexItem page in pageIndex.Items) {
+            foreach (var page in pageIndex.Items) {
 /*                bool isDeleted = false;
                 DateTime? parentDeleteDate = DateTime.MinValue;
                 DateTime? parentStartDate = DateTime.MinValue;
                 DateTime? parentStopDate = DateTime.MaxValue;*/
 
-                string fullpath = page.PageUrl;
+                var fullPath = page.PageUrl;
 
-                Guid currentPageId = page.ParentId;
+                var currentPageId = page.ParentId;
                 if (currentPageId != Guid.Empty) {
-                    PageIndexItem parentPage = pageIndex.GetPageIndexItem(currentPageId);
+                    var parentPage = pageIndex.GetPageIndexItem(currentPageId);
 
-                    fullpath = parentPage.PageUrl + "/" + fullpath;
+                    fullPath = parentPage.PageUrl + "/" + fullPath;
 
 /*                    if (parentPage.DeletedDate != null) {
                         throw new NotImplementedException("Should not be reached!");
@@ -317,8 +356,8 @@ namespace KalikoCMS.Core {
                         parentStopDate = parentPage.StopPublish;
                     }*/
                 }
-                fullpath = fullpath.ToLower();
-                page.PageUrl = fullpath.Replace("//", "/") + "/";
+                fullPath = fullPath.ToLower();
+                page.PageUrl = fullPath.Replace("//", "/") + "/";
 
 /*
                 //The page startpublish is older then any parents.. obey the parent!
@@ -333,17 +372,20 @@ namespace KalikoCMS.Core {
         }
 
         private void InitLinkedList() {
-            int pageId = 0;
+            var pageId = 0;
 
-            for (int i = 0; i < _pageIndex.Count; i++) {
+            for (var i = 0; i < _pageIndex.Count; i++) {
                 _pageIndex[i].NextPage = _pageIndex[i].FirstChild = -1;
 
-                if (_pageIndex[i].ParentId == Guid.Empty) {
-                    if (i != 0) {
-                        _pageIndex[pageId].NextPage = i;
-                    }
-                    pageId = i;
+                if (_pageIndex[i].ParentId != Guid.Empty) {
+                    continue;
                 }
+
+                if (i != 0) {
+                    _pageIndex[pageId].NextPage = i;
+                }
+                
+                pageId = i;
             }
         }
 
@@ -373,9 +415,9 @@ namespace KalikoCMS.Core {
 
         private void WriteIndexToLog() {
             #if DEBUG
-                StringBuilder stringBuilder = new StringBuilder();
+                var stringBuilder = new StringBuilder();
                 stringBuilder.Append("Page index created:\r\n[");
-                int count = 0;
+                var count = 0;
 
                 foreach (PageIndexItem t in _pageIndex) {
                     stringBuilder.Append(string.Format("{{ \"Offset\": " + count + ", \"PageUrl\": \"{0}\", \"ParentId\": \"{1}\", \"NextPage\": {2}, \"FirstChild\": {3} }},\r\n", t.PageUrl, t.ParentId, t.NextPage, t.FirstChild));
@@ -387,7 +429,7 @@ namespace KalikoCMS.Core {
             #endif
         }
 
-        internal void MovePage(Guid pageId, Guid targetId) {
+        internal void MovePage(Guid pageId, Guid targetId, int position) {
             var changedItems = new List<PageIndexItem>();
 
             for (var i = 0; i < _pageIndex.Count; i++) {
@@ -398,7 +440,6 @@ namespace KalikoCMS.Core {
                 }
 
                 if (pageIndexItem.ParentId == targetId) {
-                    // TODO: There's no need to move the page, fix the sort order instead
                     return;
                 }
 
@@ -436,6 +477,27 @@ namespace KalikoCMS.Core {
             }
 
             PageData.UpdateStructure(changedItems);
+        }
+
+        internal void UpdateSortOrder(Guid parentId, Dictionary<Guid, int> newSortOrder) {
+            PageIndexItem pageIndexItem;
+
+            if (parentId == SiteSettings.RootPage) {
+                pageIndexItem = GetRootPageIndexItem();
+            }
+            else {
+                pageIndexItem = GetPageIndexItem(parentId);
+            }
+
+            var currentId = pageIndexItem.FirstChild;
+
+            while (currentId > -1) {
+                var item = _pageIndex[currentId];
+                var sortIndex = newSortOrder[item.PageId];
+                item.SortOrder = sortIndex;
+
+                currentId = _pageIndex[currentId].NextPage;
+            }
         }
 
         private void DetachPage(PageIndexItem pageIndexItem, int i) {
