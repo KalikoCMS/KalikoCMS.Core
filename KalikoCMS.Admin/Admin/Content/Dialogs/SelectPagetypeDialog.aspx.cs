@@ -32,9 +32,12 @@ namespace KalikoCMS.Admin.Content.Dialogs {
                 return;
             }
 
-            var pageId = new Guid(Request.QueryString["pageId"]);
-            var allowAll = true;
             Type[] allowedTypes = null;
+            Guid pageId;
+            
+            Guid.TryParse(Request.QueryString["pageId"], out pageId);
+            
+            var allowAll = true;
 
             if (pageId != SiteSettings.RootPage) {
                 var parent = PageFactory.GetPage(pageId);
