@@ -21,6 +21,7 @@ namespace KalikoCMS.Admin.Content.Dialogs {
     using System;
     using System.Linq;
     using System.Text;
+    using Configuration;
     using KalikoCMS.Core;
 
     public partial class SelectPagetypeDialog : System.Web.UI.Page {
@@ -32,21 +33,27 @@ namespace KalikoCMS.Admin.Content.Dialogs {
             }
 
             var pageId = new Guid(Request.QueryString["pageId"]);
-            var parent = PageFactory.GetPage(pageId);
-            var parentPageType = pageTypes.Find(p => p.PageTypeId == parent.PageTypeId);
-            var allowAll = parentPageType.AllowedTypes == null;
+            var allowAll = true;
+            Type[] allowedTypes = null;
 
-            if (parentPageType.AllowedTypes != null && parentPageType.AllowedTypes.Length == 0) {
-                PageTypeList.Text = "No pages can be created under the selected page.";
-                return;
+            if (pageId != SiteSettings.RootPage) {
+                var parent = PageFactory.GetPage(pageId);
+                var parentPageType = pageTypes.Find(p => p.PageTypeId == parent.PageTypeId);
+                allowedTypes = parentPageType.AllowedTypes;
+                allowAll = parentPageType.AllowedTypes == null;
+
+                if (parentPageType.AllowedTypes != null && parentPageType.AllowedTypes.Length == 0) {
+                    PageTypeList.Text = "No pages can be created under the selected page.";
+                    return;
+                }
             }
-            
+
             var stringBuilder = new StringBuilder();
             var count = 0;
 
             foreach (var pageType in pageTypes) {
-                if (allowAll || parentPageType.AllowedTypes.Contains(pageType.Type)) {
-                    if (count > 0 && count % 2 == 0) {
+                if (allowAll || allowedTypes.Contains(pageType.Type)) {
+                    if (count > 0 && count%2 == 0) {
                         stringBuilder.Append("</div><div class=\"row\">");
                     }
                     var previewImage = string.IsNullOrEmpty(pageType.PreviewImage) ? "assets/images/defaultpagetype.png" : pageType.PreviewImage;
