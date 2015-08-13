@@ -103,11 +103,14 @@ namespace KalikoCMS.Admin.Content {
 
         private void LoadFormForRootPage() {
             PageHeader.Text = "Root";
+            PageTypeName.Text = "Root";
+            PageId.Text = Guid.Empty.ToString();
             PageName.Visible = false;
             StartPublishDate.Visible = false;
             StopPublishDate.Visible = false;
             VisibleInMenu.Visible = false;
             SaveButton.Visible = false;
+            PublishButton.Visible = false;
             AdvancedOptionButton.Visible = false;
         }
 
@@ -119,6 +122,8 @@ namespace KalikoCMS.Admin.Content {
             foreach (var propertyDefinition in propertyDefinitions) {
                 AddControl(propertyDefinition.Name, null, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters);
             }
+
+            PageTypeName.Text = PageType.GetPageType(_pageTypeId).DisplayName;
 
             var pageType = PageType.GetPageType(_pageTypeId);
             ChildSortDirection.SelectedValue = ((int)pageType.DefaultChildSortDirection).ToString();
@@ -173,6 +178,8 @@ namespace KalikoCMS.Admin.Content {
             ChildSortOrder.SelectedValue = ((int)cmsPage.ChildSortOrder).ToString();
 
             PageId.Text = cmsPage.PageId.ToString();
+
+            PageTypeName.Text = PageType.GetPageType(cmsPage.PageTypeId).DisplayName;
 
             var propertyDefinitions = PageType.GetPropertyDefinitions(cmsPage.PageTypeId);
 
