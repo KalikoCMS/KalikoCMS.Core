@@ -54,7 +54,7 @@
       },
       success: function (r) {
         if (!r.status) {
-          refreshParentNode(currentPageId);
+          selectParentNode(currentPageId);
         }
       }
     });
@@ -64,6 +64,15 @@
     top.closeModal();
 
     $("#maincontent").attr("src", "Content/EditPage.aspx?id=&parentId=" + currentPageId + "&pageTypeId=" + pageTypeId);
+  }
+
+  function selectParentNode(node) {
+      var instance = $.jstree.reference('#pagetree');
+      var parent = instance.get_parent(node);
+      instance.load_node(parent, function (n, s) {
+          instance.deselect_all();
+          instance.select_node(parent);
+      });
   }
 
   function refreshNode(node) {

@@ -51,8 +51,13 @@
           <div class="form-group">
             <label class="control-label col-xs-2" for="PageId">Page Id</label>
             <div class="controls col-xs-10">
-              <span class="static-text">
-                <asp:Literal ID="PageId" runat="server" /></span>
+              <span class="static-text"><asp:Literal ID="PageId" runat="server" /></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-xs-2" for="PageTypeName">Pagetype</label>
+            <div class="controls col-xs-10">
+              <span class="static-text"><asp:Literal ID="PageTypeName" runat="server" /></span>
             </div>
           </div>
           <div class="form-actions">
