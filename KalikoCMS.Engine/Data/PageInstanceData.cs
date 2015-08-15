@@ -22,7 +22,6 @@ namespace KalikoCMS.Data {
     using System.Collections.Generic;
     using Entities;
 
-    // TODO: Fixa access
     public class PageInstanceData {
         internal static PageInstanceEntity GetByStatus(Guid pageId, int languageId, PageInstanceStatus status) {
             return DataManager.FirstOrDefault<PageInstanceEntity>(p => p.Status == status && p.PageId == pageId && p.LanguageId == languageId);
@@ -34,6 +33,10 @@ namespace KalikoCMS.Data {
 
         public static List<PageInstanceEntity> GetById(Guid pageId, int languageId) {
             return DataManager.Select<PageInstanceEntity>(p => p.PageId == pageId && p.LanguageId == languageId);
+        }
+
+        internal static PageInstanceEntity GetById(int pageInstanceId) {
+            return DataManager.FirstOrDefault<PageInstanceEntity>(p => p.PageInstanceId == pageInstanceId);
         }
     }
 }

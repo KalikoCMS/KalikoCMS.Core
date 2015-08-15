@@ -598,7 +598,18 @@ namespace KalikoCMS {
                 }
             }
 
-            return string.Empty;
+            // If above fails, try to get from database (this occurs when a newer version is published)
+            var pageInstance = PageInstanceData.GetById(pageInstanceId);
+            if (pageInstance == null) {
+                return string.Empty;
+            }
+
+            var page = GetPage(pageInstance.PageId, pageInstance.LanguageId);
+            if (page == null) {
+                return string.Empty;
+            }
+
+            return page.PageUrl.ToString();
         }
 
 
