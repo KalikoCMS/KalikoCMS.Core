@@ -633,12 +633,14 @@ namespace KalikoCMS.Core {
         }
 
         // TODO: Cache-candidate
-        internal PageCollection GetPagePath(Guid pageId) {
+        internal PageCollection GetPagePath(Guid pageId, bool includeCurrentPage = true) {
             var pathList = new PageCollection();
-            Guid currentPageId = pageId;
+            var currentPageId = pageId;
 
-            for (int i = 0; i < 10000; i++) {
-                pathList.Add(currentPageId);
+            for (var i = 0; i < 10000; i++) {
+                if (i > 0 || includeCurrentPage) {
+                    pathList.Add(currentPageId);
+                }
                 currentPageId = GetPageIndexItem(currentPageId).ParentId;
                 if (currentPageId == Guid.Empty) {
                     break;

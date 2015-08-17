@@ -282,6 +282,22 @@ namespace KalikoCMS {
         }
 
 
+        public static PageCollection GetAncestors(CmsPage page) {
+            return GetAncestors(page.PageId, page.LanguageId);
+        }
+
+
+        public static PageCollection GetAncestors(Guid pageId) {
+            var languageId = Language.CurrentLanguageId;
+            return GetAncestors(pageId, languageId);
+        }
+        
+        private static PageCollection GetAncestors(Guid pageId, int languageId)
+        {
+            var pageIndex = GetPageIndex(languageId);
+            return pageIndex.GetPagePath(pageId, false);
+        }
+
         public static CmsPage GetParentAtLevel(Guid pageId, int level) {
             var pageCollection = GetPagePath(pageId);
             level++;
