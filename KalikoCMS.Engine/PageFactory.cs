@@ -282,6 +282,22 @@ namespace KalikoCMS {
         }
 
 
+        public static PageCollection GetAncestors(CmsPage page) {
+            return GetAncestors(page.PageId, page.LanguageId);
+        }
+
+
+        public static PageCollection GetAncestors(Guid pageId) {
+            var languageId = Language.CurrentLanguageId;
+            return GetAncestors(pageId, languageId);
+        }
+        
+        private static PageCollection GetAncestors(Guid pageId, int languageId)
+        {
+            var pageIndex = GetPageIndex(languageId);
+            return pageIndex.GetPagePath(pageId, false);
+        }
+
         public static CmsPage GetParentAtLevel(Guid pageId, int level) {
             var pageCollection = GetPagePath(pageId);
             level++;
@@ -598,7 +614,18 @@ namespace KalikoCMS {
                 }
             }
 
-            return string.Empty;
+            // If above fails, try to get from database (this occurs when a newer version is published)
+            var pageInstance = PageInstanceData.GetById(pageInstanceId);
+            if (pageInstance == null) {
+                return string.Empty;
+            }
+
+            var page = GetPage(pageInstance.PageId, pageInstance.LanguageId);
+            if (page == null) {
+                return string.Empty;
+            }
+
+            return page.PageUrl.ToString();
         }
 
 

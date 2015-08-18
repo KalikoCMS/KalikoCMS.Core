@@ -140,7 +140,7 @@ namespace KalikoCMS.Core {
 
         public PageCollection ParentPath {
             get {
-                return _parentPath ?? (_parentPath = PageFactory.GetPagePath(this));
+                return _parentPath ?? (_parentPath = PageFactory.GetAncestors(this));
             }
         }
 
