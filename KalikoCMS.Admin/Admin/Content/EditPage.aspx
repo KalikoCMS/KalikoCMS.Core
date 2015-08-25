@@ -2,7 +2,6 @@
 <%@ Register tagPrefix="cms" tagName="StringPropertyEditor" src="PropertyType/StringPropertyEditor.ascx" %>
 <%@ Register tagPrefix="cms" tagName="UniversalDateTimePropertyEditor" src="PropertyType/UniversalDateTimePropertyEditor.ascx" %>
 <%@ Register tagPrefix="cms" tagName="BooleanPropertyEditor" src="PropertyType/BooleanPropertyEditor.ascx" %>
-<%@ Register tagPrefix="cms" tagName="NumericPropertyEditor" src="PropertyType/NumericPropertyEditor.ascx" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
   <form id="MainForm" class="page-editor admin-page" role="form" runat="server">

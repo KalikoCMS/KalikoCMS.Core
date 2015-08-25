@@ -57,7 +57,7 @@ namespace KalikoCMS.PropertyType {
         }
 
         protected override PropertyData DeserializeFromJson(string data) {
-            return JsonSerialization.DeserializeJson<DateTimeProperty>(data);
+            return JsonSerialization.DeserializeJson<UniversalDateTimeProperty>(data);
         }
 
         public override int GetHashCode() {

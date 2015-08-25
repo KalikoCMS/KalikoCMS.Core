@@ -32,7 +32,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
 
         public override PropertyData PropertyValue {
             set {
-                DateTime? dateTime = ((DateTimeProperty)value).Value;
+                var dateTime = ((UniversalDateTimeProperty)value).Value;
                 if(dateTime==null) {
                     UniversalDateField.Value = string.Empty;
                 }
@@ -41,7 +41,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                 }
             }
             get {
-                DateTimeProperty dateTimeProperty = new DateTimeProperty();
+                var dateTimeProperty = new UniversalDateTimeProperty();
                 DateTime dateTime;
 
                 if (DateTime.TryParse(UniversalDateField.Value, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime)) {
