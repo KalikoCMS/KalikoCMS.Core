@@ -38,8 +38,6 @@ namespace KalikoCMS.Mvc {
             RequestManager = new RequestManager();
         }
 
-        public int StartupOrder { get { return 10; } }
-
         protected override void RedirectToStartPage() {
             var startPageId = Configuration.SiteSettings.Instance.StartPageId;
 
@@ -68,10 +66,13 @@ namespace KalikoCMS.Mvc {
             var controller = (Controller)Activator.CreateInstance(type);
             var controllerName = StripEnd(type.Name.ToLowerInvariant(), "controller");
 
+            HttpContext.Current.Items["cmsRouting"] = true;
+
             var routeData = new RouteData();
             routeData.Values["controller"] = controllerName;
             routeData.Values["action"] = actionName;
             routeData.Values["currentPage"] = ((IPageController)controller).GetTypedPage(page);
+            routeData.Values["cmsPageUrl"] = page.PageUrl.ToString().Trim('/');
 
             if (additionalRouteData != null) {
                 foreach (var data in additionalRouteData) {
@@ -82,7 +83,7 @@ namespace KalikoCMS.Mvc {
             HttpContext.Current.Response.Clear();
             var requestContext = new RequestContext(new HttpContextWrapper(HttpContext.Current), routeData);
             ((IController)controller).Execute(requestContext);
-            HttpContext.Current.Response.End();
+            HttpContext.Current.ApplicationInstance.CompleteRequest();
         }
 
         private static Type GetControllerType(CmsPage page) {
@@ -115,7 +116,9 @@ namespace KalikoCMS.Mvc {
             var controllerName = StripEnd(type.Name.ToLowerInvariant(), "controller");
             var filePath = string.Format("/{0}/{1}/", controllerName, string.Join("/", parameters));
 
-            HttpContext.Current.RewritePath(filePath);
+            HttpContext.Current.Items["cmsRouting"] = true;
+
+            //HttpContext.Current.RewritePath(filePath);
             var httpContext = new HttpContextWrapper(HttpContext.Current);
             var routeData = RouteTable.Routes.GetRouteData(httpContext);
 
@@ -128,14 +131,26 @@ namespace KalikoCMS.Mvc {
             HttpContext.Current.Response.Clear();
             var requestContext = new RequestContext(new HttpContextWrapper(HttpContext.Current), routeData);
             ((IController)controller).Execute(requestContext);
-            HttpContext.Current.Response.End();
+            HttpContext.Current.ApplicationInstance.CompleteRequest();
         }
 
 
         #region Startup sequence
 
+        public int StartupOrder { get { return 10; } }
+
         public void Startup() {
             _controllerList = BuildControllerList();
+            InjectMvcRoute();
+        }
+
+        private void InjectMvcRoute() {
+            var route = new CmsRoute("{cmsPageUrl}/{action}", new MvcRouteHandler()) {
+                Constraints = new RouteValueDictionary { {"cmsPageUrl", new CmsRouteConstraint()} },
+                Defaults = new RouteValueDictionary { { "action", "Index" } }
+            };
+
+            RouteTable.Routes.Insert(0, route);
         }
 
         private static Dictionary<int, Type> BuildControllerList() {
