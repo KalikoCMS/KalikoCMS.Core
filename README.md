@@ -6,6 +6,18 @@ The framework approach also doesn't set any boundaries on how you structure your
 
 You find a couple of articles on [how to get started using Kaliko CMS here](http://kaliko.com/cms/get-started/).
 
+Demo project using ASP.NET MVC and SQLite:
+https://github.com/KalikoCMS/DemoSite.Mvc
+ and the accompanying article:
+http://www.codeproject.com/Articles/1021598/Build-a-website-with-Kaliko-CMS-using-ASP-NET-MVC
+
+Demo project using WebForms and SQLite:
+https://github.com/KalikoCMS/DemoSite.WebForms
+ and the accompanying article:
+http://www.codeproject.com/Articles/845483/Build-a-website-with-Kaliko-CMS-using-WebForms
+
+Sign up to the Kaliko CMS Developer Newsletter to get updates about the project: http://eepurl.com/dJzMY
+
 ## Install via NuGet
 
 The far easiest way to install Kaliko CMS is through NuGet:
@@ -22,7 +34,7 @@ Optionally install [Kaliko CMS Search](https://www.nuget.org/packages/KalikoCMS.
 
 ## Requirements
 
-* ASP.NET 4.0 or later
+* ASP.NET 4.0 or later (ASP.NET 4.5 required for ASP.NET Identity provider)
 * Your choice of database ([list of supported databases](http://kaliko.com/cms/knowledge-base/supported-databases/))
 * ASP.NET MVC or WebForms depending of choice
 
@@ -52,6 +64,7 @@ Kaliko CMS is licensed under *GNU Lesser General Public License version 3 (LGPL)
 * jQuery File Upload Plugin ([MIT](http://opensource.org/licenses/mit-license.php))
 * jsTree ([MIT](http://opensource.org/licenses/mit-license.php))
 * Logger ([Ms-PL](http://dotnetlogger.codeplex.com/license))
+* MarkdownSharp ([MIT](http://opensource.org/licenses/mit-license.php))
 * Moment.js ([MIT](http://opensource.org/licenses/mit-license.php))
 * .NET Image Library ([Ms-PL](http://dotnetlogger.codeplex.com/license))
 * Telerik Data Access ([License](http://www.telerik.com/purchase/license-agreement/data-access))
