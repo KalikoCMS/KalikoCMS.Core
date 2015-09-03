@@ -74,7 +74,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
 
-            ScriptManager.RegisterClientScriptInclude(this, typeof(PageLinkPropertyEditor), "Admin.Content.PropertyType.PageLinkPropertyEditor", "Content/PropertyType/PageLinkPropertyEditor.js");
+            ScriptManager.RegisterClientScriptInclude(this, typeof(PageLinkPropertyEditor), "Admin.Content.PropertyType.PageLinkPropertyEditor", "Content/PropertyType/PageLinkPropertyEditor.js?v=" + Utils.VersionHash);
 
             string clickScript = string.Format("top.propertyEditor.pageLink.openDialog($('#{0}'),$('#{1}'),$('#{2}'));return false;", LanguageId.ClientID, PageId.ClientID, DisplayField.ClientID);
             SelectButton.Attributes["onclick"] = clickScript;
