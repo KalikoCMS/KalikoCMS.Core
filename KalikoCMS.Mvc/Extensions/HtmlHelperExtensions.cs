@@ -25,11 +25,16 @@ namespace KalikoCMS.Mvc.Extensions {
     using System.Web;
     using System.Web.Mvc;
     using Core;
+    using Core.Collections;
 
     public static class HtmlHelperExtensions {
         #region Breadcrumbs
 
-        public static IHtmlString BreadcrumbsFor(this HtmlHelper helper, CmsPage page, Dictionary<String, Object> htmlAttributes = null) {
+        public static IHtmlString BreadcrumbsFor(this HtmlHelper helper, CmsPage page, object htmlAttributes) {
+            return BreadcrumbsFor(helper, page, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
+        }
+
+        public static IHtmlString BreadcrumbsFor(this HtmlHelper helper, CmsPage page, IDictionary<String, Object> htmlAttributes = null) {
             var ancestors = page.ParentPath.Reverse();
 
             if (!ancestors.Any()) {
@@ -49,7 +54,7 @@ namespace KalikoCMS.Mvc.Extensions {
 
                 AddOptionalClassName(linkClassName, stringBuilder);
 
-                stringBuilder.AppendFormat("{0}</a></li>", ancestor.PageName);
+                stringBuilder.AppendFormat(">{0}</a></li>", ancestor.PageName);
             }
 
             var list = new TagBuilder("ul");
@@ -59,13 +64,88 @@ namespace KalikoCMS.Mvc.Extensions {
             return new HtmlString(list.ToString());
         }
 
-        private static void AddOptionalClassName(string className, StringBuilder stringBuilder) {
-            if (!string.IsNullOrEmpty(className)) {
-                stringBuilder.Append(" class=\"" + className + "\"");
+        #endregion
+
+        #region Menu tree
+
+        public static IHtmlString MenuTreeFor(this HtmlHelper helper, CmsPage page, CmsPage rootPage, object htmlAttributes) {
+            return MenuTreeFor(helper, page, rootPage, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
+        }
+
+        public static IHtmlString MenuTreeFor(this HtmlHelper helper, CmsPage page, CmsPage rootPage, IDictionary<String, Object> htmlAttributes = null) {
+            if (!rootPage.HasChildren) {
+                return null;
+            }
+
+            var listClass = GetHtmlAttribute(htmlAttributes, "class");
+            var itemClassName = PullHtmlAttribute(htmlAttributes, "itemClass");
+            var selectedItemClassName = PullHtmlAttribute(htmlAttributes, "selectedItemClass");
+            var linkClassName = PullHtmlAttribute(htmlAttributes, "linkClass");
+
+            var stringBuilder = new StringBuilder();
+            var pagePath = PageFactory.GetPagePath(page);
+
+            AddChildrenToMenu(stringBuilder, rootPage, page, pagePath, itemClassName, selectedItemClassName, linkClassName, listClass);
+
+            var list = new TagBuilder("ul");
+            list.MergeAttributes(htmlAttributes);
+            list.InnerHtml = stringBuilder.ToString();
+
+            return new HtmlString(list.ToString());
+        }
+
+        private static void AddChildrenToMenu(StringBuilder stringBuilder, CmsPage nodePage, CmsPage page, PageCollection pagePath, string itemClassName, string selectedItemClassName, string linkClassName, string listClass) {
+            foreach (CmsPage child in nodePage.Children) {
+                if (!child.VisibleInMenu) {
+                    continue;
+                }
+
+                stringBuilder.Append("<li");
+                if (child.PageId == page.PageId && !string.IsNullOrEmpty(selectedItemClassName)) {
+                    AddClassName(selectedItemClassName, stringBuilder);
+                }
+                else {
+                    AddOptionalClassName(itemClassName, stringBuilder);
+                }
+
+                stringBuilder.AppendFormat("><a href=\"{0}\"", child.PageUrl);
+                AddOptionalClassName(linkClassName, stringBuilder);
+                stringBuilder.AppendFormat(">{0}</a>", child.PageName);
+
+                if (child.HasChildren && pagePath.Contains(child.PageId)) {
+                    stringBuilder.Append("<ul");
+                    AddOptionalClassName(listClass, stringBuilder);
+                    stringBuilder.Append(">");
+                    AddChildrenToMenu(stringBuilder, child, page, pagePath, itemClassName, selectedItemClassName, linkClassName, listClass);
+                    stringBuilder.Append("</ul>");
+                }
+                stringBuilder.Append("</li>");
             }
         }
 
-        private static string PullHtmlAttribute(Dictionary<string, object> htmlAttributes, string attributeName) {
+        #endregion
+
+        #region Private methods
+
+        private static void AddOptionalClassName(string className, StringBuilder stringBuilder) {
+            if (!string.IsNullOrEmpty(className)) {
+                AddClassName(className, stringBuilder);
+            }
+        }
+
+        private static void AddClassName(string className, StringBuilder stringBuilder) {
+            stringBuilder.Append(" class=\"" + className + "\"");
+        }
+
+        private static string GetHtmlAttribute(IDictionary<string, object> htmlAttributes, string attributeName) {
+            if (htmlAttributes == null || !htmlAttributes.ContainsKey(attributeName)) {
+                return null;
+            }
+
+            return (string)htmlAttributes[attributeName];
+        }
+
+        private static string PullHtmlAttribute(IDictionary<string, object> htmlAttributes, string attributeName) {
             if (htmlAttributes == null || !htmlAttributes.ContainsKey(attributeName)) {
                 return null;
             }
