@@ -213,5 +213,15 @@ namespace KalikoCMS.Admin.Content.Dialogs {
         private bool DoesImageNeedHandling {
             get { return _hasCropValues || _width > 0 || _height > 0; }
         }
+
+        public string CropValues {
+            get {
+                if (_hasCropValues) {
+                    return string.Format("[{0}, {1}, {2}, {3}]", _cropX, _cropY, _cropX + _cropW, _cropY + _cropH);
+                }
+
+                return "[0, 0, 9999, 9999]";
+            }
+        }
     }
 }

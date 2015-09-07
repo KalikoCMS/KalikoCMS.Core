@@ -68,10 +68,17 @@
       });
 
       cropImage.load(function () {
-        enableSaveButton();
         image.src = $(this).attr('src');
-        jcropApi.setSelect([0, 0, 9999, 9999]);
-        setTimeout(function () { jcropApi.setSelect([0, 0, 9999, 9999]); }, 200); // Call with slight delay
+
+        if (image.src.substr(0, 5) == "data:") {
+            return;
+        }
+
+        enableSaveButton();
+        if (typeof (jcropApi) != "undefined") {
+            jcropApi.setSelect(<%=CropValues%>);
+        }
+        setTimeout(function () { jcropApi.setSelect(<%=CropValues%>); }, 200); // Call with slight delay
       }).attr("src", localImagePath);
 
       function enableSaveButton() {
@@ -96,7 +103,7 @@
       }
 
       function onImageLoaded() {
-        jcropApi.setSelect([0, 0, 9999, 9999]);
+        jcropApi.setSelect(<%=CropValues%>);
         setTimeout(function () { jcropApi.setSelect([0, 0, 9999, 9999]); }, 200); // Call with slight delay
       }
 

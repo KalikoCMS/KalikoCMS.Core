@@ -118,7 +118,6 @@ namespace KalikoCMS.Mvc {
 
             HttpContext.Current.Items["cmsRouting"] = true;
 
-            //HttpContext.Current.RewritePath(filePath);
             var httpContext = new HttpContextWrapper(HttpContext.Current);
             var routeData = RouteTable.Routes.GetRouteData(httpContext);
 
