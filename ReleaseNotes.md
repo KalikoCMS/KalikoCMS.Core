@@ -1,3 +1,8 @@
+### New in 1.0.1
+* Added Html helper for menu trees
+* Added Html helper for breadcrumbs
+* Fixed problems with image editor
+
 ### New in 1.0.0
 * Added Markdown property type
 * Added option to set URL segment when editing a page
