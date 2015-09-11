@@ -126,6 +126,10 @@ namespace KalikoCMS {
             get { return _version ?? (_version = Assembly.GetExecutingAssembly().GetName().Version.ToString()); }
         }
 
+        public static string VersionHash {
+            get { return Version.GetHashCode().ToString(); }
+        }
+
         public static string ApplicationPath {
             get { return _applicationPath ?? (_applicationPath = HttpContext.Current.Request.ApplicationPath); }
         }

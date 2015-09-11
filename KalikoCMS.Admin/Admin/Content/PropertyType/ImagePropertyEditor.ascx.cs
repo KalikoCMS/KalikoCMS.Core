@@ -31,26 +31,19 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         public override string PropertyLabel {
             set { LabelText.Text = value; }
         }
-
+        
         public override PropertyData PropertyValue {
             set {
                 var imageProperty = (ImageProperty) value;
 
-                if (string.IsNullOrEmpty(imageProperty.ImageUrl)) {
-                    ImagePreview.ImageUrl = string.Format("{0}assets/images/no-image.jpg", SiteSettings.Instance.AdminPath);
-                }
-                else {
-                    ImagePreview.ImageUrl = SiteSettings.Instance.AdminPath + "Assets/Images/Thumbnail.ashx?path=" + Server.UrlEncode(imageProperty.ImageUrl);
-                }
-
                 ImagePath.Value = imageProperty.ImageUrl;
                 OriginalImagePath.Value = imageProperty.OriginalImageUrl;
-                int width = imageProperty.Width ?? 0;
-                int height = imageProperty.Height ?? 0;
-                int cropX = imageProperty.CropX ?? -1;
-                int cropY = imageProperty.CropY ?? -1;
-                int cropW = imageProperty.CropW ?? -1;
-                int cropH = imageProperty.CropH ?? -1;
+                var width = imageProperty.Width ?? 0;
+                var height = imageProperty.Height ?? 0;
+                var cropX = imageProperty.CropX ?? -1;
+                var cropY = imageProperty.CropY ?? -1;
+                var cropW = imageProperty.CropW ?? -1;
+                var cropH = imageProperty.CropH ?? -1;
 
                 WidthValue.Value = GetStringValue(width);
                 HeightValue.Value = GetStringValue(height);
@@ -101,14 +94,13 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate(bool required) {
-            // TODO: Implementera rätt logik här
             return Validate();
         }
 
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
 
-            ScriptManager.RegisterClientScriptInclude(this, typeof(ImagePropertyEditor), "Admin.Content.PropertyType.ImagePropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/ImagePropertyEditor.js");
+            ScriptManager.RegisterClientScriptInclude(this, typeof(ImagePropertyEditor), "Admin.Content.PropertyType.ImagePropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/ImagePropertyEditor.js?v=" + Utils.VersionHash);
 
             var width = 0;
             var height = 0;
@@ -118,14 +110,17 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                 height = _attributeValues.Height;
             }
 
-            if (string.IsNullOrEmpty(ImagePreview.ImageUrl)) {
+            if (string.IsNullOrEmpty(ImagePath.Value)) {
                 ImagePreview.ImageUrl = string.Format("{0}assets/images/no-image.jpg", SiteSettings.Instance.AdminPath);
+            }
+            else {
+                ImagePreview.ImageUrl = SiteSettings.Instance.AdminPath + "Assets/Images/Thumbnail.ashx?path=" + Server.UrlEncode(ImagePath.Value);
             }
 
             var clickScript = string.Format(
-                    "top.propertyEditor.image.openDialog('#{0}', '#{1}', '#{2}', '#{3}', '#{4}', '#{5}', '#{6}', '{7}', '{8}', '#{9}');return false;",
-                    ImagePath.ClientID, ImagePreview.ClientID, OriginalImagePath.ClientID, CropX.ClientID,
-                    CropY.ClientID, CropW.ClientID, CropH.ClientID, width, height, AltText.ClientID);
+                "top.propertyEditor.image.openDialog('#{0}', '#{1}', '#{2}', '#{3}', '#{4}', '#{5}', '#{6}', '{7}', '{8}', '#{9}');return false;",
+                ImagePath.ClientID, ImagePreview.ClientID, OriginalImagePath.ClientID, CropX.ClientID,
+                CropY.ClientID, CropW.ClientID, CropH.ClientID, width, height, AltText.ClientID);
 
             SelectButton.Attributes["onclick"] = clickScript;
         }

@@ -23,7 +23,7 @@ namespace KalikoCMS.PropertyType {
     using KalikoCMS.Core;
     using KalikoCMS.Serialization;
 
-    [PropertyType("B1071D73-7DDE-4E0B-BEBB-521A9975DF1E", "Universal DateTime", "Timezone independent DateTime", "%AdminPath%ontent/PropertyType/UniversalDateTimePropertyEditor.ascx")]
+    [PropertyType("B1071D73-7DDE-4E0B-BEBB-521A9975DF1E", "Universal DateTime", "Timezone independent DateTime", "%AdminPath%Content/PropertyType/UniversalDateTimePropertyEditor.ascx")]
     public class UniversalDateTimeProperty : PropertyData {
         public DateTime? Value { get; set; }
 
@@ -57,7 +57,7 @@ namespace KalikoCMS.PropertyType {
         }
 
         protected override PropertyData DeserializeFromJson(string data) {
-            return JsonSerialization.DeserializeJson<DateTimeProperty>(data);
+            return JsonSerialization.DeserializeJson<UniversalDateTimeProperty>(data);
         }
 
         public override int GetHashCode() {

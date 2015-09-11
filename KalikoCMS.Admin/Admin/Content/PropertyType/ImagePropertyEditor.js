@@ -16,8 +16,14 @@
                 $(cropYField).val(newCropY);
                 $(cropWField).val(newCropW);
                 $(cropHField).val(newCropH);
-                $(previewImage).attr('src', 'Assets/Images/Thumbnail.ashx?path=' + escape(newImagePath));
                 $(descriptionField).val(newDescription);
+                
+                if (newImagePath.length > 0) {
+                    $(previewImage).attr('src', 'Assets/Images/Thumbnail.ashx?path=' + escape(newImagePath));
+                } else {
+                    $(previewImage).attr('src', 'assets/images/no-image.jpg');
+                    $(originalPathField).val('');
+                }
             };
 
             top.registerCallback(callback);

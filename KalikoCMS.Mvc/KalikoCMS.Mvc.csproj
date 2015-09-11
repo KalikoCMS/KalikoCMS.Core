@@ -49,6 +49,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.0\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
     <Reference Include="Telerik.OpenAccess">
       <HintPath>..\packages\Telerik.DataAccess.Core.2015.2.624.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
       <Private>True</Private>
@@ -70,6 +74,9 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
+    <Compile Include="Framework\CmsRoute.cs" />
+    <Compile Include="Framework\CmsRouteConstraint.cs" />
     <Compile Include="Framework\PageController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestManager.cs" />

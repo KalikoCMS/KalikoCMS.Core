@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Base.master.cs" Inherits="KalikoCMS.Admin.Templates.MasterPages.Base" %>
+<%@ Import Namespace="KalikoCMS" %>
 <!DOCTYPE html>
 <html lang="en">
   <head runat="server">
@@ -10,7 +11,7 @@
     
     <!-- Stylesheets -->
     <asp:ContentPlaceHolder ID="BaseStyles" runat="server">
-      <link href="assets/themes/<%=KalikoCMS.Configuration.SiteSettings.Instance.Theme%>/theme.min.css" rel="stylesheet" />
+      <link href="assets/themes/<%=KalikoCMS.Configuration.SiteSettings.Instance.Theme%>/theme.min.css?v=<%=Utils.VersionHash %>" rel="stylesheet" />
     </asp:ContentPlaceHolder>
     <asp:ContentPlaceHolder ID="AdditionalStyles" runat="server" />
     
@@ -24,8 +25,8 @@
     <asp:ContentPlaceHolder ID="MainContent" runat="server" />
     
     <!-- Scripts -->
-    <script src="assets/js/kalikocms.admin.core.min.js"></script>
+    <script src="assets/js/kalikocms.admin.core.min.js?v=<%=Utils.VersionHash %>"></script>
     <asp:ContentPlaceHolder ID="AdditionalScripts" runat="server" />
-    <script src="assets/themes/<%=KalikoCMS.Configuration.SiteSettings.Instance.Theme%>/theme.js"></script>
+    <script src="assets/themes/<%=KalikoCMS.Configuration.SiteSettings.Instance.Theme%>/theme.js?v=<%=Utils.VersionHash %>"></script>
   </body>
 </html>

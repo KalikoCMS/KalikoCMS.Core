@@ -94,7 +94,7 @@ namespace KalikoCMS.Admin.Content {
             ChildSortOrder.Items.Add(new ListItem("Created date", ((int)Core.Collections.SortOrder.CreatedDate).ToString()));
             ChildSortOrder.Items.Add(new ListItem("Page name", ((int)Core.Collections.SortOrder.PageName).ToString()));
             ChildSortOrder.Items.Add(new ListItem("Sort index", ((int)Core.Collections.SortOrder.SortIndex).ToString()));
-            ChildSortOrder.Items.Add(new ListItem("Start pubish date", ((int)Core.Collections.SortOrder.StartPublishDate).ToString()));
+            ChildSortOrder.Items.Add(new ListItem("Start publish date", ((int)Core.Collections.SortOrder.StartPublishDate).ToString()));
             ChildSortOrder.Items.Add(new ListItem("Updated date", ((int)Core.Collections.SortOrder.UpdateDate).ToString()));
 
             ChildSortDirection.Items.Add(new ListItem("Ascending", ((int)Core.Collections.SortDirection.Ascending).ToString()));
@@ -166,8 +166,8 @@ namespace KalikoCMS.Admin.Content {
 
             // Standard fields
             PageName.PropertyValue = new StringProperty(cmsPage.PageName);
-            StartPublishDate.PropertyValue = new DateTimeProperty(cmsPage.StartPublish);
-            StopPublishDate.PropertyValue = new DateTimeProperty(cmsPage.StopPublish);
+            StartPublishDate.PropertyValue = new UniversalDateTimeProperty(cmsPage.StartPublish);
+            StopPublishDate.PropertyValue = new UniversalDateTimeProperty(cmsPage.StopPublish);
             VisibleInMenu.PropertyValue = new BooleanProperty(cmsPage.VisibleInMenu);
 
             // Advanced fields
@@ -279,8 +279,8 @@ namespace KalikoCMS.Admin.Content {
 
         private void SavePropertiesForPage(EditablePage editablePage) {
             editablePage.PageName = ((StringProperty)PageName.PropertyValue).Value;
-            editablePage.SetStartPublish(((DateTimeProperty)StartPublishDate.PropertyValue).Value);
-            editablePage.SetStopPublish(((DateTimeProperty)StopPublishDate.PropertyValue).Value);
+            editablePage.SetStartPublish(((UniversalDateTimeProperty)StartPublishDate.PropertyValue).Value);
+            editablePage.SetStopPublish(((UniversalDateTimeProperty)StopPublishDate.PropertyValue).Value);
             editablePage.SetVisibleInMenu(((BooleanProperty) VisibleInMenu.PropertyValue).Value);
             editablePage.SetVisibleInSiteMap(((BooleanProperty)VisibleInSitemap.PropertyValue).Value);
             editablePage.SetChildSortDirection(int.Parse(ChildSortDirection.SelectedValue));

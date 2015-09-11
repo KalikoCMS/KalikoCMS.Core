@@ -56,7 +56,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
 
-            ScriptManager.RegisterClientScriptInclude(this, typeof(FilePropertyEditor), "Admin.Content.PropertyType.FilePropertyEditor", "Content/PropertyType/FilePropertyEditor.js");
+            ScriptManager.RegisterClientScriptInclude(this, typeof(FilePropertyEditor), "Admin.Content.PropertyType.FilePropertyEditor", "Content/PropertyType/FilePropertyEditor.js?v=" + Utils.VersionHash);
 
             string clickScript = "top.propertyEditor.file.openDialog('#" + FilePath.ClientID + "', '#" + DisplayField.ClientID + "');return false;";
             SelectButton.Attributes["onclick"] = clickScript;
