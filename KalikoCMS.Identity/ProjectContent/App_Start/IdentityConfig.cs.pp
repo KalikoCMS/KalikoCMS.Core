@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using AspNet.Identity.DataAccess;
     using AspNet.Identity.DataAccess.Data;
+    using KalikoCMS.Identity;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin;
@@ -24,11 +25,11 @@
     }
 
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
-    public class ApplicationUserManager : UserManager<IdentityUser, Guid> {
+    public class ApplicationUserManager : IdentityUserManager {
         public ApplicationUserManager(IUserStore<IdentityUser, Guid> store)
             : base(store) {}
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) {
+        public static IdentityUserManager Create(IdentityFactoryOptions<IdentityUserManager> options, IOwinContext context) {
             var manager = new ApplicationUserManager(new UserStore(context.Get<DataContext>()));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<IdentityUser, Guid>(manager) {
@@ -71,7 +72,7 @@
     }
 
     public class ApplicationSignInManager : SignInManager<IdentityUser, Guid> {
-        public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager) :
+        public ApplicationSignInManager(IdentityUserManager userManager, IAuthenticationManager authenticationManager) :
             base(userManager, authenticationManager) {}
 
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(IdentityUser user) {
@@ -79,7 +80,7 @@
         }
 
         public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context) {
-            return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
+            return new ApplicationSignInManager(context.GetUserManager<IdentityUserManager>(), context.Authentication);
         }
     }
 }

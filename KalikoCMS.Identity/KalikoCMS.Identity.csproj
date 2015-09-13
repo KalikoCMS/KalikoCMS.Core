@@ -38,9 +38,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AspNet.Identity.DataAccess, Version=2.1.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AspNet.Identity.DataAccess.2.1.0.6\lib\AspNet.Identity.DataAccess.dll</HintPath>
+    <Reference Include="AspNet.Identity.DataAccess, Version=2.1.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AspNet.Identity.DataAccess.2.1.0.7\lib\AspNet.Identity.DataAccess.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
@@ -191,7 +190,9 @@
     <Content Include="Admin\Identity\IdentityMenu.ascx" />
     <Content Include="Admin\Identity\Roles.aspx" />
     <Content Include="Admin\Identity\Users.aspx" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KalikoCMS.Admin\KalikoCMS.Admin.csproj">
@@ -204,7 +205,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="web.config" />
+    <Content Include="web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="web.Debug.config">

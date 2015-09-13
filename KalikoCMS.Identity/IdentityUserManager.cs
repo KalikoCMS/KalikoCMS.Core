@@ -20,9 +20,11 @@
 namespace KalikoCMS.Identity {
     using System;
     using System.Security.Principal;
+    using System.Web;
     using AspNet.Identity.DataAccess;
     using Microsoft.AspNet.Identity;
     using KalikoCMS.Extensions;
+    using Microsoft.AspNet.Identity.Owin;
 
     public class IdentityUserManager : UserManager<IdentityUser, Guid> {
         protected IdentityUserManager(IUserStore<IdentityUser, Guid> store) : base(store) {}
@@ -36,7 +38,19 @@ namespace KalikoCMS.Identity {
         }
 
         public static IdentityUserManager GetManager() {
-            return new IdentityUserManager(new UserStore());
+            IdentityUserManager userManager = null;
+
+            var owinContext = HttpContext.Current.GetOwinContext();
+            if (owinContext != null) {
+                userManager = owinContext.GetUserManager<IdentityUserManager>();
+            }
+
+            // Fallback if OWIN application code removed from project
+            if (userManager == null) {
+                userManager = new IdentityUserManager(new UserStore());
+            }
+
+            return userManager;
         }
     }
 }
