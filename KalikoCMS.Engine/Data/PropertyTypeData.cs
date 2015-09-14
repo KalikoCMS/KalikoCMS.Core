@@ -44,7 +44,11 @@ namespace KalikoCMS.Data {
             var typesWithAttribute = AttributeReader.GetTypesWithAttribute(typeof (PropertyTypeAttribute));
 
             foreach (var type in typesWithAttribute) {
-                var customAttribute = (PropertyTypeAttribute) type.GetCustomAttributes(typeof (PropertyTypeAttribute), false)[0];
+                var customAttributes = type.GetCustomAttributes(typeof (PropertyTypeAttribute), false);
+                if (!customAttributes.Any()) {
+                    throw new Exception(string.Format("Property type '{0}' is missing the Property attribute!", type.Name));
+                }
+                var customAttribute = (PropertyTypeAttribute) customAttributes[0];
                 var proptertyTypeId = new Guid(customAttribute.PropertyTypeId);
                 var propertyType = GetExistingPropertyTypeOrCreateNew(proptertyTypeId);
 
@@ -56,6 +60,10 @@ namespace KalikoCMS.Data {
         }
 
         private static string FixPath(string path) {
+            if (path == null) {
+                return null;
+            }
+
             return path.Replace("%AdminPath%", SiteSettings.Instance.AdminPath);
         }
 
