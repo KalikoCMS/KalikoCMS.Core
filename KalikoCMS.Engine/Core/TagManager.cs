@@ -134,6 +134,7 @@ namespace KalikoCMS.Core {
         }
 
         private static TagContext GetTagContext(string contextName) {
+            contextName = contextName.ToLowerInvariant();
             TagContext context;
 
             if (TagContexts.TryGetValue(contextName, out context)) {
@@ -154,6 +155,8 @@ namespace KalikoCMS.Core {
         }
 
         public static TagContext GetTags(string contextName) {
+            contextName = contextName.ToLowerInvariant();
+
             if (TagContexts.ContainsKey(contextName)) {
                 return TagContexts[contextName];
             }
