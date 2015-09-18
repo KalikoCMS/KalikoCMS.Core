@@ -48,8 +48,13 @@ namespace KalikoCMS.Core {
                 var pageTags = Mapper.Map<List<PageTagEntity>, List<PageTag>>(context.PageTags.ToList());
 
                 foreach (var tagContext in tagContexts) {
+                    var tagContextName = tagContext.ContextName.ToLowerInvariant();
+                    if (contexts.ContainsKey(tagContextName)) {
+                        continue;
+                    }
+
                     AddTagsToContext(tagContext, tags, pageTags);
-                    contexts.Add(tagContext.ContextName.ToLowerInvariant(), tagContext);
+                    contexts.Add(tagContextName, tagContext);
                 }
             }
 
