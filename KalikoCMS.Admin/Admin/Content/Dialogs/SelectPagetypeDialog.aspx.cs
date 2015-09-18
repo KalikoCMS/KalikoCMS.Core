@@ -54,7 +54,7 @@ namespace KalikoCMS.Admin.Content.Dialogs {
             var stringBuilder = new StringBuilder();
             var count = 0;
 
-            foreach (var pageType in pageTypes) {
+            foreach (var pageType in pageTypes.OrderBy(x => x.DisplayName)) {
                 if (allowAll || allowedTypes.Contains(pageType.Type)) {
                     if (count > 0 && count%2 == 0) {
                         stringBuilder.Append("</div><div class=\"row\">");
