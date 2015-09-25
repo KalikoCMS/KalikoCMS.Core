@@ -147,6 +147,7 @@
     <Compile Include="Modules\RequestModuleBase.cs" />
     <Compile Include="PropertyType\BooleanProperty.cs" />
     <Compile Include="PropertyType\CollectionProperty.cs" />
+    <Compile Include="PropertyType\CompositeProperty.cs" />
     <Compile Include="PropertyType\FileProperty.cs" />
     <Compile Include="PropertyType\IPageSavedHandler.cs" />
     <Compile Include="PropertyType\LinkProperty.cs" />

@@ -243,6 +243,7 @@
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.ascx" />
     <Content Include="Admin\Content\Dialogs\EditCollectionPropertyDialog.aspx" />
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.js" />
+    <Content Include="Admin\Content\PropertyType\CompositePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\MarkdownPropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\UniversalDateTimePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.ascx" />
@@ -350,6 +351,13 @@
     </Compile>
     <Compile Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx.designer.cs">
       <DependentUpon>BooleanPropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\CompositePropertyEditor.ascx.cs">
+      <DependentUpon>CompositePropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\CompositePropertyEditor.ascx.designer.cs">
+      <DependentUpon>CompositePropertyEditor.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Content\PropertyType\MarkdownPropertyEditor.ascx.cs">
       <DependentUpon>MarkdownPropertyEditor.ascx</DependentUpon>
