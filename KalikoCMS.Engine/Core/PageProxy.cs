@@ -40,7 +40,6 @@ namespace KalikoCMS.Core {
             var method = methodMessage.MethodBase;
             object returnValue;
 
-
             if (method.IsVirtual) {
                 returnValue = HandleVirtualMethods(method);
             }
@@ -59,6 +58,14 @@ namespace KalikoCMS.Core {
 
         private object HandleVirtualMethods(MethodBase method) {
             string methodName = method.Name;
+
+            if (methodName == "ToString") {
+                return _target.ToString();
+            }
+
+            if (methodName == "GetHashCode") {
+                return _target.GetHashCode();
+            }
 
             if (!methodName.StartsWith("get_")) {
                 return null;
