@@ -60,7 +60,7 @@ namespace KalikoCMS.Core {
             var methodName = method.Name;
 
             // Handle properties if they are CMS properties
-            if (!methodName.StartsWith("get_")) {
+            if (methodName.StartsWith("get_")) {
                 bool propertyExists;
                 var currentPage = (CmsPage)_target;
                 var propertyName = methodName.Substring(4);
