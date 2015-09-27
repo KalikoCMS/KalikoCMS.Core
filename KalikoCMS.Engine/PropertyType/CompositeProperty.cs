@@ -40,7 +40,14 @@ namespace KalikoCMS.PropertyType {
         }
 
         protected override PropertyData DeserializeFromJson(string data) {
-            return (PropertyData)JsonSerialization.DeserializeTypedJson(data);
+            var property = (CompositeProperty)JsonSerialization.DeserializeTypedJson(data);
+            property.UpdateValues();
+
+            return property;
+        }
+
+        internal override string Serialize() {
+            return JsonSerialization.SerializeTypedJson(this);
         }
 
         public override int GetHashCode() {
@@ -121,6 +128,30 @@ namespace KalikoCMS.PropertyType {
             _properties = properties;
 
             return properties;
+        }
+
+        private void UpdateValues() {
+            var propertyDefinitions = GetProperties();
+            var propertyAttributeType = typeof(PropertyAttribute);
+            var type = GetType();
+
+            foreach (var propertyInfo in type.GetProperties()) {
+                var attributes = propertyInfo.GetCustomAttributes(true);
+                var propertyAttribute = (PropertyAttribute)attributes.SingleOrDefault(propertyAttributeType.IsInstanceOfType);
+
+                if (propertyAttribute == null)
+                {
+                    continue;
+                }
+
+                var value = propertyInfo.GetValue(this, null) as PropertyData;
+
+                if (value == null) {
+                    value = (PropertyData)Activator.CreateInstance(propertyInfo.PropertyType);
+                }
+
+                propertyDefinitions.First(x => x.Name == propertyInfo.Name).Value = value;
+            }
         }
 
         public class PropertyDefinition {

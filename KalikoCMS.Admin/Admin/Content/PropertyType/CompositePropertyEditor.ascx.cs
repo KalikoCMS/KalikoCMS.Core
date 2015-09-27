@@ -49,6 +49,8 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         private void PopulateValue() {
+            var type = _value.GetType();
+
             foreach (var property in _value.GetProperties()) {
                 if (!_controls.ContainsKey(property.Name)) {
                     continue;
@@ -56,6 +58,9 @@ namespace KalikoCMS.Admin.Content.PropertyType {
 
                 var editor = _controls[property.Name];
                 property.Value = editor.PropertyValue;
+
+                var propertyInfo = type.GetProperty(property.Name);
+                propertyInfo.SetValue(_value, property.Value, null);
             }
         }
 
