@@ -83,7 +83,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                 return;
             }
 
-            foreach (var property in _value.GetProperties()) {
+            foreach (var property in _value.GetProperties(true)) {
                 AddControl(property.Name, property.Value, property.PropertyTypeId, property.Header, property.Parameters);
             }
         }

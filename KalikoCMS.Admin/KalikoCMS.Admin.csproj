@@ -122,9 +122,18 @@
     <None Include="Admin\Assets\themes\dakota\includes\32px.png" />
     <None Include="Admin\Assets\themes\dakota\includes\bootstrap-theme.less" />
     <None Include="Admin\Assets\themes\dakota\includes\jstree.less" />
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.css.map">
+      <DependentUpon>kalikocms-editor.css</DependentUpon>
+    </Content>
     <None Include="Admin\Assets\themes\dakota\theme.css">
       <DependentUpon>theme.less</DependentUpon>
     </None>
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.css">
+      <DependentUpon>kalikocms-editor.less</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.min.css">
+      <DependentUpon>kalikocms-editor.css</DependentUpon>
+    </Content>
     <Content Include="Admin\Assets\themes\dakota\theme.js" />
     <None Include="Admin\Assets\themes\dakota\includes\throbber.gif" />
     <Content Include="Admin\Assets\themes\dakota\theme.min.css">

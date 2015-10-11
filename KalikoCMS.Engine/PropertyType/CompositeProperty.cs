@@ -85,7 +85,11 @@ namespace KalikoCMS.PropertyType {
             return stringBuilder.ToString();
         }
 
-        public List<PropertyDefinition> GetProperties() {
+        public List<PropertyDefinition> GetProperties(bool forceUpdate = false) {
+            if (forceUpdate) {
+                UpdateValues();
+            }
+
             if (_properties != null) {
                 return _properties;
             }
