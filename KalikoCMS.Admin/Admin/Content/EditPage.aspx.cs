@@ -67,6 +67,9 @@ namespace KalikoCMS.Admin.Content {
             if (propertyValue != null) {
                 loadControl.PropertyValue = propertyValue;
             }
+            else if (propertyType.ClassInstance is CompositeProperty) {
+                loadControl.PropertyValue = propertyType.CreateNewClassInstance();
+            }
 
             if (!string.IsNullOrEmpty(parameters)) {
                 loadControl.Parameters = parameters;

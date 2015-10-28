@@ -70,7 +70,7 @@ namespace KalikoCMS.Admin.Content.Dialogs {
                 ((PropertyEditorBase) _editor).SerializedProperty = value;
             }
             else if (propertyType.ClassInstance is CompositeProperty) {
-                ((PropertyEditorBase)_editor).PropertyValue = propertyType.ClassInstance;
+                ((PropertyEditorBase)_editor).PropertyValue = propertyType.CreateNewClassInstance();
             }
 
             PropertyEditor.Controls.Add(_editor);

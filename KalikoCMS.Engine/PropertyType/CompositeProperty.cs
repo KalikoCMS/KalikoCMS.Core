@@ -40,7 +40,16 @@ namespace KalikoCMS.PropertyType {
         }
 
         protected override PropertyData DeserializeFromJson(string data) {
-            var property = (CompositeProperty)JsonSerialization.DeserializeTypedJson(data);
+            CompositeProperty property;
+
+            if (string.IsNullOrEmpty(data)) {
+                var propertyType = PropertyType.GetPropertyType(GetType());
+                property = (CompositeProperty)propertyType.CreateNewClassInstance();
+            }
+            else {
+                property = (CompositeProperty)JsonSerialization.DeserializeTypedJson(data);
+            }
+
             property.UpdateValues();
 
             return property;
