@@ -1,6 +1,8 @@
 ### New in 1.1.0
 * Added composite property
 * Added page preview
+* Added options to set class or additional attributes on ImageProperty.ToHtml()
+* Extended FindSimular to support additional meta data
 * Fixed wrong path for DateTimeProperty
 * Fixed sort order in page type dialog
 * Fixed problem for systems that have duplicate tag context

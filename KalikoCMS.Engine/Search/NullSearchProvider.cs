@@ -44,7 +44,7 @@ namespace KalikoCMS.Search {
             throw new Exception("Can't search using NullSearchProvider, change to a valid provider in config.");
         }
 
-        public override SearchResult FindSimular(Guid pageId, int languageId, int resultOffset = 0, int resultSize = 10, bool matchCategory = true) {
+        public override SearchResult FindSimular(Guid pageId, int languageId, int resultOffset = 0, int resultSize = 10, bool matchCategory = true, string[] metaData = null) {
             throw new Exception("Can't search using NullSearchProvider, change to a valid provider in config.");
         }
     }
