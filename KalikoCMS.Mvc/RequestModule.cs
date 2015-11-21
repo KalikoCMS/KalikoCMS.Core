@@ -56,8 +56,8 @@ namespace KalikoCMS.Mvc {
             RedirectToController(page);
         }
 
-        public static void RedirectToController(CmsPage page, string actionName = "index", Dictionary<string, object> additionalRouteData = null) {
-            if (!page.IsAvailable) {
+        public static void RedirectToController(CmsPage page, string actionName = "index", Dictionary<string, object> additionalRouteData = null, bool isPreview = false) {
+            if (!page.IsAvailable && !isPreview) {
                 PageHasExpired();
                 return;
             }

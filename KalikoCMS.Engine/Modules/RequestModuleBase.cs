@@ -21,14 +21,20 @@ namespace KalikoCMS.Modules {
     using System;
     using System.Web;
     using System.Web.SessionState;
+    using Configuration;
     using KalikoCMS.ContentProvider;
     using KalikoCMS.Core;
 
     public abstract class RequestModuleBase : IHttpModule {
+        private static readonly string PreviewPath;
         protected static IRequestManager RequestManager { get; set; }
 
+        static RequestModuleBase() {
+            PreviewPath = SiteSettings.Instance.PreviewPath;
+        }
+
         public void Init(HttpApplication context) {
-            context.PostAuthenticateRequest += PostAuthenticateRequest;
+            context.PostAuthorizeRequest += PostAuthorizeRequest;
             context.PreRequestHandlerExecute += PreRequestHandlerExecute;
         }
 
@@ -38,29 +44,38 @@ namespace KalikoCMS.Modules {
         }
 
         private void PreRequestHandlerExecute(object sender, EventArgs e) {
-            HttpSessionState session = HttpContext.Current.Session;
+            var session = HttpContext.Current.Session;
 
-            if (session == null) return;
-
-            if (session.IsNewSession) {
+            if (session != null && session.IsNewSession) {
                 Language.CurrentLanguage = Language.ReadLanguageFromHostAddress();
                 session["__session_is_set"] = "true";
             }
         }
 
-        private void PostAuthenticateRequest(object sender, EventArgs e) {
+        private void PostAuthorizeRequest(object sender, EventArgs e) {
             HandleRequest();
         }
 
         private void HandleRequest() {
             var url = RelativeUrl;
 
-            if (IsUrlToStartPage(url)) {
+            if (IsUrlToPreview(url)) {
+                PreviewPage();
+            }
+            else if (IsUrlToStartPage(url)) {
                 RedirectToStartPage();
             }
             else {
                 PageFactory.FindPage(url, RequestManager);
             }
+        }
+
+        private static void PreviewPage() {
+            var pageId = Guid.Parse(HttpContext.Current.Request.QueryString["id"]);
+            var version = int.Parse(HttpContext.Current.Request.QueryString["version"]);
+            var page = PageFactory.GetSpecificVersion(pageId, version);
+
+            RequestManager.PreviewPage(page);
         }
 
         private static string RelativeUrl {
@@ -70,6 +85,13 @@ namespace KalikoCMS.Modules {
                 url = url.Length > rootPathLength ? url.Substring(rootPathLength) : string.Empty;
                 return url;
             }
+        }
+        
+        private bool IsUrlToPreview(string url) {
+            if (!url.StartsWith("/")) {
+                url = string.Format("/{0}", url);
+            }
+            return url.ToLowerInvariant().StartsWith(PreviewPath);
         }
 
         private static bool IsUrlToStartPage(string url) {

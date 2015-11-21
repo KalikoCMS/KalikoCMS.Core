@@ -18,6 +18,7 @@
 #endregion
 
 namespace KalikoCMS.WebForms {
+    using System.Web;
     using ContentProvider;
     using Core;
 
@@ -29,6 +30,11 @@ namespace KalikoCMS.WebForms {
 
         public void HandlePage(CmsPage page) {
             var templateUrl = RequestModule.GetTemplateUrl(page.IsAvailable, page.PageId, page.PageTypeId);
+            RequestModule.RedirectToTemplate(templateUrl);
+        }
+
+        public void PreviewPage(CmsPage page) {
+            var templateUrl = RequestModule.GetTemplateUrl(true, page.PageId, page.PageTypeId);
             RequestModule.RedirectToTemplate(templateUrl);
         }
 

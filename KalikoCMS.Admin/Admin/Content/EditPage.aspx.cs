@@ -20,7 +20,9 @@
 namespace KalikoCMS.Admin.Content {
     using System;
     using System.Collections.Generic;
+    using System.Web;
     using System.Web.UI.WebControls;
+    using Configuration;
     using Data;
     using Core;
     using Extensions;
@@ -46,6 +48,8 @@ namespace KalikoCMS.Admin.Content {
             MainForm.Action = Request.Url.PathAndQuery;
 
             LoadControls();
+
+            Session["CmsAdminMode"] = "yes";
         }
 
         private void GetQueryStringValues() {
@@ -53,7 +57,6 @@ namespace KalikoCMS.Admin.Content {
             Request.QueryString["parentId"].TryParseGuid(out _parentId);
             int.TryParse(Request.QueryString["pageTypeId"], out _pageTypeId);
             _hasVersionSpecified = int.TryParse(Request.QueryString["version"], out _version);
-
         }
 
         private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId, string headerText, string parameters) {
@@ -154,11 +157,11 @@ namespace KalikoCMS.Admin.Content {
             if (!IsPostBack) {
                 if (cmsPage.OriginalStatus == PageInstanceStatus.WorkingCopy)
                 {
-                    ShowMessage(Feedback, "This version has not yet been published", "warning");
+                    ShowMessage(Feedback, "This version has not yet been published. " + RenderPreviewButton(cmsPage), "warning");
                 }
                 else if (cmsPage.OriginalStatus == PageInstanceStatus.Archived)
                 {
-                    ShowMessage(Feedback, "This version has previously been published", "warning");
+                    ShowMessage(Feedback, "This version has previously been published. " + RenderPreviewButton(cmsPage), "warning");
                 }
             }
 
@@ -203,7 +206,7 @@ namespace KalikoCMS.Admin.Content {
                     Feedback.Visible = true;
                 }
                 else {
-                    ShowMessage(Feedback, String.Format("A working copy of <b>{0}</b> has been saved! Remember to publish this version once it's complete.", _pageName));
+                    ShowMessage(Feedback, String.Format("A working copy of <b>{0}</b> has been saved! Remember to publish this version once it's complete. {1}", _pageName, RenderPreviewButton(page)));
                 }
             }
             else {
@@ -231,6 +234,10 @@ namespace KalikoCMS.Admin.Content {
             else {
                 ShowError(Feedback, "One or more errors occured!");
             }
+        }
+
+        private string RenderPreviewButton(CmsPage page) {
+            return string.Format("<a href=\"{2}?id={0}&version={1} \" target=\"_blank\">Preview</a>", page.PageId, page.CurrentVersion, SiteSettings.Instance.PreviewPath);
         }
 
         protected bool IsDataValid {

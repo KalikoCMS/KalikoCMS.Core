@@ -25,7 +25,6 @@ namespace KalikoCMS.WebForms.Framework {
     public abstract class PageTemplate : System.Web.UI.Page {
         private CmsPage _currentPage;
         private DataStore _dataStoreManager;
-        private Guid _pageId;
 
         public CmsPage CurrentPage {
             get {
@@ -45,10 +44,18 @@ namespace KalikoCMS.WebForms.Framework {
         //}
 
         private CmsPage GetCurrentPageOrDefault() {
-            _pageId = Utils.GetCurrentPageId();
-            var page = PageFactory.GetPage(_pageId);
+            var pageId = Utils.GetCurrentPageId();
+            var version = Utils.GetRequestedVersion();
+            CmsPage page;
 
-            if (page != null && !page.IsAvailable) {
+            if (version >= 0) {
+                page = PageFactory.GetSpecificVersion(pageId, version);
+            }
+            else {
+                page = PageFactory.GetPage(pageId);
+            }
+            
+            if (page != null && !(version >= 0 || page.IsAvailable)) {
                 Utils.RenderSimplePage(Response, "Page is not available", "The requested page has expired or is not yet published.", 404);
             }
 

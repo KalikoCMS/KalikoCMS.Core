@@ -33,6 +33,10 @@ namespace KalikoCMS.Mvc {
             RequestModule.RedirectToController(page);
         }
 
+        public void PreviewPage(CmsPage page) {
+            RequestModule.RedirectToController(page, "index", null, true);
+        }
+
         public bool TryMvcSupport(int segmentPosition, string[] segments, PageIndexItem page) {
             if (page.PageId == Guid.Empty) {
                 return false;
