@@ -18,6 +18,8 @@
 #endregion
 
 namespace KalikoCMS.PropertyType {
+    using System.Collections.Generic;
+    using System.Text;
     using System.Web;
     using System.Web.UI.WebControls;
     using KalikoCMS.Attributes;
@@ -86,18 +88,50 @@ namespace KalikoCMS.PropertyType {
             }
         }
 
-        public HtmlString ToHtml() {
-            if(string.IsNullOrEmpty(ImageUrl)) {
+        public HtmlString ToHtml()
+        {
+            if (string.IsNullOrEmpty(ImageUrl)) {
                 return new HtmlString(string.Empty);
             }
 
             var styles = Styles;
-            var html = string.Format("<img src=\"{0}\" alt=\"{1}\"{2} />", ImageUrl, Description, styles);
+            var html = string.Format("<img src=\"{0}\" alt=\"{1}\" {2}/>", ImageUrl, Description, styles);
 
             return new HtmlString(html);
         }
 
-        private string Styles {
+        public HtmlString ToHtml(string className)
+        {
+            if (string.IsNullOrEmpty(ImageUrl)) {
+                return new HtmlString(string.Empty);
+            }
+
+            var styles = Styles;
+            var html = string.Format("<img src=\"{0}\" alt=\"{1}\" class=\"{3}\" {2}/>", ImageUrl, Description, styles, className);
+
+            return new HtmlString(html);
+        }
+
+        public HtmlString ToHtml(Dictionary<string, string> attributes)
+        {
+            if (string.IsNullOrEmpty(ImageUrl)) {
+                return new HtmlString(string.Empty);
+            }
+
+            var htmlAttributes = string.Empty;
+            foreach (var attribute in attributes) {
+                htmlAttributes += string.Format("{0}=\"{1}\" ", attribute.Key, attribute.Value);
+            }
+
+            var styles = Styles;
+
+            var html = string.Format("<img src=\"{0}\" alt=\"{1}\" {2} {3}/>", ImageUrl, Description, styles, htmlAttributes);
+
+            return new HtmlString(html);
+        }
+
+        private string Styles
+        {
             get {
                 var styles = string.Empty;
                 
