@@ -72,12 +72,10 @@ namespace KalikoCMS.Core {
             }
 
             // Handle everything else that isn't a CMS property
-            try
-            {
+            try {
                 return method.Invoke(_target, args);
             }
-            catch (Exception exception)
-            {
+            catch (Exception exception) {
                 throw GetExceptionToRethrow(exception);
             }
         }

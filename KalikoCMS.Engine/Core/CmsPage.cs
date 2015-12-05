@@ -193,6 +193,7 @@ namespace KalikoCMS.Core {
             destination.PageTypeId = source.PageTypeId;
             destination.PageUrl = source.PageUrl;
             destination.ParentId = source.ParentId;
+            destination.Property = source.Property;
             destination.RootId = source.RootId;
             destination.SortIndex = source.SortIndex;
             destination.StartPublish = source.StartPublish;
