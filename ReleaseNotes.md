@@ -2,6 +2,7 @@
 * Added composite property
 * Added page preview
 * Added options to set class or additional attributes on ImageProperty.ToHtml()
+* Added tags and summary field to search hits
 * Extended FindSimular to support additional meta data
 * Fixed wrong path for DateTimeProperty
 * Fixed sort order in page type dialog
