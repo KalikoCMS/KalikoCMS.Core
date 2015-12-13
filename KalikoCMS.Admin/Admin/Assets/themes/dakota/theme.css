@@ -5905,6 +5905,17 @@ a.no-decoration:hover {
   padding-top: 5px;
   display: inline-block;
 }
+.composite-block {
+  padding: 20px 0 10px;
+  margin-bottom: 20px;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+}
+.modal-body .composite-block {
+  padding: 10px 0;
+  margin: 0;
+  border: none;
+}
 /*#endregion*/
 /*#region Tags */
 .tag.label {

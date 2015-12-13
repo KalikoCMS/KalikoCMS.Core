@@ -1,13 +1,15 @@
 ﻿<%@ Page Language="C#" %>
 <%@ Import Namespace="AspNet.Identity.DataAccess" %>
 <%@ Import Namespace="Microsoft.AspNet.Identity" %>
+<%@ Import Namespace="KalikoCMS.Identity" %>
 <%
-  // To create a basic admin account uncomment the code below and change the password, then run the page.
+  // To create a basic admin account uncomment the code below and change the password and email, then run the page.
   // This file should be deleted immediately after!!
   
   /*
   var userName = "admin";
   var password = "";
+  var email = "admin@example.com";
   var roleName = "WebAdmin";
 
   var roleManager = new RoleManager<IdentityRole, Guid>(new RoleStore());
@@ -22,12 +24,12 @@
       roleManager.Create(role);
   }
 
-  var userManager = new UserManager<IdentityUser, Guid>(new UserStore());
+  var userManager = IdentityUserManager.GetManager();
 
   var user = userManager.FindByName(userName);
 
   if (user == null) {
-      user = new IdentityUser(userName);
+      user = new IdentityUser(userName) { Email = email };
       var result = userManager.Create(user, password);
       if (!result.Succeeded) {
           throw new Exception("Could not create user due to: " + string.Join(", ", result.Errors));

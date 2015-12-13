@@ -2,6 +2,7 @@
     using System;
     using AspNet.Identity.DataAccess;
     using AspNet.Identity.DataAccess.Data;
+    using KalikoCMS.Identity;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin;
@@ -14,7 +15,7 @@
         public void ConfigureAuth(IAppBuilder app) {
             // Configure the db context, user manager and signin manager to use a single instance per request
             app.CreatePerOwinContext(DataContext.Create);
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            app.CreatePerOwinContext<IdentityUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
             // Enable the application to use a cookie to store information for the signed in user

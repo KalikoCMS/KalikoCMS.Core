@@ -27,6 +27,8 @@ namespace KalikoCMS.Search {
         public string Path { get; set; }
         public string Excerpt { get; set; }
         public double Score { get; set; }
+        public string Summary { get; set; }
+        public string Tags { get; set; }
         public Dictionary<string, string> MetaData { get; set; }
     }
 }

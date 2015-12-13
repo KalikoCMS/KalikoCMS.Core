@@ -54,6 +54,10 @@ namespace KalikoCMS.Core {
             return PropertyTypes.Find(pt => pt.PropertyTypeId == propertyTypeId);
         }
 
+        public static PropertyType GetPropertyType(Type propertyType) {
+            return PropertyTypes.Find(pt => pt.Type == propertyType);
+        }
+
         public static PropertyType GetPropertyTypeByClassName(string className) {
             return PropertyTypes.Find(pt => pt.Class == className);
         }
@@ -71,13 +75,17 @@ namespace KalikoCMS.Core {
 
             var propertyType = PropertyTypes.Find(pt => pt.Class == typeName);
 
-            if(propertyType == null) {
-                var exception = new Exception("Cannot find propertytype for type " + type.Name);
-                Logger.Write(exception, Logger.Severity.Major);
-                throw exception;
+            if (propertyType != null) {
+                return propertyType.PropertyTypeId;
             }
 
-            return propertyType.PropertyTypeId;
+            var exception = new Exception("Cannot find propertytype for type " + type.Name);
+            Logger.Write(exception, Logger.Severity.Major);
+            throw exception;
+        }
+
+        public PropertyData CreateNewClassInstance() {
+            return CreateInstance();
         }
     }
 }

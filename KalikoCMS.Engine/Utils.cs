@@ -75,6 +75,26 @@ namespace KalikoCMS {
             return (string)HttpContext.Current.Items[key];
         }
 
+        public static int GetRequestedVersion() {
+            var httpContext = HttpContext.Current;
+
+            var value = httpContext.Request.QueryString["version"];
+            if (string.IsNullOrEmpty(value)) {
+                return -1;
+            }
+
+            if ((string)httpContext.Session["CmsAdminMode"] != "yes") {
+                return -1;
+            }
+
+            int version;
+            if (int.TryParse(value, out version)) {
+                return version;
+            }
+
+            return -1;
+        }
+
         public static Stream GetResourceStream(string resourceName) {
             Assembly assembly = Assembly.GetCallingAssembly();
 

@@ -20,6 +20,7 @@
 namespace KalikoCMS.Admin.Content.Dialogs {
     using System;
     using System.Text;
+    using Configuration;
     using Core;
     using Data;
 
@@ -52,7 +53,7 @@ namespace KalikoCMS.Admin.Content.Dialogs {
                 else {
                     classAttribute = " class=\"middle\"";
                 }
-                stringBuilder.AppendFormat("<tr{0}><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td><button type=\"button\" data-pageid=\"{5}\" data-version=\"{1}\" class=\"btn btn-primary edit-button\">Edit</a></td></tr>", classAttribute, version.CurrentVersion, version.UpdateDate, version.Author, GetFriendlyStatusName(version.Status), _pageId);
+                stringBuilder.AppendFormat("<tr{0}><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td><button type=\"button\" data-pageid=\"{5}\" data-version=\"{1}\" class=\"btn btn-primary edit-button\">Edit</button> <a href=\"{6}?id={5}&version={1}\" target=\"_blank\" class=\"btn btn-default\">Preview</a></td></tr>", classAttribute, version.CurrentVersion, version.UpdateDate, version.Author, GetFriendlyStatusName(version.Status), _pageId, SiteSettings.Instance.PreviewPath);
             }
 
             VersionRows.Text = stringBuilder.ToString();

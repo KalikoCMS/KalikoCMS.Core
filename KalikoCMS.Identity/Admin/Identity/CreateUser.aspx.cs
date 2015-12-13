@@ -58,7 +58,9 @@ namespace KalikoCMS.Identity.Admin.Identity {
             var user = new IdentityUser {
                 UserName = UserName.Text,
                 FirstName = FirstName.Text,
-                SurName = SurName.Text
+                SurName = SurName.Text,
+                Email = Email.Text,
+                PhoneNumber = PhoneNumber.Text
             };
             
             var result = userManager.Create(user, Password.Text);

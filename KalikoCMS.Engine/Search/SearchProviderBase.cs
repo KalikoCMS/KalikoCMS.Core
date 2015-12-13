@@ -37,11 +37,12 @@ namespace KalikoCMS.Search {
 
         public abstract SearchResult Search(SearchQuery query);
 
-        public SearchResult FindSimular(CmsPage page, int resultOffset = 0, int resultSize = 10, bool matchCategory = true) {
-            return FindSimular(page.PageId, page.LanguageId, resultOffset, resultSize, matchCategory);
+        public SearchResult FindSimular(CmsPage page, int resultOffset = 0, int resultSize = 10, bool matchCategory = true, string[] metaData = null)
+        {
+            return FindSimular(page.PageId, page.LanguageId, resultOffset, resultSize, matchCategory, metaData);
         }
 
-        public abstract SearchResult FindSimular(Guid pageId, int languageId, int resultOffset = 0, int resultSize = 10, bool matchCategory = true);
+        public abstract SearchResult FindSimular(Guid pageId, int languageId, int resultOffset = 0, int resultSize = 10, bool matchCategory = true, string[] metaData = null);
 
         public void IndexPage(CmsPage page) {
             var pageType = PageType.GetPageType(page.PageTypeId);

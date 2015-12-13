@@ -110,5 +110,11 @@ namespace KalikoCMS.Configuration {
         public string BlockedFileExtensions {
             get { return _blockedFileExtensions ?? (_blockedFileExtensions = (string)base["blockedFileExtensions"]); }
         }
+
+        public string PreviewPath {
+            get {
+                return string.Format("{0}preview/", AdminPath.ToLowerInvariant());
+            }
+        }
     }
 }

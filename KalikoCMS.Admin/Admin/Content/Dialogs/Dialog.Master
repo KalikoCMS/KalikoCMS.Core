@@ -1,6 +1,55 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Dialog.master.cs" Inherits="KalikoCMS.Admin.Content.Dialogs.Dialog" MasterPageFile="../../Templates/MasterPages/Base.Master" %>
 
 <asp:Content ContentPlaceHolderID="AdditionalScripts" runat="server">
+    <script src="assets/js/kalikocms.admin.editor.min.js" type="text/javascript"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // TODO: Get editor options/toolbar from property attribute and web.config
+            tinymce.init({
+                skin_url: '../../assets/vendors/tinymce/skins/lightgray',
+                selector: "textarea.html-editor",
+                plugins: [
+                    "advlist autolink lists link image charmap anchor",
+                    "searchreplace visualblocks code",
+                    "insertdatetime media table contextmenu paste"
+                ],
+                resize: true,
+                height: 300,
+                menubar: false,
+                extended_valid_elements: "i[class],span,span[class]",
+                relative_urls: false,
+                toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code",
+                file_picker_callback: function(callback, value, meta) {
+                    if (meta.filetype == 'file') {
+                        top.registerCallback(function(newUrl, newType) { callback(newUrl); });
+                        top.propertyEditor.dialogs.openSelectLinkDialog(value, 0);
+                    }
+                    if (meta.filetype == 'image') {
+                        top.registerCallback(function(imagePath, cropX, cropY, cropW, cropH, originalPath, description) { callback(imagePath, { alt: description }); });
+                        top.propertyEditor.dialogs.openEditImageDialog(value, value, '', '', '', '', '', '', '');
+                    }
+                }
+            });
+
+            $(".markdown-editor").markdown({
+                savable: false,
+                iconlibrary: 'fa-3',
+                onPreview: function(e) {
+                    var retval = "";
+                    jQuery.ajax({
+                        url: 'Handlers/MarkdownHandler.ashx?markdown=' + escape(e.getContent()),
+                        success: function(result) {
+                            retval = result;
+                        },
+                        async: false
+                    });
+
+                    return retval;
+                }
+            });
+        });
+    </script>
     <script>
       function abort() {
         top.abortCallback();

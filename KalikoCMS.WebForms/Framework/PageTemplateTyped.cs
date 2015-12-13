@@ -33,14 +33,22 @@ namespace KalikoCMS.WebForms.Framework {
 
         private static CmsPage GetCurrentPage() {
             var pageId = Utils.GetCurrentPageId();
-            var page = PageFactory.GetPage(pageId);
+            var version = Utils.GetRequestedVersion();
+            CmsPage page;
+
+            if (version >= 0) {
+                page = PageFactory.GetSpecificVersion(pageId, version);
+            }
+            else {
+                page = PageFactory.GetPage(pageId);
+            }
 
             if (page == null) {
                 Utils.Throw<ApplicationException>("Template loaded without proper page reference.");
             }
 
 
-            if (!page.IsAvailable) {
+            if (!page.IsAvailable && version < 0) {
                 Utils.RenderSimplePage(HttpContext.Current.Response, "Page is not available", "The requested page has expired or is not yet published.", 404);
             }
 

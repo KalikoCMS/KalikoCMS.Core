@@ -40,9 +40,8 @@ namespace KalikoCMS.Core {
             var method = methodMessage.MethodBase;
             object returnValue;
 
-
             if (method.IsVirtual) {
-                returnValue = HandleVirtualMethods(method);
+                returnValue = HandleVirtualMethods(method, methodMessage.Args);
             }
             else {
                 try {
@@ -57,26 +56,31 @@ namespace KalikoCMS.Core {
             return returnMessage;
         }
 
-        private object HandleVirtualMethods(MethodBase method) {
-            string methodName = method.Name;
+        private object HandleVirtualMethods(MethodBase method, object[] args) {
+            var methodName = method.Name;
 
-            if (!methodName.StartsWith("get_")) {
-                return null;
+            // Handle properties if they are CMS properties
+            if (methodName.StartsWith("get_")) {
+                bool propertyExists;
+                var currentPage = (CmsPage)_target;
+                var propertyName = methodName.Substring(4);
+                var propertyData = currentPage.Property.GetPropertyValue(propertyName, out propertyExists);
+
+                if (propertyExists) {
+                    return GetPropertyValue(method, propertyData);
+                }
             }
 
-            return GetPropertyValue(method, methodName);
+            // Handle everything else that isn't a CMS property
+            try {
+                return method.Invoke(_target, args);
+            }
+            catch (Exception exception) {
+                throw GetExceptionToRethrow(exception);
+            }
         }
 
-        private object GetPropertyValue(MethodBase method, string methodName) {
-            bool propertyExists;
-            var currentPage = (CmsPage)_target;
-            var propertyName = methodName.Substring(4);
-            var propertyData = currentPage.Property.GetPropertyValue(propertyName, out propertyExists);
-
-            if (!propertyExists) {
-                return null;
-            }
-
+        private object GetPropertyValue(MethodBase method, PropertyData propertyData) {
             if (propertyData == null) {
                 return Activator.CreateInstance(((MethodInfo)method).ReturnType);
             }

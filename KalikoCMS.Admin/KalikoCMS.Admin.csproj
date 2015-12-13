@@ -66,21 +66,21 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Xml" />
-    <Reference Include="Telerik.OpenAccess, Version=2015.2.624.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2015.2.624.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
+    <Reference Include="Telerik.OpenAccess, Version=2015.3.926.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.3.926.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2015.2.624.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2015.2.624.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
+    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2015.3.926.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.3.926.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.40.Extensions, Version=2015.2.624.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2015.2.624.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
+    <Reference Include="Telerik.OpenAccess.40.Extensions, Version=2015.3.926.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.3.926.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.Runtime, Version=2015.2.624.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2015.2.624.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
+    <Reference Include="Telerik.OpenAccess.Runtime, Version=2015.3.926.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.3.926.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -243,6 +243,7 @@
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.ascx" />
     <Content Include="Admin\Content\Dialogs\EditCollectionPropertyDialog.aspx" />
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.js" />
+    <Content Include="Admin\Content\PropertyType\CompositePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\MarkdownPropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\UniversalDateTimePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.ascx" />
@@ -350,6 +351,13 @@
     </Compile>
     <Compile Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx.designer.cs">
       <DependentUpon>BooleanPropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\CompositePropertyEditor.ascx.cs">
+      <DependentUpon>CompositePropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\CompositePropertyEditor.ascx.designer.cs">
+      <DependentUpon>CompositePropertyEditor.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Content\PropertyType\MarkdownPropertyEditor.ascx.cs">
       <DependentUpon>MarkdownPropertyEditor.ascx</DependentUpon>

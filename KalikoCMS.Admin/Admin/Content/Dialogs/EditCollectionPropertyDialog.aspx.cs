@@ -63,8 +63,14 @@ namespace KalikoCMS.Admin.Content.Dialogs {
             var propertyType = PropertyType.GetPropertyTypeByClassName(propertyTypeClass);
             _editor = LoadControl(propertyType.EditControl);
 
-            if (!string.IsNullOrEmpty(value)) {
+            if (value == "null") {
+                ((PropertyEditorBase) _editor).PropertyValue =  propertyType.ClassInstance;
+            } 
+            else if (!string.IsNullOrEmpty(value)) {
                 ((PropertyEditorBase) _editor).SerializedProperty = value;
+            }
+            else if (propertyType.ClassInstance is CompositeProperty) {
+                ((PropertyEditorBase)_editor).PropertyValue = propertyType.CreateNewClassInstance();
             }
 
             PropertyEditor.Controls.Add(_editor);
