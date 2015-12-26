@@ -20,6 +20,7 @@
 namespace KalikoCMS.Data {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using Attributes;
     using AutoMapper;
@@ -81,6 +82,7 @@ namespace KalikoCMS.Data {
 
         private static void SynchronizeProperties(DataContext context, PageType pageType, Type type, IList<PropertyEntity> propertyEntities) {
             var propertyAttributeType = typeof(PropertyAttribute);
+            var requiredAttributeType = typeof(RequiredAttribute);
             var properties = propertyEntities;
             var sortOrder = 0;
 
@@ -100,6 +102,8 @@ namespace KalikoCMS.Data {
                         throw notSupportedException;
                     }
 
+                    var required = attributes.Count(requiredAttributeType.IsInstanceOfType) > 0;
+
                     sortOrder++;
 
                     var property = properties.SingleOrDefault(p => p.Name == propertyName);
@@ -113,6 +117,7 @@ namespace KalikoCMS.Data {
                     property.PageTypeId = pageType.PageTypeId;
                     property.SortOrder = sortOrder;
                     property.Header = propertyAttribute.Header;
+                    property.Required = required;
 
                     // If generic and standard attribute, store generic type as parameter. Required for list types like CollectionProperty.
                     if (declaringType.IsGenericType && propertyAttribute.GetType() == typeof(PropertyAttribute)) {

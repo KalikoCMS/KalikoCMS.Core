@@ -1,3 +1,6 @@
+### New in 1.2.0
+* Properties now recognize [Required]-attribute
+
 ### New in 1.1.0
 * Added composite property
 * Added page preview
