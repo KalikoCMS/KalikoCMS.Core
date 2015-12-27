@@ -64,7 +64,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate() {
-            string value = UniversalDateField.Value;
+            var value = UniversalDateField.Value;
 
             if (!IsNumericOrEmpty(value)) {
                 ErrorText.Text = "* Not a valid date time";
@@ -77,14 +77,12 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate(bool required) {
-            string value = UniversalDateField.Value;
+            var value = UniversalDateField.Value;
 
-            if (required) {
-                if (string.IsNullOrEmpty(value)) {
-                    ErrorText.Text = "* Required";
-                    ErrorText.Visible = true;
-                    return false;
-                }
+            if (required && string.IsNullOrEmpty(value)) {
+                ErrorText.Text = "* Required";
+                ErrorText.Visible = true;
+                return false;
             }
 
             return Validate();

@@ -29,5 +29,6 @@ namespace KalikoCMS.Core {
         public bool ShowInAdmin { get; set; }
         public int SortOrder { get; set; }
         public string Parameters { get; set; }
+        public bool Required { get; set; }
     }
 }

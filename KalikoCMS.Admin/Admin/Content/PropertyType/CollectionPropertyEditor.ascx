@@ -9,5 +9,6 @@
 
     <button runat="server" ID="AddNewButton" class="btn btn-primary"><i class="icon icon-plus"></i> Add...</button>
     <asp:TextBox ID="CollectionValue" CssClass="collection-value hide" runat="server" />
+    <asp:Literal ID="ErrorText" runat="server" />
   </asp:Panel>
 </div>

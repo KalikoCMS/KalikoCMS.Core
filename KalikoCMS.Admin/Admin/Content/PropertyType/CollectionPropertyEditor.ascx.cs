@@ -88,7 +88,13 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate(bool required) {
-            return true;
+            if (required && string.IsNullOrEmpty(CollectionValue.Text)) {
+                ErrorText.Text = "* Required";
+                ErrorText.Visible = true;
+                return false;
+            }
+
+            return Validate();
         }
     }
 }

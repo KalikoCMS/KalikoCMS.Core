@@ -20,6 +20,7 @@
 namespace KalikoCMS.Admin.Content.PropertyType {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Core;
     using KalikoCMS.PropertyType;
 
@@ -73,7 +74,13 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate(bool required) {
-            return true;
+            if (_controls.Values.Any(control => !control.Validate(required))) {
+                ErrorText.Text = "* Required";
+                ErrorText.Visible = true;
+                return false;
+            }
+
+            return Validate();
         }
 
         protected override void OnInit(EventArgs e) {

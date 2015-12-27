@@ -20,6 +20,7 @@
 namespace KalikoCMS.Admin.Content {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web;
     using System.Web.UI.WebControls;
     using Configuration;
@@ -59,14 +60,15 @@ namespace KalikoCMS.Admin.Content {
             _hasVersionSpecified = int.TryParse(Request.QueryString["version"], out _version);
         }
 
-        private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId, string headerText, string parameters) {
+        private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId, string headerText, string parameters, bool required) {
             var propertyType = Core.PropertyType.GetPropertyType(propertyTypeId);
             var editControl = propertyType.EditControl;
 
             var loadControl = (PropertyEditorBase)LoadControl(editControl);
             loadControl.PropertyName = propertyName;
             loadControl.PropertyLabel = headerText;
-            
+            loadControl.Required = required;
+
             if (propertyValue != null) {
                 loadControl.PropertyValue = propertyValue;
             }
@@ -126,7 +128,7 @@ namespace KalikoCMS.Admin.Content {
 
             var propertyDefinitions = PageType.GetPropertyDefinitions(_pageTypeId);
             foreach (var propertyDefinition in propertyDefinitions) {
-                AddControl(propertyDefinition.Name, null, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters);
+                AddControl(propertyDefinition.Name, null, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters, propertyDefinition.Required);
             }
 
             PageTypeName.Text = PageType.GetPageType(_pageTypeId).DisplayName;
@@ -193,7 +195,7 @@ namespace KalikoCMS.Admin.Content {
                 var propertyName = propertyDefinition.Name;
                 var propertyData = cmsPage.Property[propertyName];
 
-                AddControl(propertyName, propertyData, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters);
+                AddControl(propertyName, propertyData, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters, propertyDefinition.Required);
             }
         }
 
@@ -242,19 +244,17 @@ namespace KalikoCMS.Admin.Content {
 
         protected bool IsDataValid {
             get {
-                var valid = true;
-
                 if (!PageName.Validate(true)) {
-                    valid = false;
+                    return false;
                 }
-                else if (!StartPublishDate.Validate()) {
-                    valid = false;
+                if (!StartPublishDate.Validate()) {
+                    return false;
                 }
-                else if (!StopPublishDate.Validate()) {
-                    valid = false;
+                if (!StopPublishDate.Validate()) {
+                    return false;
                 }
 
-                return valid;
+                return _controls.All(control => control.Validate(control.Required));
             }
         }
 

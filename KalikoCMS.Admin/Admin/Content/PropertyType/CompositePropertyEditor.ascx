@@ -4,4 +4,5 @@
 
 <div class="composite-block">
   <asp:Panel runat="server" ID="EditControls" />
+  <asp:Literal ID="ErrorText" runat="server" />
 </div>
