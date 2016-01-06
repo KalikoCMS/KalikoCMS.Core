@@ -1,3 +1,7 @@
+### New in 1.1.1
+* Changed length of DataStore key to support MySQL
+* Fixed problem with culture dependent property name case-shifting
+
 ### New in 1.1.0
 * Added composite property
 * Added page preview
