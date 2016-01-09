@@ -1,6 +1,8 @@
 ### New in 1.1.1
-* Changed length of DataStore key to support MySQL
+* Improved routing to actions on pages
+* Fixed problem with page tree in editor and certain page names
 * Fixed problem with culture dependent property name case-shifting
+* Fixed outdated reference in NuGet-package
 
 ### New in 1.1.0
 * Added composite property
