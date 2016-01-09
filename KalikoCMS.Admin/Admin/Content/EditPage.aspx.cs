@@ -272,6 +272,7 @@ namespace KalikoCMS.Admin.Content {
             var editablePage = parent.CreateChildPage(_pageTypeId);
             SavePropertiesForPage(editablePage);
             _pageId = editablePage.PageId;
+            _pageName = editablePage.PageName;
             OldPageUrlSegment.Value = editablePage.UrlSegment;
 
             return editablePage;
@@ -283,6 +284,7 @@ namespace KalikoCMS.Admin.Content {
             var editablePage = cmsPage.MakeEditable();
             SavePropertiesForPage(editablePage);
             OldPageUrlSegment.Value = editablePage.UrlSegment;
+            _pageName = editablePage.PageName;
 
             return editablePage;
         }
