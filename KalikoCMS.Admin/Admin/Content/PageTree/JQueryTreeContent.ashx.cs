@@ -19,43 +19,55 @@
 
 namespace KalikoCMS.Admin.Content.PageTree {
     using System;
-    using System.Text;
+    using System.Collections.Generic;
     using System.Web;
+    using fastJSON;
     using KalikoCMS.Core;
     using KalikoCMS.Data;
     using KalikoCMS.Caching;
 
     public class JQueryTreeContent : IHttpHandler {
+        private class JQueryTreeItem {
+            // ReSharper disable InconsistentNaming
+            public string text { get; set; }
+            public bool children { get; set; }
+            public string id { get; set; }
+            public string parent { get; set; }
+            public string icon { get; set; }
+            public object a_attr { get; set; }
+            // ReSharper restore InconsistentNaming
+        }
+
+        private class JQueryTreeLink {
+            public string href { get; set; }
+        }
+
         private void GetChildren(HttpContext context) {
             context.Response.ContentType = "application/json";
 
+            var items = new List<dynamic>();
+
             var id = context.Request.Form["id"];
             if (id == "#") {
-                context.Response.Write("[{\"text\":\"Root\",\"children\":true,\"id\":\"" + Guid.Empty + "\",\"parent\":\"#\",\"icon\":\"jstree-rooticon\"}]");
+                items.Add(new JQueryTreeItem {text = "Root", children = true, id = Guid.Empty.ToString(), parent = "#", icon = "jstree-rooticon"});
+                context.Response.Write(Serialization.JsonSerialization.SerializeJson(items, new JSONParameters { UseExtensions = false, SerializeNullValues = false }));
                 context.Response.End();
             }
 
             var pageId = new Guid(id);
-            var separator = string.Empty;
 
             var children = PageFactory.GetChildrenForPage(pageId, PublishState.All);
-            var stringBuilder = new StringBuilder();
-            stringBuilder.Append("[");
 
-
-            foreach (Guid childId in children.PageIds) {
+            foreach (var childId in children.PageIds) {
                 var page = PageFactory.GetPage(childId);
                 var icon = page.Status == PageInstanceStatus.Published ? "" : "jstree-newpage";
                 var text = page.Status == PageInstanceStatus.Published ? page.PageName : "<i>" + page.PageName + "</i>";
-                stringBuilder.AppendFormat("{0}{{\"text\": \"{1}\", \"id\": \"{2}\", \"children\": {3}, \"a_attr\": {{ \"href\": \"{4}\" }},\"icon\":\"{5}\"}}", separator, text, childId, (page.HasChildren ? "true" : "false"), page.PageUrl, icon);
-                separator = ",";
+                items.Add(new JQueryTreeItem { text = text, children = page.HasChildren, id = childId.ToString(), icon = icon, a_attr = new JQueryTreeLink { href = page.PageUrl.ToString() } });
             }
 
-            stringBuilder.Append("]");
-
-            context.Response.Write(stringBuilder.ToString());
+            context.Response.Write(Serialization.JsonSerialization.SerializeJson(items, new JSONParameters { UseExtensions = false, SerializeNullValues = false }));
         }
-        
+
         private void MoveNode(HttpContext context) {
             var pageId = new Guid(context.Request.Form["id"]);
             var targetId = new Guid(context.Request.Form["ref"]);
@@ -81,9 +93,10 @@ namespace KalikoCMS.Admin.Content.PageTree {
         }
 
         private static void WriteResponse(HttpContext context, bool status, string message) {
-            var statusString = status ? "true" : "false";
+            var success = status ? "true" : "false";
             context.Response.ContentType = "application/json";
-            context.Response.Write(string.Format("{{ \"success\": {0}, \"message\": \"{1}\" }}", statusString, message));
+            var json = Serialization.JsonSerialization.SerializeJson(new {success, message});
+            context.Response.Write(json);
         }
 
         private void RemoveNode(HttpContext context) {
@@ -95,15 +108,13 @@ namespace KalikoCMS.Admin.Content.PageTree {
         #region IHttpHandler Members
 
         public bool IsReusable {
-            get {
-                return false;
-            }
+            get { return false; }
         }
 
         public void ProcessRequest(HttpContext context) {
             string operation = context.Request.Form["operation"];
 
-            if(operation== "get_children") {
+            if (operation == "get_children") {
                 GetChildren(context);
             }
             else if (operation == "move_node") {
@@ -115,5 +126,6 @@ namespace KalikoCMS.Admin.Content.PageTree {
         }
 
         #endregion
+
     }
 }

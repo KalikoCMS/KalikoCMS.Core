@@ -66,6 +66,10 @@ namespace KalikoCMS.Serialization {
             return JSON.ToJSON(instance, GenericParameters);
         }
 
+        public static string SerializeJson(object instance, JSONParameters parameters) {
+            return JSON.ToJSON(instance, parameters);
+        }
+
         public static string SerializeTypedJson(object instance) {
             var json = JSON.ToJSON(instance, TypedParameters);
 

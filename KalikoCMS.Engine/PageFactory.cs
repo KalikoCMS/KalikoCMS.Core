@@ -80,7 +80,7 @@ namespace KalikoCMS {
                             if (TryAsPageExtender(i + 1, segments, lastPage)) {
                                 return true;
                             }
-                            if (requestManager.TryMvcSupport(i, segments, lastPage)) {
+                            if (requestManager.TryMvcSupport(i + 1, segments, lastPage)) {
                                 return true;
                             }
                             if (TryAsRedirect(pageUrl)) {

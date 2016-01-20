@@ -1,3 +1,10 @@
+### New in 1.1.1
+* Improved MVC routing to actions on pages
+* Fixed problem with running actions in views
+* Fixed problem with page tree in editor and certain page names
+* Fixed problem with culture dependent property name case-shifting
+* Fixed outdated reference in NuGet-package
+
 ### New in 1.1.0
 * Added composite property
 * Added page preview

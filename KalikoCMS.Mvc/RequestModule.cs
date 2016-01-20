@@ -114,17 +114,17 @@ namespace KalikoCMS.Mvc {
             var type = GetControllerType(page);
             var controller = (Controller)Activator.CreateInstance(type);
             var controllerName = StripEnd(type.Name.ToLowerInvariant(), "controller");
-            var filePath = string.Format("/{0}/{1}/", controllerName, string.Join("/", parameters));
-
-            HttpContext.Current.Items["cmsRouting"] = true;
-
             var httpContext = new HttpContextWrapper(HttpContext.Current);
-            var routeData = RouteTable.Routes.GetRouteData(httpContext);
+            var route = new CmsRoute(page.PageUrl.ToString().TrimStart('/') + "{action}", new MvcRouteHandler());
+            var routeData = route.GetRouteData(httpContext);
 
-            if (routeData == null) {
-                throw new Exception(string.Format("Not an action {0}", filePath));
+            if (routeData == null)
+            {
+                var message = string.Format("Not an action /{0}/{1}/", controllerName, string.Join("/", parameters));
+                throw new Exception(message);
             }
 
+            routeData.Values["controller"] = controllerName;
             routeData.Values["currentPage"] = ((IPageController)controller).GetTypedPage(page);
 
             HttpContext.Current.Response.Clear();
@@ -132,7 +132,6 @@ namespace KalikoCMS.Mvc {
             ((IController)controller).Execute(requestContext);
             HttpContext.Current.ApplicationInstance.CompleteRequest();
         }
-
 
         #region Startup sequence
 
