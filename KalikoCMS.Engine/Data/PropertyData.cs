@@ -50,7 +50,7 @@ namespace KalikoCMS.Data {
                         orderby p.SortOrder
                         select new PropertyItem {
                             PagePropertyId = m.PagePropertyId,
-                            PropertyName = p.Name.ToLower(),
+                            PropertyName = p.Name.ToLowerInvariant(),
                             PropertyData = CreatePropertyData(p.PropertyTypeId, m.PageData),
                             PropertyId = p.PropertyId,
                             PropertyTypeId = p.PropertyTypeId

@@ -26,7 +26,7 @@ namespace KalikoCMS.Data {
 
     public class DataContext : OpenAccessContext {
         private const string ConnectionStringName = "KalikoCMS";
-        private const int DatabaseVersion = 6;
+        private const int DatabaseVersion = 8;
         private static readonly MetadataContainer MetadataContainer;
         private static readonly BackendConfiguration BackendConfiguration;
 

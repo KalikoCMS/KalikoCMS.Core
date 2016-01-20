@@ -43,9 +43,9 @@ namespace KalikoCMS.Mvc {
             }
 
             try {
-                var parametersCount = segments.Length - segmentPosition - 1;
+                var parametersCount = segments.Length - segmentPosition;
                 var parameters = new string[parametersCount];
-                Array.Copy(segments, segmentPosition + 1, parameters, 0, parametersCount);
+                Array.Copy(segments, segmentPosition, parameters, 0, parametersCount);
                 var cmsPage = new CmsPage(page, Language.CurrentLanguageId);
                 RequestModule.RedirectToControllerAction(cmsPage, parameters);
 

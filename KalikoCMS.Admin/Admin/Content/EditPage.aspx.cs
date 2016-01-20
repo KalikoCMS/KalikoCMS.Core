@@ -204,7 +204,7 @@ namespace KalikoCMS.Admin.Content {
                 var page = SaveData();
 
                 if (_pageTypeId > 0) {
-                    Feedback.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> has been created!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();parent.refreshTreeNode('{1}','{2}');document.location = '{3}?id={2}';</script>", _pageName, _parentId, _pageId, Request.Path);
+                    Feedback.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> has been created!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();parent.refreshTreeNode('{1}','{2}');document.location = '{3}?id={2}';</script>", _pageName.Replace("\"", "\\\""), _parentId, _pageId, Request.Path);
                     Feedback.Visible = true;
                 }
                 else {
@@ -225,11 +225,11 @@ namespace KalikoCMS.Admin.Content {
                 ScriptArea.Text = "top.refreshNode('" + CurrentPageId + "');";
 
                 if (_pageTypeId > 0) {
-                    Feedback.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> has been created and published!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();parent.refreshTreeNode('{1}','{2}');document.location = '{3}?id={2}';</script>", _pageName, _parentId, _pageId, Request.Path);
+                    Feedback.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> has been created and published!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();parent.refreshTreeNode('{1}','{2}');document.location = '{3}?id={2}';</script>", _pageName.Replace("\"", "\\\""), _parentId, _pageId, Request.Path);
                     Feedback.Visible = true;
                 }
                 else {
-                    Feedback.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> has been published!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();</script>", _pageName);
+                    Feedback.Text = string.Format("<script>parent.$('.notifications.top-right').notify({{ type: 'info', message: \"<i class=\\\"icon-flag\\\"></i> Page <b>{0}</b> has been published!!\", fadeOut: {{ enabled: true, delay: 5000 }}}}).show();</script>", _pageName.Replace("\"", "\\\""));
                     Feedback.Visible = true;
                 }
             }
@@ -272,6 +272,7 @@ namespace KalikoCMS.Admin.Content {
             var editablePage = parent.CreateChildPage(_pageTypeId);
             SavePropertiesForPage(editablePage);
             _pageId = editablePage.PageId;
+            _pageName = editablePage.PageName;
             OldPageUrlSegment.Value = editablePage.UrlSegment;
 
             return editablePage;
@@ -283,6 +284,7 @@ namespace KalikoCMS.Admin.Content {
             var editablePage = cmsPage.MakeEditable();
             SavePropertiesForPage(editablePage);
             OldPageUrlSegment.Value = editablePage.UrlSegment;
+            _pageName = editablePage.PageName;
 
             return editablePage;
         }

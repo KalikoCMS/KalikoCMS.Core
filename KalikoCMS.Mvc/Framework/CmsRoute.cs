@@ -35,11 +35,20 @@ namespace KalikoCMS.Mvc.Framework {
         #endregion
 
         public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values) {
-            if (requestContext.HttpContext.Items.Contains("cmsRouting")) {
+            object controller = null;
+
+            if (requestContext.HttpContext.Items.Contains("cmsRouting") && values.ContainsKey("controller")) {
+                controller = values["controller"];
                 values.Remove("controller");
             }
-            
-            return base.GetVirtualPath(requestContext, values);
+
+            var virtualPath = base.GetVirtualPath(requestContext, values);
+
+            if (controller != null) {
+                values.Add("controller", controller);
+            }
+
+            return virtualPath;
         }
     }
 }
