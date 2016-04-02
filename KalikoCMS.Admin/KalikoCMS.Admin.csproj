@@ -136,6 +136,7 @@
     </Content>
     <None Include="Admin\Assets\vendors\bootstrap-markdown\js\bootstrap-markdown.js" />
     <None Include="Admin\Assets\vendors\bootstrap\css\bootstrap-modal-bs3patch.css" />
+    <Content Include="Admin\Assets\vendors\bootstrap-markdown\js\bootstrap-markdown.customization.js" />
     <Content Include="Admin\Assets\vendors\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Admin\Assets\vendors\jquery\css\jquery.jcrop.min.css" />
     <None Include="Admin\Assets\vendors\bootstrap\js\bootstrap-tagsinput.min.js" />
