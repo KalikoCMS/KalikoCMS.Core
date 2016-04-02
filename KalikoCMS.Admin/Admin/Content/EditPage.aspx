@@ -106,12 +106,18 @@
         $(".markdown-editor").markdown({
           savable: false,
           iconlibrary: 'fa-3',
+          reorderButtonGroups: ['groupHeaders', 'groupFont', 'groupLink', 'groupMisc', 'groupUtil', 'groupHelp'],
           onPreview: function (e) {
             var retval = "";
             jQuery.ajax({
-              url: 'Handlers/MarkdownHandler.ashx?markdown=' + escape(e.getContent()),
+              type: 'POST',
+              url: 'Handlers/MarkdownHandler.ashx',
+              data: { 'markdown': e.getContent() },
               success: function (result) {
                 retval = result;
+              },
+              error: function() {
+                alert('Could not preview the Markdown, please check the syntax.');
               },
               async: false
             });

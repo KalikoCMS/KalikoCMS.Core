@@ -5917,6 +5917,13 @@ a.no-decoration:hover {
   border: none;
 }
 /*#endregion*/
+/*#region Mardown */
+.md-preview h1 {
+  font-size: 36px;
+  margin: 20px 0 10px;
+  padding: 0;
+}
+/*#endregion*/
 /*#region Tags */
 .tag.label {
   display: inline-block;
@@ -6560,7 +6567,7 @@ a.no-decoration:hover {
  * Bootstrap-Markdown.less
  *
  * @author Taufan Aditya @taufanaditya
- * @copyright 2013 Taufan Aditya
+ * @copyright 2013-2016 Taufan Aditya
  */
 .md-editor {
   display: block;
@@ -9127,4 +9134,3 @@ Copyright (c) 2012 Dan Eden*/
     font-weight: 700;
     font-style: normal;
 }
-/*# sourceMappingURL=theme.css.map */

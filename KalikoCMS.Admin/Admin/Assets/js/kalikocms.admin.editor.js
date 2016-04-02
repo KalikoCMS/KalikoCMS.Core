@@ -1402,6 +1402,7 @@ if(t&&t.selection){var n=t.selection.getRng();n&&!n.collapsed&&(d.lastRng=n)}},a
 
 
 (function ($) {
+    // Replace bootstrap-markdown.js's dialogs for links and images to the Kaliko CMS ones
     $.fn.markdown.defaults.buttons[0].forEach(function (group) {
         group.data.forEach(function (button) {
             if (button.name === 'cmdUrl') {
@@ -1413,6 +1414,73 @@ if(t&&t.selection){var n=t.selection.getRng();n&&!n.collapsed&&(d.lastRng=n)}},a
             }
         });
     });
+
+    // Extend bootstrap-markdown.js with header options
+    $.fn.markdown.defaults.buttons[0].push({
+        name: 'groupHeaders',
+        data: [
+            {
+                name: 'cmdH1',
+                title: 'Header 1',
+                btnText: "H1",
+                callback: function(e) {
+                    var selected = e.getSelection();
+                    e.replaceSelection('# ' + selected.text);
+                    var cursor = selected.start + 2;
+                    e.setSelection(cursor, cursor + selected.length);
+                }
+            },
+            {
+                name: 'cmdH2',
+                title: 'Header 2',
+                btnText: "H2",
+                callback: function(e) {
+                    var selected = e.getSelection();
+                    e.replaceSelection('## ' + selected.text);
+                    var cursor = selected.start + 3;
+                    e.setSelection(cursor, cursor + selected.length);
+                }
+            },
+            {
+                name: 'cmdH3',
+                title: 'Header 3',
+                btnText: "H3",
+                callback: function(e) {
+                    var selected = e.getSelection();
+                    e.replaceSelection('### ' + selected.text);
+                    var cursor = selected.start + 4;
+                    e.setSelection(cursor, cursor + selected.length);
+                }
+            }, {
+                name: 'cmdH4',
+                title: 'Header 4',
+                btnText: "H4",
+                callback: function(e) {
+                    var selected = e.getSelection();
+                    e.replaceSelection('#### ' + selected.text);
+                    var cursor = selected.start + 5;
+                    e.setSelection(cursor, cursor + selected.length);
+                }
+            }
+        ]
+    });
+
+    // Extend bootstrap-markdown.js with header options
+    $.fn.markdown.defaults.buttons[0].push({
+        name: 'groupHelp',
+        data: [
+            {
+                name: 'cmdHelp',
+                title: 'Markdown syntax',
+                icon: 'icon-question',
+                btnClass: 'btn btn-primary btn-sm',
+                callback: function(e) {
+                    window.open('http://kaliko.com/cms/knowledge-base/markdown-syntax/');
+                }
+            }
+        ]
+    });
+
 
     function urlCallback(e) {
         var chunk, cursor, selected = e.getSelection();

@@ -25,7 +25,7 @@ namespace KalikoCMS.Admin.Handlers {
         public void ProcessRequest(HttpContext context) {
             context.Response.ContentType = "text/html";
 
-            var markdown = context.Request.QueryString["markdown"];
+            var markdown = context.Request["markdown"];
             var processor = new Markdown();
             context.Response.Write(processor.Transform(markdown));
         }
