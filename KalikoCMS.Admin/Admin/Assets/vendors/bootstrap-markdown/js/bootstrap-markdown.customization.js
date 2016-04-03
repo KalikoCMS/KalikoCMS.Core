@@ -80,6 +80,46 @@
         ]
     });
 
+    // Extend bootstrap-markdown.js with extra options
+    $.fn.markdown.defaults.buttons[0].push({
+        name: 'groupExtras',
+        data: [
+            {
+                name: 'cmdEmbedImage',
+                title: 'Embed image as base64',
+                btnText: 'Embed',
+                icon: 'icon-image',
+                callback: function (e) {
+                    var chunk, cursor, selected = e.getSelection();
+
+                    if (selected.length === 0) {
+                        chunk = e.__localize('image description');
+                    } else {
+                        chunk = selected.text;
+                    }
+
+                    top.registerCallback(function (imagePath, cropX, cropY, cropW, cropH, originalPath, description) {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'Handlers/Base64Handler.ashx',
+                            data: { 'path': imagePath },
+                            success: function (result) {
+                                e.replaceSelection('![' + description + '](' + result + ')');
+                                cursor = selected.start + 2;
+                                e.setSelection(cursor, cursor + description.length);
+                            },
+                            error: function () {
+                                alert('Could not preview the Markdown, please check the syntax.');
+                            },
+                            async: false
+                        });
+                    });
+
+                    top.propertyEditor.dialogs.openEditImageDialog('', '', '', '', '', '', '', '', chunk);
+                }
+            }
+        ]
+    });
 
     function urlCallback(e) {
         var chunk, cursor, selected = e.getSelection();
@@ -111,7 +151,7 @@
         top.registerCallback(function (imagePath, cropX, cropY, cropW, cropH, originalPath, description) {
             e.replaceSelection('![' + description + '](' + imagePath + ')');
             cursor = selected.start + 2;
-            e.setSelection(cursor, cursor + imagePath.length);
+            e.setSelection(cursor, cursor + description.length);
         });
 
         top.propertyEditor.dialogs.openEditImageDialog('', '', '', '', '', '', '', '', chunk);

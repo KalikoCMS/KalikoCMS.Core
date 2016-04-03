@@ -106,7 +106,7 @@
         $(".markdown-editor").markdown({
           savable: false,
           iconlibrary: 'fa-3',
-          reorderButtonGroups: ['groupHeaders', 'groupFont', 'groupLink', 'groupMisc', 'groupUtil', 'groupHelp'],
+          reorderButtonGroups: ['groupHeaders', 'groupFont', 'groupLink', 'groupMisc', 'groupExtras', 'groupUtil', 'groupHelp'],
           onPreview: function (e) {
             var retval = "";
             jQuery.ajax({

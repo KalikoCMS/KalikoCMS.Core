@@ -317,6 +317,7 @@
     </None>
     <None Include="Admin\Assets\vendors\bootstrap-markdown\less\bootstrap-markdown.less" />
     <Content Include="Admin\Handlers\MarkdownHandler.ashx" />
+    <Content Include="Admin\Handlers\Base64Handler.ashx" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml">
       <SubType>Designer</SubType>
     </None>
@@ -391,6 +392,9 @@
     </Compile>
     <Compile Include="Admin\Content\PropertyType\TagPropertyEditor.ascx.designer.cs">
       <DependentUpon>TagPropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Handlers\Base64Handler.ashx.cs">
+      <DependentUpon>Base64Handler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Handlers\FileHandler.ashx.cs">
       <DependentUpon>FileHandler.ashx</DependentUpon>
