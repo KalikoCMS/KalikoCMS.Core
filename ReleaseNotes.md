@@ -1,5 +1,6 @@
 ### New in 1.2.0
 * Properties now recognize [Required]-attribute
+* Improved Markdown editor with support for headings, CMS images and links
 
 ### New in 1.1.1
 * Improved MVC routing to actions on pages
