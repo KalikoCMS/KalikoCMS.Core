@@ -19,6 +19,8 @@
 
 namespace KalikoCMS.Admin.Content.PropertyType {
     using System;
+    using System.Web.UI;
+    using Configuration;
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
 
@@ -53,6 +55,15 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             }
 
             return Validate();
+        }
+
+        protected override void OnLoad(EventArgs e) {
+            base.OnLoad(e);
+
+            ScriptManager.RegisterClientScriptInclude(this, typeof(LinkPropertyEditor), "Admin.Content.PropertyType.LinkPropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/LinkPropertyEditor.js?v=" + Utils.VersionHash);
+            ScriptManager.RegisterClientScriptInclude(this, typeof(FilePropertyEditor), "Admin.Content.PropertyType.FilePropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/FilePropertyEditor.js?v=" + Utils.VersionHash);
+            ScriptManager.RegisterClientScriptInclude(this, typeof(PageLinkPropertyEditor), "Admin.Content.PropertyType.PageLinkPropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/PageLinkPropertyEditor.js?v=" + Utils.VersionHash);
+            ScriptManager.RegisterClientScriptInclude(this, typeof(ImagePropertyEditor), "Admin.Content.PropertyType.ImagePropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/ImagePropertyEditor.js?v=" + Utils.VersionHash);
         }
     }
 }
