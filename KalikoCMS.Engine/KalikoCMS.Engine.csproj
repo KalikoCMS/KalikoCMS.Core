@@ -104,6 +104,7 @@
     <Compile Include="Core\Collections\SortOrder.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\DefaultTabGroups.cs" />
     <Compile Include="Core\FileSystemObject.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -122,9 +123,11 @@
     <Compile Include="Data\DataMetadataSource.cs" />
     <Compile Include="Data\Entities\PropertyTypeEntity.cs" />
     <Compile Include="Data\Entities\RedirectEntity.cs" />
+    <Compile Include="Data\Entities\SiteEntity.cs" />
     <Compile Include="Data\Entities\SiteLanguageEntity.cs" />
     <Compile Include="Data\Entities\PageTagEntity.cs" />
     <Compile Include="Data\Entities\PageTypeEntity.cs" />
+    <Compile Include="Data\Entities\SitePropertyEntity.cs" />
     <Compile Include="Data\Entities\SystemInfoEntity.cs" />
     <Compile Include="Data\Entities\TagContextEntity.cs" />
     <Compile Include="Data\Entities\TagEntity.cs" />

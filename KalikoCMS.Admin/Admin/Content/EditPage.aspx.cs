@@ -21,6 +21,8 @@ namespace KalikoCMS.Admin.Content {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web.UI;
+    using System.Web.UI.HtmlControls;
     using System.Web.UI.WebControls;
     using Configuration;
     using Data;
@@ -36,6 +38,8 @@ namespace KalikoCMS.Admin.Content {
         private int _pageTypeId;
         private bool _hasVersionSpecified;
         private int _version;
+        private bool _useTabs;
+        private Dictionary<string, Panel> _tabs;
 
         protected void Page_Init(object sender, EventArgs e) {
             GetQueryStringValues();
@@ -59,7 +63,63 @@ namespace KalikoCMS.Admin.Content {
             _hasVersionSpecified = int.TryParse(Request.QueryString["version"], out _version);
         }
 
-        private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId, string headerText, string parameters, bool required) {
+        private void AddTabs(List<PropertyDefinition> propertyDefinitions) {
+            var tabGroups = propertyDefinitions.Select(x => x.TabGroup).Distinct();
+
+            if (tabGroups.Count() <= 1) {
+                var header = new HtmlGenericControl("legend") {
+                    InnerText = "Content"
+                };
+                EditControls.Controls.Add(header);
+                _useTabs = false;
+                return;
+            }
+
+            var tabs = new HtmlGenericControl("ul");
+            tabs.Attributes.Add("class", "nav nav-tabs editor-tabs");
+            tabs.Attributes.Add("role", "tablist");
+            EditControls.Controls.Add(tabs);
+
+            var tabContainer = new Panel {
+                CssClass = "tab-content"
+            };
+            EditControls.Controls.Add(tabContainer);
+
+            _tabs = new Dictionary<string, Panel>();
+            var isFirst = true;
+            var count = 0;
+
+            foreach (var tabGroup in tabGroups) {
+                var tab = new HtmlGenericControl("li") {
+                    InnerHtml = string.Format("<a href=\"#tab{1}\" id=\"tab{1}-tab\" role=\"tab\" data-toggle=\"tab\">{0}</a>", tabGroup, count)
+                };
+                if (isFirst) {
+                    tab.Attributes.Add("class", "active");
+                }
+
+                tab.Attributes.Add("role", "presentation");
+                tabs.Controls.Add(tab);
+
+                var tabTarget = new Panel {
+                    CssClass = "tab-pane",
+                    ClientIDMode = ClientIDMode.Static,
+                    ID = string.Format("tab{0}", count)
+                };
+                if (isFirst) {
+                    tabTarget.CssClass += " active";
+                }
+                tabTarget.Attributes.Add("role", "tabpanel");
+                tabContainer.Controls.Add(tabTarget);
+                _tabs.Add(tabGroup, tabTarget);
+
+                isFirst = false;
+                count++;
+            }
+
+            _useTabs = true;
+        }
+
+        private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId, string headerText, string parameters, bool required, string tabGroup) {
             var propertyType = Core.PropertyType.GetPropertyType(propertyTypeId);
             var editControl = propertyType.EditControl;
 
@@ -79,7 +139,15 @@ namespace KalikoCMS.Admin.Content {
                 loadControl.Parameters = parameters;
             }
 
-            EditControls.Controls.Add(loadControl);
+            if (_useTabs) {
+                var container = _tabs[tabGroup];
+                container.Controls.Add(loadControl);
+            }
+            else {
+                EditControls.Controls.Add(loadControl);
+            }
+
+
             _controls.Add(loadControl);
         }
 
@@ -126,8 +194,9 @@ namespace KalikoCMS.Admin.Content {
             SetStandardFieldLabels();
 
             var propertyDefinitions = PageType.GetPropertyDefinitions(_pageTypeId);
+            AddTabs(propertyDefinitions);
             foreach (var propertyDefinition in propertyDefinitions) {
-                AddControl(propertyDefinition.Name, null, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters, propertyDefinition.Required);
+                AddControl(propertyDefinition.Name, null, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters, propertyDefinition.Required, propertyDefinition.TabGroup);
             }
 
             PageTypeName.Text = PageType.GetPageType(_pageTypeId).DisplayName;
@@ -136,7 +205,7 @@ namespace KalikoCMS.Admin.Content {
             ChildSortDirection.SelectedValue = ((int)pageType.DefaultChildSortDirection).ToString();
             ChildSortOrder.SelectedValue = ((int)pageType.DefaultChildSortOrder).ToString();
         }
-
+        
         private void SetStandardFieldLabels() {
             PageName.PropertyLabel = "Pagename";
             StartPublishDate.PropertyLabel = "Start publish";
@@ -190,11 +259,13 @@ namespace KalikoCMS.Admin.Content {
 
             var propertyDefinitions = PageType.GetPropertyDefinitions(cmsPage.PageTypeId);
 
+            AddTabs(propertyDefinitions);
+
             foreach (var propertyDefinition in propertyDefinitions) {
                 var propertyName = propertyDefinition.Name;
                 var propertyData = cmsPage.Property[propertyName];
 
-                AddControl(propertyName, propertyData, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters, propertyDefinition.Required);
+                AddControl(propertyName, propertyData, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters, propertyDefinition.Required, propertyDefinition.TabGroup);
             }
         }
 

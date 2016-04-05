@@ -42,11 +42,14 @@
               </div>
             </div>
           </div>
-
         </fieldset>
+                
         <fieldset>
-          <legend>Content</legend>
           <asp:Panel ID="EditControls" runat="server" />
+        </fieldset>
+        
+        <fieldset>
+          <legend>Information</legend>
           <div class="form-group">
             <label class="control-label col-xs-2" for="PageId">Page Id</label>
             <div class="controls col-xs-10">

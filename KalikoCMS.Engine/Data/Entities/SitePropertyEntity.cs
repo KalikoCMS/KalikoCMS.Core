@@ -17,28 +17,16 @@
  */
 #endregion
 
-namespace KalikoCMS.Attributes {
+namespace KalikoCMS.Data.Entities {
     using System;
-    using Core;
 
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class PropertyAttribute : Attribute {
-
-        public string Header { get; private set; }
-
-        public string TabGroup { get; set; }
-
-        public PropertyAttribute(string header) {
-            Header = header;
-            TabGroup = DefaultTabGroups.Content;
-        }
-
-        public virtual string Parameters {
-            get { return null; }
-        }
-
-        public virtual bool IsTypeValid(Type type) {
-            return true;
-        }
+    public class SitePropertyEntity {
+        public virtual int SitePropertyId { get; set; }
+        public virtual Guid SiteId { get; set; }
+        public virtual int PropertyId { get; set; }
+        public virtual int LanguageId { get; set; }
+        public virtual string SiteData { get; set; }
+        public virtual PropertyEntity Property { get; set; }
+        public virtual SiteEntity Site { get; set; }
     }
 }

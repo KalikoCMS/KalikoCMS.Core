@@ -49,6 +49,7 @@ namespace KalikoCMS.Data {
             Mapper.CreateMap<PropertyItem, PropertyItem>();
 
             Mapper.CreateMap<PropertyEntity, PropertyDefinition>()
+                .ForMember(m => m.TabGroup, o => o.Ignore())
                 .ReverseMap();
 
             Mapper.CreateMap<PropertyTypeEntity, PropertyType>()

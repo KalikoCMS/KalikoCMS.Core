@@ -30,5 +30,6 @@ namespace KalikoCMS.Core {
         public int SortOrder { get; set; }
         public string Parameters { get; set; }
         public bool Required { get; set; }
+        public string TabGroup { get; set; }
     }
 }

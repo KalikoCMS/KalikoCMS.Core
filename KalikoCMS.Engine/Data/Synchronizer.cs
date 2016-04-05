@@ -131,7 +131,10 @@ namespace KalikoCMS.Data {
                     if (property.PropertyId == 0) {
                         context.Add(property);
                     }
-                    pageType.Properties.Add(Mapper.Map<PropertyEntity, PropertyDefinition>(property));
+                    
+                    var propertyDefinition = Mapper.Map<PropertyEntity, PropertyDefinition>(property);
+                    propertyDefinition.TabGroup = propertyAttribute.TabGroup;
+                    pageType.Properties.Add(propertyDefinition);
                 }
             }
 

@@ -17,28 +17,9 @@
  */
 #endregion
 
-namespace KalikoCMS.Attributes {
-    using System;
-    using Core;
-
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class PropertyAttribute : Attribute {
-
-        public string Header { get; private set; }
-
-        public string TabGroup { get; set; }
-
-        public PropertyAttribute(string header) {
-            Header = header;
-            TabGroup = DefaultTabGroups.Content;
-        }
-
-        public virtual string Parameters {
-            get { return null; }
-        }
-
-        public virtual bool IsTypeValid(Type type) {
-            return true;
-        }
+namespace KalikoCMS.Core {
+    public class DefaultTabGroups {
+        public const string Content = "Content";
+        public static string Settings = "Settings";
     }
 }
