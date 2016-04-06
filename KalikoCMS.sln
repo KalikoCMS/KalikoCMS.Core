@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{325BBD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FE85CE25-7A58-4010-A5FA-1908F2A114A6}"
 	ProjectSection(SolutionItems) = preProject
+		ReleaseNotes.md = ReleaseNotes.md
 		WebEssentials-Settings.json = WebEssentials-Settings.json
 	EndProjectSection
 EndProject

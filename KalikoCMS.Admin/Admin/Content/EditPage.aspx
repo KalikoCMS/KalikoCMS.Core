@@ -98,6 +98,7 @@
             table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'},
             tools: {title: 'Tools', items: 'code'}
           },
+          paste_data_images: true,
           extended_valid_elements: "i[class],span,span[class]",
           relative_urls: false,
           toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code",
