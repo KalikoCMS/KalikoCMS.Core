@@ -85,21 +85,28 @@
           selector: "textarea.html-editor",
           plugins: [
               "advlist autolink lists link image charmap anchor",
-              "searchreplace visualblocks code",
-              "insertdatetime media table contextmenu paste"
+              "searchreplace visualblocks code hr",
+              "media table contextmenu paste"
           ],
           resize: true,
           height: 300,
-          menubar: false,
+          menu: {
+            edit: {title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall'},
+            insert: {title: 'Insert', items: 'link image media | charmap anchor hr'},
+            view: {title: 'View', items: 'visualaid visualblocks'},
+            format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat'},
+            table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'},
+            tools: {title: 'Tools', items: 'code'}
+          },
           extended_valid_elements: "i[class],span,span[class]",
           relative_urls: false,
           toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code",
           file_picker_callback: function (callback, value, meta) {
-            if (meta.filetype == 'file') {
+            if (meta.filetype === 'file') {
               top.registerCallback(function (newUrl, newType) { callback(newUrl); });
               top.propertyEditor.dialogs.openSelectLinkDialog(value, 0);
             }
-            if (meta.filetype == 'image') {
+            if (meta.filetype === 'image') {
               top.registerCallback(function (imagePath, cropX, cropY, cropW, cropH, originalPath, description) { callback(imagePath, { alt: description }); });
               top.propertyEditor.dialogs.openEditImageDialog(value, value, '', '', '', '', '', '', '');
             }
