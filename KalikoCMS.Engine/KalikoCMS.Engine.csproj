@@ -83,6 +83,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Attributes\AttributeReader.cs" />
+    <Compile Include="Attributes\SiteSettingsAttribute.cs" />
     <Compile Include="Attributes\PageTypeAttribute.cs" />
     <Compile Include="Attributes\PropertyAttribute.cs" />
     <Compile Include="Attributes\PropertyTypeAttribute.cs" />
@@ -105,6 +106,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\DefaultTabGroups.cs" />
+    <Compile Include="Core\EditableSite.cs" />
     <Compile Include="Core\FileSystemObject.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -114,6 +116,8 @@
     <Compile Include="Core\PageProxy.cs" />
     <Compile Include="Core\PageTag.cs" />
     <Compile Include="Core\PropertyDefinition.cs" />
+    <Compile Include="Core\CmsSite.cs" />
+    <Compile Include="Core\SiteProxy.cs" />
     <Compile Include="Core\Tag.cs" />
     <Compile Include="Core\TagContext.cs" />
     <Compile Include="Core\TagManager.cs" />
@@ -121,6 +125,7 @@
     <Compile Include="Data\AutoMapperConfiguration.cs" />
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Data\DataMetadataSource.cs" />
+    <Compile Include="Data\Entities\SitePropertyDefinitionEntity.cs" />
     <Compile Include="Data\Entities\PropertyTypeEntity.cs" />
     <Compile Include="Data\Entities\RedirectEntity.cs" />
     <Compile Include="Data\Entities\SiteEntity.cs" />
@@ -131,6 +136,9 @@
     <Compile Include="Data\Entities\SystemInfoEntity.cs" />
     <Compile Include="Data\Entities\TagContextEntity.cs" />
     <Compile Include="Data\Entities\TagEntity.cs" />
+    <Compile Include="Data\Maps\SitePropertyDefinitionMap.cs" />
+    <Compile Include="Data\Maps\SitePropertyMap.cs" />
+    <Compile Include="Data\Maps\SiteMap.cs" />
     <Compile Include="Data\Maps\DataStoreMap.cs" />
     <Compile Include="Data\Maps\PageInstanceMap.cs" />
     <Compile Include="Data\Maps\PageMap.cs" />
@@ -146,7 +154,9 @@
     <Compile Include="Data\Maps\TagMap.cs" />
     <Compile Include="Core\RedirectManager.cs" />
     <Compile Include="Data\PageInstanceStatus.cs" />
+    <Compile Include="Data\SiteData.cs" />
     <Compile Include="Data\Synchronizer.cs" />
+    <Compile Include="Events\SiteEventArgs.cs" />
     <Compile Include="Helpers\Markdown.cs" />
     <Compile Include="IDashboardArea.cs" />
     <Compile Include="Modules\RequestModuleBase.cs" />
@@ -221,6 +231,7 @@
     <Compile Include="Search\SearchResult.cs" />
     <Compile Include="Serialization\Base62.cs" />
     <Compile Include="Serialization\JsonSerialization.cs" />
+    <Compile Include="SiteFactory.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Events\SendFormEventArgs.cs" />
   </ItemGroup>

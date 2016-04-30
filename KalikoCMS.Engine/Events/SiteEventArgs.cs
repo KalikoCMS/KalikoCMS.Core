@@ -17,23 +17,32 @@
  */
 #endregion
 
-namespace KalikoCMS.Data.Entities {
+namespace KalikoCMS.Events {
     using System;
-    using System.Collections.Generic;
-    using Core.Collections;
+    using Core;
 
-    public class SiteEntity {
-        public virtual Guid SiteId { get; set; }
-        public virtual string Name { get; set; }
-        public virtual string Author { get; set; }
-        public virtual SortDirection ChildSortDirection { get; set; }
-        public virtual SortOrder ChildSortOrder { get; set; }
-        public virtual DateTime UpdateDate { get; set; }
-        
-        public virtual IList<SitePropertyEntity> SiteProperties { get; private set; }
+    public delegate void SiteEventHandler(object sender, SiteEventArgs e);
 
-        public SiteEntity() {
-            SiteProperties =new List<SitePropertyEntity>();
+    public class SiteEventArgs : EventArgs {
+        private readonly Guid _siteId;
+        private readonly int _languageId;
+        private CmsSite _site;
+
+        public SiteEventArgs(Guid siteId, int languageId) {
+            _siteId = siteId;
+            _languageId = languageId;
+        }
+
+        public int LanguageId {
+            get { return _languageId; }
+        }
+
+        public Guid SiteId {
+            get { return _siteId; }
+        }
+
+        public CmsSite Site {
+            get { return _site ?? (_site = SiteFactory.Get(_siteId)); }
         }
     }
 }

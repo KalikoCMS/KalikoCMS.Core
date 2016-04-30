@@ -228,6 +228,7 @@
     <Content Include="Admin\Content\Dialogs\SelectFileDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectLinkDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectPageDialog.aspx" />
+    <Content Include="Admin\Content\EditSite.aspx" />
     <Content Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.ascx" />
     <Content Include="Admin\Content\Dialogs\EditCollectionPropertyDialog.aspx" />
@@ -334,6 +335,13 @@
     </Compile>
     <Compile Include="Admin\Content\Dialogs\SelectLinkDialog.aspx.designer.cs">
       <DependentUpon>SelectLinkDialog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\EditSite.aspx.cs">
+      <DependentUpon>EditSite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\EditSite.aspx.designer.cs">
+      <DependentUpon>EditSite.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx.cs">
       <DependentUpon>BooleanPropertyEditor.ascx</DependentUpon>

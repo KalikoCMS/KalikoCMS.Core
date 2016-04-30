@@ -17,23 +17,14 @@
  */
 #endregion
 
-namespace KalikoCMS.Data.Entities {
+namespace KalikoCMS.Attributes {
     using System;
-    using System.Collections.Generic;
     using Core.Collections;
 
-    public class SiteEntity {
-        public virtual Guid SiteId { get; set; }
-        public virtual string Name { get; set; }
-        public virtual string Author { get; set; }
-        public virtual SortDirection ChildSortDirection { get; set; }
-        public virtual SortOrder ChildSortOrder { get; set; }
-        public virtual DateTime UpdateDate { get; set; }
-        
-        public virtual IList<SitePropertyEntity> SiteProperties { get; private set; }
-
-        public SiteEntity() {
-            SiteProperties =new List<SitePropertyEntity>();
-        }
+    [AttributeUsage(AttributeTargets.Class)]
+    public sealed class SiteSettingsAttribute : Attribute {
+        public Type[] AllowedTypes { get; set; }
+        public SortDirection DefaultChildSortDirection { get; set; }
+        public SortOrder DefaultChildSortOrder { get; set; }
     }
 }

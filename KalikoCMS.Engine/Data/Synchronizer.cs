@@ -31,6 +31,8 @@ namespace KalikoCMS.Data {
 
     internal class Synchronizer {
 
+        #region Synchronize page types
+
         public static void SynchronizePageTypes() {
             using (var context = new DataContext()) {
                 var fetchStrategy = new FetchStrategy {MaxFetchDepth = 1};
@@ -79,6 +81,9 @@ namespace KalikoCMS.Data {
             }
         }
 
+        #endregion
+
+        #region Synchronize properties
 
         private static void SynchronizeProperties(DataContext context, PageType pageType, Type type, IList<PropertyEntity> propertyEntities) {
             var propertyAttributeType = typeof(PropertyAttribute);
@@ -140,5 +145,93 @@ namespace KalikoCMS.Data {
 
             context.SaveChanges();
         }
+
+        #endregion
+
+        #region Synchronize site properties
+
+        public static void SynchronizeSiteProperties() {
+            var typesWithAttribute = AttributeReader.GetTypesWithAttribute(typeof(SiteSettingsAttribute)).ToList();
+            if (typesWithAttribute.Count > 1) {
+                throw new Exception("More than one class implementing Site was found!");
+            }
+            if (!typesWithAttribute.Any()) {
+                CmsSite.PropertyDefinitions = new List<PropertyDefinition>();
+                return;
+            }
+
+            var type = typesWithAttribute.First();
+            var siteSettingsAttribute = AttributeReader.GetAttribute<SiteSettingsAttribute>(type);
+            CmsSite.AllowedTypes = siteSettingsAttribute.AllowedTypes;
+            CmsSite.DefaultChildSortDirection = siteSettingsAttribute.DefaultChildSortDirection;
+            CmsSite.DefaultChildSortOrder = siteSettingsAttribute.DefaultChildSortOrder;
+
+            var definition = new List<PropertyDefinition>();
+            var propertyAttributeType = typeof(PropertyAttribute);
+            var requiredAttributeType = typeof(RequiredAttribute);
+            var sortOrder = 0;
+
+            using (var context = new DataContext()) {
+                var properties = context.SitePropertyDefinitions.ToList();
+                
+                foreach (var propertyInfo in type.GetProperties()) {
+                    var attributes = propertyInfo.GetCustomAttributes(true);
+
+                    var propertyAttribute = (PropertyAttribute)attributes.SingleOrDefault(propertyAttributeType.IsInstanceOfType);
+
+                    if (propertyAttribute != null) {
+                        var propertyName = propertyInfo.Name;
+                        var declaringType = propertyInfo.PropertyType;
+                        var propertyTypeId = PropertyType.GetPropertyTypeId(declaringType);
+
+                        if (!propertyAttribute.IsTypeValid(declaringType)) {
+                            var notSupportedException = new NotSupportedException(string.Format("The property attribute of '{0}' on site settings ({1}) does not support the propertytype!", propertyName, type.FullName));
+                            Logger.Write(notSupportedException, Logger.Severity.Critical);
+                            throw notSupportedException;
+                        }
+
+                        var required = attributes.Count(requiredAttributeType.IsInstanceOfType) > 0;
+
+                        sortOrder++;
+
+                        var property = properties.SingleOrDefault(p => p.Name == propertyName);
+
+                        if (property == null) {
+                            property = new SitePropertyDefinitionEntity {Name = propertyName};
+                            properties.Add(property);
+                        }
+
+                        property.PropertyTypeId = propertyTypeId;
+                        property.SortOrder = sortOrder;
+                        property.Header = propertyAttribute.Header;
+                        property.Required = required;
+
+                        // If generic and standard attribute, store generic type as parameter. Required for list types like CollectionProperty.
+                        if (declaringType.IsGenericType && propertyAttribute.GetType() == typeof(PropertyAttribute)) {
+                            var subType = declaringType.GetGenericArguments()[0];
+                            property.Parameters = subType.FullName + ", " + subType.Assembly.GetName().Name;
+                        }
+                        else {
+                            property.Parameters = propertyAttribute.Parameters;
+                        }
+
+                        if (property.PropertyId == 0) {
+                            context.Add(property);
+                        }
+
+                        var propertyDefinition = Mapper.Map<SitePropertyDefinitionEntity, PropertyDefinition>(property);
+                        propertyDefinition.TabGroup = propertyAttribute.TabGroup;
+                        definition.Add(propertyDefinition);
+                    }
+                }
+
+                context.SaveChanges();
+            }
+
+            CmsSite.PropertyDefinitions = definition;
+        }
+
+        #endregion
+
     }
 }

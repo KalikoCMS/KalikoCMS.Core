@@ -69,6 +69,22 @@ namespace KalikoCMS.Data {
             return propertyCollection;
         }
 
+        internal static PropertyCollection GetPropertiesForSite(Guid siteId, int languageId, DataContext context) {
+            var properties = from p in context.SitePropertyDefinitions
+                join pp in context.SiteProperties on new { PropertyId = p.PropertyId, SiteId = siteId, LanguageId = languageId} equals new {pp.PropertyId, pp.SiteId, pp.LanguageId} into merge
+                from m in merge.DefaultIfEmpty()
+                orderby p.SortOrder
+                select new PropertyItem {
+                    PropertyName = p.Name.ToLowerInvariant(),
+                    PropertyData = CreatePropertyData(p.PropertyTypeId, m.SiteData),
+                    PropertyId = p.PropertyId,
+                    PropertyTypeId = p.PropertyTypeId
+                };
+
+            var propertyCollection = new PropertyCollection { Properties = properties.ToList() };
+
+            return propertyCollection;
+        }
 
         internal static void RemovePropertiesFromCache(Guid pageId, int languageId, int version) {
             var cacheName = GetCacheName(pageId, languageId, version);

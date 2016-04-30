@@ -2,8 +2,9 @@
 * Properties now recognize [Required]-attribute
 * Improved Markdown editor with support for headings, CMS images and links
 * Added ability to use property tabs
-* Added drag&drop image embedding in TinyMCE-editor
+* Added drag & drop image inline embedding in TinyMCE-editor
 * Updated TinyMCE to 4.3.8
+* Added site settings
 
 ### New in 1.1.1
 * Improved MVC routing to actions on pages

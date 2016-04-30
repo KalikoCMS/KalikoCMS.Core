@@ -21,7 +21,6 @@ namespace KalikoCMS.Admin.Content.Dialogs {
     using System;
     using System.Linq;
     using System.Text;
-    using Configuration;
     using KalikoCMS.Core;
 
     public partial class SelectPagetypeDialog : System.Web.UI.Page {
@@ -32,20 +31,28 @@ namespace KalikoCMS.Admin.Content.Dialogs {
                 return;
             }
 
-            Type[] allowedTypes = null;
+            bool allowAll;
+            Type[] allowedTypes;
             Guid pageId;
             
             Guid.TryParse(Request.QueryString["pageId"], out pageId);
             
-            var allowAll = true;
+            if (SiteFactory.IsSite(pageId)) {
+                allowedTypes = CmsSite.AllowedTypes;
+                allowAll = allowedTypes == null;
 
-            if (pageId != SiteSettings.RootPage) {
+                if (allowedTypes != null && allowedTypes.Length == 0) {
+                    PageTypeList.Text = "No pages can be created under the selected page.";
+                    return;
+                }
+            }
+            else {
                 var parent = PageFactory.GetPage(pageId);
                 var parentPageType = pageTypes.Find(p => p.PageTypeId == parent.PageTypeId);
                 allowedTypes = parentPageType.AllowedTypes;
                 allowAll = parentPageType.AllowedTypes == null;
 
-                if (parentPageType.AllowedTypes != null && parentPageType.AllowedTypes.Length == 0) {
+                if (allowedTypes != null && allowedTypes.Length == 0) {
                     PageTypeList.Text = "No pages can be created under the selected page.";
                     return;
                 }
@@ -55,14 +62,14 @@ namespace KalikoCMS.Admin.Content.Dialogs {
             var count = 0;
 
             foreach (var pageType in pageTypes.OrderBy(x => x.DisplayName)) {
-                if (allowAll || allowedTypes.Contains(pageType.Type)) {
-                    if (count > 0 && count%2 == 0) {
-                        stringBuilder.Append("</div><div class=\"row\">");
-                    }
-                    var previewImage = string.IsNullOrEmpty(pageType.PreviewImage) ? "assets/images/defaultpagetype.png" : pageType.PreviewImage;
-                    stringBuilder.Append("<div class=\"col-xs-6\"><a href=\"javascript:selectPageType('" + pageType.PageTypeId + "')\" class=\"no-decoration\"><div class=\"media pick-box\"><div class=\"pull-left\"><img class=\"media-object\" src=\"" + previewImage + "\"></div><div class=\"media-body\"><h2 class=\"media-heading\">" + pageType.DisplayName + "</h2>" + pageType.PageTypeDescription + "</div></div></a></div>");
-                    count++;
+                if (!allowAll && !allowedTypes.Contains(pageType.Type)) continue;
+                
+                if (count > 0 && count%2 == 0) {
+                    stringBuilder.Append("</div><div class=\"row\">");
                 }
+                var previewImage = string.IsNullOrEmpty(pageType.PreviewImage) ? "assets/images/defaultpagetype.png" : pageType.PreviewImage;
+                stringBuilder.Append("<div class=\"col-xs-6\"><a href=\"javascript:selectPageType('" + pageType.PageTypeId + "')\" class=\"no-decoration\"><div class=\"media pick-box\"><div class=\"pull-left\"><img class=\"media-object\" src=\"" + previewImage + "\"></div><div class=\"media-body\"><h2 class=\"media-heading\">" + pageType.DisplayName + "</h2>" + pageType.PageTypeDescription + "</div></div></a></div>");
+                count++;
             }
 
             PageTypeList.Text = stringBuilder.ToString();

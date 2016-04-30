@@ -26,7 +26,7 @@ namespace KalikoCMS.Data.Entities {
         public virtual int PropertyId { get; set; }
         public virtual int LanguageId { get; set; }
         public virtual string SiteData { get; set; }
-        public virtual PropertyEntity Property { get; set; }
+        public virtual SitePropertyDefinitionEntity Property { get; set; }
         public virtual SiteEntity Site { get; set; }
     }
 }

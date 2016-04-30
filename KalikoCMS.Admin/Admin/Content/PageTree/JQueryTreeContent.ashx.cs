@@ -49,7 +49,10 @@ namespace KalikoCMS.Admin.Content.PageTree {
 
             var id = context.Request.Form["id"];
             if (id == "#") {
-                items.Add(new JQueryTreeItem {text = "Root", children = true, id = Guid.Empty.ToString(), parent = "#", icon = "jstree-rooticon"});
+                var siteId = Guid.Empty;
+                var site = SiteFactory.Get(siteId);
+                var jQueryTreeItem = new JQueryTreeItem {text = site.Name, children = true, id = siteId.ToString(), parent = "#", icon = "jstree-rooticon"};
+                items.Add(jQueryTreeItem);
                 context.Response.Write(Serialization.JsonSerialization.SerializeJson(items, new JSONParameters { UseExtensions = false, SerializeNullValues = false }));
                 context.Response.End();
             }

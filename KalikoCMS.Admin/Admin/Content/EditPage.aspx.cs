@@ -44,6 +44,10 @@ namespace KalikoCMS.Admin.Content {
         protected void Page_Init(object sender, EventArgs e) {
             GetQueryStringValues();
 
+            if (!IsPostBack) {
+                RedirectIfSite();
+            }
+
             SaveButton.Click += SaveButtonEventHandler;
             PublishButton.Click += PublishButtonEventHandler;
 
@@ -54,6 +58,12 @@ namespace KalikoCMS.Admin.Content {
             LoadControls();
 
             Session["CmsAdminMode"] = "yes";
+        }
+
+        private void RedirectIfSite() {
+            if (SiteFactory.IsSite(_pageId)) {
+                Response.Redirect(string.Format("EditSite.aspx?id={0}", _pageId));
+            }
         }
 
         private void GetQueryStringValues() {
@@ -160,9 +170,6 @@ namespace KalikoCMS.Admin.Content {
             else if(_pageTypeId > 0) {
                 LoadFormForNewPage();
             }
-            else {
-                LoadFormForRootPage();
-            }
         }
 
         private void LoadChildSortOrderLists() {
@@ -174,19 +181,6 @@ namespace KalikoCMS.Admin.Content {
 
             ChildSortDirection.Items.Add(new ListItem("Ascending", ((int)Core.Collections.SortDirection.Ascending).ToString()));
             ChildSortDirection.Items.Add(new ListItem("Descending", ((int)Core.Collections.SortDirection.Descending).ToString()));
-        }
-
-        private void LoadFormForRootPage() {
-            PageHeader.Text = "Root";
-            PageTypeName.Text = "Root";
-            PageId.Text = Guid.Empty.ToString();
-            PageName.Visible = false;
-            StartPublishDate.Visible = false;
-            StopPublishDate.Visible = false;
-            VisibleInMenu.Visible = false;
-            SaveButton.Visible = false;
-            PublishButton.Visible = false;
-            AdvancedOptionButton.Visible = false;
         }
 
         private void LoadFormForNewPage() {

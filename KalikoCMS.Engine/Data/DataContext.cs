@@ -26,7 +26,7 @@ namespace KalikoCMS.Data {
 
     public class DataContext : OpenAccessContext {
         private const string ConnectionStringName = "KalikoCMS";
-        private const int DatabaseVersion = 8;
+        private const int DatabaseVersion = 10;
         private static readonly MetadataContainer MetadataContainer;
         private static readonly BackendConfiguration BackendConfiguration;
 
@@ -96,8 +96,20 @@ namespace KalikoCMS.Data {
             get { return GetAll<RedirectEntity>(); }
         }
 
+        public IQueryable<SiteEntity> Sites {
+            get { return GetAll<SiteEntity>(); }
+        } 
+
         public IQueryable<SiteLanguageEntity> SiteLanguages {
             get { return GetAll<SiteLanguageEntity>(); }
+        }
+
+        public IQueryable<SitePropertyEntity> SiteProperties {
+            get { return GetAll<SitePropertyEntity>(); }
+        }
+
+        public IQueryable<SitePropertyDefinitionEntity> SitePropertyDefinitions {
+            get { return GetAll<SitePropertyDefinitionEntity>(); }
         }
 
         public IQueryable<SystemInfoEntity> SystemInfo {
