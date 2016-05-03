@@ -235,6 +235,7 @@
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.js" />
     <Content Include="Admin\Content\PropertyType\CompositePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\MarkdownPropertyEditor.ascx" />
+    <Content Include="Admin\Content\PropertyType\SelectorPropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\UniversalDateTimePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.js" />
@@ -363,6 +364,13 @@
     </Compile>
     <Compile Include="Admin\Content\PropertyType\MarkdownPropertyEditor.ascx.designer.cs">
       <DependentUpon>MarkdownPropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\SelectorPropertyEditor.ascx.cs">
+      <DependentUpon>SelectorPropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\SelectorPropertyEditor.ascx.designer.cs">
+      <DependentUpon>SelectorPropertyEditor.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Content\PropertyType\UniversalDateTimePropertyEditor.ascx.cs">
       <DependentUpon>UniversalDateTimePropertyEditor.ascx</DependentUpon>

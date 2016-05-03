@@ -161,6 +161,9 @@
     <Compile Include="IDashboardArea.cs" />
     <Compile Include="Modules\RequestModuleBase.cs" />
     <Compile Include="PropertyType\BooleanProperty.cs" />
+    <Compile Include="PropertyType\SelectorFactory.cs" />
+    <Compile Include="PropertyType\SelectorItem.cs" />
+    <Compile Include="PropertyType\SelectorProperty.cs" />
     <Compile Include="PropertyType\CollectionProperty.cs" />
     <Compile Include="PropertyType\CompositeProperty.cs" />
     <Compile Include="PropertyType\FileProperty.cs" />
@@ -168,6 +171,7 @@
     <Compile Include="PropertyType\LinkProperty.cs" />
     <Compile Include="PropertyType\MarkdownProperty.cs" />
     <Compile Include="PropertyType\PageLinkProperty.cs" />
+    <Compile Include="PropertyType\SelectorPropertyAttribute.cs" />
     <Compile Include="PropertyType\TagProperty.cs" />
     <Compile Include="PropertyType\TagPropertyAttribute.cs" />
     <Compile Include="PropertyType\UniversalDateTimeProperty.cs" />

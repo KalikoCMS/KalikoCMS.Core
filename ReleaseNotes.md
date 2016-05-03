@@ -5,6 +5,7 @@
 * Added drag & drop image inline embedding in TinyMCE-editor
 * Updated TinyMCE to 4.3.8
 * Added site settings
+* Added new selector property type
 
 ### New in 1.1.1
 * Improved MVC routing to actions on pages
