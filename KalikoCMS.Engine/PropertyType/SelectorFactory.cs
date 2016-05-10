@@ -22,7 +22,7 @@ namespace KalikoCMS.PropertyType {
     using Serialization;
 
     public abstract class SelectorFactory<T> {
-        public abstract List<SelectorItem<T>> Options { get; }
+        public abstract IEnumerable<SelectorItem<T>> Options { get; }
 
         public SelectorProperty<T> CreateProperty(string value) {
             return new SelectorProperty<T> { Value = JsonSerialization.DeserializeJson<T>(value) };
