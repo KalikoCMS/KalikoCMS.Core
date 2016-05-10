@@ -151,8 +151,19 @@ namespace KalikoCMS {
         }
 
         public static string ApplicationPath {
-            get { return _applicationPath ?? (_applicationPath = HttpContext.Current.Request.ApplicationPath); }
+            get { return _applicationPath ?? (_applicationPath = GetApplicationPath()); }
         }
+
+        private static string GetApplicationPath() {
+            var applicationPath = HttpContext.Current.Request.ApplicationPath;
+
+            if (applicationPath.EndsWith("/")) {
+                return applicationPath;
+            }
+            
+            return string.Format("{0}/", applicationPath);
+        }
+
 
         public static string DomainApplicationPath {
             get { return _domainApplicationPath ?? (_domainApplicationPath = GetDomainApplicationPath()); }
