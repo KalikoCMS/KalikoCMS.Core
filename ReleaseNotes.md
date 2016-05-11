@@ -7,6 +7,9 @@
 * Added site settings
 * Added new selector property type
 
+### New in 1.1.2
+* Fixed problem with URLs and virtual application paths
+
 ### New in 1.1.1
 * Improved MVC routing to actions on pages
 * Fixed problem with running actions in views
