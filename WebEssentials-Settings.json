@@ -27,7 +27,7 @@
   "Css": {
     "AdjustRelativePaths": true,
     "AutoMinify": true,
-    "Autoprefix": false,
+    "Autoprefix": true,
     "AutoprefixerBrowsers": null,
     "GenerateRtlSourceMaps": false,
     "GzipMinifiedFiles": false,

@@ -124,6 +124,6 @@ function renderEnhancedOption(text, description, image) {
     return '<div><div class="dropdown__title">' + text + '</div><div class="dropdown__description">' + description + '</div></div>';
 }
 function renderFullOption(text, description, image) {
-    return '<div class="clearfix"><img src="' + image + '" class=\"dropdown__image\" /><div class="dropdown__block"><div class="dropdown__title">' +
+    return '<div class="dropdown__item"><div><img src="' + image + '" class=\"dropdown__image\" /></div><div class="dropdown__block"><div class="dropdown__title">' +
         text + '</div><div class="dropdown__description">' + description + '</div></div></div>';
 }

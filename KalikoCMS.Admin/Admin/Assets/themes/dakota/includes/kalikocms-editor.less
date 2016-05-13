@@ -225,9 +225,14 @@
 }
 /*#endregion */
 
+/*#region Dropdown */
 
 .dropdown {
-    &__image { float:left; }
-    &__block { float:left; padding-left:10px; }
-    &__title { font-size:1em; font-weight:bold; }
+    &__item { display:flex; }
+    &__image { flex:0 0 auto; }
+    &__block { padding-left:10px; }
+    &__title { font-size:1em; font-weight:600; }
+    &__description { white-space:normal !important; }
 }
+
+/*#endregion */
