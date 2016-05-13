@@ -61,7 +61,7 @@ namespace KalikoCMS.Admin.Content {
         }
 
         private void RedirectIfSite() {
-            if (SiteFactory.IsSite(_pageId)) {
+            if (_pageTypeId == 0 && SiteFactory.IsSite(_pageId)) {
                 Response.Redirect(string.Format("EditSite.aspx?id={0}", _pageId));
             }
         }
