@@ -20,6 +20,7 @@
 namespace KalikoCMS.Admin.Content.PropertyType {
     using System;
     using System.Collections;
+    using System.Web.UI;
     using System.Web.UI.WebControls;
     using Core;
     using KalikoCMS.PropertyType;
@@ -74,16 +75,39 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             _options = (IEnumerable)_selectorFactory.GetType().GetProperty("Options").GetValue(_selectorFactory, null);
 
             var originalValue = OriginalValue;
+            var hasDescription = false;
+            var hasImage = false;
 
             foreach (var option in _options) {
                 var optionType = option.GetType();
                 var value = optionType.GetProperty("Value").GetValue(option, null);
                 var encodedValue = JsonSerialization.SerializeJson(value);
-                var text = (string)optionType.GetProperty("Text").GetValue(option, null);
-                var previewImage = optionType.GetProperty("PreviewImage").GetValue(option, null);
+                var title = (string)optionType.GetProperty("Title").GetValue(option, null);
+                var description = (string)optionType.GetProperty("Description").GetValue(option, null);
+                var previewImage = (string)optionType.GetProperty("PreviewImage").GetValue(option, null);
                 var selected = value.Equals(originalValue);
 
-                Value.Items.Add(new ListItem {Text = text, Value = encodedValue, Selected = selected});
+                var listItem = new ListItem { Text = title, Value = encodedValue, Selected = selected };
+                listItem.Attributes.Add("data-description", description);
+                listItem.Attributes.Add("data-image", previewImage);
+
+                Value.Items.Add(listItem);
+
+                if (!string.IsNullOrEmpty(description)) {
+                    hasDescription = true;
+                }
+                if (!string.IsNullOrEmpty(previewImage)) {
+                    hasImage = true;
+                }
+            }
+
+            if (hasImage)
+            {
+                Value.CssClass = "selectbox dropdown--full";
+            }
+            else if (hasDescription)
+            {
+                Value.CssClass = "selectbox dropdown--enhanced";
             }
         }
 

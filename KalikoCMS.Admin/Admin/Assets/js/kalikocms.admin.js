@@ -84,3 +84,46 @@ function initMarkdownEditor() {
         }
     });
 }
+
+
+function initDropDowns() {
+    $('select.selectbox')
+        .each(function(index) {
+            var element = $(this);
+
+            var render;
+            if (element.hasClass('dropdown--enhanced')) {
+                render = renderEnhancedOption;
+            }
+            else if (element.hasClass('dropdown--full')) {
+                render = renderFullOption;
+            }
+            else {
+                render = renderSimpleOption;
+            }
+
+            element.selectric({
+                optionsItemBuilder: function(itemData, element, index) {
+                    var description = element.attr('data-description');
+                    var image = element.attr('data-image');
+                    return render(itemData.text, description, image);
+                },
+                labelBuilder: function(currItem) {
+                    var description = currItem.element.attr('data-description');
+                    var image = currItem.element.attr('data-image');
+                    return render(currItem.text, description, image);
+                }
+            });
+        });
+}
+
+function renderSimpleOption(text, description, image) {
+    return text;
+}
+function renderEnhancedOption(text, description, image) {
+    return '<div><div class="dropdown__title">' + text + '</div><div class="dropdown__description">' + description + '</div></div>';
+}
+function renderFullOption(text, description, image) {
+    return '<div class="clearfix"><img src="' + image + '" class=\"dropdown__image\" /><div class="dropdown__block"><div class="dropdown__title">' +
+        text + '</div><div class="dropdown__description">' + description + '</div></div></div>';
+}

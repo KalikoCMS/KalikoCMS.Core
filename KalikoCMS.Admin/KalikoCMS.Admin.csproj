@@ -129,6 +129,12 @@
     <None Include="Admin\Assets\themes\dakota\theme.css">
       <DependentUpon>theme.less</DependentUpon>
     </None>
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.css">
+      <DependentUpon>kalikocms-editor.less</DependentUpon>
+    </Content>
+    <Content Include="Admin\Assets\themes\dakota\includes\kalikocms-editor.min.css">
+      <DependentUpon>kalikocms-editor.css</DependentUpon>
+    </Content>
     <Content Include="Admin\Assets\themes\dakota\theme.js" />
     <None Include="Admin\Assets\themes\dakota\includes\throbber.gif" />
     <Content Include="Admin\Assets\themes\dakota\theme.min.css">
@@ -140,6 +146,8 @@
     <Content Include="Admin\Assets\vendors\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Admin\Assets\vendors\jquery\css\jquery.jcrop.min.css" />
     <None Include="Admin\Assets\vendors\bootstrap\js\bootstrap-tagsinput.min.js" />
+    <Content Include="Admin\Assets\vendors\jquery\css\selectric.css" />
+    <Content Include="Admin\Assets\vendors\jquery\js\jquery.selectric.js" />
     <Content Include="Admin\Assets\vendors\jstree\themes\default\32px.png" />
     <Content Include="Admin\Assets\vendors\jstree\themes\default\40px.png" />
     <Content Include="Admin\Assets\vendors\jstree\themes\default\style.css" />
@@ -163,9 +171,6 @@
       <DependentUpon>kalikocms.admin.fileupload.min.js</DependentUpon>
     </Content>
     <Content Include="Admin\Assets\js\kalikocms.admin.taginput.js.bundle" />
-    <Content Include="Admin\Assets\js\kalikocms.admin.taginput.min.js.map">
-      <DependentUpon>kalikocms.admin.taginput.min.js</DependentUpon>
-    </Content>
     <Content Include="Admin\Assets\js\kalikocms.admin.imageeditor.js.bundle" />
     <Content Include="Admin\Assets\js\kalikocms.admin.imageeditor.min.js.map">
       <DependentUpon>kalikocms.admin.imageeditor.min.js</DependentUpon>

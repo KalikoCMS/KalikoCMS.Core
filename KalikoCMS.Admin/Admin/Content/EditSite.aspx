@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EditSite.aspx.cs" Inherits="KalikoCMS.Admin.Content.EditSite" ValidateRequest="false" MasterPageFile="../Templates/MasterPages/Base.Master" %>
+<%@ Import Namespace="KalikoCMS" %>
 <%@ Register tagPrefix="cms" tagName="StringPropertyEditor" src="PropertyType/StringPropertyEditor.ascx" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
@@ -39,12 +40,13 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="AdditionalScripts" runat="server">
-    <script src="assets/js/kalikocms.admin.editor.min.js" type="text/javascript"></script>
+    <script src="assets/js/kalikocms.admin.editor.min.js?v=<%=Utils.VersionHash %>" type="text/javascript"></script>
     
     <script type="text/javascript">
         $(document).ready(function() {
             initHtmlEditor('../assets/');
             initMarkdownEditor();
+            initDropDowns();
 
             <asp:Literal Id="ScriptArea" runat="server" />
 

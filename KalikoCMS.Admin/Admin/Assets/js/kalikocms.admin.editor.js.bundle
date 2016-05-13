@@ -15,5 +15,6 @@
     <file>/Admin/Assets/vendors/bootstrap-markdown/js/bootstrap-markdown.customization.js</file>
     <file>/Admin/Assets/vendors/bootstrap/js/bootstrap-datetimepicker.min.js</file>
     <file>/Admin/Assets/vendors/jquery/js/jquery-ui.min.js</file>
+    <file>/Admin/Assets/vendors/jquery/js/jquery.selectric.js</file>
   </files>
 </bundle>

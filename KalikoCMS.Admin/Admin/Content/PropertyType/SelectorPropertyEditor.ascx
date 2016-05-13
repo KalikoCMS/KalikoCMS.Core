@@ -3,7 +3,7 @@
     <asp:Label AssociatedControlID="Items" runat="server" ID="LabelText" Text="Text" CssClass="control-label col-xs-2" />
     <div class="col-xs-4">
         <asp:Literal runat="server" ID="Items" />
-        <asp:DropDownList ID="Value" CssClass="form-control" runat="server"/>
+        <asp:DropDownList ID="Value" CssClass="selectbox" runat="server"/>
         <asp:Literal ID="ErrorText" runat="server" />
     </div>
 </div>
