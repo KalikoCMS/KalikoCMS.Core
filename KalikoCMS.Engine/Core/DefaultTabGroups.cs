@@ -20,6 +20,6 @@
 namespace KalikoCMS.Core {
     public class DefaultTabGroups {
         public const string Content = "Content";
-        public static string Settings = "Settings";
+        public const string Settings = "Settings";
     }
 }
