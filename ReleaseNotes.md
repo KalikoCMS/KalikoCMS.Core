@@ -6,6 +6,7 @@
 * Updated TinyMCE to 4.3.8
 * Added site settings
 * Added new selector property type
+* Improved compability for custom date formats
 
 ### New in 1.1.2
 * Fixed problem with URLs and virtual application paths

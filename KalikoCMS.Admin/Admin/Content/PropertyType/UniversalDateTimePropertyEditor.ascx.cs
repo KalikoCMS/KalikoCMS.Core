@@ -44,7 +44,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                 var dateTimeProperty = new UniversalDateTimeProperty();
                 DateTime dateTime;
 
-                if (DateTime.TryParse(UniversalDateField.Value, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime)) {
+                if (DateTime.TryParseExact(UniversalDateField.Value, SiteSettings.Instance.DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime)) {
                     dateTimeProperty.Value = dateTime;
                 }
 
@@ -94,7 +94,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             }
 
             DateTime dateTime;
-            if (DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime)) {
+            if (DateTime.TryParseExact(value, SiteSettings.Instance.DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime)) {
                 return true;
             }
             else {
