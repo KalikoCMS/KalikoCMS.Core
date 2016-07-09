@@ -58,7 +58,8 @@ namespace KalikoCMS.Data {
                 SiteId = Guid.Empty,
                 Name = "Site",
                 ChildSortDirection = CmsSite.DefaultChildSortDirection,
-                ChildSortOrder = CmsSite.DefaultChildSortOrder
+                ChildSortOrder = CmsSite.DefaultChildSortOrder,
+                UpdateDate = DateTime.Now.ToUniversalTime()
             };
             context.AttachCopy(site);
             context.SaveChanges();
