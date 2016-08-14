@@ -20,6 +20,7 @@
 namespace KalikoCMS.PropertyType {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Text;
     using Attributes;
@@ -105,6 +106,7 @@ namespace KalikoCMS.PropertyType {
 
             var type = GetType();
             var propertyAttributeType = typeof(PropertyAttribute);
+            var requiredAttributeType = typeof(RequiredAttribute);
 
             var properties = new List<PropertyDefinition>();
             foreach (var propertyInfo in type.GetProperties()) {
@@ -117,6 +119,7 @@ namespace KalikoCMS.PropertyType {
 
                 var propertyName = propertyInfo.Name;
                 var declaringType = propertyInfo.PropertyType;
+                var required = attributes.Count(requiredAttributeType.IsInstanceOfType) > 0;
 
                 if (!propertyAttribute.IsTypeValid(declaringType)) {
                     var notSupportedException = new NotSupportedException(string.Format("The property attribute of '{0}' on property type '{1}' ({2}) does not support the type!", propertyName, type.Name, type.FullName));
@@ -135,6 +138,7 @@ namespace KalikoCMS.PropertyType {
                     Name = propertyName,
                     Parameters = propertyAttribute.Parameters,
                     PropertyTypeId = PropertyType.GetPropertyTypeId(declaringType),
+                    Required = required,
                     Value = value});
             }
 
@@ -173,6 +177,7 @@ namespace KalikoCMS.PropertyType {
             public string Parameters { get; set; }
             public Guid PropertyTypeId { get; set; }
             public PropertyData Value { get; set; }
+            public bool Required { get; set; }
         }
 
         #endregion

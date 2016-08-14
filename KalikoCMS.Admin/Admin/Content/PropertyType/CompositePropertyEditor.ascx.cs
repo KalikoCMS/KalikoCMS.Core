@@ -91,17 +91,18 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             }
 
             foreach (var property in _value.GetProperties(true)) {
-                AddControl(property.Name, property.Value, property.PropertyTypeId, property.Header, property.Parameters);
+                AddControl(property.Name, property.Value, property.PropertyTypeId, property.Header, property.Parameters, property.Required);
             }
         }
 
-        private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId, string headerText, string parameters) {
+        private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId, string headerText, string parameters, bool required) {
             var propertyType = PropertyType.GetPropertyType(propertyTypeId);
             var editControl = propertyType.EditControl;
 
             var loadControl = (PropertyEditorBase)LoadControl(editControl);
             loadControl.PropertyName = propertyName;
             loadControl.PropertyLabel = headerText;
+            loadControl.Required = required;
 
             if (propertyValue != null)
             {
