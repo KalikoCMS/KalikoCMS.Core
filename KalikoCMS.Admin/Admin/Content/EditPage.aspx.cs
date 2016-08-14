@@ -251,6 +251,12 @@ namespace KalikoCMS.Admin.Content {
 
             PageTypeName.Text = PageType.GetPageType(cmsPage.PageTypeId).DisplayName;
 
+            var basePage = PageFactory.GetPage(_pageId);
+            if (basePage != null) {
+                ShortUrl.Text = "<a href=\"/"+ basePage.ShortUrl + "\" target=\"_blank\">/" + basePage.ShortUrl + "</a>";
+                PublishedUrl.Text = "<a href=\"" + basePage.PageUrl + "\" target=\"_blank\">" + basePage.PageUrl + "</a>";
+            }
+
             var propertyDefinitions = PageType.GetPropertyDefinitions(cmsPage.PageTypeId);
 
             AddTabs(propertyDefinitions);

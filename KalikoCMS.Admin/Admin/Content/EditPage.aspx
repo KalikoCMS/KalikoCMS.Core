@@ -63,6 +63,18 @@
               <span class="static-text"><asp:Literal ID="PageTypeName" runat="server" /></span>
             </div>
           </div>
+          <div class="form-group">
+            <label class="control-label col-xs-2" for="PublishedUrl">Published Url</label>
+            <div class="controls col-xs-10">
+              <span class="static-text"><asp:Literal ID="PublishedUrl" runat="server" /></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-xs-2" for="ShortUrl">Short Url</label>
+            <div class="controls col-xs-10">
+              <span class="static-text"><asp:Literal ID="ShortUrl" runat="server" /></span>
+            </div>
+          </div>
           <div class="form-actions">
             <button id="versionbutton" type="button" class="btn btn-default pull-right"><i class="icon-code-fork"></i> Show versions</button>
             <asp:LinkButton runat="server" ID="PublishButton" CssClass="btn btn-lg btn-primary"><i class="icon-thumbs-up"></i> Publish page</asp:LinkButton>
