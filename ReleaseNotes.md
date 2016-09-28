@@ -7,6 +7,7 @@
 * Added site settings
 * Added new selector property type
 * Improved compability for custom date formats
+* Fixed problem with characters breaking collection property editor
 
 ### New in 1.1.2
 * Fixed problem with URLs and virtual application paths
