@@ -21,6 +21,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
     using System;
     using System.Collections;
     using System.Text;
+    using System.Web;
     using System.Web.UI;
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
@@ -58,7 +59,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             Items.Attributes.Add("data-type", _classParameter);
 
             if (IsPostBack) {
-                SerializedProperty = CollectionValue.Text;
+                SerializedProperty = HttpUtility.UrlDecode(CollectionValue.Text);
             }
         }
 
@@ -72,6 +73,11 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                     var property = (PropertyData)item;
                     var serializedProperty = SerializeProperty(property);
                     var exerpt = property.Preview;
+
+                    if (!string.IsNullOrEmpty(serializedProperty)) {
+                        serializedProperty = HttpUtility.UrlEncode(serializedProperty);
+                    }
+
                     stringBuilder.AppendFormat("<li class=\"btn btn-default collection-item\" data-value='{0}'><a href=\"#\" onclick=\"top.propertyEditor.collection.editField(this);return false;\" class=\"pull-right\"><i class=\"icon icon-edit\"></i> edit</a><i class=\"icon icon-sort\"></i> {1}</li>", serializedProperty, exerpt);
                 }
             }
@@ -88,7 +94,13 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate(bool required) {
-            return true;
+            if (required && string.IsNullOrEmpty(CollectionValue.Text)) {
+                ErrorText.Text = "* Required";
+                ErrorText.Visible = true;
+                return false;
+            }
+
+            return Validate();
         }
     }
 }

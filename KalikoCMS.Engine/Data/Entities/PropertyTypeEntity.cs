@@ -28,9 +28,11 @@ namespace KalikoCMS.Data.Entities {
         public virtual string EditControl { get; set; }
 
         public virtual IList<PropertyEntity> Properties { get; private set; }
+        public virtual IList<SitePropertyDefinitionEntity> SiteProperties { get; private set; }
  
         public PropertyTypeEntity() {
             Properties = new List<PropertyEntity>();
+            SiteProperties = new List<SitePropertyDefinitionEntity>();
         }
 
     }

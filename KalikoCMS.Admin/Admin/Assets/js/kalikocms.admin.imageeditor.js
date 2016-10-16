@@ -1,5 +1,4 @@
-﻿///#source 1 1 /Admin/Assets/vendors/jquery/js/jquery.color.js
-/*!
+﻿/*!
  * jQuery Color Animations v2.0pre
  * http://jquery.org/
  *
@@ -661,7 +660,6 @@
 	};
 })( jQuery );
 
-///#source 1 1 /Admin/Assets/vendors/jquery/js/jquery.jcrop.min.js
 /**
  * jquery.Jcrop.min.js v0.9.12 (build:20130202)
  * jQuery Image Cropping Plugin - released under MIT License

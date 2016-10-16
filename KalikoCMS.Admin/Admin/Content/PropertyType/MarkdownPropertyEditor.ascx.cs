@@ -23,7 +23,6 @@ namespace KalikoCMS.Admin.Content.PropertyType {
     using Configuration;
     using KalikoCMS.Core;
     using KalikoCMS.PropertyType;
-    using MarkdownSharp;
 
     public partial class MarkdownPropertyEditor : PropertyEditorBase {
 
@@ -49,7 +48,22 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate(bool required) {
+            if (required && string.IsNullOrEmpty(ValueField.Text)) {
+                ErrorText.Text = "* Required";
+                ErrorText.Visible = true;
+                return false;
+            }
+
             return Validate();
+        }
+
+        protected override void OnLoad(EventArgs e) {
+            base.OnLoad(e);
+
+            ScriptManager.RegisterClientScriptInclude(this, typeof(LinkPropertyEditor), "Admin.Content.PropertyType.LinkPropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/LinkPropertyEditor.js?v=" + Utils.VersionHash);
+            ScriptManager.RegisterClientScriptInclude(this, typeof(FilePropertyEditor), "Admin.Content.PropertyType.FilePropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/FilePropertyEditor.js?v=" + Utils.VersionHash);
+            ScriptManager.RegisterClientScriptInclude(this, typeof(PageLinkPropertyEditor), "Admin.Content.PropertyType.PageLinkPropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/PageLinkPropertyEditor.js?v=" + Utils.VersionHash);
+            ScriptManager.RegisterClientScriptInclude(this, typeof(ImagePropertyEditor), "Admin.Content.PropertyType.ImagePropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/ImagePropertyEditor.js?v=" + Utils.VersionHash);
         }
     }
 }

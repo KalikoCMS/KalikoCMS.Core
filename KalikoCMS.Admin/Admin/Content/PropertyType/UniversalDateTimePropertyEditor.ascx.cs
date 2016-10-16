@@ -44,7 +44,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                 var dateTimeProperty = new UniversalDateTimeProperty();
                 DateTime dateTime;
 
-                if (DateTime.TryParse(UniversalDateField.Value, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime)) {
+                if (DateTime.TryParseExact(UniversalDateField.Value, SiteSettings.Instance.DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime)) {
                     dateTimeProperty.Value = dateTime;
                 }
 
@@ -64,7 +64,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate() {
-            string value = UniversalDateField.Value;
+            var value = UniversalDateField.Value;
 
             if (!IsNumericOrEmpty(value)) {
                 ErrorText.Text = "* Not a valid date time";
@@ -77,14 +77,12 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate(bool required) {
-            string value = UniversalDateField.Value;
+            var value = UniversalDateField.Value;
 
-            if (required) {
-                if (string.IsNullOrEmpty(value)) {
-                    ErrorText.Text = "* Required";
-                    ErrorText.Visible = true;
-                    return false;
-                }
+            if (required && string.IsNullOrEmpty(value)) {
+                ErrorText.Text = "* Required";
+                ErrorText.Visible = true;
+                return false;
             }
 
             return Validate();
@@ -96,7 +94,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             }
 
             DateTime dateTime;
-            if (DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime)) {
+            if (DateTime.TryParseExact(value, SiteSettings.Instance.DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime)) {
                 return true;
             }
             else {

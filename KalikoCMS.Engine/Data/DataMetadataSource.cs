@@ -34,7 +34,10 @@ namespace KalikoCMS.Data {
                 new PropertyMap(),
                 new PropertyTypeMap(),
                 new RedirectMap(),
+                new SiteMap(),
                 new SiteLanguageMap(),
+                new SitePropertyMap(),
+                new SitePropertyDefinitionMap(),
                 new SystemInfoMap(),
                 new TagContextMap(),
                 new TagMap()

@@ -58,6 +58,8 @@ namespace KalikoCMS.Admin.Content.PropertyType {
 
         public override bool Validate(bool required) {
             if (required && string.IsNullOrEmpty(ValueField.Text)) {
+                ErrorText.Text = "* Required";
+                ErrorText.Visible = true;
                 return false;
             }
 

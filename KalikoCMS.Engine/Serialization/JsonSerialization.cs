@@ -27,11 +27,11 @@ namespace KalikoCMS.Serialization {
         private const int RandomlyChosenPrimeNumber = 17;
         private const int RandomlyChosenPrimeNumber2 = 31;
 
-        private static readonly JSONParameters GenericParameters = new JSONParameters {UseExtensions = false};
-        private static readonly JSONParameters TypedParameters = new JSONParameters { UseExtensions = true, UsingGlobalTypes = true };
+        private static readonly JSONParameters GenericParameters = new JSONParameters {UseExtensions = false, UseFastGuid = false };
+        private static readonly JSONParameters TypedParameters = new JSONParameters { UseExtensions = true, UsingGlobalTypes = true, UseFastGuid = false };
 
         public static T DeserializeJson<T>(string json) {
-            if (String.IsNullOrEmpty(json)) {
+            if (string.IsNullOrEmpty(json)) {
                 return default(T);
             }
 
@@ -47,7 +47,7 @@ namespace KalikoCMS.Serialization {
         }
 
         public static object DeserializeTypedJson(string json) {
-            if (String.IsNullOrEmpty(json)) {
+            if (string.IsNullOrEmpty(json)) {
                 return default(object);
             }
 

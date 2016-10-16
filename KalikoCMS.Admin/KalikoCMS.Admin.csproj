@@ -136,9 +136,12 @@
     </Content>
     <None Include="Admin\Assets\vendors\bootstrap-markdown\js\bootstrap-markdown.js" />
     <None Include="Admin\Assets\vendors\bootstrap\css\bootstrap-modal-bs3patch.css" />
+    <Content Include="Admin\Assets\vendors\bootstrap-markdown\js\bootstrap-markdown.customization.js" />
     <Content Include="Admin\Assets\vendors\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Admin\Assets\vendors\jquery\css\jquery.jcrop.min.css" />
     <None Include="Admin\Assets\vendors\bootstrap\js\bootstrap-tagsinput.min.js" />
+    <Content Include="Admin\Assets\vendors\jquery\css\selectric.css" />
+    <Content Include="Admin\Assets\vendors\jquery\js\jquery.selectric.js" />
     <Content Include="Admin\Assets\vendors\jstree\themes\default\32px.png" />
     <Content Include="Admin\Assets\vendors\jstree\themes\default\40px.png" />
     <Content Include="Admin\Assets\vendors\jstree\themes\default\style.css" />
@@ -162,9 +165,6 @@
       <DependentUpon>kalikocms.admin.fileupload.min.js</DependentUpon>
     </Content>
     <Content Include="Admin\Assets\js\kalikocms.admin.taginput.js.bundle" />
-    <Content Include="Admin\Assets\js\kalikocms.admin.taginput.min.js.map">
-      <DependentUpon>kalikocms.admin.taginput.min.js</DependentUpon>
-    </Content>
     <Content Include="Admin\Assets\js\kalikocms.admin.imageeditor.js.bundle" />
     <Content Include="Admin\Assets\js\kalikocms.admin.imageeditor.min.js.map">
       <DependentUpon>kalikocms.admin.imageeditor.min.js</DependentUpon>
@@ -203,22 +203,6 @@
     <Content Include="Admin\Assets\vendors\jquery\js\jquery.iframe-transport.js" />
     <Content Include="Admin\Assets\vendors\jquery\js\jquery.jcrop.min.js" />
     <Content Include="Admin\Assets\vendors\jquery\js\jquery.ui.widget.js" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-cool.gif" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-cry.gif" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-embarassed.gif" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-frown.gif" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-innocent.gif" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-kiss.gif" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-laughing.gif" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-money-mouth.gif" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-sealed.gif" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-smile.gif" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-surprised.gif" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-tongue-out.gif" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-undecided.gif" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-wink.gif" />
-    <Content Include="Admin\Assets\vendors\tinymce\plugins\emoticons\img\smiley-yell.gif" />
     <Content Include="Admin\Assets\vendors\tinymce\plugins\visualblocks\css\visualblocks.css" />
     <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\content.inline.min.css" />
     <Content Include="Admin\Assets\vendors\tinymce\skins\lightgray\content.min.css" />
@@ -243,12 +227,14 @@
     <Content Include="Admin\Content\Dialogs\SelectFileDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectLinkDialog.aspx" />
     <Content Include="Admin\Content\Dialogs\SelectPageDialog.aspx" />
+    <Content Include="Admin\Content\EditSite.aspx" />
     <Content Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.ascx" />
     <Content Include="Admin\Content\Dialogs\EditCollectionPropertyDialog.aspx" />
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.js" />
     <Content Include="Admin\Content\PropertyType\CompositePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\MarkdownPropertyEditor.ascx" />
+    <Content Include="Admin\Content\PropertyType\SelectorPropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\UniversalDateTimePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.ascx" />
     <Content Include="Admin\Content\PropertyType\FilePropertyEditor.js" />
@@ -316,6 +302,7 @@
     </None>
     <None Include="Admin\Assets\vendors\bootstrap-markdown\less\bootstrap-markdown.less" />
     <Content Include="Admin\Handlers\MarkdownHandler.ashx" />
+    <Content Include="Admin\Handlers\Base64Handler.ashx" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml">
       <SubType>Designer</SubType>
     </None>
@@ -349,6 +336,13 @@
     <Compile Include="Admin\Content\Dialogs\SelectLinkDialog.aspx.designer.cs">
       <DependentUpon>SelectLinkDialog.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\Content\EditSite.aspx.cs">
+      <DependentUpon>EditSite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\EditSite.aspx.designer.cs">
+      <DependentUpon>EditSite.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx.cs">
       <DependentUpon>BooleanPropertyEditor.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -370,6 +364,13 @@
     <Compile Include="Admin\Content\PropertyType\MarkdownPropertyEditor.ascx.designer.cs">
       <DependentUpon>MarkdownPropertyEditor.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\Content\PropertyType\SelectorPropertyEditor.ascx.cs">
+      <DependentUpon>SelectorPropertyEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Content\PropertyType\SelectorPropertyEditor.ascx.designer.cs">
+      <DependentUpon>SelectorPropertyEditor.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Content\PropertyType\UniversalDateTimePropertyEditor.ascx.cs">
       <DependentUpon>UniversalDateTimePropertyEditor.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -390,6 +391,9 @@
     </Compile>
     <Compile Include="Admin\Content\PropertyType\TagPropertyEditor.ascx.designer.cs">
       <DependentUpon>TagPropertyEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Handlers\Base64Handler.ashx.cs">
+      <DependentUpon>Base64Handler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Handlers\FileHandler.ashx.cs">
       <DependentUpon>FileHandler.ashx</DependentUpon>

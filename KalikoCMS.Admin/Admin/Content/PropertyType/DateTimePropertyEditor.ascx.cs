@@ -32,7 +32,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
 
         public override PropertyData PropertyValue {
             set {
-                DateTime? dateTime = ((DateTimeProperty)value).Value;
+                var dateTime = ((DateTimeProperty)value).Value;
                 if(dateTime==null) {
                     ValueField.Text = string.Empty;
                 }
@@ -41,10 +41,10 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                 }
             }
             get {
-                DateTimeProperty dateTimeProperty = new DateTimeProperty();
+                var dateTimeProperty = new DateTimeProperty();
                 DateTime dateTime;
 
-                if(DateTime.TryParse(ValueField.Text, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime)) {
+                if (DateTime.TryParseExact(ValueField.Text, SiteSettings.Instance.DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime)) {
                     dateTimeProperty.Value = dateTime;
                 }
 
@@ -77,16 +77,12 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate(bool required) {
-            string value = ValueField.Text;
-
-            if (required) {
-                if (string.IsNullOrEmpty(value)) {
-                    ErrorText.Text = "* Required";
-                    ErrorText.Visible = true;
-                    return false;
-                }
+            if (required && string.IsNullOrEmpty(ValueField.Text)) {
+                ErrorText.Text = "* Required";
+                ErrorText.Visible = true;
+                return false;
             }
-
+            
             return Validate();
         }
 
@@ -96,7 +92,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             }
 
             DateTime dateTime;
-            if (DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime)) {
+            if (DateTime.TryParseExact(value, SiteSettings.Instance.DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime)) {
                 return true;
             }
             else {

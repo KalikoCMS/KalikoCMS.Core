@@ -94,6 +94,12 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate(bool required) {
+            if (required && string.IsNullOrEmpty(ImagePath.Value)) {
+                ErrorText.Text = "* Required";
+                ErrorText.Visible = true;
+                return false;
+            }
+
             return Validate();
         }
 

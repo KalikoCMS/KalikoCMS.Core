@@ -24,7 +24,9 @@ namespace KalikoCMS.PropertyType {
 
     public abstract class PropertyEditorBase : UserControl {
         public string PropertyName { get; set; }
-        
+
+        public bool Required { get; set; }
+
         public abstract string PropertyLabel { set; }
         
         public abstract PropertyData PropertyValue { get; set; }

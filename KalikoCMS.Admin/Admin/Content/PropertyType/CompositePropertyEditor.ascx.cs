@@ -20,6 +20,7 @@
 namespace KalikoCMS.Admin.Content.PropertyType {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Core;
     using KalikoCMS.PropertyType;
 
@@ -73,7 +74,13 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate(bool required) {
-            return true;
+            if (_controls.Values.Any(control => !control.Validate(required))) {
+                ErrorText.Text = "* Required";
+                ErrorText.Visible = true;
+                return false;
+            }
+
+            return Validate();
         }
 
         protected override void OnInit(EventArgs e) {
@@ -84,17 +91,18 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             }
 
             foreach (var property in _value.GetProperties(true)) {
-                AddControl(property.Name, property.Value, property.PropertyTypeId, property.Header, property.Parameters);
+                AddControl(property.Name, property.Value, property.PropertyTypeId, property.Header, property.Parameters, property.Required);
             }
         }
 
-        private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId, string headerText, string parameters) {
+        private void AddControl(string propertyName, PropertyData propertyValue, Guid propertyTypeId, string headerText, string parameters, bool required) {
             var propertyType = PropertyType.GetPropertyType(propertyTypeId);
             var editControl = propertyType.EditControl;
 
             var loadControl = (PropertyEditorBase)LoadControl(editControl);
             loadControl.PropertyName = propertyName;
             loadControl.PropertyLabel = headerText;
+            loadControl.Required = required;
 
             if (propertyValue != null)
             {

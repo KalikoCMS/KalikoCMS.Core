@@ -1,3 +1,14 @@
+### New in 1.2.0
+* Properties now recognize [Required]-attribute
+* Improved Markdown editor with support for headings, CMS images and links
+* Added ability to use property tabs
+* Added drag & drop image inline embedding in TinyMCE-editor
+* Updated TinyMCE to 4.3.8
+* Added site settings
+* Added new selector property type
+* Improved compability for custom date formats
+* Fixed problem with characters breaking collection property editor
+
 ### New in 1.1.2
 * Fixed problem with URLs and virtual application paths
 

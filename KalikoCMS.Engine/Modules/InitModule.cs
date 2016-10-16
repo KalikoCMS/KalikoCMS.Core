@@ -25,6 +25,7 @@ namespace KalikoCMS.Modules {
     using System.Reflection;
     using System.Web;
     using Core;
+    using Core.Collections;
     using Data;
     using Data.Entities;
     using Kaliko;
@@ -79,6 +80,7 @@ namespace KalikoCMS.Modules {
             KeepDatabaseUpToDate();
             AutoMapperConfiguration.Configure();
             PageType.LoadPageTypes();
+            SiteFactory.LoadSites();
             PageFactory.IndexSite();
 
             ExecutePostStartupSequence(startupSequence);

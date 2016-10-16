@@ -30,6 +30,7 @@ namespace KalikoCMS.Data.Entities {
         public virtual bool ShowInAdmin { get; set; }
         public virtual int SortOrder { get; set; }
         public virtual string Parameters { get; set; }
+        public virtual bool Required { get; set; }
         public virtual PageTypeEntity PageType { get; set; }
         public virtual PropertyTypeEntity PropertyType { get; set; }
         public virtual IList<PagePropertyEntity> PageProperties { get; private set; }

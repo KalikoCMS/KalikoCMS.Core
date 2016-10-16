@@ -37,6 +37,9 @@ namespace KalikoCMS.Data {
                 .ForMember(m => m.ParentPath, o => o.Ignore())
                 .ReverseMap();
 
+            Mapper.CreateMap<CmsSite, EditableSite>()
+                .ReverseMap();
+
             Mapper.CreateMap<PageTagEntity, PageTag>()
                 .ReverseMap();
             
@@ -49,6 +52,7 @@ namespace KalikoCMS.Data {
             Mapper.CreateMap<PropertyItem, PropertyItem>();
 
             Mapper.CreateMap<PropertyEntity, PropertyDefinition>()
+                .ForMember(m => m.TabGroup, o => o.Ignore())
                 .ReverseMap();
 
             Mapper.CreateMap<PropertyTypeEntity, PropertyType>()
@@ -58,6 +62,10 @@ namespace KalikoCMS.Data {
 
             Mapper.CreateMap<SiteLanguageEntity, Language>()
                 .ReverseMap();
+
+            Mapper.CreateMap<SitePropertyDefinitionEntity, PropertyDefinition>()
+                .ForMember(m => m.PageTypeId, o => o.Ignore())
+                .ForMember(m => m.TabGroup, o => o.Ignore());
 
             Mapper.CreateMap<TagContextEntity, TagContext>()
                 .ForMember(m => m.Tags, o => o.Ignore())

@@ -23,7 +23,6 @@ namespace KalikoCMS.Core.Collections {
     using System.Collections.Generic;
 
     public class PropertyCollection : IEnumerable<PropertyItem> {
-
         internal List<PropertyItem> Properties { get; set; }
 
         public PropertyData this[string propertyName] {

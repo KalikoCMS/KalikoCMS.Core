@@ -64,11 +64,17 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate() {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool Validate(bool required) {
-            throw new NotImplementedException();
+            if (required && string.IsNullOrEmpty(PageId.Value)) {
+                ErrorText.Text = "* Required";
+                ErrorText.Visible = true;
+                return false;
+            }
+
+            return true;
         }
 
         protected override void OnLoad(EventArgs e) {

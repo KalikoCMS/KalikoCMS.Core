@@ -43,7 +43,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate() {
-            string value = ValueField.Text;
+            var value = ValueField.Text;
             int integerValue;
 
             if (string.IsNullOrEmpty(value) || int.TryParse(value, out integerValue)) {
@@ -57,7 +57,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate(bool required) {
-            string value = ValueField.Text;
+            var value = ValueField.Text;
             int integerValue;
 
             if (int.TryParse(value, out integerValue)) {
