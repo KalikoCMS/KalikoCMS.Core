@@ -188,14 +188,19 @@ namespace KalikoCMS.Admin.Content {
             SetStandardFieldLabels();
 
             var propertyDefinitions = PageType.GetPropertyDefinitions(_pageTypeId);
+            var pageType = PageType.GetPageType(_pageTypeId);
+            var parent = PageFactory.GetPage(_parentId);
+            var editablePage = parent.CreateChildPage(_pageTypeId);
+
+
             AddTabs(propertyDefinitions);
             foreach (var propertyDefinition in propertyDefinitions) {
-                AddControl(propertyDefinition.Name, null, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters, propertyDefinition.Required, propertyDefinition.TabGroup);
+                var propertyValue = editablePage.Property[propertyDefinition.Name];
+                AddControl(propertyDefinition.Name, propertyValue, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters, propertyDefinition.Required, propertyDefinition.TabGroup);
             }
 
             PageTypeName.Text = PageType.GetPageType(_pageTypeId).DisplayName;
 
-            var pageType = PageType.GetPageType(_pageTypeId);
             ChildSortDirection.SelectedValue = ((int)pageType.DefaultChildSortDirection).ToString();
             ChildSortOrder.SelectedValue = ((int)pageType.DefaultChildSortOrder).ToString();
         }

@@ -1,3 +1,6 @@
+### New in 1.2.1
+* Method for setting default values for pages
+
 ### New in 1.2.0
 * Properties now recognize [Required]-attribute
 * Improved Markdown editor with support for headings, CMS images and links

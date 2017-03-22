@@ -216,5 +216,8 @@ namespace KalikoCMS.Core {
             return workingCopy;
         }
 
+        public virtual void SetDefaults(EditablePage editablePage) {
+            // No defaults
+        }
     }
 }
