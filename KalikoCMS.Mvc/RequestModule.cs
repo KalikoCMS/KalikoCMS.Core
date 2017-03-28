@@ -63,7 +63,9 @@ namespace KalikoCMS.Mvc {
             }
 
             var type = GetControllerType(page);
-            var controller = (Controller)Activator.CreateInstance(type);
+
+            var controller = DependencyResolver.Current.GetService(type);
+
             var controllerName = StripEnd(type.Name.ToLowerInvariant(), "controller");
 
             HttpContext.Current.Items["cmsRouting"] = true;

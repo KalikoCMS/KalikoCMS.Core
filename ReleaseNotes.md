@@ -1,5 +1,7 @@
 ### New in 1.2.1
 * Method for setting default values for pages
+* Fixed problem where collection property editor breaks on larger property value
+* Added IoC support for MVC controllers
 
 ### New in 1.2.0
 * Properties now recognize [Required]-attribute
