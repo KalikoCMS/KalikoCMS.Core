@@ -31,6 +31,15 @@ namespace KalikoCMS.Admin.Content.Dialogs {
         protected global::System.Web.UI.WebControls.Literal PostbackResult;
         
         /// <summary>
+        /// PropertyTypeName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField PropertyTypeName;
+        
+        /// <summary>
         /// SaveButton control.
         /// </summary>
         /// <remarks>

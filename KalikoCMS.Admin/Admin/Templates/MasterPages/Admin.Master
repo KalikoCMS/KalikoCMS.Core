@@ -44,6 +44,21 @@
         .modal({ backdrop: 'static', width: width });
     }
 
+
+    function openModalViaPost(url, data, width, height) {
+      var $iframe = $('<iframe class="modal fade" style="height:' + height + 'px;left:50%" src="about:blank"></iframe>');
+      $.post(url, data)
+        .done(function (result) {
+          $iframe.modal({ backdrop: 'static', width: width });
+          $iframe.ready(function () {
+            var doc = $iframe[0].contentWindow.document;
+            doc.open();
+            doc.write(result);
+            doc.close();
+          });
+        });
+    }
+
     function closeModal() {
       $("iframe.modal:last").modal('hide');
     }

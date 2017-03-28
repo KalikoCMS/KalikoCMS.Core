@@ -1,5 +1,5 @@
 ﻿(function (propertyEditor) {
-    propertyEditor.image = {
+    propertyEditor.image = propertyEditor.image || {
         openDialog: function (pathField, previewImage, originalPathField, cropXField, cropYField, cropWField, cropHField, width, height, descriptionField) {
             var imagePath = $(pathField).val();
             var originalPath = $(originalPathField).val();
@@ -25,7 +25,7 @@
                     $(originalPathField).val('');
                 }
             };
-
+            
             top.registerCallback(callback);
 
             top.propertyEditor.dialogs.openEditImageDialog(imagePath, originalPath, cropX, cropY, cropW, cropH, width, height, description);
@@ -35,7 +35,7 @@
 
 
 (function (dialogs) {
-    dialogs.openEditImageDialog = function (imagePath, originalPath, cropX, cropY, cropW, cropH, width, height, description) {
+    dialogs.openEditImageDialog = dialogs.openEditImageDialog || function (imagePath, originalPath, cropX, cropY, cropW, cropH, width, height, description) {
         parent.openModal("Content/Dialogs/EditImageDialog.aspx?imagePath=" + imagePath + "&originalPath=" + originalPath + "&cropX=" + cropX + "&cropY=" + cropY + "&cropW=" + cropW + "&cropH=" + cropH + "&width=" + width + "&height=" + height + "&description=" + escape(description), 710, 500);
         return false;
     };

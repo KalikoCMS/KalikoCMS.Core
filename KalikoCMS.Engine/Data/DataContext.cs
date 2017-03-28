@@ -34,23 +34,23 @@ namespace KalikoCMS.Data {
             MetadataContainer = new DataMetadataSource().GetModel();
             BackendConfiguration = new BackendConfiguration();
 
-            #if DEBUG
+            //#if DEBUG
             // Debug data access by logging queries
-            BackendConfiguration.Logging.LogEvents = LoggingLevel.Normal;
-            BackendConfiguration.Logging.StackTrace = true;
-            BackendConfiguration.Logging.EventStoreCapacity = 10000;
-            BackendConfiguration.Logging.MetricStoreCapacity = 3600;
-            BackendConfiguration.Logging.MetricStoreSnapshotInterval = 1000;
-            BackendConfiguration.Logging.Downloader.EventBinary = true;
-            BackendConfiguration.Logging.Downloader.MetricBinary = true;
-            BackendConfiguration.Logging.Downloader.Filename = "C:\\Temp\\DataAccess";
-            BackendConfiguration.Logging.Downloader.MaxFileSizeKB = 1000;
-            BackendConfiguration.Logging.Downloader.NumberOfBackups = 3;
-            BackendConfiguration.Logging.Downloader.EventPollSeconds = 1;
-            BackendConfiguration.Logging.Downloader.MetricPollSeconds = 1;
-            #else
+            //BackendConfiguration.Logging.LogEvents = LoggingLevel.Normal;
+            //BackendConfiguration.Logging.StackTrace = true;
+            //BackendConfiguration.Logging.EventStoreCapacity = 10000;
+            //BackendConfiguration.Logging.MetricStoreCapacity = 3600;
+            //BackendConfiguration.Logging.MetricStoreSnapshotInterval = 1000;
+            //BackendConfiguration.Logging.Downloader.EventBinary = true;
+            //BackendConfiguration.Logging.Downloader.MetricBinary = true;
+            //BackendConfiguration.Logging.Downloader.Filename = "C:\\Temp\\DataAccess";
+            //BackendConfiguration.Logging.Downloader.MaxFileSizeKB = 1000;
+            //BackendConfiguration.Logging.Downloader.NumberOfBackups = 3;
+            //BackendConfiguration.Logging.Downloader.EventPollSeconds = 1;
+            //BackendConfiguration.Logging.Downloader.MetricPollSeconds = 1;
+            //#else
             BackendConfiguration.Logging.LogEvents = LoggingLevel.Errors;
-            #endif
+            //#endif
         }
         
 

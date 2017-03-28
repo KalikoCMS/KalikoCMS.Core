@@ -27,12 +27,18 @@ namespace KalikoCMS.Admin.Content.Dialogs {
         private Control _editor;
 
         protected void Page_Load(object sender, EventArgs e) {
-            var propertyType = Request.QueryString["propertyType"];
+            string propertyType = null;
             string value = null;
 
             if (!IsPostBack) {
-                value = Request.QueryString["value"];
+                propertyType = Request.Form["propertyType"];
+                value = Request.Form["value"];
             }
+            else {
+                propertyType = PropertyTypeName.Value;
+            }
+
+            PropertyTypeName.Value = propertyType;
 
             if (string.IsNullOrEmpty(propertyType)) {
                 // TODO: Load into container

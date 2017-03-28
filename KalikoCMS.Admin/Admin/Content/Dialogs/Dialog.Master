@@ -5,7 +5,7 @@
     
     <script type="text/javascript">
         $(document).ready(function() {
-          initHtmlEditor('../../assets/');
+          initHtmlEditor('../assets/');
           initMarkdownEditor();
           initDropDowns();
         });
