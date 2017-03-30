@@ -114,7 +114,7 @@ namespace KalikoCMS.Mvc {
             }
 
             var type = GetControllerType(page);
-            var controller = (Controller)Activator.CreateInstance(type);
+            var controller = DependencyResolver.Current.GetService(type);
             var controllerName = StripEnd(type.Name.ToLowerInvariant(), "controller");
             var httpContext = new HttpContextWrapper(HttpContext.Current);
             var route = new CmsRoute(page.PageUrl.ToString().TrimStart('/') + "{action}", new MvcRouteHandler());
