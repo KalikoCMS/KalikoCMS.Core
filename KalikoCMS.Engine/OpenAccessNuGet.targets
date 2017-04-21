@@ -25,6 +25,7 @@ Copyright (C) 2007-2015 Telerik AD. All rights reserved.
     <EnhancerVerboseMode Condition="'$(EnhancerVerboseMode)'==''">3</EnhancerVerboseMode>
     <Use64BitEnhancer Condition="'$(Use64BitEnhancer)'=='' And '$(PlatformTarget)'=='x64'">true</Use64BitEnhancer>
     <ValidateMapping Condition="'$(ValidateMapping)'==''">false</ValidateMapping>
+    <EnhancerDoNotCheckVersionOfReferencedAssemblies Condition="'$(EnhancerDoNotCheckVersionOfReferencedAssemblies)'==''">false</EnhancerDoNotCheckVersionOfReferencedAssemblies>
   </PropertyGroup>
 
   <!-- Register the enhancement tasks from the enhancer assembly -->
@@ -99,7 +100,8 @@ Copyright (C) 2007-2015 Telerik AD. All rights reserved.
     <KeyFileArg Condition="'$(AssemblyOriginatorKeyFile)'!=''"> -keyFile:"$(AssemblyOriginatorKeyFile)"</KeyFileArg>
     <KeyContainerArg Condition="'$(KeyContainerName)'!=''"> -keyContainer:"$(KeyContainerName)"</KeyContainerArg>
     <ReferencesArgs Condition="'$(ReferencesArgs)'==''"> -reference:"@(ReferencePath,'" -reference:"')"</ReferencesArgs>
-    <AdditionalEnhancerArgs Condition="'$(AdditionalEnhancerArgs)'==''">$(EnhancerMappingArgs)$(KeyFileArg)$(KeyContainerArg)$(ReferencesArgs)</AdditionalEnhancerArgs>
+    <DoNotCheckVersionOfReferencedAssembliesArgs Condition="'$(EnhancerDoNotCheckVersionOfReferencedAssembliesArgs)'=='true'"> -DoNotCheckVersionOfReferencedAssembliesArgs+</DoNotCheckVersionOfReferencedAssembliesArgs>
+    <AdditionalEnhancerArgs Condition="'$(AdditionalEnhancerArgs)'==''">$(EnhancerMappingArgs)$(KeyFileArg)$(KeyContainerArg)$(ReferencesArgs)$(DoNotCheckVersionOfReferencedAssembliesArgs)</AdditionalEnhancerArgs>
   </PropertyGroup>
 
   <!-- The OpenAccessEnhancer task enhances the project assembly with the OpenAccess ORM specific code -->
@@ -115,7 +117,8 @@ Copyright (C) 2007-2015 Telerik AD. All rights reserved.
         KeyFile="$(AssemblyOriginatorKeyFile)"
         KeyContainer="$(KeyContainerName)"
         References="@(ReferencePath)"
-        TargetFramework="$(TargetFrameworkVersion)" >
+        TargetFramework="$(TargetFrameworkVersion)"
+        DoNotCheckVersionOfReferencedAssemblies="$(EnhancerDoNotCheckVersionOfReferencedAssemblies)">
       <Output TaskParameter="Version" ItemName="EnhancerVersion" />
     </OpenAccessEnhancer>
     <Touch AlwaysCreate="true" Files="@(EnhancementFlagFile)" Time="%(IntermediateAssembly.ModifiedTime)" />
