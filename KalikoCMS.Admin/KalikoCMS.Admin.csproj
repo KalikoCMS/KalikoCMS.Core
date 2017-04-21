@@ -29,6 +29,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,7 +52,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="fastjson, Version=2.1.0.0, Culture=neutral, PublicKeyToken=6b75a806b86095cd, processorArchitecture=MSIL">
-      <HintPath>..\packages\fastJSON.2.1.14.0\lib\net40\fastjson.dll</HintPath>
+      <HintPath>..\packages\fastJSON.2.1.23\lib\net40\fastjson.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Kaliko.ImageLibrary, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
