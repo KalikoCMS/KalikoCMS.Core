@@ -86,3 +86,10 @@ Kaliko CMS is licensed under *GNU Lesser General Public License version 3 (LGPL)
 **KalikoCMS.Identity makes use of:**
 
 * ASP.NET Identity provider for Telerik Data Access  ([Ms-PL](http://opensource.org/licenses/MS-PL))
+
+## Thanks to
+
+This project has been developed using:
+* [BrowserStack](https://www.browserstack.com/)
+* [Document! X](http://www.innovasys.com/product/dx/overview)
+* [ReSharper](http://www.jetbrains.com/resharper/features/index.html?linklogos)
