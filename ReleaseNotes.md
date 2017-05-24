@@ -2,8 +2,10 @@
 * Method for setting default values for pages
 * Fixed problem where collection property editor breaks on larger property value
 * Fixed problem with non-responsive dialog when moving pages
+* Fixed problem with image editor in collection properties
 * Added IoC support for MVC controllers
 * Added option to select what fields to search in
+* Updated core project to ASP.NET 4.5
 
 ### New in 1.2.0
 * Properties now recognize [Required]-attribute
