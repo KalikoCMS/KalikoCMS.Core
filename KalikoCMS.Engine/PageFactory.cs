@@ -37,6 +37,7 @@ namespace KalikoCMS {
         private static PageEventHandler _pageSaved;
         private static PageEventHandler _pageDeleted;
         private static PageEventHandler _pagePublished;
+        private static PageEventHandler _pageMoved;
 
 
         private static PageIndex CurrentIndex {
@@ -404,6 +405,18 @@ namespace KalikoCMS {
         }
 
 
+        internal static void RaisePageMoved(Guid pageId, int languageId, int version) {
+            if (_pageMoved != null) {
+                try {
+                    _pageMoved(null, new PageEventArgs(pageId, languageId, version));
+                }
+                catch (Exception exception) {
+                    Logger.Write(exception, Logger.Severity.Major);
+                }
+            }
+        }
+
+
         internal static void RaisePageDeleted(Guid pageId, int languageId, int version) {
             if (_pageDeleted != null) {
                 try {
@@ -434,6 +447,16 @@ namespace KalikoCMS {
             }
             remove {
                 _pagePublished -= value;
+            }
+        }
+
+        public static event PageEventHandler PageMoved {
+            add {
+                _pageMoved -= value;
+                _pageMoved += value;
+            }
+            remove {
+                _pageMoved -= value;
             }
         }
 
@@ -580,6 +603,8 @@ namespace KalikoCMS {
             }
 
             ReorderChildren(pageId, targetId, position);
+
+            RaisePageMoved(pageId, 0, 0);
         }
 
         public static bool ReorderChildren(Guid pageId, Guid parentId, int position) {
