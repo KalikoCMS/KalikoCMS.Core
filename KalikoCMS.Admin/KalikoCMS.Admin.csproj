@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KalikoCMS</RootNamespace>
     <AssemblyName>KalikoCMS.Admin</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -39,6 +39,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,6 +50,7 @@
     <ExcludeFilesFromDeployment>Admin\Assets\themes\denim\theme.less;Admin\Assets\themes\denim\theme.css;Admin\Assets\themes\denim\theme.css.map;Admin\Assets\js\*.bundle;Admin\Assets\js\kalikocms.admin.core.js;Admin\Assets\js\kalikocms.admin.editor.js;Admin\Assets\js\kalikocms.admin.fileupload.js;Admin\Assets\js\kalikocms.admin.imageeditor.js;Admin\Assets\js\kalikocms.admin.taginput.js;Admin\Assets\js\*.map;Admin\Assets\vendors\tinymce\tinymce.min.js;Admin\Assets\vendors\tmpl.min.js;Admin\Assets\vendors\typeahead.min.js;Admin\Assets\vendors\jquery\js\jquery.*;Admin\Assets\vendors\jquery\js\jquery-ui.min.js;Admin\Assets\vendors\jquery\css\jquery-ui.custom.css;</ExcludeFilesFromDeployment>
     <ExcludeFoldersFromDeployment>Admin\Assets\less;Admin\Assets\vendors\bootstrap;Admin\Assets\themes\denim\includes;Admin\Assets\vendors\font-awesome\less;Admin\Assets\vendors\jstree;</ExcludeFoldersFromDeployment>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="fastjson, Version=2.1.0.0, Culture=neutral, PublicKeyToken=6b75a806b86095cd, processorArchitecture=MSIL">
@@ -65,12 +67,17 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="Telerik.OpenAccess, Version=2016.2.822.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <HintPath>..\packages\Telerik.DataAccess.Core.2016.2.822.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
       <Private>True</Private>

@@ -24,60 +24,62 @@ namespace KalikoCMS.Data {
 
     internal static class AutoMapperConfiguration {
         internal static void Configure() {
-            Mapper.CreateMap<CmsPage, EditablePage>()
-                .ForMember(m => m.PageInstanceId, o => o.MapFrom(m => m.PageInstanceId))
-                .ForMember(m => m.FirstChild, o => o.MapFrom(m => m.FirstChild))
-                .ForMember(m => m.NextPage, o => o.MapFrom(m => m.NextPage))
-                .ForMember(m => m.UrlSegment, o => o.MapFrom(m => m.UrlSegment))
-                .ForMember(m => m.Children, o => o.Ignore())
-                .ForMember(m => m.HasChildren, o => o.Ignore())
-                .ForMember(m => m.IsAvailable, o => o.Ignore())
-                .ForMember(m => m.Parent, o => o.Ignore())
-                .ForMember(m => m.ShortUrl, o => o.Ignore())
-                .ForMember(m => m.ParentPath, o => o.Ignore())
-                .ReverseMap();
+            Mapper.Initialize(configuration => {
+                configuration.CreateMap<CmsPage, EditablePage>()
+                    .ForMember(m => m.PageInstanceId, o => o.MapFrom(m => m.PageInstanceId))
+                    .ForMember(m => m.FirstChild, o => o.MapFrom(m => m.FirstChild))
+                    .ForMember(m => m.NextPage, o => o.MapFrom(m => m.NextPage))
+                    .ForMember(m => m.UrlSegment, o => o.MapFrom(m => m.UrlSegment))
+                    .ForMember(m => m.Children, o => o.Ignore())
+                    .ForMember(m => m.HasChildren, o => o.Ignore())
+                    .ForMember(m => m.IsAvailable, o => o.Ignore())
+                    .ForMember(m => m.Parent, o => o.Ignore())
+                    .ForMember(m => m.ShortUrl, o => o.Ignore())
+                    .ForMember(m => m.ParentPath, o => o.Ignore())
+                    .ReverseMap();
 
-            Mapper.CreateMap<CmsSite, EditableSite>()
-                .ReverseMap();
+                configuration.CreateMap<CmsSite, EditableSite>()
+                    .ReverseMap();
 
-            Mapper.CreateMap<PageTagEntity, PageTag>()
-                .ReverseMap();
-            
-            Mapper.CreateMap<PageTypeEntity, PageType>()
-                .ForMember(m => m.AllowedTypes, o => o.Ignore())
-                .ForMember(m => m.Type, o => o.Ignore())
-                .ForMember(m => m.PreviewImage, o => o.Ignore())
-                .ReverseMap();
+                configuration.CreateMap<PageTagEntity, PageTag>()
+                    .ReverseMap();
 
-            Mapper.CreateMap<PropertyItem, PropertyItem>();
+                configuration.CreateMap<PageTypeEntity, PageType>()
+                    .ForMember(m => m.AllowedTypes, o => o.Ignore())
+                    .ForMember(m => m.Type, o => o.Ignore())
+                    .ForMember(m => m.PreviewImage, o => o.Ignore())
+                    .ReverseMap();
 
-            Mapper.CreateMap<PropertyEntity, PropertyDefinition>()
-                .ForMember(m => m.TabGroup, o => o.Ignore())
-                .ReverseMap();
+                configuration.CreateMap<PropertyItem, PropertyItem>();
 
-            Mapper.CreateMap<PropertyTypeEntity, PropertyType>()
-                .ForMember(m => m.ClassInstance, o => o.Ignore())
-                .ForMember(m => m.Type, o => o.Ignore())
-                .ReverseMap();
+                configuration.CreateMap<PropertyEntity, PropertyDefinition>()
+                    .ForMember(m => m.TabGroup, o => o.Ignore())
+                    .ReverseMap();
 
-            Mapper.CreateMap<SiteLanguageEntity, Language>()
-                .ReverseMap();
+                configuration.CreateMap<PropertyTypeEntity, PropertyType>()
+                    .ForMember(m => m.ClassInstance, o => o.Ignore())
+                    .ForMember(m => m.Type, o => o.Ignore())
+                    .ReverseMap();
 
-            Mapper.CreateMap<SitePropertyDefinitionEntity, PropertyDefinition>()
-                .ForMember(m => m.PageTypeId, o => o.Ignore())
-                .ForMember(m => m.TabGroup, o => o.Ignore());
+                configuration.CreateMap<SiteLanguageEntity, Language>()
+                    .ReverseMap();
 
-            Mapper.CreateMap<TagContextEntity, TagContext>()
-                .ForMember(m => m.Tags, o => o.Ignore())
-                .ReverseMap()
-                .ForMember(m => m.Tags, o => o.Ignore());
+                configuration.CreateMap<SitePropertyDefinitionEntity, PropertyDefinition>()
+                    .ForMember(m => m.PageTypeId, o => o.Ignore())
+                    .ForMember(m => m.TabGroup, o => o.Ignore());
 
-            Mapper.CreateMap<TagEntity, Tag>()
-                .ForMember(m => m.Pages, o => o.Ignore())
-                .ForMember(m => m.TagContext, o => o.Ignore())
-                .ReverseMap()
-                .ForMember(m => m.PageTags, o => o.Ignore())
-                .ForMember(m => m.TagContext, o => o.Ignore());
+                configuration.CreateMap<TagContextEntity, TagContext>()
+                    .ForMember(m => m.Tags, o => o.Ignore())
+                    .ReverseMap()
+                    .ForMember(m => m.Tags, o => o.Ignore());
+
+                configuration.CreateMap<TagEntity, Tag>()
+                    .ForMember(m => m.Pages, o => o.Ignore())
+                    .ForMember(m => m.TagContext, o => o.Ignore())
+                    .ReverseMap()
+                    .ForMember(m => m.PageTags, o => o.Ignore())
+                    .ForMember(m => m.TagContext, o => o.Ignore());
+            });
 
             Mapper.AssertConfigurationIsValid();
         }
