@@ -5,7 +5,9 @@
 * Fixed problem with image editor in collection properties
 * Added IoC support for MVC controllers
 * Added option to select what fields to search in
+* Added PageMoved event
 * Updated core project to ASP.NET 4.5
+* Updated AutoMapper
 
 ### New in 1.2.0
 * Properties now recognize [Required]-attribute
