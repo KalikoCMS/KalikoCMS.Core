@@ -52,7 +52,7 @@ namespace KalikoCMS.Serialization {
             }
 
             try {
-                var instance = JSON.ToObject(json);
+                var instance = JSON.ToObject(json, TypedParameters);
                 return instance;
             }
             catch (Exception e) {

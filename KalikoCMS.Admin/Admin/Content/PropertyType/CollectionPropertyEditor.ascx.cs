@@ -75,7 +75,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                     var exerpt = property.Preview;
 
                     if (!string.IsNullOrEmpty(serializedProperty)) {
-                        serializedProperty = HttpUtility.UrlEncode(serializedProperty);
+                        serializedProperty = Uri.EscapeUriString(serializedProperty);
                     }
 
                     stringBuilder.AppendFormat("<li class=\"btn btn-default collection-item\" data-value='{0}'><a href=\"#\" onclick=\"top.propertyEditor.collection.editField(this);return false;\" class=\"pull-right\"><i class=\"icon icon-edit\"></i> edit</a><i class=\"icon icon-sort\"></i> {1}</li>", serializedProperty, exerpt);
