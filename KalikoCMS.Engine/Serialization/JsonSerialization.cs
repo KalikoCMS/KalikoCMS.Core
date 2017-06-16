@@ -27,7 +27,8 @@ namespace KalikoCMS.Serialization {
         private const int RandomlyChosenPrimeNumber = 17;
         private const int RandomlyChosenPrimeNumber2 = 31;
 
-        private static readonly JSONParameters GenericParameters = new JSONParameters {UseExtensions = false, UseFastGuid = false, EnableAnonymousTypes = true };
+        public static readonly JSONParameters AnonymousParameters = new JSONParameters { UseExtensions = false, UseFastGuid = false, EnableAnonymousTypes = true };
+        private static readonly JSONParameters GenericParameters = new JSONParameters { UseExtensions = false, UseFastGuid = false };
         private static readonly JSONParameters TypedParameters = new JSONParameters { UseExtensions = true, UsingGlobalTypes = true, UseFastGuid = false };
 
         public static T DeserializeJson<T>(string json) {
