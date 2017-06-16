@@ -1,5 +1,5 @@
 ﻿(function (propertyEditor) {
-    propertyEditor.collection = {
+    propertyEditor.collection = propertyEditor.collection || {
         openDialog: function (container, valueField, className) {
             var callback = function (val, exerpt) {
                 var list = $(container).find("ul.sortable-collection");
@@ -40,7 +40,7 @@
 
 
 (function (dialogs) {
-    dialogs.openEditCollectionPropertyDialog = function(className, value) {
+    dialogs.openEditCollectionPropertyDialog = dialogs.openEditCollectionPropertyDialog || function(className, value) {
         parent.openModalViaPost('Content/Dialogs/EditCollectionPropertyDialog.aspx', { propertyType: className, value: value }, 780, 460);
         return false;
     };

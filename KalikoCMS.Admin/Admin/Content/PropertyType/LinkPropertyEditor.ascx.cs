@@ -69,7 +69,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             ScriptManager.RegisterClientScriptInclude(this, typeof(FilePropertyEditor), "Admin.Content.PropertyType.FilePropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/FilePropertyEditor.js?v=" + Utils.VersionHash);
             ScriptManager.RegisterClientScriptInclude(this, typeof(PageLinkPropertyEditor), "Admin.Content.PropertyType.PageLinkPropertyEditor", SiteSettings.Instance.AdminPath + "Content/PropertyType/PageLinkPropertyEditor.js?v=" + Utils.VersionHash);
 
-            string clickScript = string.Format("top.propertyEditor.link.openDialog('#{0}','#{1}', '#{2}');return false;", Url.ClientID, Type.ClientID, DisplayField.ClientID);
+            string clickScript = string.Format("top.propertyEditor.link.openDialog($('#{0}'), $('#{1}'), $('#{2}'));return false;", Url.ClientID, Type.ClientID, DisplayField.ClientID);
             SelectButton.Attributes["onclick"] = clickScript;
         }
     }

@@ -84,6 +84,17 @@ namespace KalikoCMS.Admin.Content.PropertyType {
 
             string clickScript = string.Format("top.propertyEditor.pageLink.openDialog($('#{0}'),$('#{1}'),$('#{2}'));return false;", LanguageId.ClientID, PageId.ClientID, DisplayField.ClientID);
             SelectButton.Attributes["onclick"] = clickScript;
+
+            SetDisplayName();
+        }
+
+        private void SetDisplayName() {
+            var page = ((PageLinkProperty)PropertyValue).Page;
+            if (page == null) {
+                return;
+            }
+
+            DisplayField.Text = page.PageName;
         }
     }
 }

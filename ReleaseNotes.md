@@ -4,6 +4,8 @@
 * Fixed problem with non-responsive dialog when moving pages
 * Fixed problem with image editor in collection properties
 * Fixed problem with using composite properties in collections
+* Fixed problem with failing page saves on PageLink properties
+* Fixed problem with property type scripts when using collection properties
 * Added IoC support for MVC controllers
 * Added option to select what fields to search in
 * Added PageMoved event

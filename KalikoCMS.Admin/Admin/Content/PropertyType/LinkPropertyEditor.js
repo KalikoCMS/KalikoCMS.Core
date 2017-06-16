@@ -1,5 +1,5 @@
 ﻿(function (propertyEditor) {
-    propertyEditor.link = {
+    propertyEditor.link = propertyEditor.link || {
         openDialog: function (urlField, typeField, displayField) {
             var url = $(urlField).val();
             var type = $(typeField).val();
@@ -19,7 +19,7 @@
 
 
 (function (dialogs) {
-    dialogs.openSelectLinkDialog = function (url, type) {
+    dialogs.openSelectLinkDialog = dialogs.openSelectLinkDialog || function (url, type) {
         parent.openModal("Content/Dialogs/SelectLinkDialog.aspx?url=" + escape(url) + "&type=" + type, 500, 240);
         return false;
     };
