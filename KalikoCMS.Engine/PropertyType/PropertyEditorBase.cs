@@ -49,7 +49,7 @@ namespace KalikoCMS.PropertyType {
             set {
                 if (PropertyValue == null) {
                     // Note: Required for new generic properties like CollectionProperty that doesn't have a default empty value.
-                    PropertyValue = (PropertyData) JsonSerialization.DeserializeTypedJson(value);
+                    PropertyValue = (PropertyData)JsonSerialization.DeserializeTypedJson(value);
                 }
                 else {
                     PropertyValue = PropertyValue.Deserialize(value);

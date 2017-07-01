@@ -21,10 +21,10 @@ namespace KalikoCMS.Admin.Content.PageTree {
     using System;
     using System.Collections.Generic;
     using System.Web;
-    using fastJSON;
     using KalikoCMS.Core;
     using KalikoCMS.Data;
     using KalikoCMS.Caching;
+    using Serialization;
 
     public class JQueryTreeContent : IHttpHandler {
         private class JQueryTreeItem {
@@ -53,7 +53,7 @@ namespace KalikoCMS.Admin.Content.PageTree {
                 var site = SiteFactory.Get(siteId);
                 var jQueryTreeItem = new JQueryTreeItem {text = site.Name, children = true, id = siteId.ToString(), parent = "#", icon = "jstree-rooticon"};
                 items.Add(jQueryTreeItem);
-                context.Response.Write(Serialization.JsonSerialization.SerializeJson(items, new JSONParameters { UseExtensions = false, SerializeNullValues = false }));
+                context.Response.Write(JsonSerialization.SerializeJsonForAjax(items));
                 context.Response.End();
             }
 
@@ -68,7 +68,7 @@ namespace KalikoCMS.Admin.Content.PageTree {
                 items.Add(new JQueryTreeItem { text = text, children = page.HasChildren, id = childId.ToString(), icon = icon, a_attr = new JQueryTreeLink { href = page.PageUrl.ToString() } });
             }
 
-            context.Response.Write(Serialization.JsonSerialization.SerializeJson(items, new JSONParameters { UseExtensions = false, SerializeNullValues = false }));
+            context.Response.Write(JsonSerialization.SerializeJsonForAjax(items));
         }
 
         private void MoveNode(HttpContext context) {
@@ -98,7 +98,7 @@ namespace KalikoCMS.Admin.Content.PageTree {
         private static void WriteResponse(HttpContext context, bool status, string message) {
             var success = status ? "true" : "false";
             context.Response.ContentType = "application/json";
-            var json = Serialization.JsonSerialization.SerializeJson(new {success, message}, Serialization.JsonSerialization.AnonymousParameters);
+            var json = JsonSerialization.SerializeJson(new {success, message});
             context.Response.Write(json);
         }
 
