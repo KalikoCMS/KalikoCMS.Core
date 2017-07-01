@@ -1,4 +1,5 @@
 ### New in 1.2.1
+* Replaced JSON component
 * Method for setting default values for pages
 * Fixed problem where collection property editor breaks on larger property value
 * Fixed problem with non-responsive dialog when moving pages
