@@ -7,6 +7,7 @@
 * Fixed problem with failing page saves on PageLink properties
 * Fixed problem with property type scripts when using collection properties
 * Fixed problem with preview when site is set up as a subsite
+* Fixed problem with short url in editor when site is set up as a subsite
 * Fixed problem with editor allowing start publish date after stop publish date
 * Added IoC support for MVC controllers
 * Added option to select what fields to search in

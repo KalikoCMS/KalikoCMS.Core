@@ -259,7 +259,7 @@ namespace KalikoCMS.Admin.Content {
 
             var basePage = PageFactory.GetPage(_pageId);
             if (basePage != null) {
-                ShortUrl.Text = "<a href=\"/"+ basePage.ShortUrl + "\" target=\"_blank\">/" + basePage.ShortUrl + "</a>";
+                ShortUrl.Text = string.Format("<a href=\"{0}{1}\" target=\"_blank\">{0}{1}</a>", Utils.ApplicationPath, basePage.ShortUrl);
                 PublishedUrl.Text = "<a href=\"" + basePage.PageUrl + "\" target=\"_blank\">" + basePage.PageUrl + "</a>";
             }
 
@@ -347,7 +347,7 @@ namespace KalikoCMS.Admin.Content {
                 var stopPublishDate = ((UniversalDateTimeProperty)StopPublishDate.PropertyValue).Value;
 
                 if (startPublishDate != null && stopPublishDate != null && startPublishDate > stopPublishDate) {
-                    _errors.Add("Start publish date is higher than stop publish date");
+                    _errors.Add("Start publish date is later than stop publish date");
                     return false;
                 }
 
