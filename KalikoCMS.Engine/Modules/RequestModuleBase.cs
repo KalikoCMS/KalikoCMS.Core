@@ -57,16 +57,16 @@ namespace KalikoCMS.Modules {
         }
 
         private void HandleRequest() {
-            var url = RelativeUrl;
+            var relativeUrl = RelativeUrl;
 
-            if (IsUrlToPreview(url)) {
+            if (IsUrlToPreview(FullUrl)) {
                 PreviewPage();
             }
-            else if (IsUrlToStartPage(url)) {
+            else if (IsUrlToStartPage(relativeUrl)) {
                 RedirectToStartPage();
             }
             else {
-                PageFactory.FindPage(url, RequestManager);
+                PageFactory.FindPage(relativeUrl, RequestManager);
             }
         }
 
@@ -86,7 +86,13 @@ namespace KalikoCMS.Modules {
                 return url;
             }
         }
-        
+
+        private static string FullUrl {
+            get {
+                return HttpContext.Current.Request.Path.ToLowerInvariant();
+            }
+        }
+
         private bool IsUrlToPreview(string url) {
             if (!url.StartsWith("/")) {
                 url = string.Format("/{0}", url);

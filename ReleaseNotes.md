@@ -6,6 +6,7 @@
 * Fixed problem with using composite properties in collections
 * Fixed problem with failing page saves on PageLink properties
 * Fixed problem with property type scripts when using collection properties
+* Fixed problem with preview when site is set up as a subsite
 * Added IoC support for MVC controllers
 * Added option to select what fields to search in
 * Added PageMoved event
