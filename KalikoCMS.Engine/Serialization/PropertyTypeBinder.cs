@@ -90,6 +90,9 @@
          private static void RegisterBuiltInPropertyTypes() {
              foreach (var propertyType in Core.PropertyType.PropertyTypes) {
                  var type = propertyType.Type;
+                 if (type == null) {
+                     continue;
+                 }
                  RegisteredTypes.Add(type.FullName, type);
              }
          }
