@@ -40,6 +40,7 @@ namespace KalikoCMS.Admin.Content {
         private int _version;
         private bool _useTabs;
         private Dictionary<string, Panel> _tabs;
+        private List<string> _errors = new List<string>();
 
         protected void Page_Init(object sender, EventArgs e) {
             GetQueryStringValues();
@@ -287,7 +288,7 @@ namespace KalikoCMS.Admin.Content {
                 }
             }
             else {
-                ShowError(Feedback, "One or more errors occured!");
+                ShowError(Feedback, "One or more errors occured!<br/>" + string.Join("<br/>", _errors));
             }
         }
 
@@ -309,7 +310,7 @@ namespace KalikoCMS.Admin.Content {
                 }
             }
             else {
-                ShowError(Feedback, "One or more errors occured!");
+                ShowError(Feedback, "One or more errors occured!<br/>" + string.Join("<br/>", _errors));
             }
         }
 
@@ -320,16 +321,37 @@ namespace KalikoCMS.Admin.Content {
         protected bool IsDataValid {
             get {
                 if (!PageName.Validate(true)) {
+                    _errors.Add("Page name is not valid");
                     return false;
                 }
-                if (!StartPublishDate.Validate()) {
-                    return false;
-                }
-                if (!StopPublishDate.Validate()) {
+                if (!IsPublishDatesValid) {
                     return false;
                 }
 
                 return _controls.All(control => control.Validate(control.Required));
+            }
+        }
+
+        public bool IsPublishDatesValid {
+            get {
+                if (!StartPublishDate.Validate()) {
+                    _errors.Add("Start publish date is not valid");
+                    return false;
+                }
+                if (!StopPublishDate.Validate()) {
+                    _errors.Add("Stop publish date is not valid");
+                    return false;
+                }
+
+                var startPublishDate = ((UniversalDateTimeProperty)StartPublishDate.PropertyValue).Value;
+                var stopPublishDate = ((UniversalDateTimeProperty)StopPublishDate.PropertyValue).Value;
+
+                if (startPublishDate != null && stopPublishDate != null && startPublishDate > stopPublishDate) {
+                    _errors.Add("Start publish date is higher than stop publish date");
+                    return false;
+                }
+
+                return true;
             }
         }
 
