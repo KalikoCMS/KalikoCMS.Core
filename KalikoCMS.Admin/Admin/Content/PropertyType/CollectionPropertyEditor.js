@@ -55,7 +55,7 @@ $(document).ready(function () {
 
     function sortUpdate(event, ui) {
         var className = $(this).attr("data-type");
-        var value = '{"$types":{"KalikoCMS.PropertyType.CollectionProperty`1[[' + className +']], KalikoCMS.Engine":"1"},"$type":"1", "Items": [';
+        var value = '{"$type":"KalikoCMS.PropertyType.CollectionProperty`1[[' + className +']], KalikoCMS.Engine", "Items": [';
 
         $(this).children("li").each(function () {
             value += $(this).attr("data-value") + ",";

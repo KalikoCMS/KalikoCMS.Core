@@ -34,7 +34,7 @@ Optionally install [Kaliko CMS Search](https://www.nuget.org/packages/KalikoCMS.
 
 ## Requirements
 
-* ASP.NET 4.0 or later (ASP.NET 4.5 required for ASP.NET Identity provider)
+* ASP.NET 4.5 or later
 * Your choice of database ([list of supported databases](http://kaliko.com/cms/knowledge-base/supported-databases/))
 * ASP.NET MVC or WebForms depending of choice
 
@@ -54,7 +54,6 @@ Kaliko CMS is licensed under *GNU Lesser General Public License version 3 (LGPL)
 * Bootstrap-notify ([Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))
 * Bootstrap Tags Input ([MIT](http://opensource.org/licenses/mit-license.php))
 * Datepicker for Bootstrap ([Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))
-* fastJSON ([Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html))
 * Font Awesome ([SIL OFL/MIT](http://fortawesome.github.io/Font-Awesome/license/))
 * JavaScript Templates ([MIT](http://opensource.org/licenses/mit-license.php))
 * Jcrop ([MIT](http://opensource.org/licenses/mit-license.php))
@@ -63,6 +62,7 @@ Kaliko CMS is licensed under *GNU Lesser General Public License version 3 (LGPL)
 * jQuery Cookie plugin ([MIT](http://opensource.org/licenses/mit-license.php))
 * jQuery File Upload Plugin ([MIT](http://opensource.org/licenses/mit-license.php))
 * jQuery Selectric ([MIT](http://opensource.org/licenses/mit-license.php))
+* Json.NET ([MIT](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md))
 * jsTree ([MIT](http://opensource.org/licenses/mit-license.php))
 * Logger ([Ms-PL](http://dotnetlogger.codeplex.com/license))
 * MarkdownSharp ([MIT](http://opensource.org/licenses/mit-license.php))

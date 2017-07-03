@@ -19,17 +19,46 @@
 
 namespace KalikoCMS.Serialization {
     using System;
-    using System.Text.RegularExpressions;
     using Kaliko;
-    using fastJSON;
+    using Newtonsoft.Json;
 
     public class JsonSerialization {
-        private const int RandomlyChosenPrimeNumber = 17;
+        #region Private members
+
+        private static readonly JsonSerializerSettings AjaxSerializerSettings;
+        private static readonly JsonSerializerSettings StandardSerializerSettings;
+        private static readonly JsonSerializerSettings TypedJsonSerializerSettings;
+        private const int RandomlyChosenPrimeNumber1 = 17;
         private const int RandomlyChosenPrimeNumber2 = 31;
 
-        public static readonly JSONParameters AnonymousParameters = new JSONParameters { UseExtensions = false, UseFastGuid = false, EnableAnonymousTypes = true };
-        private static readonly JSONParameters GenericParameters = new JSONParameters { UseExtensions = false, UseFastGuid = false };
-        private static readonly JSONParameters TypedParameters = new JSONParameters { UseExtensions = true, UsingGlobalTypes = true, UseFastGuid = false };
+        #endregion
+
+        #region Constructors
+
+        static JsonSerialization() {
+            AjaxSerializerSettings = new JsonSerializerSettings {
+                TypeNameHandling = TypeNameHandling.None,
+                NullValueHandling = NullValueHandling.Ignore,
+                ContractResolver = new WritablePropertiesOnlyResolver()
+            };
+
+            StandardSerializerSettings = new JsonSerializerSettings {
+                TypeNameHandling = TypeNameHandling.None,
+                ContractResolver = new WritablePropertiesOnlyResolver()
+            };
+
+            TypedJsonSerializerSettings = new JsonSerializerSettings {
+                TypeNameHandling = TypeNameHandling.Objects,
+                SerializationBinder = new PropertyTypeBinder(),
+                ContractResolver = new WritablePropertiesOnlyResolver()
+            };
+        }
+
+        #endregion
+
+        #region Public functions
+
+        #region Deserialization
 
         public static T DeserializeJson<T>(string json) {
             if (string.IsNullOrEmpty(json)) {
@@ -37,11 +66,10 @@ namespace KalikoCMS.Serialization {
             }
 
             try {
-                var instance = JSON.ToObject<T>(json);
-                return instance;
+                return JsonConvert.DeserializeObject<T>(json, StandardSerializerSettings);
             }
-            catch (Exception e) {
-                Logger.Write("Could not deserialize " + json + ": " + e.Message, Logger.Severity.Major);
+            catch (Exception exception) {
+                Logger.Write($"Could not deserialize {json}: {exception.Message}", Logger.Severity.Major);
             }
 
             return default(T);
@@ -52,47 +80,42 @@ namespace KalikoCMS.Serialization {
                 return default(object);
             }
 
+            if (json.StartsWith("{\"$types\":")) {
+                json = LegacyJsonConverter.Convert(json);
+            }
+
             try {
-                var instance = JSON.ToObject(json, TypedParameters);
-                return instance;
+                return JsonConvert.DeserializeObject(json, TypedJsonSerializerSettings);
             }
             catch (Exception e) {
-                Logger.Write("Could not deserialize " + json + ": " + e.Message, Logger.Severity.Major);
+                Logger.Write($"Could not deserialize {json}: {e.Message}", Logger.Severity.Major);
             }
 
             return default(object);
         }
 
+        #endregion
+
+        #region Serialization
+
         public static string SerializeJson(object instance) {
-            return JSON.ToJSON(instance, GenericParameters);
+            return JsonConvert.SerializeObject(instance, StandardSerializerSettings);
         }
 
-        public static string SerializeJson(object instance, JSONParameters parameters) {
-            return JSON.ToJSON(instance, parameters);
+        public static string SerializeJsonForAjax(object instance) {
+            return JsonConvert.SerializeObject(instance, AjaxSerializerSettings);
         }
 
         public static string SerializeTypedJson(object instance) {
-            var json = JSON.ToJSON(instance, TypedParameters);
-
-            json = OptimizeJsonTypes(json);
-
-            return json;
+            return JsonConvert.SerializeObject(instance, TypedJsonSerializerSettings);
         }
 
-        private static string OptimizeJsonTypes(string json) {
-            var match = Regex.Match(json, ".*?\\\"\\$types\\\":\\{.*?\\}");
-            if (match.Success) {
-                var types = match.Groups[0].Value;
-                var optimizedTypes = Regex.Replace(types, @", Version=\d+.\d+.\d+.\d+", string.Empty);
-                optimizedTypes = Regex.Replace(optimizedTypes, @", Culture=\w+", string.Empty);
-                optimizedTypes = Regex.Replace(optimizedTypes, @", PublicKeyToken=\w+", string.Empty);
-                json = json.Replace(types, optimizedTypes);
-            }
-            return json;
-        }
+        #endregion
+
+        #region Hashing
 
         public static int GetNewHash() {
-            return RandomlyChosenPrimeNumber;
+            return RandomlyChosenPrimeNumber1;
         }
 
         public static int CombineHashCode(int hash, object o) {
@@ -104,5 +127,9 @@ namespace KalikoCMS.Serialization {
 
             return hash;
         }
+
+        #endregion
+
+        #endregion
     }
 }
