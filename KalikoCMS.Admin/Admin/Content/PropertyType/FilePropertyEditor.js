@@ -1,5 +1,5 @@
 ﻿(function (propertyEditor) {
-    propertyEditor.file = {
+    propertyEditor.file = propertyEditor.file || {
         openDialog: function(pathField, displayField) {
             var filePath = $(pathField).val();
 
@@ -17,7 +17,7 @@
 
 
 (function(dialogs) {
-    dialogs.openSelectFileDialog = function(filePath) {
+    dialogs.openSelectFileDialog = dialogs.openSelectFileDialog || function(filePath) {
         parent.openModal("Content/Dialogs/SelectFileDialog.aspx?filePath=" + filePath, 700, 500);
         return false;
     };

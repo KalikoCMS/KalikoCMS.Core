@@ -27,8 +27,15 @@ namespace KalikoCMS.PropertyType {
     public class PageLinkProperty : PropertyData {
         private int? _cachedHashCode;
         private CmsPage _page;
+        private Guid _pageId;
 
-        public Guid PageId { get; set; }
+        public Guid PageId {
+            get { return _pageId; }
+            set {
+                _pageId = value;
+                _page = null;
+            }
+        }
 
         public int LanguageId { get; set; }
 

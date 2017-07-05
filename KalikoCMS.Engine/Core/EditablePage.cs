@@ -122,6 +122,8 @@ namespace KalikoCMS.Core {
                 editablePage.TreeLevel = page.TreeLevel + 1;
             }
 
+            pageType.Instance.SetDefaults(editablePage);
+
             return editablePage;
         }
 

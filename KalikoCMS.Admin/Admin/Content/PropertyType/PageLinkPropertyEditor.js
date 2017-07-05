@@ -1,5 +1,5 @@
 ﻿(function (propertyEditor) {
-    propertyEditor.pageLink = {
+    propertyEditor.pageLink = propertyEditor.pageLink || {
         openDialog: function (languageField, pageField, displayField) {
             var languageId = languageField.val();
             var pageId = pageField.val();
@@ -18,7 +18,7 @@
 
 
 (function (dialogs) {
-    dialogs.openSelectPageDialog = function(pageId, languageId) {
+    dialogs.openSelectPageDialog = dialogs.openSelectPageDialog || function(pageId, languageId) {
         parent.openModal("Content/Dialogs/SelectPageDialog.aspx?pageId=" + pageId + "&languageId=" + languageId, 500, 400);
         return false;
     };

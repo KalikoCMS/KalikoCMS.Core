@@ -40,6 +40,7 @@ namespace KalikoCMS.Admin.Content {
         private int _version;
         private bool _useTabs;
         private Dictionary<string, Panel> _tabs;
+        private List<string> _errors = new List<string>();
 
         protected void Page_Init(object sender, EventArgs e) {
             GetQueryStringValues();
@@ -188,14 +189,19 @@ namespace KalikoCMS.Admin.Content {
             SetStandardFieldLabels();
 
             var propertyDefinitions = PageType.GetPropertyDefinitions(_pageTypeId);
+            var pageType = PageType.GetPageType(_pageTypeId);
+            var parent = PageFactory.GetPage(_parentId);
+            var editablePage = parent.CreateChildPage(_pageTypeId);
+
+
             AddTabs(propertyDefinitions);
             foreach (var propertyDefinition in propertyDefinitions) {
-                AddControl(propertyDefinition.Name, null, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters, propertyDefinition.Required, propertyDefinition.TabGroup);
+                var propertyValue = editablePage.Property[propertyDefinition.Name];
+                AddControl(propertyDefinition.Name, propertyValue, propertyDefinition.PropertyTypeId, propertyDefinition.Header, propertyDefinition.Parameters, propertyDefinition.Required, propertyDefinition.TabGroup);
             }
 
             PageTypeName.Text = PageType.GetPageType(_pageTypeId).DisplayName;
 
-            var pageType = PageType.GetPageType(_pageTypeId);
             ChildSortDirection.SelectedValue = ((int)pageType.DefaultChildSortDirection).ToString();
             ChildSortOrder.SelectedValue = ((int)pageType.DefaultChildSortOrder).ToString();
         }
@@ -253,7 +259,7 @@ namespace KalikoCMS.Admin.Content {
 
             var basePage = PageFactory.GetPage(_pageId);
             if (basePage != null) {
-                ShortUrl.Text = "<a href=\"/"+ basePage.ShortUrl + "\" target=\"_blank\">/" + basePage.ShortUrl + "</a>";
+                ShortUrl.Text = string.Format("<a href=\"{0}{1}\" target=\"_blank\">{0}{1}</a>", Utils.ApplicationPath, basePage.ShortUrl);
                 PublishedUrl.Text = "<a href=\"" + basePage.PageUrl + "\" target=\"_blank\">" + basePage.PageUrl + "</a>";
             }
 
@@ -282,7 +288,7 @@ namespace KalikoCMS.Admin.Content {
                 }
             }
             else {
-                ShowError(Feedback, "One or more errors occured!");
+                ShowError(Feedback, "One or more errors occured!<br/>" + string.Join("<br/>", _errors));
             }
         }
 
@@ -304,7 +310,7 @@ namespace KalikoCMS.Admin.Content {
                 }
             }
             else {
-                ShowError(Feedback, "One or more errors occured!");
+                ShowError(Feedback, "One or more errors occured!<br/>" + string.Join("<br/>", _errors));
             }
         }
 
@@ -315,16 +321,37 @@ namespace KalikoCMS.Admin.Content {
         protected bool IsDataValid {
             get {
                 if (!PageName.Validate(true)) {
+                    _errors.Add("Page name is not valid");
                     return false;
                 }
-                if (!StartPublishDate.Validate()) {
-                    return false;
-                }
-                if (!StopPublishDate.Validate()) {
+                if (!IsPublishDatesValid) {
                     return false;
                 }
 
                 return _controls.All(control => control.Validate(control.Required));
+            }
+        }
+
+        public bool IsPublishDatesValid {
+            get {
+                if (!StartPublishDate.Validate()) {
+                    _errors.Add("Start publish date is not valid");
+                    return false;
+                }
+                if (!StopPublishDate.Validate()) {
+                    _errors.Add("Stop publish date is not valid");
+                    return false;
+                }
+
+                var startPublishDate = ((UniversalDateTimeProperty)StartPublishDate.PropertyValue).Value;
+                var stopPublishDate = ((UniversalDateTimeProperty)StopPublishDate.PropertyValue).Value;
+
+                if (startPublishDate != null && stopPublishDate != null && startPublishDate > stopPublishDate) {
+                    _errors.Add("Start publish date is later than stop publish date");
+                    return false;
+                }
+
+                return true;
             }
         }
 

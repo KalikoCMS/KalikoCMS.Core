@@ -1,3 +1,21 @@
+### New in 1.2.1
+* Replaced JSON component
+* Method for setting default values for pages
+* Fixed problem where collection property editor breaks on larger property value
+* Fixed problem with non-responsive dialog when moving pages
+* Fixed problem with image editor in collection properties
+* Fixed problem with using composite properties in collections
+* Fixed problem with failing page saves on PageLink properties
+* Fixed problem with property type scripts when using collection properties
+* Fixed problem with preview when site is set up as a subsite
+* Fixed problem with short url in editor when site is set up as a subsite
+* Fixed problem with editor allowing start publish date after stop publish date
+* Added IoC support for MVC controllers
+* Added option to select what fields to search in
+* Added PageMoved event
+* Updated core project to ASP.NET 4.5
+* Updated AutoMapper
+
 ### New in 1.2.0
 * Properties now recognize [Required]-attribute
 * Improved Markdown editor with support for headings, CMS images and links

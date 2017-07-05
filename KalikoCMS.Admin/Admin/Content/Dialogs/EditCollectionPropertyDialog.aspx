@@ -2,9 +2,10 @@
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="MainArea" runat="server">
   <div class="form-horizontal fill-area">
-  <asp:PlaceHolder runat="server" ID="PropertyEditor" />
-  <asp:Literal runat="server" ID="PostbackResult" />  
+    <asp:PlaceHolder runat="server" ID="PropertyEditor" />
+    <asp:Literal runat="server" ID="PostbackResult" />  
   </div>
+  <asp:HiddenField ID="PropertyTypeName" runat="server" />
 </asp:Content>
 
 

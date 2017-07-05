@@ -23,7 +23,7 @@ namespace KalikoCMS.Core {
     using Kaliko;
 
     public class PropertyType {
-        private static readonly List<PropertyType> PropertyTypes = Data.PropertyTypeData.GetPropertyTypes();
+        internal static readonly List<PropertyType> PropertyTypes = Data.PropertyTypeData.GetPropertyTypes();
         private PropertyData _class;
 
         public Guid PropertyTypeId { get; set; }

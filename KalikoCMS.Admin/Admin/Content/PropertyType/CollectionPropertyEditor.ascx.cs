@@ -53,7 +53,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
 
             ScriptManager.RegisterClientScriptInclude(this, typeof(CollectionPropertyEditor), "Admin.Content.PropertyType.CollectionPropertyEditor", "Content/PropertyType/CollectionPropertyEditor.js?v=" + Utils.VersionHash);
 
-            var clickScript = string.Format("top.propertyEditor.collection.openDialog('#{0}', null, '{1}');return false;", ListContainer.ClientID, _classParameter);
+            var clickScript = string.Format("top.propertyEditor.collection.openDialog($('#{0}'), null, '{1}');return false;", ListContainer.ClientID, _classParameter);
             AddNewButton.Attributes["onclick"] = clickScript;
 
             Items.Attributes.Add("data-type", _classParameter);
@@ -75,10 +75,10 @@ namespace KalikoCMS.Admin.Content.PropertyType {
                     var exerpt = property.Preview;
 
                     if (!string.IsNullOrEmpty(serializedProperty)) {
-                        serializedProperty = HttpUtility.UrlEncode(serializedProperty);
+                        serializedProperty = Uri.EscapeUriString(serializedProperty);
                     }
 
-                    stringBuilder.AppendFormat("<li class=\"btn btn-default collection-item\" data-value='{0}'><a href=\"#\" onclick=\"top.propertyEditor.collection.editField(this);return false;\" class=\"pull-right\"><i class=\"icon icon-edit\"></i> edit</a><i class=\"icon icon-sort\"></i> {1}</li>", serializedProperty, exerpt);
+                    stringBuilder.AppendFormat("<li class=\"btn btn-default collection-item\" data-value=\"{0}\"><a href=\"#\" onclick=\"top.propertyEditor.collection.editField(this);return false;\" class=\"pull-right\"><i class=\"icon icon-edit\"></i> edit</a><i class=\"icon icon-sort\"></i> {1}</li>", serializedProperty, exerpt);
                 }
             }
 

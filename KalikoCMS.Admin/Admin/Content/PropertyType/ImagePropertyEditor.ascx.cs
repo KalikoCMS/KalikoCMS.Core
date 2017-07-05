@@ -124,7 +124,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
             }
 
             var clickScript = string.Format(
-                "top.propertyEditor.image.openDialog('#{0}', '#{1}', '#{2}', '#{3}', '#{4}', '#{5}', '#{6}', '{7}', '{8}', '#{9}');return false;",
+                "top.propertyEditor.image.openDialog($('#{0}'), $('#{1}'), $('#{2}'), $('#{3}'), $('#{4}'), $('#{5}'), $('#{6}'), '{7}', '{8}', $('#{9}'));return false;",
                 ImagePath.ClientID, ImagePreview.ClientID, OriginalImagePath.ClientID, CropX.ClientID,
                 CropY.ClientID, CropW.ClientID, CropH.ClientID, width, height, AltText.ClientID);
 
