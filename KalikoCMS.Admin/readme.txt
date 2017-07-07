@@ -10,8 +10,10 @@ Notice if you're upgrading Kaliko CMS (this doesn't apply to new projects):
  tested we recommend as an extra precaution to backup the database.
 ============================================================================
 
-New in 1.2.1:
+New in 1.2.2
+* Fixed problem with custom property types only used in site definition not registering
 
+New in 1.2.1:
 * Replaced JSON component
 * Method for setting default values for pages
 * Fixed problem where collection property editor breaks on larger property value
