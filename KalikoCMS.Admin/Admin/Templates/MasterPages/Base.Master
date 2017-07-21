@@ -28,5 +28,12 @@
     <script src="assets/js/kalikocms.admin.core.min.js?v=<%=Utils.VersionHash %>"></script>
     <asp:ContentPlaceHolder ID="AdditionalScripts" runat="server" />
     <script src="assets/themes/<%=KalikoCMS.Configuration.SiteSettings.Instance.Theme%>/theme.js?v=<%=Utils.VersionHash %>"></script>
+    
+    <!-- Temporary fix for script reference problem in Chrome -->  
+    <script src="Content/PropertyType/CollectionPropertyEditorNoExec.js?v=<%=Utils.VersionHash %>" type="text/javascript"></script>
+    <script src="Content/PropertyType/FilePropertyEditor.js?v=<%=Utils.VersionHash %>" type="text/javascript"></script>
+    <script src="Content/PropertyType/ImagePropertyEditor.js?v=<%=Utils.VersionHash %>" type="text/javascript"></script>
+    <script src="Content/PropertyType/LinkPropertyEditor.js?v=<%=Utils.VersionHash %>" type="text/javascript"></script>
+    <script src="Content/PropertyType/PageLinkPropertyEditor.js?v=<%=Utils.VersionHash %>" type="text/javascript"></script>
   </body>
 </html>
