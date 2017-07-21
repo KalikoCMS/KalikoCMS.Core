@@ -1,5 +1,5 @@
 ﻿
-Thanks for installing Kaliko CMS version 1.2.1!
+Thanks for installing Kaliko CMS version 1.2.2!
 
 Notice if you're upgrading Kaliko CMS (this doesn't apply to new projects):
 ============================================================================
