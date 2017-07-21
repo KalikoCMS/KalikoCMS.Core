@@ -275,6 +275,7 @@
     <Content Include="Files\Readme.txt" />
     <Content Include="ImageCache\readme.txt" />
     <Content Include="Login.aspx" />
+    <Content Include="readme.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

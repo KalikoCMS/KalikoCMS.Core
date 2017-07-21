@@ -192,6 +192,7 @@ namespace KalikoCMS.Data {
                             throw notSupportedException;
                         }
 
+                        PropertyTypeBinder.RegisterType(declaringType);
                         var required = attributes.Count(requiredAttributeType.IsInstanceOfType) > 0;
 
                         sortOrder++;

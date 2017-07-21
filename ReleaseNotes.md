@@ -1,3 +1,6 @@
+### New in 1.2.2
+* Fixed problem with custom property types only used in site definition not registering
+
 ### New in 1.2.1
 * Replaced JSON component
 * Method for setting default values for pages
