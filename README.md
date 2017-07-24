@@ -89,6 +89,8 @@ Kaliko CMS is licensed under *GNU Lesser General Public License version 3 (LGPL)
 
 ## Thanks to
 
+Thanks to Alvaro Muñoz (@pwntester) and Alexandr Mirosh from Hewlett-Packard Enterprise Security for great help with identifying and solving vulnerability related to JSON deserialization.
+
 This project has been developed using:
 * [BrowserStack](https://www.browserstack.com/)
 * [Document! X](http://www.innovasys.com/product/dx/overview)
