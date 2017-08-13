@@ -1,3 +1,6 @@
+### New in 1.2.3
+* Fixed script reference problem for property editors in Chrome
+
 ### New in 1.2.2
 * Fixed problem with custom property types only used in site definition not registering
 

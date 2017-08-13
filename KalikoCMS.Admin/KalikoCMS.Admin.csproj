@@ -237,7 +237,6 @@
     <Content Include="Admin\Content\Dialogs\SelectPageDialog.aspx" />
     <Content Include="Admin\Content\EditSite.aspx" />
     <Content Include="Admin\Content\PropertyType\BooleanPropertyEditor.ascx" />
-    <Content Include="Admin\Content\PropertyType\CollectionPropertyEditorNoExec.js" />
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.ascx" />
     <Content Include="Admin\Content\Dialogs\EditCollectionPropertyDialog.aspx" />
     <Content Include="Admin\Content\PropertyType\CollectionPropertyEditor.js" />

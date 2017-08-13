@@ -4,6 +4,13 @@
 <%@ Register tagPrefix="cms" tagName="UniversalDateTimePropertyEditor" src="PropertyType/UniversalDateTimePropertyEditor.ascx" %>
 <%@ Register tagPrefix="cms" tagName="BooleanPropertyEditor" src="PropertyType/BooleanPropertyEditor.ascx" %>
 
+<asp:Content ContentPlaceHolderID="HeaderScripts" runat="server">
+    <script type="text/javascript">
+        // Reset property editors
+        top.propertyEditor = null;
+    </script>
+</asp:Content>
+
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
   <form id="MainForm" class="page-editor admin-page" role="form" runat="server">
     <div class="page-head">
@@ -91,23 +98,23 @@
     <script src="assets/js/kalikocms.admin.editor.min.js?v=<%=Utils.VersionHash %>" type="text/javascript"></script>
     
     <script type="text/javascript">
-      $(document).ready(function () {
-        initHtmlEditor('../assets/');
-        initMarkdownEditor();
-        initDropDowns();
+        $(document).ready(function () {
+            initHtmlEditor('../assets/');
+            initMarkdownEditor();
+            initDropDowns();
         
-        <asp:Literal Id="ScriptArea" runat="server" />
+            <asp:Literal Id="ScriptArea" runat="server" />
 
-        warnBeforeLeavingIfChangesBeenMade();
+            warnBeforeLeavingIfChangesBeenMade();
 
-          $('#versionbutton').click(function() {
-              parent.openModal("Content/Dialogs/PageVersionDialog.aspx?id=<%=CurrentPageId%>", 700, 500);
-          });
+            $('#versionbutton').click(function() {
+                parent.openModal("Content/Dialogs/PageVersionDialog.aspx?id=<%=CurrentPageId%>", 700, 500);
+            });
 
-        $('#advanced-options').click(function() {
-            $('#<%=AdvancedOptionButton.ClientID%>').hide();
-            $('#advanced-panel').slideDown();
+            $('#advanced-options').click(function() {
+                $('#<%=AdvancedOptionButton.ClientID%>').hide();
+                $('#advanced-panel').slideDown();
+            });
         });
-      });
     </script>
 </asp:Content>
