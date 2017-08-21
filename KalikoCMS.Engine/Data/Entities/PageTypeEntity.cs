@@ -22,23 +22,23 @@ namespace KalikoCMS.Data.Entities {
     using KalikoCMS.Core.Collections;
 
     public class PageTypeEntity {
-        public virtual int PageTypeId { get; set; }
-        public virtual string Name { get; set; }
-        public virtual SortDirection DefaultChildSortDirection { get; set; }
-        public virtual SortOrder DefaultChildSortOrder { get; set; }
-        public virtual string DisplayName { get; set; }
-        public virtual string PageTypeDescription { get; set; }
-        public virtual string PageTemplate { get; set; }
-        public virtual bool? ShowPublishDates { get; set; }
-        public virtual bool? ShowSortOrder { get; set; }
-        public virtual bool? ShowVisibleInMenu { get; set; }
+        public int PageTypeId { get; set; }
+        public string Name { get; set; }
+        public SortDirection DefaultChildSortDirection { get; set; }
+        public SortOrder DefaultChildSortOrder { get; set; }
+        public string DisplayName { get; set; }
+        public string PageTypeDescription { get; set; }
+        public string PageTemplate { get; set; }
+        public bool? ShowPublishDates { get; set; }
+        public bool? ShowSortOrder { get; set; }
+        public bool? ShowVisibleInMenu { get; set; }
 
-        public virtual IList<PropertyEntity> Properties { get; private set; }
-        public virtual IList<PageEntity> Pages { get; private set; }
+        public virtual ICollection<PropertyEntity> Properties { get; set; }
+        public virtual ICollection<PageEntity> Pages { get; set; }
 
         public PageTypeEntity() {
-            Pages = new List<PageEntity>();
-            Properties = new List<PropertyEntity>();
+            Pages = new HashSet<PageEntity>();
+            Properties = new HashSet<PropertyEntity>();
         }
     }
 }

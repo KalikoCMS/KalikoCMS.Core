@@ -19,7 +19,7 @@
 
 namespace KalikoCMS.Data.Entities {
     public class SystemInfoEntity {
-        public virtual int DatabaseVersion { get; set; }
-        public virtual int Id { get; set; }
+        public int DatabaseVersion { get; set; }
+        public int Id { get; set; }
     }
 }

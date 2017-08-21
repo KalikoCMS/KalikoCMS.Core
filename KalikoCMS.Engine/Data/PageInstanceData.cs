@@ -17,25 +17,31 @@
  */
 #endregion
 
-namespace KalikoCMS.Data {
+namespace KalikoCMS.Data
+{
     using System;
     using System.Collections.Generic;
     using Entities;
 
-    public class PageInstanceData {
-        internal static PageInstanceEntity GetByStatus(Guid pageId, int languageId, PageInstanceStatus status) {
+    public class PageInstanceData
+    {
+        internal static PageInstanceEntity GetByStatus(Guid pageId, int languageId, PageInstanceStatus status)
+        {
             return DataManager.FirstOrDefault<PageInstanceEntity>(p => p.Status == status && p.PageId == pageId && p.LanguageId == languageId);
         }
 
-        internal static PageInstanceEntity GetByVersion(Guid pageId, int languageId, int version) {
+        internal static PageInstanceEntity GetByVersion(Guid pageId, int languageId, int version)
+        {
             return DataManager.FirstOrDefault<PageInstanceEntity>(p => p.CurrentVersion == version && p.PageId == pageId && p.LanguageId == languageId);
         }
 
-        public static List<PageInstanceEntity> GetById(Guid pageId, int languageId) {
+        public static List<PageInstanceEntity> GetById(Guid pageId, int languageId)
+        {
             return DataManager.Select<PageInstanceEntity>(p => p.PageId == pageId && p.LanguageId == languageId);
         }
 
-        internal static PageInstanceEntity GetById(int pageInstanceId) {
+        internal static PageInstanceEntity GetById(int pageInstanceId)
+        {
             return DataManager.FirstOrDefault<PageInstanceEntity>(p => p.PageInstanceId == pageInstanceId);
         }
     }

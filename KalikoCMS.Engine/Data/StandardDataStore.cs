@@ -17,31 +17,38 @@
  */
 #endregion
 
-namespace KalikoCMS.Data {
+namespace KalikoCMS.Data
+{
     using System;
     using Core;
     using Serialization;
 
-    public class StandardDataStore : DataStore {
+    public class StandardDataStore : DataStore
+    {
         public StandardDataStore(CmsPage page)
-            : base(page) {
+            : base(page)
+        {
         }
 
         public StandardDataStore(Guid id)
-            : base(id) {
+            : base(id)
+        {
         }
 
         public StandardDataStore(string id)
-            : base(id) {
+            : base(id)
+        {
         }
 
-        public override T Get<T>(string objectName) {
+        public override T Get<T>(string objectName)
+        {
             string key = CreateKey(objectName);
             string cacheKey = GetCacheKey(key);
 
             T objectInstance = Caching.CacheManager.Get<T>(cacheKey);
 
-            if (objectInstance == null) {
+            if (objectInstance == null)
+            {
                 objectInstance = ObjectInstance<T>(key);
 
                 Caching.CacheManager.Add(cacheKey, objectInstance);
@@ -50,20 +57,23 @@ namespace KalikoCMS.Data {
             return objectInstance;
         }
 
-        private static T ObjectInstance<T>(string key) {
+        private static T ObjectInstance<T>(string key)
+        {
             string value = null;
             KeyValuePair dataStoreItem = DataStoreData.GetDataStoreItem(key);
 
-            if (dataStoreItem != null) {
+            if (dataStoreItem != null)
+            {
                 value = dataStoreItem.Value;
             }
 
             T objectInstance = JsonSerialization.DeserializeJson<T>(value);
-            
+
             return objectInstance;
         }
 
-        public override void Store(string objectName, object instance) {
+        public override void Store(string objectName, object instance)
+        {
             string key = CreateKey(objectName);
             string value = JsonSerialization.SerializeJson(instance);
             string cacheKey = GetCacheKey(key);
@@ -74,7 +84,8 @@ namespace KalikoCMS.Data {
             Caching.CacheManager.Remove(cacheKey);
         }
 
-        private static string GetCacheKey(string key) {
+        private static string GetCacheKey(string key)
+        {
             return "DataStore:" + key;
         }
     }

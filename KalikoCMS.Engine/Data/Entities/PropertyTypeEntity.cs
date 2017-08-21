@@ -22,17 +22,17 @@ namespace KalikoCMS.Data.Entities {
     using System.Collections.Generic;
 
     public class PropertyTypeEntity {
-        public virtual Guid PropertyTypeId { get; set; }
-        public virtual string Name { get; set; }
-        public virtual string Class { get; set; }
-        public virtual string EditControl { get; set; }
+        public Guid PropertyTypeId { get; set; }
+        public string Name { get; set; }
+        public string Class { get; set; }
+        public string EditControl { get; set; }
 
-        public virtual IList<PropertyEntity> Properties { get; private set; }
-        public virtual IList<SitePropertyDefinitionEntity> SiteProperties { get; private set; }
+        public virtual ICollection<PropertyEntity> Properties { get; set; }
+        public virtual ICollection<SitePropertyDefinitionEntity> SiteProperties { get; set; }
  
         public PropertyTypeEntity() {
-            Properties = new List<PropertyEntity>();
-            SiteProperties = new List<SitePropertyDefinitionEntity>();
+            Properties = new HashSet<PropertyEntity>();
+            SiteProperties = new HashSet<SitePropertyDefinitionEntity>();
         }
 
     }

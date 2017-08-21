@@ -22,21 +22,22 @@ namespace KalikoCMS.Data.Entities {
     using System.Collections.Generic;
 
     public class PropertyEntity {
-        public virtual int PropertyId { get; set; }
-        public virtual Guid PropertyTypeId { get; set; }
-        public virtual int PageTypeId { get; set; }
-        public virtual string Name { get; set; }
-        public virtual string Header { get; set; }
-        public virtual bool ShowInAdmin { get; set; }
-        public virtual int SortOrder { get; set; }
-        public virtual string Parameters { get; set; }
-        public virtual bool Required { get; set; }
+        public int PropertyId { get; set; }
+        public Guid PropertyTypeId { get; set; }
+        public int PageTypeId { get; set; }
+        public string Name { get; set; }
+        public string Header { get; set; }
+        public bool ShowInAdmin { get; set; }
+        public int SortOrder { get; set; }
+        public string Parameters { get; set; }
+        public bool Required { get; set; }
+
         public virtual PageTypeEntity PageType { get; set; }
         public virtual PropertyTypeEntity PropertyType { get; set; }
-        public virtual IList<PagePropertyEntity> PageProperties { get; private set; }
+        public virtual ICollection<PagePropertyEntity> PageProperties { get; set; }
 
         public PropertyEntity() {
-            PageProperties = new List<PagePropertyEntity>();
+            PageProperties = new HashSet<PagePropertyEntity>();
         }
     }
 }

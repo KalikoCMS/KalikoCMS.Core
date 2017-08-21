@@ -88,20 +88,21 @@ namespace KalikoCMS.Modules {
         }
 
         private static void KeepDatabaseUpToDate() {
-            using (var context = new DataContext(true)) {
-                // Keep schema up to date
-                context.UpdateSchema();
+            // TODO:
+            //using (var context = new DataContext(true)) {
+            //    // Keep schema up to date
+            //    context.UpdateSchema();
 
-                // TODO: Read languages from web.config (i.e. don't hard code 'English')
-                // Ensure that at least one language is available
-                if (!context.SiteLanguages.Any()) {
-                    context.Add(new SiteLanguageEntity {
-                        ShortName = "en",
-                        LongName = "English"
-                    });
-                    context.SaveChanges();
-                }
-            }
+            //    // TODO: Read languages from web.config (i.e. don't hard code 'English')
+            //    // Ensure that at least one language is available
+            //    if (!context.SiteLanguages.Any()) {
+            //        context.Add(new SiteLanguageEntity {
+            //            ShortName = "en",
+            //            LongName = "English"
+            //        });
+            //        context.SaveChanges();
+            //    }
+            //}
         }
 
         private static List<IStartupSequence> GetStartupSequence() {

@@ -23,10 +23,11 @@ namespace KalikoCMS.Data.Entities {
     public class TagContextEntity {
         public virtual int TagContextId { get; set; }
         public virtual string ContextName { get; set; }
-        public virtual IList<TagEntity> Tags { get; private set; }
+
+        public virtual ICollection<TagEntity> Tags { get; set; }
 
         public TagContextEntity() {
-            Tags = new List<TagEntity>();
+            Tags = new HashSet<TagEntity>();
         }
 
     }

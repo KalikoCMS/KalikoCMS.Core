@@ -17,7 +17,8 @@
  */
 #endregion
 
-namespace KalikoCMS.Data {
+namespace KalikoCMS.Data
+{
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -25,43 +26,52 @@ namespace KalikoCMS.Data {
     using Core;
     using Core.Collections;
 
-    internal static class PropertyData {
-        internal static PropertyCollection GetPropertiesForPage(Guid pageId, int languageId, int pageTypeId, int version, bool useCache) {
+    internal static class PropertyData
+    {
+        internal static PropertyCollection GetPropertiesForPage(Guid pageId, int languageId, int pageTypeId, int version, bool useCache)
+        {
             var cacheName = GetCacheName(pageId, languageId, version);
 
             var propertyCollection = new PropertyCollection();
             List<PropertyItem> propertyItems = null;
 
-            if (useCache) {
+            if (useCache)
+            {
                 propertyItems = CacheManager.Get<List<PropertyItem>>(cacheName);
             }
 
-            if (propertyItems != null) {
+            if (propertyItems != null)
+            {
                 propertyCollection.Properties = propertyItems;
             }
-            else {
+            else
+            {
                 var context = new DataContext();
 
-                try {
+                try
+                {
                     var properties = from p in context.Properties
-                        join pp in context.PageProperties on new { PropertyId = p.PropertyId, PageId = pageId, LanguageId = languageId, Version = version } equals new { pp.PropertyId, pp.PageId, pp.LanguageId, pp.Version } into merge
-                        from m in merge.DefaultIfEmpty()
-                        where p.PageTypeId == pageTypeId
-                        orderby p.SortOrder
-                        select new PropertyItem {
-                            PagePropertyId = m.PagePropertyId,
-                            PropertyName = p.Name.ToLowerInvariant(),
-                            PropertyData = CreatePropertyData(p.PropertyTypeId, m.PageData),
-                            PropertyId = p.PropertyId,
-                            PropertyTypeId = p.PropertyTypeId
-                        };
+                                     join pp in context.PageProperties on new { PropertyId = p.PropertyId, PageId = pageId, LanguageId = languageId, Version = version } equals new { pp.PropertyId, pp.PageId, pp.LanguageId, pp.Version } into merge
+                                     from m in merge.DefaultIfEmpty()
+                                     where p.PageTypeId == pageTypeId
+                                     orderby p.SortOrder
+                                     select new PropertyItem
+                                     {
+                                         PagePropertyId = m.PagePropertyId,
+                                         PropertyName = p.Name.ToLowerInvariant(),
+                                         PropertyData = CreatePropertyData(p.PropertyTypeId, m.PageData),
+                                         PropertyId = p.PropertyId,
+                                         PropertyTypeId = p.PropertyTypeId
+                                     };
                     propertyCollection.Properties = properties.ToList();
                 }
-                finally {
+                finally
+                {
                     context.Dispose();
                 }
 
-                if (useCache) {
+                if (useCache)
+                {
                     CacheManager.Add(cacheName, propertyCollection.Properties, CachePriority.Medium, 30, true, true);
                 }
             }
@@ -69,34 +79,39 @@ namespace KalikoCMS.Data {
             return propertyCollection;
         }
 
-        internal static PropertyCollection GetPropertiesForSite(Guid siteId, int languageId, DataContext context) {
+        internal static PropertyCollection GetPropertiesForSite(Guid siteId, int languageId, DataContext context)
+        {
             var properties = from p in context.SitePropertyDefinitions
-                join pp in context.SiteProperties on new { PropertyId = p.PropertyId, SiteId = siteId, LanguageId = languageId} equals new {pp.PropertyId, pp.SiteId, pp.LanguageId} into merge
-                from m in merge.DefaultIfEmpty()
-                orderby p.SortOrder
-                select new PropertyItem {
-                    PropertyName = p.Name.ToLowerInvariant(),
-                    PropertyData = CreatePropertyData(p.PropertyTypeId, m.SiteData),
-                    PropertyId = p.PropertyId,
-                    PropertyTypeId = p.PropertyTypeId
-                };
+                             join pp in context.SiteProperties on new { PropertyId = p.PropertyId, SiteId = siteId, LanguageId = languageId } equals new { pp.PropertyId, pp.SiteId, pp.LanguageId } into merge
+                             from m in merge.DefaultIfEmpty()
+                             orderby p.SortOrder
+                             select new PropertyItem
+                             {
+                                 PropertyName = p.Name.ToLowerInvariant(),
+                                 PropertyData = CreatePropertyData(p.PropertyTypeId, m.SiteData),
+                                 PropertyId = p.PropertyId,
+                                 PropertyTypeId = p.PropertyTypeId
+                             };
 
             var propertyCollection = new PropertyCollection { Properties = properties.ToList() };
 
             return propertyCollection;
         }
 
-        internal static void RemovePropertiesFromCache(Guid pageId, int languageId, int version) {
+        internal static void RemovePropertiesFromCache(Guid pageId, int languageId, int version)
+        {
             var cacheName = GetCacheName(pageId, languageId, version);
             CacheManager.Remove(cacheName);
         }
 
-        private static Core.PropertyData CreatePropertyData(Guid propertyTypeId, string pageData) {
+        private static Core.PropertyData CreatePropertyData(Guid propertyTypeId, string pageData)
+        {
             var propertyType = PropertyType.GetPropertyType(propertyTypeId);
             return propertyType.ClassInstance.Deserialize(pageData);
         }
 
-        private static string GetCacheName(Guid pageId, int languageId, int version) {
+        private static string GetCacheName(Guid pageId, int languageId, int version)
+        {
             return string.Format("Property:{0}:{1}:{2}", pageId, languageId, version);
         }
     }

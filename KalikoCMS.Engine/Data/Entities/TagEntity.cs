@@ -21,14 +21,15 @@ namespace KalikoCMS.Data.Entities {
     using System.Collections.Generic;
 
     public class TagEntity {
-        public virtual int TagId { get; set; }
-        public virtual string TagName { get; set; }
-        public virtual int TagContextId { get; set; }
+        public int TagId { get; set; }
+        public string TagName { get; set; }
+        public int TagContextId { get; set; }
+
         public virtual TagContextEntity TagContext { get; set; }
-        public virtual IList<PageTagEntity> PageTags { get; private set; }
+        public virtual ICollection<PageTagEntity> PageTags { get; set; }
 
         public TagEntity() {
-            PageTags = new List<PageTagEntity>();
+            PageTags = new HashSet<PageTagEntity>();
         }
 
     }

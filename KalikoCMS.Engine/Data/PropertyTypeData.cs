@@ -17,7 +17,8 @@
  */
 #endregion
 
-namespace KalikoCMS.Data {
+namespace KalikoCMS.Data
+{
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -27,11 +28,13 @@ namespace KalikoCMS.Data {
     using Core;
     using Entities;
 
-    internal static class PropertyTypeData {
+    internal static class PropertyTypeData
+    {
         private static List<PropertyType> _propertyTypes;
 
 
-        internal static List<PropertyType> GetPropertyTypes() {
+        internal static List<PropertyType> GetPropertyTypes()
+        {
             GetPropertyTypesFromDatabase();
             UpdatePropertyTypesFromBinaries();
             UpdatePropertyTypesInDatabase();
@@ -40,15 +43,18 @@ namespace KalikoCMS.Data {
         }
 
 
-        private static void UpdatePropertyTypesFromBinaries() {
-            var typesWithAttribute = AttributeReader.GetTypesWithAttribute(typeof (PropertyTypeAttribute));
+        private static void UpdatePropertyTypesFromBinaries()
+        {
+            var typesWithAttribute = AttributeReader.GetTypesWithAttribute(typeof(PropertyTypeAttribute));
 
-            foreach (var type in typesWithAttribute) {
-                var customAttributes = type.GetCustomAttributes(typeof (PropertyTypeAttribute), false);
-                if (!customAttributes.Any()) {
+            foreach (var type in typesWithAttribute)
+            {
+                var customAttributes = type.GetCustomAttributes(typeof(PropertyTypeAttribute), false);
+                if (!customAttributes.Any())
+                {
                     throw new Exception(string.Format("Property type '{0}' is missing the Property attribute!", type.Name));
                 }
-                var customAttribute = (PropertyTypeAttribute) customAttributes[0];
+                var customAttribute = (PropertyTypeAttribute)customAttributes[0];
                 var proptertyTypeId = new Guid(customAttribute.PropertyTypeId);
                 var propertyType = GetExistingPropertyTypeOrCreateNew(proptertyTypeId);
 
@@ -59,8 +65,10 @@ namespace KalikoCMS.Data {
             }
         }
 
-        private static string FixPath(string path) {
-            if (path == null) {
+        private static string FixPath(string path)
+        {
+            if (path == null)
+            {
                 return null;
             }
 
@@ -68,11 +76,13 @@ namespace KalikoCMS.Data {
         }
 
 
-        private static PropertyType GetExistingPropertyTypeOrCreateNew(Guid propertyTypeId) {
+        private static PropertyType GetExistingPropertyTypeOrCreateNew(Guid propertyTypeId)
+        {
             var propertyType = _propertyTypes.SingleOrDefault(p => p.PropertyTypeId == propertyTypeId);
 
-            if (propertyType == null) {
-                propertyType = new PropertyType {PropertyTypeId = propertyTypeId};
+            if (propertyType == null)
+            {
+                propertyType = new PropertyType { PropertyTypeId = propertyTypeId };
                 _propertyTypes.Add(propertyType);
             }
 
@@ -80,12 +90,14 @@ namespace KalikoCMS.Data {
         }
 
 
-        private static void GetPropertyTypesFromDatabase() {
+        private static void GetPropertyTypesFromDatabase()
+        {
             _propertyTypes = DataManager.SelectAll<PropertyTypeEntity, PropertyType>();
         }
 
 
-        private static void UpdatePropertyTypesInDatabase() {
+        private static void UpdatePropertyTypesInDatabase()
+        {
             var propertyTypeEntities = Mapper.Map<List<PropertyType>, List<PropertyTypeEntity>>(_propertyTypes);
             DataManager.BatchUpdate(propertyTypeEntities);
         }

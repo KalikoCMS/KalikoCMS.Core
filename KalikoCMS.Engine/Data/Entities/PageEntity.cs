@@ -28,16 +28,16 @@ namespace KalikoCMS.Data.Entities {
         public virtual Guid RootId { get; set; }
         public virtual int TreeLevel { get; set; }
         public virtual int SortOrder { get; set; }
-        public virtual PageTypeEntity PageType { get; set; }
 
-        public virtual IList<PageTagEntity> PageTags { get; private set; }
-        public virtual IList<PagePropertyEntity> PageProperties { get; private set; }
-        public virtual IList<PageInstanceEntity> PageInstances { get; private set; }
+        public virtual PageTypeEntity PageType { get; set; }
+        public virtual ICollection<PageTagEntity> PageTags { get; private set; }
+        public virtual ICollection<PageInstanceEntity> PageInstances { get; set; }
+        public virtual ICollection<PagePropertyEntity> PageProperties { get; set; }
 
         public PageEntity() {
-            PageInstances = new List<PageInstanceEntity>();
-            PageProperties = new List<PagePropertyEntity>();
-            PageTags = new List<PageTagEntity>();
+            PageInstances = new HashSet<PageInstanceEntity>();
+            PageProperties = new HashSet<PagePropertyEntity>();
+            PageTags = new HashSet<PageTagEntity>();
         }
     }
 }

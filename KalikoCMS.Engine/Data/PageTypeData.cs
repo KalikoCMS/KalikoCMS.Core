@@ -17,8 +17,10 @@
  */
 #endregion
 
-namespace KalikoCMS.Data {
+namespace KalikoCMS.Data
+{
 
-    internal static class PageTypeData {
+    internal static class PageTypeData
+    {
     }
 }

@@ -28,7 +28,6 @@ namespace KalikoCMS.Data {
     using Entities;
     using Kaliko;
     using Serialization;
-    using Telerik.OpenAccess.FetchOptimization;
 
     internal class Synchronizer {
 
@@ -36,10 +35,10 @@ namespace KalikoCMS.Data {
 
         public static void SynchronizePageTypes() {
             using (var context = new DataContext()) {
-                var fetchStrategy = new FetchStrategy {MaxFetchDepth = 1};
-                fetchStrategy.LoadWith<PageTypeEntity>(pt => pt.Properties);
-                fetchStrategy.LoadWith<PropertyEntity>(p => p.PropertyType);
-                context.FetchStrategy = fetchStrategy;
+                //var fetchStrategy = new FetchStrategy {MaxFetchDepth = 1};
+                //fetchStrategy.LoadWith<PageTypeEntity>(pt => pt.Properties);
+                //fetchStrategy.LoadWith<PropertyEntity>(p => p.PropertyType);
+                //context.FetchStrategy = fetchStrategy;
 
                 var pageTypeEntities = context.PageTypes.ToList();
                 var pageTypes = new List<PageType>();
@@ -81,12 +80,12 @@ namespace KalikoCMS.Data {
                 PageType.PageTypes = pageTypes;
             }
         }
-
+        
         #endregion
 
         #region Synchronize properties
 
-        private static void SynchronizeProperties(DataContext context, PageType pageType, Type type, IList<PropertyEntity> propertyEntities) {
+        private static void SynchronizeProperties(DataContext context, PageType pageType, Type type, ICollection<PropertyEntity> propertyEntities) {
             var propertyAttributeType = typeof(PropertyAttribute);
             var requiredAttributeType = typeof(RequiredAttribute);
             var properties = propertyEntities;

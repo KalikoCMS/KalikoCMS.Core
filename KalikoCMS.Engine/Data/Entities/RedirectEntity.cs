@@ -27,7 +27,7 @@ namespace KalikoCMS.Data.Entities {
         public RedirectEntity(CmsPage page) {
             PageId = page.PageId;
             LanguageId = page.LanguageId;
-            Url = page.PageUrl.ToString().TrimStart(new [] {'/'}).ToLowerInvariant();
+            Url = page.PageUrl.ToString().TrimStart('/').ToLowerInvariant();
             UrlHash = Url.GetHashCode();
         }
 

@@ -21,14 +21,15 @@ namespace KalikoCMS.Data.Entities {
     using System;
 
     public class PagePropertyEntity {
-        public virtual int PagePropertyId { get; set; }
-        public virtual Guid PageId { get; set; }
-        public virtual int PropertyId { get; set; }
-        public virtual int LanguageId { get; set; }
-        public virtual string PageData { get; set; }
+        public int PagePropertyId { get; set; }
+        public Guid PageId { get; set; }
+        public int PropertyId { get; set; }
+        public int LanguageId { get; set; }
+        public string PageData { get; set; }
+        public int Version { get; set; }
+
+        public virtual PageEntity Page { get; set; }
         public virtual PageInstanceEntity PageInstance { get; set; }
         public virtual PropertyEntity Property { get; set; }
-        public virtual int Version { get; set; }
-        public virtual PageEntity Page { get; set; }
     }
 }

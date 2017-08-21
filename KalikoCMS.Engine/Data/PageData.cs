@@ -25,11 +25,11 @@ namespace KalikoCMS.Data {
     using Core.Collections;
     using Kaliko;
     using Core;
-    using Telerik.OpenAccess;
 
     internal static class PageData {
 
         internal static PageIndexDictionary GetPageStructure(int languageId) {
+            //throw new NotImplementedException();
             var context = new DataContext();
 
             try {
@@ -47,55 +47,57 @@ namespace KalikoCMS.Data {
 
         // Warning: Due to backward compability installations updated from 0.9.9 might return two instances for the same page. This is handled internally in PageIndexDictionary where the first instance (lowest status) is used.
         private static IEnumerable<PageIndexItem> GetPages(DataContext context, int languageId) {
+            //throw new NotImplementedException();
             return from p in context.Pages
-                   join pi in context.PageInstances on p.PageId equals pi.PageId
-                   where pi.LanguageId == languageId && pi.DeletedDate == null && (pi.Status == PageInstanceStatus.Published || (pi.Status == PageInstanceStatus.WorkingCopy && pi.CurrentVersion == 1))
+                join pi in context.PageInstances on p.PageId equals pi.PageId
+                where pi.LanguageId == languageId && pi.DeletedDate == null && (pi.Status == PageInstanceStatus.Published || (pi.Status == PageInstanceStatus.WorkingCopy && pi.CurrentVersion == 1))
                 orderby p.TreeLevel, p.ParentId, p.PageId, pi.Status
                 select
-                    new PageIndexItem {
-                        Author = pi.Author,
-                        ChildSortDirection = pi.ChildSortDirection,
-                        ChildSortOrder = pi.ChildSortOrder,
-                        CreatedDate = pi.CreatedDate,
-                        CurrentVersion = pi.CurrentVersion,
-                        PageId = pi.PageId,
-                        PageInstanceId = pi.PageInstanceId,
-                        PageName = pi.PageName,
-                        PageTypeId = p.PageTypeId,
-                        PageUrl = pi.PageUrl,
-                        ParentId = p.ParentId,
-                        RootId = p.RootId,
-                        SortOrder = p.SortOrder,
-                        StartPublish = pi.StartPublish,
-                        Status = pi.Status,
-                        StopPublish = pi.StopPublish,
-                        TreeLevel = p.TreeLevel,
-                        UpdateDate = pi.UpdateDate,
-                        UrlSegment = pi.PageUrl.ToLowerInvariant(),
-                        UrlSegmentHash = pi.PageUrl.GetHashCode(),
-                        VisibleInMenu = pi.VisibleInMenu,
-                        VisibleInSiteMap = pi.VisibleInSitemap
-                    };
+                new PageIndexItem {
+                    Author = pi.Author,
+                    ChildSortDirection = pi.ChildSortDirection,
+                    ChildSortOrder = pi.ChildSortOrder,
+                    CreatedDate = pi.CreatedDate,
+                    CurrentVersion = pi.CurrentVersion,
+                    PageId = pi.PageId,
+                    PageInstanceId = pi.PageInstanceId,
+                    PageName = pi.PageName,
+                    PageTypeId = p.PageTypeId,
+                    PageUrl = pi.PageUrl,
+                    ParentId = p.ParentId,
+                    RootId = p.RootId,
+                    SortOrder = p.SortOrder,
+                    StartPublish = pi.StartPublish,
+                    Status = pi.Status,
+                    StopPublish = pi.StopPublish,
+                    TreeLevel = p.TreeLevel,
+                    UpdateDate = pi.UpdateDate,
+                    UrlSegment = pi.PageUrl.ToLowerInvariant(),
+                    UrlSegmentHash = pi.PageUrl.GetHashCode(),
+                    VisibleInMenu = pi.VisibleInMenu,
+                    VisibleInSiteMap = pi.VisibleInSitemap
+                };
         }
 
         //TODO: Add language parameters when going multi-language
         internal static Collection<Guid> DeletePage(Guid pageId) {
-            var pageIds = PageFactory.GetPageTreeFromPage(pageId, PublishState.All).PageIds;
-            pageIds.Add(pageId);
+            throw new NotImplementedException();
+            //            var pageIds = PageFactory.GetPageTreeFromPage(pageId, PublishState.All).PageIds;
+            //            pageIds.Add(pageId);
 
-            var context = new DataContext();
+            //            var context = new DataContext();
 
-            try {
-                var deleteTimeStamp = DateTime.Now.ToUniversalTime();
+            //            try {
+            //                var deleteTimeStamp = DateTime.Now.ToUniversalTime();
 
-                // TODO: Säkerställ att detta funkar mot stora mängder!!
-                context.PageInstances.Where(p => pageIds.Contains(p.PageId)).UpdateAll(p => p.Set(v => v.DeletedDate, v => deleteTimeStamp));
-            }
-            finally {
-                context.Dispose();
-            }
+            //                // TODO: Säkerställ att detta funkar mot stora mängder!!
+            //                context.PageInstances.Where(p => pageIds.Contains(p.PageId)).UpdateAll(p => p.Set(v => v.DeletedDate, v => deleteTimeStamp));
+            //            }
+            //            finally {
+            //                context.Dispose();
+            //            }
 
-            return pageIds;
+            //            return pageIds;
         }
 
         internal static void UpdateStructure(List<PageIndexItem> changedItems) {

@@ -21,11 +21,12 @@ namespace KalikoCMS.Data.Entities {
     using System;
 
     public class SitePropertyEntity {
-        public virtual int SitePropertyId { get; set; }
-        public virtual Guid SiteId { get; set; }
-        public virtual int PropertyId { get; set; }
-        public virtual int LanguageId { get; set; }
-        public virtual string SiteData { get; set; }
+        public int SitePropertyId { get; set; }
+        public Guid SiteId { get; set; }
+        public int PropertyId { get; set; }
+        public int LanguageId { get; set; }
+        public string SiteData { get; set; }
+
         public virtual SitePropertyDefinitionEntity Property { get; set; }
         public virtual SiteEntity Site { get; set; }
     }

@@ -1,177 +1,257 @@
-﻿#region License and copyright notice
-/* 
- * Kaliko Content Management System
- * 
- * Copyright (c) Fredrik Schultz
- * 
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3.0 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- * http://www.gnu.org/licenses/lgpl-3.0.html
- */
-#endregion
-
-namespace KalikoCMS.Data {
-    using System.Linq;
+﻿namespace KalikoCMS.Data {
+    using Core;
     using Entities;
-    using Telerik.OpenAccess;
-    using Telerik.OpenAccess.FetchOptimization;
-    using Telerik.OpenAccess.Metadata;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata;
 
-    public class DataContext : OpenAccessContext {
-        private const string ConnectionStringName = "KalikoCMS";
-        private const int DatabaseVersion = 10;
-        private static readonly MetadataContainer MetadataContainer;
-        private static readonly BackendConfiguration BackendConfiguration;
+    public class DataContext : DbContext {
+        //public virtual DbSet<DataStore> DataStore { get; set; }
+        public virtual DbSet<PageEntity> Pages { get; set; }
+        public virtual DbSet<PageInstanceEntity> PageInstances { get; set; }
+        public virtual DbSet<PagePropertyEntity> PageProperties { get; set; }
+        public virtual DbSet<PageTagEntity> PageTags { get; set; }
+        public virtual DbSet<PageTypeEntity> PageTypes { get; set; }
+        public virtual DbSet<PropertyEntity> Properties { get; set; }
+        public virtual DbSet<PropertyTypeEntity> PropertyTypes { get; set; }
+        public virtual DbSet<RedirectEntity> Redirects { get; set; }
+        public virtual DbSet<SiteEntity> Sites { get; set; }
+        public virtual DbSet<SiteLanguageEntity> SiteLanguages { get; set; }
+        public virtual DbSet<SitePropertyEntity> SiteProperties { get; set; }
+        public virtual DbSet<SitePropertyDefinitionEntity> SitePropertyDefinitions { get; set; }
+        public virtual DbSet<SystemInfoEntity> SystemInfo { get; set; }
+        public virtual DbSet<TagEntity> Tags { get; set; }
+        public virtual DbSet<TagContextEntity> TagContexts { get; set; }
 
-        static DataContext() {
-            MetadataContainer = new DataMetadataSource().GetModel();
-            BackendConfiguration = new BackendConfiguration();
-
-            //#if DEBUG
-            // Debug data access by logging queries
-            //BackendConfiguration.Logging.LogEvents = LoggingLevel.Normal;
-            //BackendConfiguration.Logging.StackTrace = true;
-            //BackendConfiguration.Logging.EventStoreCapacity = 10000;
-            //BackendConfiguration.Logging.MetricStoreCapacity = 3600;
-            //BackendConfiguration.Logging.MetricStoreSnapshotInterval = 1000;
-            //BackendConfiguration.Logging.Downloader.EventBinary = true;
-            //BackendConfiguration.Logging.Downloader.MetricBinary = true;
-            //BackendConfiguration.Logging.Downloader.Filename = "C:\\Temp\\DataAccess";
-            //BackendConfiguration.Logging.Downloader.MaxFileSizeKB = 1000;
-            //BackendConfiguration.Logging.Downloader.NumberOfBackups = 3;
-            //BackendConfiguration.Logging.Downloader.EventPollSeconds = 1;
-            //BackendConfiguration.Logging.Downloader.MetricPollSeconds = 1;
-            //#else
-            BackendConfiguration.Logging.LogEvents = LoggingLevel.Errors;
-            //#endif
-        }
-        
-
-        public DataContext(bool defaultFetchStrategy = false) : base(ConnectionStringName, BackendConfiguration, MetadataContainer) {
-            if (defaultFetchStrategy) {
-                return;
-            }
-
-            FetchStrategy = new FetchStrategy {
-                MaxFetchDepth = 1
-            };
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+            optionsBuilder.UseSqlServer(@"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=TemporaryKalikoCMS;Data Source=(localdb)\v11.0");
         }
 
-        public IQueryable<PageEntity> Pages {
-            get { return GetAll<PageEntity>(); }
-        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            //modelBuilder.Entity<DataStore>(entity => {
+            //    entity.HasKey(e => e.KeyName)
+            //        .HasName("pk_DataStore");
 
-        public IQueryable<PageInstanceEntity> PageInstances {
-            get { return GetAll<PageInstanceEntity>(); }
-        }
+            //    entity.Property(e => e.KeyName).HasMaxLength(256);
+            //});
 
-        public IQueryable<PagePropertyEntity> PageProperties {
-            get { return GetAll<PagePropertyEntity>(); }
-        }
+            modelBuilder.Entity<PageEntity>(entity => {
+                entity.HasIndex(e => e.PageTypeId)
+                    .HasName("IX_Page_PageTypeId");
 
-        public IQueryable<PageTagEntity> PageTags {
-            get { return GetAll<PageTagEntity>(); }
-        }
+                entity.Property(e => e.PageId).ValueGeneratedNever();
 
-        public IQueryable<PageTypeEntity> PageTypes {
-            get { return GetAll<PageTypeEntity>(); }
-        }
+                entity.HasOne(d => d.PageType)
+                    .WithMany(p => p.Pages)
+                    .HasForeignKey(d => d.PageTypeId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_Page_PageType");
+            });
 
-        public IQueryable<PropertyEntity> Properties {
-            get { return GetAll<PropertyEntity>(); }
-        }
+            modelBuilder.Entity<PageInstanceEntity>(entity => {
+                entity.HasIndex(e => e.LanguageId)
+                    .HasName("idx_PageInstance_LanguageId");
 
-        public IQueryable<PropertyTypeEntity> PropertyTypes {
-            get { return GetAll<PropertyTypeEntity>(); }
-        }
+                entity.HasIndex(e => e.PageId)
+                    .HasName("idx_PageInstance_PageId");
 
-        public IQueryable<RedirectEntity> Redirects {
-            get { return GetAll<RedirectEntity>(); }
-        }
+                entity.HasIndex(e => new {e.PageId, e.LanguageId})
+                    .HasName("IX_Page_PageIdLanguageId");
 
-        public IQueryable<SiteEntity> Sites {
-            get { return GetAll<SiteEntity>(); }
-        } 
+                entity.Property(e => e.Author).HasColumnType("varchar(256)");
 
-        public IQueryable<SiteLanguageEntity> SiteLanguages {
-            get { return GetAll<SiteLanguageEntity>(); }
-        }
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-        public IQueryable<SitePropertyEntity> SiteProperties {
-            get { return GetAll<SitePropertyEntity>(); }
-        }
+                entity.Property(e => e.DeletedDate).HasColumnType("datetime");
 
-        public IQueryable<SitePropertyDefinitionEntity> SitePropertyDefinitions {
-            get { return GetAll<SitePropertyDefinitionEntity>(); }
-        }
+                entity.Property(e => e.PageName)
+                    .IsRequired()
+                    .HasMaxLength(100);
 
-        public IQueryable<SystemInfoEntity> SystemInfo {
-            get { return GetAll<SystemInfoEntity>(); }
-        }
+                entity.Property(e => e.PageUrl)
+                    .IsRequired()
+                    .HasColumnType("varchar(100)");
 
-        public IQueryable<TagEntity> Tags {
-            get { return GetAll<TagEntity>(); }
-        }
+                entity.Property(e => e.StartPublish).HasColumnType("datetime");
 
-        public IQueryable<TagContextEntity> TagContexts {
-            get { return GetAll<TagContextEntity>(); }
-        }
+                entity.Property(e => e.StopPublish).HasColumnType("datetime");
 
-        public IQueryable<KeyValuePair> DataStores {
-            get { return GetAll<KeyValuePair>(); }
-        }
+                entity.Property(e => e.UpdateDate).HasColumnType("datetime");
 
-        public void UpdateSchema() {
-            var schemaHandler = GetSchemaHandler();
-            string script;
+                entity.HasOne(d => d.SiteLanguage)
+                    .WithMany(p => p.PageInstances)
+                    .HasForeignKey(d => d.LanguageId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_PageInstance_SiteLanguage");
 
-            if (schemaHandler.DatabaseExists()) {
-                if (CurrentVersion >= DatabaseVersion) {
-                    return;
-                }
-                script = schemaHandler.CreateUpdateDDLScript(null);
-            }
-            else {
-                schemaHandler.CreateDatabase();
-                script = schemaHandler.CreateDDLScript();
-            }
+                entity.HasOne(d => d.Page)
+                    .WithMany(p => p.PageInstances)
+                    .HasForeignKey(d => d.PageId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_PageInstance_Page");
+            });
 
+            modelBuilder.Entity<PagePropertyEntity>(entity => {
+                entity.HasIndex(e => e.PageId)
+                    .HasName("idx_PageProperty_PageId");
 
-            if (string.IsNullOrEmpty(script)) {
-                return;
-            }
+                entity.HasIndex(e => e.PropertyId)
+                    .HasName("idx_PageProperty_PropertyId");
 
-            schemaHandler.ForceExecuteDDLScript(script);
-            SetDatabaseVersion();
-        }
+                entity.HasOne(d => d.Page)
+                    .WithMany(p => p.PageProperties)
+                    .HasForeignKey(d => d.PageId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_PageProperty_Page");
 
-        private void SetDatabaseVersion() {
-            var systemInfo = SystemInfo.FirstOrDefault() ?? new SystemInfoEntity();
-            systemInfo.DatabaseVersion = DatabaseVersion;
-            AttachCopy(systemInfo);
-            SaveChanges();
-        }
+                entity.HasOne(d => d.Property)
+                    .WithMany(p => p.PageProperties)
+                    .HasForeignKey(d => d.PropertyId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_PageProperty_Property");
+            });
 
-        private int CurrentVersion {
-            get {
-                try {
-                    var systemInfo = SystemInfo.FirstOrDefault();
-                    if (systemInfo == null) {
-                        return 0;
-                    }
-                    return systemInfo.DatabaseVersion;
-                }
-                catch {
-                    return 0;
-                }
-            }
+            modelBuilder.Entity<PageTag>(entity => {
+                entity.HasKey(e => new {e.PageId, e.TagId})
+                    .HasName("pk_PageTag");
+
+                entity.HasIndex(e => e.PageId)
+                    .HasName("idx_PageTag_PageId");
+
+                entity.HasIndex(e => e.TagId)
+                    .HasName("idx_PageTag_TagId");
+            });
+
+            modelBuilder.Entity<PageType>(entity => {
+                entity.Property(e => e.DisplayName).HasMaxLength(50);
+
+                entity.Property(e => e.Name).HasColumnType("varchar(50)");
+
+                entity.Property(e => e.PageTemplate).HasColumnType("varchar(100)");
+
+                entity.Property(e => e.PageTypeDescription).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<PropertyEntity>(entity => {
+                entity.HasIndex(e => e.PageTypeId)
+                    .HasName("idx_Property_PageTypeId");
+
+                entity.HasIndex(e => e.PropertyTypeId)
+                    .HasName("idx_Property_PropertyTypeId");
+
+                entity.Property(e => e.Header)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.PageType)
+                    .WithMany(p => p.Properties)
+                    .HasForeignKey(d => d.PageTypeId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_Property_PageType");
+            });
+
+            modelBuilder.Entity<PropertyTypeEntity>(entity => {
+                entity.Property(e => e.PropertyTypeId).ValueGeneratedNever();
+
+                entity.Property(e => e.Class).HasColumnType("varchar(100)");
+
+                entity.Property(e => e.EditControl).HasColumnType("varchar(200)");
+
+                entity.Property(e => e.Name).HasColumnType("varchar(50)");
+            });
+
+            modelBuilder.Entity<RedirectEntity>(entity => {
+                entity.HasIndex(e => new {e.UrlHash, e.Url})
+                    .HasName("IX_Redirect_UrlUrlHash");
+
+                entity.Property(e => e.Url)
+                    .IsRequired()
+                    .HasMaxLength(512);
+            });
+
+            modelBuilder.Entity<SiteEntity>(entity => {
+                entity.Property(e => e.SiteId).ValueGeneratedNever();
+
+                entity.Property(e => e.Author).HasColumnType("varchar(255)");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnType("varchar(255)");
+
+                entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<SiteLanguageEntity>(entity => {
+                entity.HasKey(e => e.LanguageId)
+                    .HasName("pk_SiteLanguage");
+
+                entity.Property(e => e.LongName).HasColumnType("varchar(255)");
+
+                entity.Property(e => e.ShortName).HasColumnType("varchar(5)");
+            });
+
+            modelBuilder.Entity<SitePropertyEntity>(entity => {
+                entity.HasIndex(e => e.PropertyId)
+                    .HasName("idx_SiteProperty_PropertyId");
+
+                entity.HasIndex(e => e.SiteId)
+                    .HasName("idx_SiteProperty_SiteId");
+
+                entity.HasOne(d => d.Property)
+                    .WithMany(p => p.SiteProperties)
+                    .HasForeignKey(d => d.PropertyId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_SiteProperty_SitePropertyDefinition");
+
+                entity.HasOne(d => d.Site)
+                    .WithMany(p => p.SiteProperties)
+                    .HasForeignKey(d => d.SiteId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_SiteProperty_Site");
+            });
+
+            modelBuilder.Entity<SitePropertyDefinitionEntity>(entity => {
+                entity.HasKey(e => e.PropertyId)
+                    .HasName("pk_SitePropertyDefinition");
+
+                entity.HasIndex(e => e.PropertyTypeId)
+                    .HasName("idx_StPrprtyDfntn_PrprtyTypeId");
+
+                entity.Property(e => e.Header)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TagEntity>(entity => {
+                entity.HasIndex(e => e.TagContextId)
+                    .HasName("idx_Tag_TagContextId");
+
+                entity.Property(e => e.TagName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.TagContext)
+                    .WithMany(p => p.Tags)
+                    .HasForeignKey(d => d.TagContextId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_Tag_TagContext");
+            });
+
+            modelBuilder.Entity<TagContextEntity>(entity => {
+                entity.HasIndex(e => e.ContextName)
+                    .HasName("IX_TagContext_ContextName");
+
+                entity.Property(e => e.ContextName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
         }
     }
 }

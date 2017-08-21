@@ -21,13 +21,14 @@ namespace KalikoCMS.Data.Entities {
     using System.Collections.Generic;
 
     public class SiteLanguageEntity {
-        public virtual int LanguageId { get; set; }
-        public virtual string LongName { get; set; }
-        public virtual string ShortName { get; set; }
-        public virtual IList<PageInstanceEntity> PageInstances { get; private set; }
+        public int LanguageId { get; set; }
+        public string LongName { get; set; }
+        public string ShortName { get; set; }
+
+        public virtual ICollection<PageInstanceEntity> PageInstances { get; set; }
 
         public SiteLanguageEntity() {
-            PageInstances = new List<PageInstanceEntity>();
+            PageInstances = new HashSet<PageInstanceEntity>();
         }
     }
 }

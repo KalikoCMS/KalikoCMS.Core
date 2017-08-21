@@ -17,27 +17,33 @@
  */
 #endregion
 
-namespace KalikoCMS.Data {
+namespace KalikoCMS.Data
+{
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Core;
     using Entities;
 
-    public class SiteData {
-        public static Dictionary<Guid, CmsSite> GetSites() {
+    public class SiteData
+    {
+        public static Dictionary<Guid, CmsSite> GetSites()
+        {
             var context = new DataContext();
             var sites = context.Sites.ToList();
 
-            if (!sites.Any()) {
+            if (!sites.Any())
+            {
                 var site = AddStandardSite(context);
                 sites.Add(site);
             }
 
             var siteList = new Dictionary<Guid, CmsSite>();
 
-            foreach (var site in sites) {
-                var cmsSite = new CmsSite {
+            foreach (var site in sites)
+            {
+                var cmsSite = new CmsSite
+                {
                     SiteId = site.SiteId,
                     Author = site.Author,
                     ChildSortDirection = site.ChildSortDirection,
@@ -53,17 +59,19 @@ namespace KalikoCMS.Data {
             return siteList;
         }
 
-        private static SiteEntity AddStandardSite(DataContext context) {
-            var site = new SiteEntity {
+        private static SiteEntity AddStandardSite(DataContext context)
+        {
+            var site = new SiteEntity
+            {
                 SiteId = Guid.Empty,
                 Name = "Site",
                 ChildSortDirection = CmsSite.DefaultChildSortDirection,
                 ChildSortOrder = CmsSite.DefaultChildSortOrder,
                 UpdateDate = DateTime.Now.ToUniversalTime()
             };
-            context.AttachCopy(site);
+            context.Attach(site);
             context.SaveChanges();
-            
+
             return site;
         }
     }

@@ -17,13 +17,17 @@
  */
 #endregion
 
-namespace KalikoCMS.Data {
-    internal class DataStoreData {
-        internal static KeyValuePair GetDataStoreItem(string key) {
+namespace KalikoCMS.Data
+{
+    internal class DataStoreData
+    {
+        internal static KeyValuePair GetDataStoreItem(string key)
+        {
             return DataManager.Single<KeyValuePair>(i => i.KeyName == key);
         }
 
-        internal static void UpdateDataStoreItem(KeyValuePair keyValuePair) {
+        internal static void UpdateDataStoreItem(KeyValuePair keyValuePair)
+        {
             DataManager.InsertOrUpdate(keyValuePair);
         }
     }

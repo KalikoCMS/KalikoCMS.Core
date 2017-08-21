@@ -23,17 +23,17 @@ namespace KalikoCMS.Data.Entities {
     using Core.Collections;
 
     public class SiteEntity {
-        public virtual Guid SiteId { get; set; }
-        public virtual string Name { get; set; }
-        public virtual string Author { get; set; }
-        public virtual SortDirection ChildSortDirection { get; set; }
-        public virtual SortOrder ChildSortOrder { get; set; }
-        public virtual DateTime UpdateDate { get; set; }
+        public Guid SiteId { get; set; }
+        public string Name { get; set; }
+        public string Author { get; set; }
+        public SortDirection ChildSortDirection { get; set; }
+        public SortOrder ChildSortOrder { get; set; }
+        public DateTime UpdateDate { get; set; }
         
-        public virtual IList<SitePropertyEntity> SiteProperties { get; private set; }
+        public virtual ICollection<SitePropertyEntity> SiteProperties { get; private set; }
 
         public SiteEntity() {
-            SiteProperties =new List<SitePropertyEntity>();
+            SiteProperties = new HashSet<SitePropertyEntity>();
         }
     }
 }
