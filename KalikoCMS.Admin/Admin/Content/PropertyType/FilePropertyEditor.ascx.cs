@@ -64,6 +64,8 @@ namespace KalikoCMS.Admin.Content.PropertyType {
 
             ScriptManager.RegisterClientScriptInclude(this, typeof(FilePropertyEditor), "Admin.Content.PropertyType.FilePropertyEditor", "Content/PropertyType/FilePropertyEditor.js?v=" + Utils.VersionHash);
 
+            DisplayField.Text = FilePath.Value;
+
             string clickScript = "top.propertyEditor.file.openDialog('#" + FilePath.ClientID + "', '#" + DisplayField.ClientID + "');return false;";
             SelectButton.Attributes["onclick"] = clickScript;
         }

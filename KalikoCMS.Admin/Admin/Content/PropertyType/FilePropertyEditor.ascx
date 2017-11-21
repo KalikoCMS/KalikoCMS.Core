@@ -5,7 +5,7 @@
     <div class="controls  col-xs-6">
         <div class="input-group">
             <asp:HiddenField ID="FilePath" runat="server" />
-            <asp:TextBox runat="server" CssClass="form-control" ID="DisplayField" ReadOnly="True" /><span class="input-group-btn add-on"><asp:HyperLink ID="SelectButton" CssClass="btn btn-default" runat="server"><i class="icon icon-file-o"></i></asp:HyperLink></span>
+            <asp:TextBox runat="server" CssClass="form-control" ID="DisplayField" EnableViewState="False" ReadOnly="True" /><span class="input-group-btn add-on"><asp:HyperLink ID="SelectButton" CssClass="btn btn-default" runat="server"><i class="icon icon-file-o"></i></asp:HyperLink></span>
         </div>
         <asp:Literal ID="ErrorText" runat="server" />
     </div>

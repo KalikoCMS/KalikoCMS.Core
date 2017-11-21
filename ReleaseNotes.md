@@ -1,5 +1,7 @@
 ### New in 1.2.3
 * Fixed script reference problem for property editors in Chrome
+* Fixed problem with file property editor not showing correct filename on postback
+* Added HtmlHelper extensions for getting URL to startpage or specified page [PR #130]
 
 ### New in 1.2.2
 * Fixed problem with custom property types only used in site definition not registering
