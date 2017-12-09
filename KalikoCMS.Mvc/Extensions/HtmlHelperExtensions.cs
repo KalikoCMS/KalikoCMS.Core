@@ -26,6 +26,9 @@ namespace KalikoCMS.Mvc.Extensions {
     using System.Web.Mvc;
     using Core;
     using Core.Collections;
+    using KalikoCMS;
+    using KalikoCMS.Configuration;
+    using KalikoCMS.Core;
 
     public static class HtmlHelperExtensions {
         #region Breadcrumbs
@@ -121,6 +124,18 @@ namespace KalikoCMS.Mvc.Extensions {
                 }
                 stringBuilder.Append("</li>");
             }
+        }
+        
+        public static string StartPageUrl(this HtmlHelper helper)
+        {
+            var startPageId = SiteSettings.Instance.StartPageId;
+            return GetUrlForPage(helper, startPageId);
+        }
+
+        public static string GetUrlForPage(this HtmlHelper helper, Guid pageId)
+        {
+            var page = PageFactory.GetPage(pageId, Language.CurrentLanguageId);
+            return page.PageUrl.ToString();
         }
 
         #endregion

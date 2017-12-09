@@ -20,6 +20,7 @@
       <script src="assets/js/html5shiv.min.js"></script>
     <![endif]-->
     <script src="assets/vendors/jquery/js/jquery-1.10.2.min.js"></script>
+    <asp:ContentPlaceHolder ID="HeaderScripts" runat="server" />
   </head>
   <body>
     <asp:ContentPlaceHolder ID="MainContent" runat="server" />

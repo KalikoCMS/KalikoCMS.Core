@@ -2,6 +2,13 @@
 <%@ Import Namespace="KalikoCMS" %>
 <%@ Register tagPrefix="cms" tagName="StringPropertyEditor" src="PropertyType/StringPropertyEditor.ascx" %>
 
+<asp:Content ContentPlaceHolderID="HeaderScripts" runat="server">
+    <script type="text/javascript">
+        // Reset property editors
+        top.propertyEditor = null;
+    </script>
+</asp:Content>
+
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
   <form id="MainForm" class="page-editor admin-page" role="form" runat="server">
     <div class="page-head">
