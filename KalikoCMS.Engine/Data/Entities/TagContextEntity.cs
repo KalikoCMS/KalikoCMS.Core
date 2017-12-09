@@ -19,9 +19,12 @@
 
 namespace KalikoCMS.Data.Entities {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class TagContextEntity {
+        [Key]
         public virtual int TagContextId { get; set; }
+
         public virtual string ContextName { get; set; }
 
         public virtual ICollection<TagEntity> Tags { get; set; }

@@ -19,6 +19,7 @@
 
 namespace KalikoCMS.Data.Entities {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using Core;
 
     public class RedirectEntity {
@@ -31,7 +32,9 @@ namespace KalikoCMS.Data.Entities {
             UrlHash = Url.GetHashCode();
         }
 
+        [Key]
         public int RedirectId { get; set; }
+
         public int UrlHash { get; set; }
         public string Url { get; set; }
         public Guid PageId { get; set; }

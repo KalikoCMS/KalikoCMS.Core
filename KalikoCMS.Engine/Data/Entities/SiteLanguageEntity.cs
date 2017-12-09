@@ -19,9 +19,12 @@
 
 namespace KalikoCMS.Data.Entities {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class SiteLanguageEntity {
+        [Key]
         public int LanguageId { get; set; }
+
         public string LongName { get; set; }
         public string ShortName { get; set; }
 

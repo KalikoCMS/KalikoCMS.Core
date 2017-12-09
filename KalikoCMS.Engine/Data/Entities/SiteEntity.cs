@@ -20,10 +20,13 @@
 namespace KalikoCMS.Data.Entities {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using Core.Collections;
 
     public class SiteEntity {
+        [Key]
         public Guid SiteId { get; set; }
+
         public string Name { get; set; }
         public string Author { get; set; }
         public SortDirection ChildSortDirection { get; set; }

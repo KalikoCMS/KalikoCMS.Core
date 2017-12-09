@@ -20,12 +20,16 @@
 namespace KalikoCMS.Data.Entities {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class PageEntity {
+        [Key]
         public virtual Guid PageId { get; set; }
+
         public virtual int PageTypeId { get; set; }
         public virtual Guid ParentId { get; set; }
         public virtual Guid RootId { get; set; }
+
         public virtual int TreeLevel { get; set; }
         public virtual int SortOrder { get; set; }
 

@@ -19,9 +19,12 @@
 
 namespace KalikoCMS.Data.Entities {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     public class PagePropertyEntity {
+        [Key]
         public int PagePropertyId { get; set; }
+
         public Guid PageId { get; set; }
         public int PropertyId { get; set; }
         public int LanguageId { get; set; }

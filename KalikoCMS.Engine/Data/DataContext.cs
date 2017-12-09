@@ -110,9 +110,21 @@
                     .HasConstraintName("FK_PageProperty_Property");
             });
 
-            modelBuilder.Entity<PageTag>(entity => {
+            modelBuilder.Entity<PageTagEntity>(entity => {
                 entity.HasKey(e => new {e.PageId, e.TagId})
                     .HasName("pk_PageTag");
+
+                entity.HasOne(e => e.Page)
+                    .WithMany(p => p.PageTags)
+                    .HasForeignKey(p => p.PageId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_PageTag_Page");
+
+                entity.HasOne(e => e.Tag)
+                    .WithMany(p => p.PageTags)
+                    .HasForeignKey(p => p.TagId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_PageTag_Tag");
 
                 entity.HasIndex(e => e.PageId)
                     .HasName("idx_PageTag_PageId");
@@ -121,7 +133,7 @@
                     .HasName("idx_PageTag_TagId");
             });
 
-            modelBuilder.Entity<PageType>(entity => {
+            modelBuilder.Entity<PageTypeEntity>(entity => {
                 entity.Property(e => e.DisplayName).HasMaxLength(50);
 
                 entity.Property(e => e.Name).HasColumnType("varchar(50)");

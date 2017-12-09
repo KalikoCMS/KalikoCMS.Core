@@ -20,11 +20,14 @@
 namespace KalikoCMS.Data.Entities {
     using Core.Collections;
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     public class PageInstanceEntity {
+        [Key]
+        public int PageInstanceId { get; set; }
+
         public Guid PageId { get; set; }
         public int LanguageId { get; set; }
-        public int PageInstanceId { get; set; }
         public string PageName { get; set; }
         public string PageUrl { get; set; }
         public DateTime CreatedDate { get; set; }

@@ -20,9 +20,12 @@
 namespace KalikoCMS.Data.Entities {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class PropertyEntity {
+        [Key]
         public int PropertyId { get; set; }
+
         public Guid PropertyTypeId { get; set; }
         public int PageTypeId { get; set; }
         public string Name { get; set; }
