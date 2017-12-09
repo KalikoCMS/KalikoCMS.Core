@@ -1,5 +1,5 @@
 ﻿
-Thanks for installing Kaliko CMS version 1.2.2!
+Thanks for installing Kaliko CMS version 1.2.3!
 
 Notice if you're upgrading Kaliko CMS (this doesn't apply to new projects):
 ============================================================================
@@ -9,6 +9,11 @@ Notice if you're upgrading Kaliko CMS (this doesn't apply to new projects):
  replaced for security reasons. Although the replacement has been fully 
  tested we recommend as an extra precaution to backup the database.
 ============================================================================
+
+New in 1.2.3
+* Fixed script reference problem for property editors in Chrome
+* Fixed problem with file property editor not showing correct filename on postback
+* Added HtmlHelper extensions for getting URL to startpage or specified page [PR #130]
 
 New in 1.2.2
 * Fixed problem with custom property types only used in site definition not registering
