@@ -1,3 +1,6 @@
+### New in 1.2.4
+* Fixed problem with unicode characters in composition properties
+
 ### New in 1.2.3
 * Fixed script reference problem for property editors in Chrome
 * Fixed problem with file property editor not showing correct filename on postback
