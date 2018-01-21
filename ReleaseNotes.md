@@ -1,5 +1,6 @@
 ### New in 1.2.4
 * Fixed problem with unicode characters in composition properties
+* Fixed problem with default values for menu and sitemap visibility not honored by administration UI
 
 ### New in 1.2.3
 * Fixed script reference problem for property editors in Chrome
