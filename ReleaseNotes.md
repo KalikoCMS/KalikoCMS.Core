@@ -2,6 +2,7 @@
 * Fixed problem with unicode characters in composition properties
 * Fixed problem with default values for menu and sitemap visibility not honored by administration UI
 * Fixed problem with duplicate ApplicationPaths when creating a new page running site in virtual folder
+* Fixed problem with incompatible data types for some data providers such as Oracle
 
 ### New in 1.2.3
 * Fixed script reference problem for property editors in Chrome
