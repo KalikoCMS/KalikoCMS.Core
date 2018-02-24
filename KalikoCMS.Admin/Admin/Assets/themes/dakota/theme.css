@@ -5771,7 +5771,7 @@ a.no-decoration:hover {
   background: #cccccc;
   margin: 0;
   padding: 10px 30px;
-  background: -moz-linear-gradient(bottom center, #f8f8f8 0%, #eaeaea 100%);
+  background: -webkit-linear-gradient(bottom, #f8f8f8 0%, #eaeaea 100%);
   border-top: 1px solid #cccccc;
 }
 #pagetree {

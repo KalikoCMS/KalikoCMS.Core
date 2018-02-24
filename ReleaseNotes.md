@@ -4,6 +4,7 @@
 * Fixed problem with duplicate ApplicationPaths when creating a new page running site in virtual folder
 * Fixed problem with incompatible data types for some data providers such as Oracle
 * Fixed problem with using required flag on fields in composite and collection properties
+* Fixed problem with hidden publish and save buttons on iOS
 
 ### New in 1.2.3
 * Fixed script reference problem for property editors in Chrome
