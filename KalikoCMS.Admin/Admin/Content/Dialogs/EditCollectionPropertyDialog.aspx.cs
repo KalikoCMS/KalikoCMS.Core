@@ -53,10 +53,22 @@ namespace KalikoCMS.Admin.Content.Dialogs {
         }
 
         private void SubmitHandler(object sender, EventArgs e) {
+            if (!IsDataValid) {
+                PostbackResult.Text = "One or more errors occured!";
+                return;
+            }
+
             var editorBase = ((PropertyEditorBase)_editor);
             var serializedProperty = SafeEncode(editorBase.SerializedProperty);
             var exerpt = editorBase.PropertyValue.Preview;
             PostbackResult.Text = string.Format("<script> top.executeCallback('{0}', '{1}'); top.closeModal(); </script>", serializedProperty, exerpt);
+        }
+
+        public bool IsDataValid
+        {
+            get {
+                return ((PropertyEditorBase)_editor).Validate();
+            } 
         }
 
         private static string SafeEncode(string text) {

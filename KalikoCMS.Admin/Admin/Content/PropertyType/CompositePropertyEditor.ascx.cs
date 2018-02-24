@@ -70,7 +70,17 @@ namespace KalikoCMS.Admin.Content.PropertyType {
         }
 
         public override bool Validate() {
-            return true;
+            var success = true;
+            foreach (var control in _controls) {
+                var editor = control.Value;
+                if (!editor.Required) continue;
+
+                if (!editor.Validate(true)) {
+                    success = false;
+                }
+            }
+
+            return success;
         }
 
         public override bool Validate(bool required) {
