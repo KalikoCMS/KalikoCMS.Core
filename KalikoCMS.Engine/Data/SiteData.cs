@@ -46,8 +46,8 @@ namespace KalikoCMS.Data
                 {
                     SiteId = site.SiteId,
                     Author = site.Author,
-                    ChildSortDirection = site.ChildSortDirection,
-                    ChildSortOrder = site.ChildSortOrder,
+                    ChildSortDirection = site.DefaultChildSortDirection,
+                    ChildSortOrder = site.DefaultChildSortOrder,
                     Name = site.Name,
                     UpdateDate = site.UpdateDate,
                     Property = PropertyData.GetPropertiesForSite(site.SiteId, Language.CurrentLanguageId, context)
@@ -65,8 +65,8 @@ namespace KalikoCMS.Data
             {
                 SiteId = Guid.Empty,
                 Name = "Site",
-                ChildSortDirection = CmsSite.DefaultChildSortDirection,
-                ChildSortOrder = CmsSite.DefaultChildSortOrder,
+                DefaultChildSortDirection = CmsSite.DefaultChildSortDirection,
+                DefaultChildSortOrder = CmsSite.DefaultChildSortOrder,
                 UpdateDate = DateTime.Now.ToUniversalTime()
             };
             context.Attach(site);

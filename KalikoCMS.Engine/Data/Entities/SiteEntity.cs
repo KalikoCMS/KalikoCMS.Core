@@ -29,8 +29,8 @@ namespace KalikoCMS.Data.Entities {
 
         public string Name { get; set; }
         public string Author { get; set; }
-        public SortDirection ChildSortDirection { get; set; }
-        public SortOrder ChildSortOrder { get; set; }
+        public SortDirection DefaultChildSortDirection { get; set; }
+        public SortOrder DefaultChildSortOrder { get; set; }
         public DateTime UpdateDate { get; set; }
         
         public virtual ICollection<SitePropertyEntity> SiteProperties { get; private set; }

@@ -76,8 +76,8 @@ namespace KalikoCMS.Core {
                 }
 
                 siteEntity.Author = HttpContext.Current.User.Identity.Name;
-                siteEntity.ChildSortDirection = ChildSortDirection;
-                siteEntity.ChildSortOrder = ChildSortOrder;
+                siteEntity.DefaultChildSortDirection = ChildSortDirection;
+                siteEntity.DefaultChildSortOrder = ChildSortOrder;
                 siteEntity.Name = Name;
                 siteEntity.UpdateDate = DateTime.Now.ToUniversalTime();
 

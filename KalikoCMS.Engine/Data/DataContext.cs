@@ -33,6 +33,26 @@
 
             //    entity.Property(e => e.KeyName).HasMaxLength(256);
             //});
+            
+            modelBuilder.Entity<PageTypeEntity>().ToTable("DataStore");
+            modelBuilder.Entity<PageEntity>().ToTable("Page");
+            modelBuilder.Entity<PageInstanceEntity>().ToTable("PageInstance");
+            modelBuilder.Entity<PagePropertyEntity>().ToTable("PageProperty");
+            modelBuilder.Entity<PageTagEntity>().ToTable("PageTag");
+            modelBuilder.Entity<PageTypeEntity>().ToTable("PageType");
+            modelBuilder.Entity<PropertyEntity>().ToTable("Property");
+            modelBuilder.Entity<PropertyTypeEntity>().ToTable("PropertyType");
+            modelBuilder.Entity<RedirectEntity>().ToTable("Redirect");
+            modelBuilder.Entity<SiteEntity>().ToTable("Site");
+            modelBuilder.Entity<SiteLanguageEntity>().ToTable("SiteLanguage");
+            modelBuilder.Entity<SitePropertyEntity>().ToTable("SiteProperty");
+            modelBuilder.Entity<SitePropertyDefinitionEntity>().ToTable("SitePropertyDefinition");
+            modelBuilder.Entity<SiteLanguageEntity>().ToTable("SiteLanguage");
+            modelBuilder.Entity<SystemInfoEntity>().ToTable("SystemInfo");
+            modelBuilder.Entity<TagEntity>().ToTable("Tag");
+            modelBuilder.Entity<TagContextEntity>().ToTable("TagContext");
+            modelBuilder.Entity<TagEntity>().ToTable("Tag");
+
 
             modelBuilder.Entity<PageEntity>(entity => {
                 entity.HasIndex(e => e.PageTypeId)
