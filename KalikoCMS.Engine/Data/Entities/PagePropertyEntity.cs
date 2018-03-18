@@ -32,7 +32,6 @@ namespace KalikoCMS.Data.Entities {
         public int Version { get; set; }
 
         public virtual PageEntity Page { get; set; }
-        public virtual PageInstanceEntity PageInstance { get; set; }
         public virtual PropertyEntity Property { get; set; }
     }
 }

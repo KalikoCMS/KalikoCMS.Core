@@ -25,6 +25,7 @@ namespace KalikoCMS.Data
     using Caching;
     using Core;
     using Core.Collections;
+    using Entities;
 
     internal static class PropertyData
     {
@@ -50,16 +51,17 @@ namespace KalikoCMS.Data
 
                 try
                 {
+                    // TODO: DefaultIfEmpty returns null instead of empty object, needs to be looked up
                     var properties = from p in context.Properties
                                      join pp in context.PageProperties on new { PropertyId = p.PropertyId, PageId = pageId, LanguageId = languageId, Version = version } equals new { pp.PropertyId, pp.PageId, pp.LanguageId, pp.Version } into merge
-                                     from m in merge.DefaultIfEmpty()
+                                     from m in merge.DefaultIfEmpty(new PagePropertyEntity())
                                      where p.PageTypeId == pageTypeId
                                      orderby p.SortOrder
                                      select new PropertyItem
                                      {
-                                         PagePropertyId = m.PagePropertyId,
+                                         PagePropertyId = m == null ? 0 : m.PagePropertyId,
                                          PropertyName = p.Name.ToLowerInvariant(),
-                                         PropertyData = CreatePropertyData(p.PropertyTypeId, m.PageData),
+                                         PropertyData = CreatePropertyData(p.PropertyTypeId, m == null ? string.Empty : m.PageData),
                                          PropertyId = p.PropertyId,
                                          PropertyTypeId = p.PropertyTypeId
                                      };
@@ -88,7 +90,7 @@ namespace KalikoCMS.Data
                              select new PropertyItem
                              {
                                  PropertyName = p.Name.ToLowerInvariant(),
-                                 PropertyData = CreatePropertyData(p.PropertyTypeId, m.SiteData),
+                                 PropertyData = CreatePropertyData(p.PropertyTypeId, m == null ? string.Empty : m.SiteData),
                                  PropertyId = p.PropertyId,
                                  PropertyTypeId = p.PropertyTypeId
                              };

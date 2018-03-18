@@ -46,16 +46,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Kaliko.Logger.1.1.1\lib\Kaliko.Logger.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.EntityFrameworkCore, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.EntityFrameworkCore.1.1.2\lib\net451\Microsoft.EntityFrameworkCore.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore, Version=1.1.5.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.1.1.5\lib\net451\Microsoft.EntityFrameworkCore.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Relational.1.1.2\lib\net451\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=1.1.5.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Relational.1.1.5\lib\net451\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.EntityFrameworkCore.SqlServer, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.EntityFrameworkCore.SqlServer.1.1.2\lib\net451\Microsoft.EntityFrameworkCore.SqlServer.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore.SqlServer, Version=1.1.5.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.SqlServer.1.1.5\lib\net451\Microsoft.EntityFrameworkCore.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
@@ -178,8 +178,6 @@
     <Compile Include="Dashboard.cs" />
     <Compile Include="Data\AutoMapperConfiguration.cs" />
     <Compile Include="Data\DataContext.cs" />
-    <Compile Include="Data\_old\DataContext.cs" />
-    <Compile Include="Data\_old\DataMetadataSource.cs" />
     <Compile Include="Data\Entities\SitePropertyDefinitionEntity.cs" />
     <Compile Include="Data\Entities\PropertyTypeEntity.cs" />
     <Compile Include="Data\Entities\RedirectEntity.cs" />
@@ -191,22 +189,6 @@
     <Compile Include="Data\Entities\SystemInfoEntity.cs" />
     <Compile Include="Data\Entities\TagContextEntity.cs" />
     <Compile Include="Data\Entities\TagEntity.cs" />
-    <Compile Include="Data\_oldMaps\SitePropertyDefinitionMap.cs" />
-    <Compile Include="Data\_oldMaps\SitePropertyMap.cs" />
-    <Compile Include="Data\_oldMaps\SiteMap.cs" />
-    <Compile Include="Data\_oldMaps\DataStoreMap.cs" />
-    <Compile Include="Data\_oldMaps\PageInstanceMap.cs" />
-    <Compile Include="Data\_oldMaps\PageMap.cs" />
-    <Compile Include="Data\_oldMaps\PagePropertyMap.cs" />
-    <Compile Include="Data\_oldMaps\PageTagMap.cs" />
-    <Compile Include="Data\_oldMaps\PageTypeMap.cs" />
-    <Compile Include="Data\_oldMaps\PropertyMap.cs" />
-    <Compile Include="Data\_oldMaps\PropertyTypeMap.cs" />
-    <Compile Include="Data\_oldMaps\RedirectMap.cs" />
-    <Compile Include="Data\_oldMaps\SiteLanguageMap.cs" />
-    <Compile Include="Data\_oldMaps\SystemInfoMap.cs" />
-    <Compile Include="Data\_oldMaps\TagContextMap.cs" />
-    <Compile Include="Data\_oldMaps\TagMap.cs" />
     <Compile Include="Core\RedirectManager.cs" />
     <Compile Include="Data\PageInstanceStatus.cs" />
     <Compile Include="Data\SiteData.cs" />

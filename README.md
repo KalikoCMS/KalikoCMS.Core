@@ -1,5 +1,7 @@
 # Kaliko CMS
 
+## IMPORTANT! THIS IS AN EXPERIMENTAL BRANCH, PLEASE USE MASTER BRANCH FOR THE LATEST STABLE VERSION!
+
 Kaliko CMS is an open source content management system (CMS) for the ASP.NET platform that supports both ASP.NET MVC and traditional WebForms. It provides you with the possibilities to build your website the way you want using the tools you choose. Whether you prefer MVC over WebForms or SQL Server over SQLite, it gives you a great framework to build on.
 
 The framework approach also doesn't set any boundaries on how you structure your website or content. It's also very easy to extend the framework with content types if the ones included in the core doesn't quite match the requirements.

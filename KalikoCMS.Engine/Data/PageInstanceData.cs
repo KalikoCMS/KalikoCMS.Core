@@ -35,7 +35,7 @@ namespace KalikoCMS.Data
             return DataManager.FirstOrDefault<PageInstanceEntity>(p => p.CurrentVersion == version && p.PageId == pageId && p.LanguageId == languageId);
         }
 
-        public static List<PageInstanceEntity> GetById(Guid pageId, int languageId)
+        public static IEnumerable<PageInstanceEntity> GetById(Guid pageId, int languageId)
         {
             return DataManager.Select<PageInstanceEntity>(p => p.PageId == pageId && p.LanguageId == languageId);
         }

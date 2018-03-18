@@ -27,6 +27,7 @@ namespace KalikoCMS.Data {
     using Core;
     using Entities;
     using Kaliko;
+    using Microsoft.EntityFrameworkCore;
     using Serialization;
 
     internal class Synchronizer {
@@ -35,12 +36,7 @@ namespace KalikoCMS.Data {
 
         public static void SynchronizePageTypes() {
             using (var context = new DataContext()) {
-                //var fetchStrategy = new FetchStrategy {MaxFetchDepth = 1};
-                //fetchStrategy.LoadWith<PageTypeEntity>(pt => pt.Properties);
-                //fetchStrategy.LoadWith<PropertyEntity>(p => p.PropertyType);
-                //context.FetchStrategy = fetchStrategy;
-
-                var pageTypeEntities = context.PageTypes.ToList();
+                var pageTypeEntities = context.PageTypes.Include(x => x.Properties).ToList();
                 var pageTypes = new List<PageType>();
                 var typesWithAttribute = AttributeReader.GetTypesWithAttribute(typeof(PageTypeAttribute)).ToList();
 

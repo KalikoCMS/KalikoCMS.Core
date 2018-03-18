@@ -117,7 +117,7 @@ namespace KalikoCMS.Core {
             var tagContextId = context.TagContextId;
             var tags = DataManager.Select<TagEntity>(t => t.TagContextId == tagContextId);
             
-            if (tags.Count == 0) {
+            if (!tags.Any()) {
                 return;
             }
 

@@ -5,6 +5,7 @@
     using Microsoft.EntityFrameworkCore.Metadata;
 
     public class DataContext : DbContext {
+        // TODO: Enable DataStore again
         //public virtual DbSet<DataStore> DataStore { get; set; }
         public virtual DbSet<PageEntity> Pages { get; set; }
         public virtual DbSet<PageInstanceEntity> PageInstances { get; set; }

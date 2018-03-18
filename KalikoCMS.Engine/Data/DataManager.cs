@@ -27,98 +27,45 @@ namespace KalikoCMS.Data {
     using Entities;
 
     public static class DataManager {
-        //        public static void BatchUpdate<T>(IEnumerable<T> items) {
-        //            var context = new DataContext();
+        public static void Insert<T>(T item) where T : class {
+            var context = new DataContext();
 
-        //            try {
-        //                foreach (var item in items) {
-        //                    context.AttachCopy(item);
-        //                }
-        //                context.SaveChanges();
-        //            }
-        //            catch (Exception e) {
-        //                Logger.Write(e, Logger.Severity.Major);
-        //                throw;
-        //            }
-        //            finally {
-        //                context.Dispose();
-        //            }
-        //        }
-
-
-        public static void Insert<T>(T item) {
-            throw new NotImplementedException();
-            //var context = new DataContext();
-
-            //try {
-            //    context.Add(item);
-            //    context.SaveChanges();
-            //}
-            //catch (Exception e) {
-            //    Logger.Write(e, Logger.Severity.Major);
-            //    throw;
-            //}
-            //finally {
-            //    context.Dispose();
-            //}
+            try {
+                context.Set<T>().Add(item);
+                context.SaveChanges();
+            }
+            catch (Exception e) {
+                Logger.Write(e, Logger.Severity.Major);
+                throw;
+            }
+            finally {
+                context.Dispose();
+            }
         }
 
-        internal static void BatchUpdate(List<PropertyTypeEntity> propertyTypeEntities)
-        {
-            throw new NotImplementedException();
+        internal static void BatchUpdate(List<PropertyTypeEntity> items) {
+            var context = new DataContext();
+
+            try {
+                var dbSet = context.Set<PropertyTypeEntity>();
+                foreach (var item in items) {
+                    if (item.PropertyTypeId == Guid.Empty) {
+                        dbSet.Add(item);
+                    }
+                    else {
+                        dbSet.Update(item);
+                    }
+                }
+                context.SaveChanges();
+            }
+            catch (Exception e) {
+                Logger.Write(e, Logger.Severity.Major);
+                throw;
+            }
+            finally {
+                context.Dispose();
+            }
         }
-
-
-        //        public static T InsertOrUpdate<T>(T item) {
-        //            var context = new DataContext();
-
-        //            try {
-        //                item = context.AttachCopy(item);
-        //                context.SaveChanges();
-        //            }
-        //            catch (Exception e) {
-        //                Logger.Write(e, Logger.Severity.Major);
-        //                throw;
-        //            }
-        //            finally {
-        //                context.Dispose();
-        //            }
-        //            return item;
-        //        }
-
-
-        //        public static List<T> Select<T>(Expression<Func<T, bool>> predicate) {
-        //            var context = new DataContext();
-
-        //            try {
-        //                return context.GetAll<T>().Where(predicate).ToList();
-        //            }
-        //            catch (Exception e) {
-        //                Logger.Write(e, Logger.Severity.Major);
-        //                throw;
-        //            }
-        //            finally {
-        //                context.Dispose();
-        //            }
-        //        }
-
-
-        //        public static List<TCast> Select<T,TCast>(Expression<Func<T, bool>> predicate) {
-        //            var context = new DataContext();
-
-        //            try {
-        //                var entities = context.GetAll<T>().Where(predicate).ToList();
-        //                return Mapper.Map<List<T>, List<TCast>>(entities);
-        //            }
-        //            catch (Exception e) {
-        //                Logger.Write(e, Logger.Severity.Major);
-        //                throw;
-        //            }
-        //            finally {
-        //                context.Dispose();
-        //            }
-        //        }
-
 
         public static List<TCast> SelectAll<T, TCast>() where T : class {
             using (var context = new DataContext()) {
@@ -136,76 +83,6 @@ namespace KalikoCMS.Data {
                 }
             }
         }
-
-
-        //        internal static int DeleteAll<T>() {
-        //            var context = new DataContext();
-
-        //            try {
-        //                var affectedRows = context.GetAll<T>().DeleteAll();
-        //                return affectedRows;
-        //            }
-        //            catch (Exception e) {
-        //                Logger.Write(e, Logger.Severity.Major);
-        //                throw;
-        //            }
-        //            finally {
-        //                context.Dispose();
-        //            }
-        //        }
-
-
-        //        public static int Delete<T>(Expression<Func<T, bool>> predicate) {
-        //            var affectedRows = 0;
-        //            var context = new DataContext();
-
-        //            try {
-        //                affectedRows = context.GetAll<T>().Where(predicate).DeleteAll();
-        //            }
-        //            catch (Exception e) {
-        //                Logger.Write(e, Logger.Severity.Major);
-        //                throw;
-        //            }
-        //            finally {
-        //                context.Dispose();
-        //            }
-
-        //            return affectedRows;
-        //        }
-
-
-        //        public static TCast Single<T, TCast>(Func<T, bool> predicate) {
-        //            var context = new DataContext();
-
-        //            try {
-        //                var entity = context.GetAll<T>().SingleOrDefault(predicate);
-        //                return Mapper.Map<T, TCast>(entity);
-        //            }
-        //            catch (Exception e) {
-        //                Logger.Write(e, Logger.Severity.Major);
-        //                throw;
-        //            }
-        //            finally {
-        //                context.Dispose();
-        //            }
-        //        }
-
-
-        //        public static T Single<T>(Func<T, bool> predicate) {
-        //            var context = new DataContext();
-
-        //            try {
-        //                return context.GetAll<T>().SingleOrDefault(predicate);
-        //            }
-        //            catch (Exception e) {
-        //                Logger.Write(e, Logger.Severity.Major);
-        //                throw;
-        //            }
-        //            finally {
-        //                context.Dispose();
-        //            }
-        //        }
-
 
         public static T FirstOrDefault<T>(Func<T, bool> predicate) where T : class {
             var context = new DataContext();
@@ -226,16 +103,54 @@ namespace KalikoCMS.Data {
             throw new NotImplementedException();
         }
 
-        public static T Single<T>(Func<T, bool> func) {
-            throw new NotImplementedException();
+        public static T Single<T>(Func<T, bool> predicate) where T : class {
+            var context = new DataContext();
+
+            try {
+                return context.Set<T>().SingleOrDefault(predicate);
+            }
+            catch (Exception e) {
+                Logger.Write(e, Logger.Severity.Major);
+                throw;
+            }
+            finally {
+                context.Dispose();
+            }
         }
 
-        public static void Delete<T>(Func<T, bool> func) {
-            throw new NotImplementedException();
+        public static void Delete<T>(Func<T, bool> predicate) where T : class {
+            var context = new DataContext();
+
+            try {
+                var dbSet = context.Set<T>();
+                var entities = dbSet.Where(predicate);
+                dbSet.RemoveRange(entities);
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Logger.Write(e, Logger.Severity.Major);
+                throw;
+            }
+            finally
+            {
+                context.Dispose();
+            }
         }
 
-        public static List<T> Select<T>(Func<T, bool> func) {
-            throw new NotImplementedException();
+        public static IEnumerable<T> Select<T>(Func<T, bool> predicate) where T : class {
+            var context = new DataContext();
+
+            try {
+                return context.Set<T>().Where(predicate);
+            }
+            catch (Exception e) {
+                Logger.Write(e, Logger.Severity.Major);
+                throw;
+            }
+            finally {
+                context.Dispose();
+            }
         }
     }
 }

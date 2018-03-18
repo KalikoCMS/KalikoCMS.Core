@@ -1,3 +1,29 @@
+
+### New in x.y.z
+* Under development
+
+SQL Server database needs altering:
+
+ALTER TABLE [dbo].[Property] ALTER COLUMN [ShowInAdmin] BIT
+GO
+ALTER TABLE [dbo].[Property] ALTER COLUMN [Required] BIT
+GO
+ALTER TABLE [dbo].[PageInstance] ALTER COLUMN [VisibleInMenu] BIT
+GO
+ALTER TABLE [dbo].[PageInstance] ALTER COLUMN [VisibleInSitemap] BIT
+GO
+ALTER TABLE [dbo].[PageType] ALTER COLUMN [ShowPublishDates] BIT
+GO
+ALTER TABLE [dbo].[PageType] ALTER COLUMN [ShowSortOrder] BIT
+GO
+ALTER TABLE [dbo].[PageType] ALTER COLUMN [ShowVisibleInMenu] BIT
+GO
+ALTER TABLE [dbo].[SitePropertyDefinition] ALTER COLUMN [ShowInAdmin] BIT
+GO
+ALTER TABLE [dbo].[SitePropertyDefinition] ALTER COLUMN [Required] BIT
+GO
+
+
 ### New in 1.2.2
 * Fixed problem with custom property types only used in site definition not registering
 
