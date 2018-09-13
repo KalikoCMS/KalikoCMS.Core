@@ -38,8 +38,7 @@ namespace KalikoCMS.Serialization {
         static JsonSerialization() {
             AjaxSerializerSettings = new JsonSerializerSettings {
                 TypeNameHandling = TypeNameHandling.None,
-                NullValueHandling = NullValueHandling.Ignore,
-                ContractResolver = new WritablePropertiesOnlyResolver()
+                NullValueHandling = NullValueHandling.Ignore
             };
 
             StandardSerializerSettings = new JsonSerializerSettings {

@@ -98,7 +98,7 @@ namespace KalikoCMS.Admin.Content.PageTree {
         private static void WriteResponse(HttpContext context, bool status, string message) {
             var success = status ? "true" : "false";
             context.Response.ContentType = "application/json";
-            var json = JsonSerialization.SerializeJson(new {success, message});
+            var json = JsonSerialization.SerializeJsonForAjax(new {success, message});
             context.Response.Write(json);
         }
 

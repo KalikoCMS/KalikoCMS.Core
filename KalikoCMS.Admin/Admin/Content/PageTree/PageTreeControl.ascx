@@ -153,11 +153,12 @@
                         "old": data.old_parent,
                         "position": data.position
                     },
-                    success: function(r) {
-                        data.instance.load_node(data.parent);
-                        if (data.parent != data.old_parent) {
-                            data.instance.load_node(data.old_parent);
-                        }
+                    success: function (r) {
+                        data.instance.refresh();
+                        //data.instance.load_node(data.parent);
+                        //if (data.parent != data.old_parent) {
+                        //    data.instance.load_node(data.old_parent);
+                        //}
 
                         if (!r.success) {
                             if (r.message.length > 0) {
