@@ -19,14 +19,23 @@
 
 namespace KalikoCMS.Identity.Register {
     using AspNet.Identity.DataAccess.Data;
+    using Configuration;
     using Core;
 
     public class IdentityStartup : IStartupSequence {
+        private readonly string DefaultConnectionStringName = "KalikoCMS";
+
         public void Startup() {
             var area = new IdentityDashboardArea();
             Dashboard.RegisterArea(area);
 
-            DataContext.ConnectionStringName = "KalikoCMS";
+            var connectionStringName = SiteSettings.Instance.ConnectionStringName;
+            if (string.IsNullOrEmpty(connectionStringName))
+            {
+                connectionStringName = DefaultConnectionStringName;
+            }
+
+            DataContext.ConnectionStringName = connectionStringName;
         }
 
         public int StartupOrder { get { return 30; } }
