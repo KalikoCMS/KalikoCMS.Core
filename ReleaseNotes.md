@@ -8,6 +8,7 @@
 * Fixed problem with freezing page tree when moving pages in admin
 * Fixed problem with editor for file properties inside collections
 * Added option to specify connection string name in configuration
+* Removed client file size limit on file upload
 
 ### New in 1.2.3
 * Fixed script reference problem for property editors in Chrome

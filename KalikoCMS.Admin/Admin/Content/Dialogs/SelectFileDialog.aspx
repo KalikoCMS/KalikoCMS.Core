@@ -147,8 +147,7 @@
             sequentialUploads: true,
             formData: function(form) {
               return [{ name: 'path', value: path }];
-            },
-            maxFileSize: 5000000 //,
+            }
           }
         )
         .bind('fileuploaddrop', function(e, data) {
