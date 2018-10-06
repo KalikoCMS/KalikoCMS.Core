@@ -21,6 +21,7 @@ namespace KalikoCMS.PropertyType {
     using System;
     using Attributes;
     using Core;
+    using Newtonsoft.Json;
     using Serialization;
 
     [PropertyType("56A791FC-D480-40A9-B161-651B9C7D8AEA", "PageLink", "Page link property", "%AdminPath%Content/PropertyType/PageLinkPropertyEditor.ascx")]
@@ -45,12 +46,14 @@ namespace KalikoCMS.PropertyType {
             }
         }
 
+        [JsonIgnore]
         public CmsPage Page {
             get {
                 return _page ?? (_page = PageFactory.GetPage(PageId, LanguageId));
             }
         }
 
+        [JsonIgnore]
         public bool IsValid {
             get {
                 if (PageId == Guid.Empty) {

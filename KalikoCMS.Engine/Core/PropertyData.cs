@@ -21,6 +21,7 @@ namespace KalikoCMS.Core {
     using System;
     using System.Web;
     using Extensions;
+    using Newtonsoft.Json;
     using Serialization;
 
     public abstract class PropertyData : IHtmlString {
@@ -58,6 +59,7 @@ namespace KalikoCMS.Core {
             return StringValue;
         }
 
+        [JsonIgnore]
         public virtual string Preview {
             get {
                 var preview = StringValue.LimitCharacters(64);

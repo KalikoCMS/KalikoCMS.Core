@@ -21,6 +21,7 @@ namespace KalikoCMS.Core {
     using System;
     using Collections;
     using Data;
+    using Newtonsoft.Json;
     using Serialization;
 
     public class CmsPage : MarshalByRefObject {
@@ -86,6 +87,7 @@ namespace KalikoCMS.Core {
             NextPage = pageIndexItem.NextPage;
         }
 
+        [JsonIgnore]
         public PageCollection Children {
             get { return PageFactory.GetChildrenForPage(PageId); }
         }
@@ -115,6 +117,7 @@ namespace KalikoCMS.Core {
             }
         }
 
+        [JsonIgnore]
         public CmsPage Parent {
             get {
                 return PageFactory.GetPage(ParentId);

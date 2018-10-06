@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		WebEssentials-Settings.json = WebEssentials-Settings.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalikoCMS.Headless", "KalikoCMS.Headless\KalikoCMS.Headless.csproj", "{8242740E-BC0D-495D-B607-50F64BDCB27B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{BF7E38D1-CA77-4171-AC10-777EE7FF40B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF7E38D1-CA77-4171-AC10-777EE7FF40B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF7E38D1-CA77-4171-AC10-777EE7FF40B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8242740E-BC0D-495D-B607-50F64BDCB27B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8242740E-BC0D-495D-B607-50F64BDCB27B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8242740E-BC0D-495D-B607-50F64BDCB27B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8242740E-BC0D-495D-B607-50F64BDCB27B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
