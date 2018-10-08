@@ -66,7 +66,7 @@ namespace KalikoCMS.Admin.Content.PropertyType {
 
             DisplayField.Text = FilePath.Value;
 
-            string clickScript = "top.propertyEditor.file.openDialog('#" + FilePath.ClientID + "', '#" + DisplayField.ClientID + "');return false;";
+            string clickScript = "top.propertyEditor.file.openDialog('#" + FilePath.ClientID + "', '#" + DisplayField.ClientID + "', window);return false;";
             SelectButton.Attributes["onclick"] = clickScript;
         }
     }

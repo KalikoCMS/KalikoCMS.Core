@@ -19,20 +19,26 @@
 
 namespace KalikoCMS.Data {
     using System.Linq;
+    using Configuration;
     using Entities;
     using Telerik.OpenAccess;
     using Telerik.OpenAccess.FetchOptimization;
     using Telerik.OpenAccess.Metadata;
 
     public class DataContext : OpenAccessContext {
-        private const string ConnectionStringName = "KalikoCMS";
         private const int DatabaseVersion = 10;
+        private static string ConnectionStringName = "KalikoCMS";
         private static readonly MetadataContainer MetadataContainer;
         private static readonly BackendConfiguration BackendConfiguration;
 
         static DataContext() {
             MetadataContainer = new DataMetadataSource().GetModel();
             BackendConfiguration = new BackendConfiguration();
+
+            var connectionStringName = SiteSettings.Instance.ConnectionStringName;
+            if (!string.IsNullOrEmpty(connectionStringName)) {
+                ConnectionStringName = connectionStringName;
+            }
 
             //#if DEBUG
             // Debug data access by logging queries

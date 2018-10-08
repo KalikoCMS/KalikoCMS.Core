@@ -34,6 +34,7 @@ namespace KalikoCMS.Configuration {
         private string _blockedFileExtensions;
         private string _cacheProvider;
         private string _theme;
+        private string _connectionStringName;
 
         public static SiteSettings Instance {
             get {
@@ -54,6 +55,12 @@ namespace KalikoCMS.Configuration {
         [ConfigurationProperty("cacheProvider", IsRequired = false)]
         public string CacheProvider {
             get { return _cacheProvider ?? (_cacheProvider = (string)base["cacheProvider"]); }
+        }
+
+
+        [ConfigurationProperty("connectionStringName", IsRequired = false, DefaultValue = "KalikoCMS")]
+        public string ConnectionStringName {
+            get { return _connectionStringName ?? (_connectionStringName = (string)base["connectionStringName"]); }
         }
 
 

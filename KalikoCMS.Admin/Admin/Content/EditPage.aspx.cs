@@ -193,6 +193,9 @@ namespace KalikoCMS.Admin.Content {
             var parent = PageFactory.GetPage(_parentId);
             var editablePage = parent.CreateChildPage(_pageTypeId);
 
+            // Re-set properties so that new default values are supported
+            VisibleInMenu.PropertyValue = new BooleanProperty(editablePage.VisibleInMenu);
+            VisibleInSitemap.PropertyValue = new BooleanProperty(editablePage.VisibleInSiteMap);
 
             AddTabs(propertyDefinitions);
             foreach (var propertyDefinition in propertyDefinitions) {

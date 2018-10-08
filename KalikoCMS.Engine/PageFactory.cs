@@ -561,9 +561,9 @@ namespace KalikoCMS {
             var parent = GetPage(parentId);
             var parentUrl = parent.PageUrl.ToString();
             var url = string.Format("{0}{1}/", parentUrl, pageInstance.PageUrl);
-            url = url.TrimStart('/');
+            var applicationPath = Utils.ApplicationPath;
 
-            return url;
+            return url.Substring(applicationPath.Length);
         }
 
 

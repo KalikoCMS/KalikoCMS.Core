@@ -17,27 +17,21 @@
  */
 #endregion
 
-namespace KalikoCMS.Identity.Register {
-    using AspNet.Identity.DataAccess.Data;
+namespace KalikoCMS.Headless.Controllers {
+    using System.Web.Http;
+    using Attributes;
     using Configuration;
-    using Core;
+    using Models;
 
-    public class IdentityStartup : IStartupSequence {
-        private readonly string DefaultConnectionStringName = "KalikoCMS";
-
-        public void Startup() {
-            var area = new IdentityDashboardArea();
-            Dashboard.RegisterArea(area);
-
-            var connectionStringName = SiteSettings.Instance.ConnectionStringName;
-            if (string.IsNullOrEmpty(connectionStringName))
-            {
-                connectionStringName = DefaultConnectionStringName;
-            }
-
-            DataContext.ConnectionStringName = connectionStringName;
+    [JsonConfiguration]
+    [RoutePrefix("contentapi/v1.0/site")]
+    public class SiteApiController : ApiController {
+        [Route("")]
+        public PublicSite Get()
+        {
+            var site = SiteFactory.Get(SiteSettings.RootPage);
+            return new PublicSite(site);
         }
 
-        public int StartupOrder { get { return 30; } }
     }
 }

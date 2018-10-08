@@ -17,27 +17,25 @@
  */
 #endregion
 
-namespace KalikoCMS.Identity.Register {
-    using AspNet.Identity.DataAccess.Data;
-    using Configuration;
+namespace KalikoCMS.Headless.Models {
+    using System.Collections.Generic;
     using Core;
 
-    public class IdentityStartup : IStartupSequence {
-        private readonly string DefaultConnectionStringName = "KalikoCMS";
+    public class PublicPageList : List<PublicPage> {
+        public PublicPageList() { }
 
-        public void Startup() {
-            var area = new IdentityDashboardArea();
-            Dashboard.RegisterArea(area);
-
-            var connectionStringName = SiteSettings.Instance.ConnectionStringName;
-            if (string.IsNullOrEmpty(connectionStringName))
-            {
-                connectionStringName = DefaultConnectionStringName;
+        public PublicPageList(IEnumerable<CmsPage> pages) {
+            if (pages == null) {
+                return;
             }
 
-            DataContext.ConnectionStringName = connectionStringName;
-        }
+            foreach (var page in pages) {
+                if (page == null || !page.IsAvailable) {
+                    continue;
+                }
 
-        public int StartupOrder { get { return 30; } }
+                Add(new PublicPage(page));
+            }
+        }
     }
 }

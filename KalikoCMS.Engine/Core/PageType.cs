@@ -22,6 +22,7 @@ namespace KalikoCMS.Core {
     using System.Collections.Generic;
     using Data;
     using Collections;
+    using Newtonsoft.Json;
 
     public class PageType {
         public static List<PageType> PageTypes { get; internal set; }
@@ -37,7 +38,9 @@ namespace KalikoCMS.Core {
         public bool ShowPublishDates { get; set; }
         public bool ShowSortOrder { get; set; }
         public bool ShowVisibleInMenu { get; set; }
+        [JsonIgnore]
         public Type[] AllowedTypes { get; set; }
+        [JsonIgnore]
         public Type Type { get; set; }
         
         internal CmsPage Instance { get; set; }

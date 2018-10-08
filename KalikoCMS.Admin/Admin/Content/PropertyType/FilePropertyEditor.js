@@ -1,11 +1,11 @@
 ﻿(function (propertyEditor) {
     propertyEditor.file = propertyEditor.file || {
-        openDialog: function(pathField, displayField) {
-            var filePath = $(pathField).val();
+        openDialog: function (pathField, displayField, context) {
+            var filePath = context.$(pathField).val();
 
-            var callback = function(newFilePath) {
-                $(displayField).val(newFilePath);
-                $(pathField).val(newFilePath);
+            var callback = function (newFilePath) {
+                context.$(displayField).val(newFilePath);
+                context.$(pathField).val(newFilePath);
             };
 
             top.registerCallback(callback);
