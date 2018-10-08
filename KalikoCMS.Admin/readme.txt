@@ -1,5 +1,5 @@
 ﻿
-Thanks for installing Kaliko CMS version 1.2.3!
+Thanks for installing Kaliko CMS version 1.2.4!
 
 Notice if you're upgrading Kaliko CMS (this doesn't apply to new projects):
 ============================================================================
@@ -9,6 +9,19 @@ Notice if you're upgrading Kaliko CMS (this doesn't apply to new projects):
  replaced for security reasons. Although the replacement has been fully 
  tested we recommend as an extra precaution to backup the database.
 ============================================================================
+
+New in 1.2.4
+* Fixed problem with unicode characters in composition properties
+* Fixed problem with default values for menu and sitemap visibility not honored by administration UI
+* Fixed problem with duplicate ApplicationPaths when creating a new page running site in virtual folder
+* Fixed problem with incompatible data types for some data providers such as Oracle
+* Fixed problem with using required flag on fields in composite and collection properties
+* Fixed problem with hidden publish and save buttons on iOS
+* Fixed problem with freezing page tree when moving pages in admin
+* Fixed problem with editor for file properties inside collections
+* Added option to specify connection string name in configuration
+* Removed client file size limit on file upload
+* Added support for running the CMS headless through new content Api
 
 New in 1.2.3
 * Fixed script reference problem for property editors in Chrome
