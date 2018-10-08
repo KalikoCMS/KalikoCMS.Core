@@ -9,7 +9,7 @@
 * Fixed problem with editor for file properties inside collections
 * Added option to specify connection string name in configuration
 * Removed client file size limit on file upload
-* Added support for running the CMS headless through new content Api
+* Added support for running the CMS headless through new content API
 
 ### New in 1.2.3
 * Fixed script reference problem for property editors in Chrome

@@ -28,7 +28,6 @@ namespace KalikoCMS.Mvc.Extensions {
     using Core.Collections;
     using KalikoCMS;
     using KalikoCMS.Configuration;
-    using KalikoCMS.Core;
 
     public static class HtmlHelperExtensions {
         #region Breadcrumbs
