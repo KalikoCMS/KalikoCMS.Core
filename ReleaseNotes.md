@@ -1,3 +1,6 @@
+### New in 1.2.5
+* Fixed problem with file option in link property
+
 ### New in 1.2.4
 * Fixed problem with unicode characters in composition properties
 * Fixed problem with default values for menu and sitemap visibility not honored by administration UI
