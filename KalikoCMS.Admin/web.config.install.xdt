@@ -31,7 +31,16 @@
         <deny users="*" />
       </authorization>
       <pages validateRequest="false"/>
-      <httpRuntime requestValidationMode="2.0"/>
+      <!-- 50MB in kilobytes -->
+      <httpRuntime maxRequestLength="51200" requestValidationMode="2.0"/>
     </system.web>
+    <system.webServer>
+      <security>
+        <requestFiltering>
+          <!-- 50MB in bytes -->
+          <requestLimits maxAllowedContentLength="52428800" /> 
+        </requestFiltering>
+      </security>
+    </system.webServer>
   </location>
 </configuration>
