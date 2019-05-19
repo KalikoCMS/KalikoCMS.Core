@@ -4,6 +4,7 @@
 * Fixed problem with paths starting with "./" for images in HTML editor
 * Updated jsTree to a version that not relies on registerElement which will be deprecated in Chrome
 * Validate password before trying to change when editing a user in admin
+* Added optional configuration setting (enableSessions) to support the use of session state in MVC
 
 ### New in 1.2.4
 * Fixed problem with unicode characters in composition properties
