@@ -1,6 +1,7 @@
 ### New in 1.2.5
 * Fixed problem with file option in link property
 * Fixed problem with omitted content type when returning MVC action result
+* Fixed problem with paths starting with "./" for images in HTML editor
 * Updated jsTree to a version that not relies on registerElement which will be deprecated in Chrome
 * Validate password before trying to change when editing a user in admin
 
