@@ -2,6 +2,7 @@
 * Fixed problem with file option in link property
 * Fixed problem with omitted content type when returning MVC action result
 * Updated jsTree to a version that not relies on registerElement which will be deprecated in Chrome
+* Validate password before trying to change when editing a user in admin
 
 ### New in 1.2.4
 * Fixed problem with unicode characters in composition properties
