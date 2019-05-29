@@ -34,7 +34,15 @@ namespace KalikoCMS.Modules {
         }
 
         public void Init(HttpApplication context) {
-            context.PostAuthorizeRequest += PostAuthorizeRequest;
+            if (SiteSettings.Instance.EnableSessions) {
+                // Wait until state has been acquired before resolving request
+                context.PostAcquireRequestState += PostAuthorizeRequest;
+                context.Context.SetSessionStateBehavior(SessionStateBehavior.Required); 
+            }
+            else {
+                context.PostAuthorizeRequest += PostAuthorizeRequest;
+            }
+
             context.PreRequestHandlerExecute += PreRequestHandlerExecute;
         }
 

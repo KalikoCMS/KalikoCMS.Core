@@ -44,6 +44,7 @@ function initHtmlEditor(assetsPath) {
         },
         paste_data_images: true,
         extended_valid_elements: "i[class],span,span[class]",
+        convert_urls: false,
         relative_urls: false,
         toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code",
         file_picker_callback: function (callback, value, meta) {

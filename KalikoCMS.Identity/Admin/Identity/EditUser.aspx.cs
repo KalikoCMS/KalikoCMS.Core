@@ -26,6 +26,8 @@ namespace KalikoCMS.Identity.Admin.Identity {
     using Extensions;
     using KalikoCMS.Admin;
     using Microsoft.AspNet.Identity;
+    using System.Threading.Tasks;
+    using System.Threading;
 
     public partial class EditUser : AdminPage {
         private const string PasswordMask = "********";
@@ -89,6 +91,12 @@ namespace KalikoCMS.Identity.Admin.Identity {
                     return;
                 }
 
+                var validatedPassword = AsyncHelper.RunSync(() => _userManager.PasswordValidator.ValidateAsync(Password.Text));
+                if (!validatedPassword.Succeeded) {
+                    ShowError(Feedback, "Password does not live up the the password requirements! " + string.Join(" ", validatedPassword.Errors));
+                    return;
+                }
+
                 _userManager.RemovePassword(_user.Id);
                 _userManager.AddPassword(_user.Id, Password.Text);
             }
@@ -105,8 +113,11 @@ namespace KalikoCMS.Identity.Admin.Identity {
             var result = _userManager.Update(_user);
 
             if (result.Succeeded) {
-                var roles = Request.Form["Roles"].Split(',');
-                _userManager.AddToRoles(_user.Id, roles);
+                var roleList = Request.Form["Roles"];
+                if (!string.IsNullOrEmpty(roleList)) {
+                    var roles = roleList.Split(',');
+                    _userManager.AddToRoles(_user.Id, roles);
+                }
 
                 ShowMessage(Feedback, "Changes saved!");
             }
@@ -126,6 +137,25 @@ namespace KalikoCMS.Identity.Admin.Identity {
             }
 
             Roles.Text = stringBuilder.ToString();
+        }
+
+        internal static class AsyncHelper
+        {
+            private static readonly TaskFactory _myTaskFactory = new TaskFactory(
+                CancellationToken.None,
+                TaskCreationOptions.None,
+                TaskContinuationOptions.None,
+                TaskScheduler.Default);
+
+            public static TResult RunSync<TResult>(Func<Task<TResult>> func)
+            {
+                return _myTaskFactory.StartNew(func).Unwrap().GetAwaiter().GetResult();
+            }
+
+            public static void RunSync(Func<Task> func)
+            {
+                _myTaskFactory.StartNew(func).Unwrap().GetAwaiter().GetResult();
+            }
         }
     }
 }

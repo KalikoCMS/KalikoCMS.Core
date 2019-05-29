@@ -85,6 +85,7 @@ namespace KalikoCMS.Mvc {
             HttpContext.Current.Response.Clear();
             var requestContext = new RequestContext(new HttpContextWrapper(HttpContext.Current), routeData);
             ((IController)controller).Execute(requestContext);
+            HttpContext.Current.Response.Flush();
             HttpContext.Current.ApplicationInstance.CompleteRequest();
         }
 
@@ -132,6 +133,7 @@ namespace KalikoCMS.Mvc {
             HttpContext.Current.Response.Clear();
             var requestContext = new RequestContext(new HttpContextWrapper(HttpContext.Current), routeData);
             ((IController)controller).Execute(requestContext);
+            HttpContext.Current.Response.Flush();
             HttpContext.Current.ApplicationInstance.CompleteRequest();
         }
 

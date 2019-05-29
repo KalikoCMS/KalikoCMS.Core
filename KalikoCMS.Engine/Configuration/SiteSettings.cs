@@ -27,6 +27,7 @@ namespace KalikoCMS.Configuration {
         private string _adminPath;
         private string _datastoreProvider;
         private string _datastorePath;
+        private bool? _enableSessions;
         private string _searchProvider;
         private string _dateFormat;
         private string _filePath;
@@ -80,6 +81,14 @@ namespace KalikoCMS.Configuration {
         public string DateFormat
         {
             get { return _dateFormat ?? (_dateFormat = (string)base["dateFormat"]); }
+        }
+
+
+        [ConfigurationProperty("enableSessions", IsRequired = false, DefaultValue = false)]
+        public bool EnableSessions {
+            get {
+                return (bool)(_enableSessions ?? (_enableSessions = (bool)base["enableSessions"]));
+            }
         }
 
 

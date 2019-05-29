@@ -249,24 +249,27 @@ namespace KalikoCMS.Core {
 
         internal PageCollection GetRootChildren() {
             Predicate<PageIndexItem> match = IsPublished.And(t => t.ParentId == Guid.Empty);
+            var site = SiteFactory.CurrentSite<CmsSite>();
 
-            return GetPagesByCriteriaSorted(match, SortOrder.SortIndex, SortDirection.Ascending);
+            return GetPagesByCriteriaSorted(match, site.ChildSortOrder, site.ChildSortDirection);
         }
 
         internal PageCollection GetRootChildren(PublishState pageState) {
             Predicate<PageIndexItem> match = t => t.ParentId == Guid.Empty;
 
             match = AddPredicateForPageState(pageState, match);
+            var site = SiteFactory.CurrentSite<CmsSite>();
 
-            return GetPagesByCriteriaSorted(match, SortOrder.SortIndex, SortDirection.Ascending);
+            return GetPagesByCriteriaSorted(match, site.ChildSortOrder, site.ChildSortDirection);
         }
 
         internal PageCollection GetRootChildren(int pageTypeId, PublishState pageState) {
             Predicate<PageIndexItem> match = t => t.ParentId == Guid.Empty && t.PageTypeId == pageTypeId;
 
             match = AddPredicateForPageState(pageState, match);
+            var site = SiteFactory.CurrentSite<CmsSite>();
 
-            return GetPagesByCriteriaSorted(match, SortOrder.SortIndex, SortDirection.Ascending);
+            return GetPagesByCriteriaSorted(match, site.ChildSortOrder, site.ChildSortDirection);
         }
 
         internal void InsertPageIndexItem(PageIndexItem page) {

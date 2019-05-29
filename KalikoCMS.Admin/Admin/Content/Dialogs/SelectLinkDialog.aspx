@@ -61,7 +61,7 @@
         $('#link-tab a[href=<%=ActiveTab %>]').tab('show');
 
         $('#<%=SelectFileButton.ClientID %>').click(function () {
-          top.propertyEditor.file.openDialog($('#<%=FileUrl.ClientID %>'), $('#<%=FileDisplayField.ClientID %>'));
+          top.propertyEditor.file.openDialog($('#<%=FileUrl.ClientID %>'), $('#<%=FileDisplayField.ClientID %>'), window);
           return false;
         });
 
