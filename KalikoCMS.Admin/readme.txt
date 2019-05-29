@@ -1,5 +1,5 @@
 ﻿
-Thanks for installing Kaliko CMS version 1.2.4!
+Thanks for installing Kaliko CMS version 1.2.5!
 
 Notice if you're upgrading Kaliko CMS (this doesn't apply to new projects):
 ============================================================================
@@ -9,6 +9,16 @@ Notice if you're upgrading Kaliko CMS (this doesn't apply to new projects):
  replaced for security reasons. Although the replacement has been fully 
  tested we recommend as an extra precaution to backup the database.
 ============================================================================
+
+### New in 1.2.5
+* Fixed problem with file option in link property
+* Fixed problem with omitted content type when returning MVC action result
+* Fixed problem with paths starting with "./" for images in HTML editor
+* Fixed problem with sort settings not being applied for site root in admin
+* Fixed problem with reopening image and link dialogs in admin
+* Updated jsTree to a version that not relies on registerElement which will be deprecated in Chrome
+* Validate password before trying to change when editing a user in admin
+* Added optional configuration setting (enableSessions) to support the use of session state in MVC
 
 New in 1.2.4
 * Fixed problem with unicode characters in composition properties
