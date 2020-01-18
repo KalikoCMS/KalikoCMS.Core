@@ -109,6 +109,10 @@ namespace KalikoCMS.Modules {
         }
 
         private static bool IsUrlToStartPage(string url) {
+            if (SiteSettings.Instance.IgnoreStartPage) {
+                return false;
+            }
+
             return (url.Length == 0 || url == "default.aspx");
         }
 

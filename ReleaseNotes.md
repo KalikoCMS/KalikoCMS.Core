@@ -1,3 +1,6 @@
+### New in 1.2.6
+* New configuration setting to disable root as startpage (ignoreStartPage)
+
 ### New in 1.2.5
 * Fixed problem with file option in link property
 * Fixed problem with omitted content type when returning MVC action result

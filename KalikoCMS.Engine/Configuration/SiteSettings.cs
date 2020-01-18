@@ -36,6 +36,7 @@ namespace KalikoCMS.Configuration {
         private string _cacheProvider;
         private string _theme;
         private string _connectionStringName;
+        private bool? _ignoreStartPage;
 
         public static SiteSettings Instance {
             get {
@@ -96,6 +97,14 @@ namespace KalikoCMS.Configuration {
         public string FilePath
         {
             get { return _filePath ?? (_filePath = (string)base["filePath"]); }
+        }
+
+
+        [ConfigurationProperty("ignoreStartPage", IsRequired = false, DefaultValue = false)]
+        public bool IgnoreStartPage {
+            get {
+                return (bool)(_ignoreStartPage ?? (_ignoreStartPage = (bool)base["ignoreStartPage"]));
+            }
         }
 
 
