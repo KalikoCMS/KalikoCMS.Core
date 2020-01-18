@@ -63,7 +63,14 @@ namespace KalikoCMS.Admin.Content.Dialogs {
 
             foreach (var pageType in pageTypes.OrderBy(x => x.DisplayName)) {
                 if (!allowAll && !allowedTypes.Contains(pageType.Type)) continue;
-                
+
+                if (pageType.CanCreate != null) {
+                    var hasAccess = pageType.CanCreate.Any(role => User.IsInRole(role));
+                    if (!hasAccess) {
+                        continue;
+                    }
+                }
+
                 if (count > 0 && count%2 == 0) {
                     stringBuilder.Append("</div><div class=\"row\">");
                 }

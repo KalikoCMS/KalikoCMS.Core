@@ -46,6 +46,7 @@ namespace KalikoCMS.Data {
 
                 configuration.CreateMap<PageTypeEntity, PageType>()
                     .ForMember(m => m.AllowedTypes, o => o.Ignore())
+                    .ForMember(m => m.CanCreate, o => o.Ignore())
                     .ForMember(m => m.Type, o => o.Ignore())
                     .ForMember(m => m.PreviewImage, o => o.Ignore())
                     .ReverseMap();

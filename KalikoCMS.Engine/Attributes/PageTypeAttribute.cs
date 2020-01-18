@@ -37,6 +37,7 @@ namespace KalikoCMS.Attributes {
         }
 
         public Type[] AllowedTypes { get; set; }
+        public string[] CanCreate { get; set; }
         public SortDirection DefaultChildSortDirection { get; set; }
         public SortOrder DefaultChildSortOrder { get; set; }
         public string DisplayName { get; private set; }

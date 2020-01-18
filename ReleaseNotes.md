@@ -1,5 +1,6 @@
 ### New in 1.2.6
 * New configuration setting to disable root as startpage (ignoreStartPage)
+* New parameter in PageTypeAttribute to limit create access to specified roles (CanCreate)
 
 ### New in 1.2.5
 * Fixed problem with file option in link property

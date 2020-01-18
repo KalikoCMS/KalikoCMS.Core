@@ -42,7 +42,9 @@ namespace KalikoCMS.Core {
         public Type[] AllowedTypes { get; set; }
         [JsonIgnore]
         public Type Type { get; set; }
-        
+        [JsonIgnore]
+        public string[] CanCreate { get; set; }
+
         internal CmsPage Instance { get; set; }
         internal List<PropertyDefinition> Properties { get; set; }
 
